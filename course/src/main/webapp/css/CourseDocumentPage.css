@@ -1,0 +1,105 @@
+.PageTopBar {
+	width: 100%;
+	height: 50px;
+	margin: 0px;
+	line-height: 30px;
+	background: #3C3C3C;
+	padding: 0px;
+}
+
+.PageFootBar {
+	width: 100%;
+	background: #F0F0F0;
+	margin-top:10px;
+	padding: 10px 0px 10px 0px;
+}
+
+.PageFootBarInner {
+	width: 100%;
+	color: #000;
+	margin:auto;
+	text-align: center;
+}
+
+#DocumentPageTopSeparatorLine {
+	height: 3px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 1px;
+	margin-bottom: 0px;
+	padding: 0px;
+	background-color: #6C6C6C;
+	overflow: hidden;
+}
+
+#DocumentHeader {
+	font-family: Arial, 'Times New Roman', 'Microsoft YaHei', SimHei;
+	font-size: medium;
+	font-weight: bolder;
+	color: white;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.DocumentPage {
+	font-family: Arial, 'Times New Roman', 'Microsoft YaHei', SimHei;
+	font-size: small;
+	width: 100%;
+	margin-left: 0px;
+	margin-right: 0px;
+	overflow: hidden;
+}
+
+.DocumentPageLeftArea {
+	width: 150px;
+	height:100%;
+	float: left;
+/*	background: #d0d0d0;*/
+}
+
+.DocumentPageRightArea {
+	margin-left:150px;
+	
+}
+
+#DocumentPage a, #DocumentPage a:link, #DocumentPage a:visited {
+	font-size: small;
+	display: inline-block;
+	color: Black;
+}
+
+#DocumentPage a:hover, #DocumentPage a:visited:hover {
+	text-decoration: none;
+	color: #EA0000;
+}
+
+#DocumentPage p {
+	text-indent: 2em;
+	font-size: small;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #191970;
+	Line-height: 1.5em;
+}
+
+
+
+.CourseContentHeader {
+	margin-top: 10px;
+	padding: 10px;
+	font-weight: bolder;
+	font-size: medium;
+}
+
+.CourseContentHeaderSeparatorLine {
+	height: 3px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 10px;
+	margin-bottom: 5px;
+	padding: 0px;
+	background-color: #9D9D9D;
+	overflow: hidden;
+}

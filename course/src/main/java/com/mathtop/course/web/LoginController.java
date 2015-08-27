@@ -1,0 +1,198 @@
+package com.mathtop.course.web;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.mathtop.course.cons.CommonConstant;
+import com.mathtop.course.cons.CourseMessage;
+import com.mathtop.course.domain.User;
+import com.mathtop.course.domain.UserSessionInfo;
+import com.mathtop.course.service.LoginService;
+import com.mathtop.course.service.UserService;
+import com.mathtop.course.service.UserSessionInfoService;
+
+@Controller
+@RequestMapping("/account")
+public class LoginController extends BaseController {
+
+	/**
+	 * 自动注入
+	 */
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private LoginService loginService;
+	
+	@Autowired
+	UserSessionInfoService usersessioninfoService;
+
+	@RequestMapping(value = "androidLogin", method = RequestMethod.POST)
+	@ResponseBody
+	public User androidLogin(HttpServletRequest request, @RequestBody User user) {		
+		
+		// 如果用户已经登录，则直接进入到主页面
+		if (getSessionUser(request) != null) {
+			
+			return user;
+		}
+
+		// 对密码进行md5运算，比较两个密码其实是比较两个密码的md5值
+		user.EncoderPassword();
+
+		User dbUser = userService.getUserByUserName(user.getUser_name());
+
+		if (dbUser == null) {
+			
+			return null;
+		} else if (dbUser.getUser_name() == null
+				|| !dbUser.getUser_name().equals(user.getUser_name())) {
+			//用户名不存在
+			
+			dbUser.setUser_name(null);
+		} else if (dbUser.getUser_password() == null
+				|| !dbUser.getUser_password().equals(user.getUser_password())) {
+			//用户密码不正确
+			
+			dbUser.setUser_password(null);
+		} else {
+			
+			// 写入到登录日志中
+			loginService.Add(dbUser.getId(), request.getRemoteAddr());			
+		}
+		return dbUser;
+	}
+
+	/**
+	 * 用户登陆
+	 * 
+	 * @param request
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "/doLogin")
+	public ModelAndView login(HttpServletRequest request, User user) {
+
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("account/login");
+
+		// 如果用户已经登录，则直接进入到主页面
+		if (getSessionUser(request) != null) {
+			String toUrl = "/index.html";
+			mav.setViewName("redirect:" + toUrl);
+			return mav;
+		}
+
+		// 对密码进行md5运算，比较两个密码其实是比较两个密码的md5值
+		user.EncoderPassword();
+
+		User dbUser = userService.getUserByUserName(user.getUser_name());
+
+		if (dbUser == null) {
+			return mav;
+		} else if (dbUser.getUser_name() == null
+				|| !dbUser.getUser_name().equals(user.getUser_name())) {
+			mav.addObject(CourseMessage.Message_errorMsg, "用户名不存在");
+		} else if (dbUser.getUser_password() == null
+				|| !dbUser.getUser_password().equals(user.getUser_password())) {
+			mav.addObject(CourseMessage.Message_errorMsg, "用户密码不正确");
+		} else {
+
+			// 写入到登录日志中
+			loginService.Add(dbUser.getId(), request.getRemoteAddr());
+
+			setSessionUser(request, usersessioninfoService.GetUserSessionInfoByt_user_id(dbUser.getId()));
+			String toUrl = (String) request.getSession().getAttribute(
+					CommonConstant.LOGIN_TO_URL);
+			request.getSession().removeAttribute(CommonConstant.LOGIN_TO_URL);
+
+			// 如果当前会话中没有保存登录之前的请求URL，则直接跳转到主页
+			if (StringUtils.isEmpty(toUrl)) {
+				toUrl = "/index.html";
+			}
+
+			mav.addObject(dbUser);
+			mav.setViewName("redirect:" + toUrl);
+		}
+		return mav;
+	}
+
+	/**
+	 * 登录注销
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("/doLogout")
+	public String logout(HttpSession session) {
+		session.removeAttribute(CommonConstant.USER_CONTEXT);
+		return "forward:/account/doLogin.html";
+	}
+	
+	
+	@RequestMapping(value = "/pwd")
+	public ModelAndView pwd(HttpServletRequest request,RedirectAttributes redirectAttributes ) {
+
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("account/pwd");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/confirmpwd")
+	public ModelAndView confirmpwd(HttpServletRequest request,RedirectAttributes redirectAttributes ){
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("account/pwd");
+		
+		String old_user_password = request.getParameter("old_user_password");
+		String new_user_password = request.getParameter("new_user_password");
+		String confirm_user_password = request.getParameter("confirm_user_password");
+
+		UserSessionInfo userinfo=getSessionUser(request);
+		if(userinfo==null){		
+			mav.setViewName("redirect:/account/login");
+			return mav;
+		}
+		
+		User user=new User();
+		user.setUser_password(old_user_password);
+		user.EncoderPassword();
+
+		if(!userinfo.getUser().getUser_password().equals(user.getUser_password())){
+			redirectAttributes.addFlashAttribute(
+					CourseMessage.Message_errorMsg, "旧密码错误，请重新输入");
+			mav.setViewName("redirect:/account/pwd.html");
+			return mav;
+		}
+		
+		if(!new_user_password.equals(confirm_user_password)){
+			redirectAttributes.addFlashAttribute(
+					CourseMessage.Message_errorMsg, "新密码和确认密码不同，请重新输入");
+			mav.setViewName("redirect:/account/pwd.html");
+			return mav;
+		}
+		
+		user.setUser_password(new_user_password);
+		user.EncoderPassword();
+		
+		
+		
+		userService.UpdateUserPassword(userinfo.getUser().getId(), user.getUser_password());
+		userinfo.getUser().setUser_password(user.getUser_password());
+
+
+		mav.setViewName("redirect:/index.html");
+		return mav;
+		
+	}
+}

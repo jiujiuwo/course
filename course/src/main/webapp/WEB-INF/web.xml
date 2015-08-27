@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	version="2.4"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee   
+	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	
+	<!-- 切记：确保jar包被部署到web-inf/lib下！！！ -->
+
+	<!-- 覆盖default servlet的/, springmvc servlet将处理原来处理静态资源的映射 -->
+	<description>课程系统</description>
+	<display-name>Course</display-name>
+	
+	
+	<!-- 1:从类路径下加载Spring配置文件，classpath关键字特指类路径下加载 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+	
+	
+	<!-- 2:负责启动Spring容器的监听器，它将引用前面的1处上下文参数获得Spring配置文件地址 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>*.html</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>*.json</url-pattern>
+	</filter-mapping>
+	
+	
+	
+	<!-- Spring MVC的主控servlet -->
+	<servlet>
+		<servlet-name>course</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<!-- Spring MVC处理的URL -->
+	<servlet-mapping>
+		<servlet-name>course</servlet-name>
+		<url-pattern>*.html</url-pattern>		
+	</servlet-mapping>	
+	<servlet-mapping>
+		<servlet-name>course</servlet-name>
+		<url-pattern>*.json</url-pattern>		
+	</servlet-mapping>	
+	
+	
+	
+	<!-- 浏览器不支持put,delete等method,由该HiddenHttpMethodFilter将xxx?_method=DELETE 
+		或 xxx?_method=put 转换为标准的 http DELETE、put 方法 -->
+	<filter>
+		<filter-name>HiddenHttpMethodFilter</filter-name>
+		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>HiddenHttpMethodFilter</filter-name>
+		<servlet-name>course</servlet-name>
+	</filter-mapping>
+	
+	<welcome-file-list>
+		<welcome-file>account/doLogin.html</welcome-file>
+	</welcome-file-list>
+	
+</web-app>
+

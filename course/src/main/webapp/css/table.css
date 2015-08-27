@@ -1,0 +1,56 @@
+.Course-Table {
+	padding:10px 10px 0px 0px;
+	
+}
+
+
+.table th, .table td { 
+	 margin: auto;
+	 vertical-align:middle;
+	
+}
+
+.navPage
+{
+	
+}
+
+.navPageLeft
+{
+	margin-top:25px;
+	margin-right:10px;
+	float:right;
+}
+
+.navPageRight
+{
+	float:right;
+}
+
+.row
+{
+	overflow: hidden;
+	padding:10px 10px 0px 0px;
+}
+.rowLeft
+{
+	text-align: right;
+	width:100px;
+	float:left;
+	padding:10px 10px 0px 0px;
+}
+.rowRight
+{
+	float:left;
+}
+
+.gridseparator {
+	height: 1px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	padding: 0px;
+	background-color: #9D9D9D;
+	overflow: hidden;
+}

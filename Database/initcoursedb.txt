@@ -1,0 +1,642 @@
+-- init t_user userid:admin,password:12345
+insert into t_user (id,user_name,user_password) values('FE4AAFD3666C4FCFB1593942917A92E5','admin','827ccb0eea8a706c4c34a16891f84e7b');
+
+
+-- school:学院
+insert into t_school (id,name,note) values('7457A1C45F8B4FA881CF5E03FD747102','计算机学院','');
+
+-- department：系部
+insert into t_department (id,name,note) values('54EF893B78E24874809FC4B1CA78C382','计算机科学与技术','');
+insert into t_department (id,name,note) values('2D1725FD8F224599B0E844631F7D0CFF','软件工程','');
+insert into t_department (id,name,note) values('D6683CEF1F744FA6B94DFF834FD809FB','网络工程','');
+
+
+-- school-department：学院-系部
+insert into t_school_department (id,t_school_id,t_department_id) values('5E69C358DA6C40268B560CCFC14C2B84','7457A1C45F8B4FA881CF5E03FD747102','54EF893B78E24874809FC4B1CA78C382');
+insert into t_school_department (id,t_school_id,t_department_id) values('5763514E8DB4491ABD463C0898DB3C1F','7457A1C45F8B4FA881CF5E03FD747102','2D1725FD8F224599B0E844631F7D0CFF');
+insert into t_school_department (id,t_school_id,t_department_id) values('8325FD220F4C43BFB8D007B575EA7561','7457A1C45F8B4FA881CF5E03FD747102','D6683CEF1F744FA6B94DFF834FD809FB');
+
+-- coursestyle：课程类别
+insert into t_course_style (id,name,note) values('E757B442FB3D458BAB6D4F0AA62AE834','公共基础课','');
+insert into t_course_style (id,name,note) values('BF41DCC7107343F8B44451334540001B','专业（技术）基础课','');
+insert into t_course_style (id,name,note) values('D39FB679A103415E99B0325664D6839C','专业课','');
+insert into t_course_style (id,name,note) values('B102B47E59FA4736BFBBB9E28370F337','课程设计','');
+insert into t_course_style (id,name,note) values('335BE42461934E79A2CC85D24BA32F13','实习','');
+insert into t_course_style (id,name,note) values('4B5D9CE142C74C879078D372E6A6C813','综合实验周','');
+
+-- coursetype：课程性质
+insert into t_course_type (id,name,note) values('F216EC4941AD4CDCBAC23FDD05054C31','必修','');
+insert into t_course_type (id,name,note) values('29F373E8F7E84D13BC209686A3B5D932','选修','');
+
+
+-- t_attendance_state：考勤状态
+insert into t_attendance_state (id,name,note) values('3B836DBB38B5417AB236A7974191B891','正常','');
+insert into t_attendance_state (id,name,note) values('224DF4A2DCD044E7A2DED1C2E388D856','迟到','');
+insert into t_attendance_state (id,name,note) values('55586B2389A3491D93CD2E2FD76AA80A','早退','');
+insert into t_attendance_state (id,name,note) values('C5915FAF2B77413CB11EEBD7CC891642','旷课','');
+
+
+-- t_attendance_type：考勤类别
+insert into t_attendance_type (id,name,note) values('66605E6A402248A2996698987EB8EAA0','课堂','');
+insert into t_attendance_type (id,name,note) values('AB1E2FEE055742D4AFF51C6BAB4B619E','上机','');
+insert into t_attendance_type (id,name,note) values('1C86EF2FBB554E718B4F9209D0737A0C','实习','');
+insert into t_attendance_type (id,name,note) values('8884D8E8F91D4890A555B006701F2BFC','测验','');
+
+-- t_attendance_mode：考勤签到方式
+insert into t_attendance_mode (id,name,note) values('243CB492BC814F128D7F79C1239C6A2D','刷卡签到','');
+insert into t_attendance_mode (id,name,note) values('B90202153B554061B4CCF689E700FEDF','手机app签到','');
+insert into t_attendance_mode (id,name,note) values('B25DFDC4F374438DBF35FA92EB6A5FF4','教师手工签到','');
+insert into t_attendance_mode (id,name,note) values('0261A62974EE46FCA56A2CA226247712','二维码签到','');
+
+
+-- t_user_contact_type：用户联系类别
+insert into t_user_contact_type(id,name,note) values('DFB78A56411D41D6B4E41F1059D2FA4B','家庭固定电话','');
+insert into t_user_contact_type(id,name,note) values('6F067085B5FB4A9895856B9B0345BEDE','手机','');
+insert into t_user_contact_type(id,name,note) values('81E2E67B2C444BB88D4469BEA2B76D64','工作固定电话','');
+insert into t_user_contact_type(id,name,note) values('67C556B4CA1C4C20BF97A30DB41580DC','电子邮箱','');
+insert into t_user_contact_type(id,name,note) values('A9080BD6B3E84E16A441ECC1A37F0A91','家庭地址','');
+insert into t_user_contact_type(id,name,note) values('3BC17E1EC6784544BE0C39DF8AC98EF4','办公地址','');
+
+
+-- t_teaching_type：
+insert into t_teaching_type(id,name,note) values('8CF2A78F8C5E4B308C344A9B6928E337','主讲','');
+insert into t_teaching_type(id,name,note) values('FDED0DCE6CD5489E90961878C0A36ED5','助教','');
+insert into t_teaching_type(id,name,note) values('D0539CFEDAD544C7B6985248F5103CB3','上机辅导','');
+
+
+-- t_examination_type
+insert into t_examination_type(id,name,note) values('CD63D347A2814CBAB61D432A550137ED','期末考试','');
+insert into t_examination_type(id,name,note) values('8739914F93D24014B04DCA550EF72BA2','期中考试','');
+insert into t_examination_type(id,name,note) values('709F8D816FB14757ACDB1F973A0F29D3','测验','');
+insert into t_examination_type(id,name,note) values('CD6697604BEB4F5182857E4665F635D9','作业','');
+insert into t_examination_type(id,name,note) values('25C2D09B218C4E6AA253A4330135C14F','实验','');
+
+-- t_item_difficulty
+insert into t_item_difficulty(id,name,note) values('08A929EE2E474F21AD364BE6B5CEE5AF','容易','');
+insert into t_item_difficulty(id,name,note) values('BE3739D47E22403EBFCE668C9F2D15D9','普通','');
+insert into t_item_difficulty(id,name,note) values('8CF113D02F0448DF9E0FA69B72DEDFF9','困难','');
+
+
+
+-- t_item_type
+insert into t_item_type(id,name,note) values('53FDD89F7A104B459850B6A8B0633B5F','单选题','');
+insert into t_item_type(id,name,note) values('13078022DEB141BD8CE8555F1E16BBEE','多选题','');
+insert into t_item_type(id,name,note) values('D2AFC70F21FF4891A303376EE933BD67','填空题','');
+insert into t_item_type(id,name,note) values('3DD468A017374E509D7986F66502D2B5','简答题','');
+insert into t_item_type(id,name,note) values('AC38EBF23D864104AD0D7601AC546418','判断题','');
+
+-- t_group：组
+insert into t_group(id,name,note) values('64F4AD3C1FA64CCDAA6DAD8B56B9F4BE','系统管理员','');
+insert into t_group(id,name,note) values('5F412EF848D944668CA370C4D156C9C2','教学管理人员','');
+insert into t_group(id,name,note) values('3AC4EA45959748C68A45833D03DA8291','主讲教师','');
+insert into t_group(id,name,note) values('4ECFA4F62EA94EABBF1D53AD6473847F','上机辅导教师','');
+insert into t_group(id,name,note) values('DAF7E2DB551546AAAD873F4193022783','助教','');
+insert into t_group(id,name,note) values('A5DD3D7AB9A748658B631FD4647B8F43','学生','');
+
+-- t_user_group
+-- 将系统管理员admin加入到‘系统管理员组’
+insert into t_user_group(id,t_group_id,t_user_id) values('8A0034CF8008401DBC5F1E6C2812D1D2','64F4AD3C1FA64CCDAA6DAD8B56B9F4BE','FE4AAFD3666C4FCFB1593942917A92E5');
+
+-- t_role
+insert into t_role(id,name,note) values('55EC2B7458E846DD8BFC74B250910BC6','主讲教师','');
+insert into t_role(id,name,note) values('7392699482B64FA3B75C445C316AC42A','上机辅导教师','');
+insert into t_role(id,name,note) values('FBC207AB45D54BD6879107132C301EC6','助教','');
+insert into t_role(id,name,note) values('BB30E55CB0A54FCDA761E9B3D9D4AA51','系统管理','');
+insert into t_role(id,name,note) values('ED5D23C0E2304EA7BA1EE9ABF2CE312F','教学管理','');
+insert into t_role(id,name,note) values('AC0DEFA732A948A1AA5300F95C7EEEE4','学生','');
+
+-- t_group_role
+-- 为系统管理员组添加“系统管理”角色
+insert into t_group_role(id,t_group_id,t_role_id) values('AC79E4C983F6426A9BD9A22F89E98D37','64F4AD3C1FA64CCDAA6DAD8B56B9F4BE','BB30E55CB0A54FCDA761E9B3D9D4AA51');
+
+-- 为"上机辅导教师"组添加上机辅导教师角色
+insert into t_group_role(id,t_group_id,t_role_id) values('E78B8744C5AC4D82B596FC49996F7787','4ECFA4F62EA94EABBF1D53AD6473847F','7392699482B64FA3B75C445C316AC42A');
+
+-- 为"教学管理人员"组添加"教学管理"角色
+insert into t_group_role(id,t_group_id,t_role_id) values('E69383D2F5674E03B07C9A11FCA62049','5F412EF848D944668CA370C4D156C9C2','ED5D23C0E2304EA7BA1EE9ABF2CE312F');
+
+-- 为"主讲教师"组添加"主讲教师"角色
+insert into t_group_role(id,t_group_id,t_role_id) values('3D13FCEF2CA941268468E8AED8721DC2','3AC4EA45959748C68A45833D03DA8291','55EC2B7458E846DD8BFC74B250910BC6');
+
+-- 为"上机辅导教师"组添加"上机辅导教师"角色
+insert into t_group_role(id,t_group_id,t_role_id) values('563886E2719745F4869D43F1B9283611','64F4AD3C1FA64CCDAA6DAD8B56B9F4BE','BB30E55CB0A54FCDA761E9B3D9D4AA51');
+
+-- 为"助教"组添加"助教"角色
+insert into t_group_role(id,t_group_id,t_role_id) values('A31CEF6E932F4013A094292164CB48D8','DAF7E2DB551546AAAD873F4193022783','FBC207AB45D54BD6879107132C301EC6');
+
+-- 为"学生"组添加"学生"角色
+insert into t_group_role(id,t_group_id,t_role_id) values('D91C1AAD2AB2476ABFA824F7DCB7FA52','A5DD3D7AB9A748658B631FD4647B8F43','AC0DEFA732A948A1AA5300F95C7EEEE4');
+
+
+-- t_permission_operator
+insert into t_permission_operator(id,name,note) values('8C3E716E82074CC3A4764E5D9A88E621','查询','');
+insert into t_permission_operator(id,name,note) values('30424564E7BC4A8FADE7FE903B993B9A','增加','');
+insert into t_permission_operator(id,name,note) values('BED77E549718446BAF14434EF4C7F6AE','修改','');
+insert into t_permission_operator(id,name,note) values('C865F986C86248F7924C5918B4198E79','删除','');
+
+
+-- t_resource
+
+- 学院
+insert into t_resource(id,uri,uri_element) values('39CB1B0715994A80A4CEA9209851652D','school','add');
+insert into t_resource(id,uri,uri_element) values('4C496BA1104B41D799BC73E16152B928','school','delete');
+insert into t_resource(id,uri,uri_element) values('B6506F02182C4CD4A2F010EDB3DEE999','school','update');
+insert into t_resource(id,uri,uri_element) values('845A74C25CEF45638C655436BC0F1480','school','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('8F338C38D60E4A2FA4D53D2BF407180F','学院增加','','39CB1B0715994A80A4CEA9209851652D','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('0F08CDB276E14EFCA7505C8A8123D6CD','学院删除','','4C496BA1104B41D799BC73E16152B928','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('B491606682DB4997AC4ACB092B66FF7B','学院修改','','B6506F02182C4CD4A2F010EDB3DEE999','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('28B267DDD60440249B3454B1D9563082','学院查询','','845A74C25CEF45638C655436BC0F1480','8C3E716E82074CC3A4764E5D9A88E621');
+
+-- 系部
+insert into t_resource(id,uri,uri_element) values('D21BDC96CF2E4AD3AE0414AE1E4ED04E','department','add');
+insert into t_resource(id,uri,uri_element) values('D4450229B7404632B0EFE977D63C4293','department','delete');
+insert into t_resource(id,uri,uri_element) values('46080EC158FF4BEF957BF90A91B29EA0','department','update');
+insert into t_resource(id,uri,uri_element) values('67B41C5B80C5479CBB9D2C1985674AAB','department','select');
+
+-- 权限
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('D7CC033A5662449D8ACC509311403A63','系部增加','','D21BDC96CF2E4AD3AE0414AE1E4ED04E','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('B29580B0B3D14C88BB85B31A2C03F7CB','系部删除','','D4450229B7404632B0EFE977D63C4293','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('9D2D07A990E5482BAA5D0F4175CF7233','系部修改','','46080EC158FF4BEF957BF90A91B29EA0','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('8F9B679CCC324EE6B58D5A5D6CC24710','系部查询','','67B41C5B80C5479CBB9D2C1985674AAB','8C3E716E82074CC3A4764E5D9A88E621');
+
+
+
+
+-- 自然班
+insert into t_resource(id,uri,uri_element) values('A38AF2D575F947DB856AD2D362D9CBF1','naturalclass','add');
+insert into t_resource(id,uri,uri_element) values('3792E133B7A7478588B87F05E895FE02','naturalclass','delete');
+insert into t_resource(id,uri,uri_element) values('62B8580214F641C7B773F0E758C3EFC6','naturalclass','update');
+insert into t_resource(id,uri,uri_element) values('54B6E2DB7BF74E478A5A50653A26D1F1','naturalclass','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('DA702EC09AFF4EE890BA6D522B557D22','自然班增加','','A38AF2D575F947DB856AD2D362D9CBF1','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('8ACE54BCBF2B4DF2AFC3B0FA42B59A4D','自然班删除','','3792E133B7A7478588B87F05E895FE02','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('ADF1F77FF70046AAB42C5C3C8C54DA83','自然班修改','','62B8580214F641C7B773F0E758C3EFC6','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('39E9D404C3064842A15DCC0AD16F5FDF','自然班查询','','54B6E2DB7BF74E478A5A50653A26D1F1','8C3E716E82074CC3A4764E5D9A88E621');
+
+-- 考勤签到方式
+insert into t_resource(id,uri,uri_element) values('0EE46624EBB24B92B0EA46135C739CB4','attendancemode','add');
+insert into t_resource(id,uri,uri_element) values('2AA1DC6C1F1E42628D3A268885EF3A93','attendancemode','delete');
+insert into t_resource(id,uri,uri_element) values('A0B12428ED204C66B064559A6B195A47','attendancemode','update');
+insert into t_resource(id,uri,uri_element) values('43513DDE65144255BFA215AADE9ED34E','attendancemode','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('00F23F64A8A14BEE82688A95ED088054','考勤签到方式增加','','0EE46624EBB24B92B0EA46135C739CB4','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('1D4597E04FB5470AA0457E56B81EF737','考勤签到方式删除','','2AA1DC6C1F1E42628D3A268885EF3A93','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('1C1C5181AE454C319879AE96E45D0219','考勤签到方式修改','','A0B12428ED204C66B064559A6B195A47','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('CBC3E8942548472CA3952E218F042711','考勤签到方式查询','','43513DDE65144255BFA215AADE9ED34E','8C3E716E82074CC3A4764E5D9A88E621');
+
+
+-- 考勤状态 
+insert into t_resource(id,uri,uri_element) values('FC7F06BFD594459FAB3AAC2F8DDC34D2','attendancestate','add');
+insert into t_resource(id,uri,uri_element) values('8A541FE68E5D4593A04CE6700463C704','attendancestate','delete');
+insert into t_resource(id,uri,uri_element) values('79894BC31FC14976A5119F4573381579','attendancestate','update');
+insert into t_resource(id,uri,uri_element) values('9935E9001211497FB2EBB1BF1BE5DE09','attendancestate','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('251804BE34914527A46213BEABAB1389','考勤状态增加','','FC7F06BFD594459FAB3AAC2F8DDC34D2','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('D803089472F444CCBD2724DEB137D755','考勤状态删除','','8A541FE68E5D4593A04CE6700463C704','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('BDD998EA7F52498499992330ADC81523','考勤状态修改','','79894BC31FC14976A5119F4573381579','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('4F10A0611E4C4E62B9E7B75688B819D9','考勤状态查询','','9935E9001211497FB2EBB1BF1BE5DE09','8C3E716E82074CC3A4764E5D9A88E621');
+
+
+-- 课程类型
+insert into t_resource(id,uri,uri_element) values('9966FBAF911F42C2A622D6BF0B8EF3FC','coursetype','add');
+insert into t_resource(id,uri,uri_element) values('1322388A54B34749B87F0214CC6CC67A','coursetype','delete');
+insert into t_resource(id,uri,uri_element) values('CDB449DCD4734145AEE39E6BEBED572E','coursetype','update');
+insert into t_resource(id,uri,uri_element) values('BEE72063E725498B99BB482E9AC30C9A','coursetype','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('A581F2B6812F4A32BB8FA2A4C2D3B6E9','课程类型增加','','9966FBAF911F42C2A622D6BF0B8EF3FC','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('989CEF0512374B23B59D6CCF791B8F68','课程类型删除','','1322388A54B34749B87F0214CC6CC67A','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('4F395F251DCF4E3B82384F264EA66CC2','课程类型修改','','CDB449DCD4734145AEE39E6BEBED572E','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('CFE5F914957C495885253232DCEA5B9C','课程类型查询','','BEE72063E725498B99BB482E9AC30C9A','8C3E716E82074CC3A4764E5D9A88E621');
+
+-- 课程类别
+insert into t_resource(id,uri,uri_element) values('950A102CAD8A4FE7AD5E42C1076F79EB','coursestyle','add');
+insert into t_resource(id,uri,uri_element) values('52CC668544EE4906B8572D7CD374B3DB','coursestyle','delete');
+insert into t_resource(id,uri,uri_element) values('E7286D28673C49E88136DED1362CC640','coursestyle','update');
+insert into t_resource(id,uri,uri_element) values('4AAC86017DA4467186304DDF1956D5C5','coursestyle','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('8F3FC194AAE144BA8ADBC299B237F19D','课程类别增加','','950A102CAD8A4FE7AD5E42C1076F79EB','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('E292F9BC6F5D4AD183C85683AFB40F74','课程类别删除','','52CC668544EE4906B8572D7CD374B3DB','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('744B6B75538C4673966D259A7B683675','课程类别修改','','E7286D28673C49E88136DED1362CC640','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('7D3ED706BB8C425CB5CE9680A63926DB','课程类别查询','','4AAC86017DA4467186304DDF1956D5C5','8C3E716E82074CC3A4764E5D9A88E621');
+
+-- 课程
+insert into t_resource(id,uri,uri_element) values('728208CA1C94454BB0220CFE99A7EAA3','course','add');
+insert into t_resource(id,uri,uri_element) values('8EB99A57C7C449A88C6C37890980D8BE','course','delete');
+insert into t_resource(id,uri,uri_element) values('0D8828B19764426DA131BE62E07EF06E','course','update');
+insert into t_resource(id,uri,uri_element) values('B02EE6CBF02647EAA062CBFBEE7E09D5','course','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('009D5571939A409486B70A739B8DB3A5','课程增加','','728208CA1C94454BB0220CFE99A7EAA3','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('8D81BE8ADD354DC195F4BB393319820A','课程删除','','8EB99A57C7C449A88C6C37890980D8BE','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('6767D5743EE24AC48CA2AF5D05E3F064','课程修改','','0D8828B19764426DA131BE62E07EF06E','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('8631695EE650462891E97EB1CFBB0F78','课程查询','','B02EE6CBF02647EAA062CBFBEE7E09D5','8C3E716E82074CC3A4764E5D9A88E621');
+
+-- 教师授课类型
+insert into t_resource(id,uri,uri_element) values('8BB0097FBE6D46CCA88C87EBBC479AC2','teachingtype','add');
+insert into t_resource(id,uri,uri_element) values('0D0C1EC4DCC24FBABED1CF0486020F06','teachingtype','delete');
+insert into t_resource(id,uri,uri_element) values('DCFC4F9D5E6B4FD0955D29942E403F4F','teachingtype','update');
+insert into t_resource(id,uri,uri_element) values('4463185A0B0E49E4868D22AF4A6094A1','teachingtype','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('966387D8C7724D909D8BDF2D44A4BEC5','教师授课类型增加','','8BB0097FBE6D46CCA88C87EBBC479AC2','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('81506666760543BFA4446F487E0FD136','教师授课类型删除','','0D0C1EC4DCC24FBABED1CF0486020F06','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('CEE5C8D7E27447A8B7B11C93804F08D9','教师授课类型修改','','DCFC4F9D5E6B4FD0955D29942E403F4F','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('4363ECC137EB4DF8B2F80D3801A2EFD3','教师授课类型查询','','4463185A0B0E49E4868D22AF4A6094A1','8C3E716E82074CC3A4764E5D9A88E621');
+
+-- 教学班
+insert into t_resource(id,uri,uri_element) values('DB7DB03D6AF6456FA269F2DA9AE0783A','teachingclass','add');
+insert into t_resource(id,uri,uri_element) values('14482E720C934F38809D52826AAB4F38','teachingclass','delete');
+insert into t_resource(id,uri,uri_element) values('945749E4DB724FC4B7B054686B8295E6','teachingclass','update');
+insert into t_resource(id,uri,uri_element) values('702397291E2A480FA6C44EC05D8406CC','teachingclass','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('54E3892BBE1E4680BAC4A9EBBA889091','教学班增加','','DB7DB03D6AF6456FA269F2DA9AE0783A','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('F30F8A509C1443EFA6A320ACD6C52E87','教学班删除','','14482E720C934F38809D52826AAB4F38','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('A1876BED5F0242FFAC298AEABD5E0831','教学班修改','','945749E4DB724FC4B7B054686B8295E6','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('BFC038DBA8E74D15995FD7358FACA74F','教学班查询','','702397291E2A480FA6C44EC05D8406CC','8C3E716E82074CC3A4764E5D9A88E621');
+
+-- 教师
+insert into t_resource(id,uri,uri_element) values('58A2C5079CC24C4A97E7217193E98563','teacher','add');
+insert into t_resource(id,uri,uri_element) values('4DB834A5D1B84C83BC4EBC3D82203F6D','teacher','delete');
+insert into t_resource(id,uri,uri_element) values('BAE1297345BE4B6C82D8671D38FDECD2','teacher','update');
+insert into t_resource(id,uri,uri_element) values('4E50E2261A4C4AB5BDDF4ECF78C03B5E','teacher','');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('0DAB7F769634402FB6D3691EE873189C','教师增加','','58A2C5079CC24C4A97E7217193E98563','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('4BB595D9344E4294AF325F8A9BA9C77E','教师删除','','4DB834A5D1B84C83BC4EBC3D82203F6D','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('6054E9B24D18496BB4C12E56DC35ABD4','教师修改','','BAE1297345BE4B6C82D8671D38FDECD2','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('AA472C6FD828412CBE8BAB7DBCFBC465','教师查询','','4E50E2261A4C4AB5BDDF4ECF78C03B5E','8C3E716E82074CC3A4764E5D9A88E621');
+
+-- 学生
+insert into t_resource(id,uri,uri_element) values('1F1C6D2313CD4FD1A5E21286C6A6B231','student','add');
+insert into t_resource(id,uri,uri_element) values('D307BA93C6BB44E48A1E8C8D8B9EC33E','student','delete');
+insert into t_resource(id,uri,uri_element) values('B4F9692F9D4A459C98D441B07723F8A1','student','update');
+insert into t_resource(id,uri,uri_element) values('61666E8342DD403587912293E64B078F','student','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('4975B71D33A64CF487F73E8382DAE44E','学生增加','','1F1C6D2313CD4FD1A5E21286C6A6B231','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('DF94AF2D8127478D9F81B897964E3BD7','学生删除','','D307BA93C6BB44E48A1E8C8D8B9EC33E','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('DCA868C8A4D4480F9A8B4C62015045DC','学生修改','','B4F9692F9D4A459C98D441B07723F8A1','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('60637E42582540C49579A1BB7136342C','学生查询','','61666E8342DD403587912293E64B078F','8C3E716E82074CC3A4764E5D9A88E621');
+
+-- 联系类型
+insert into t_resource(id,uri,uri_element) values('6C0B504E1503402098B8FAB2BD33C80A','contacttype','add');
+insert into t_resource(id,uri,uri_element) values('166BCB58807F451DA76B6CA507988A6A','contacttype','delete');
+insert into t_resource(id,uri,uri_element) values('1A300A9A312F44D395A9BDE84619E7DA','contacttype','update');
+insert into t_resource(id,uri,uri_element) values('7D2DB49B5AC24A748DD05F30B9CDF98B','contacttype','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('34B3ADCD35AA455BBA80A5C8D93A976E','联系类型增加','','6C0B504E1503402098B8FAB2BD33C80A','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('BDF7836B09454EF7AC68FB4D5A81EC86','联系类型删除','','166BCB58807F451DA76B6CA507988A6A','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('7C57708A5B644ACB936AF72F8146CC59','联系类型修改','','1A300A9A312F44D395A9BDE84619E7DA','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('A55E71278008409DB2D9C810BDDB48F3','联系类型查询','','7D2DB49B5AC24A748DD05F30B9CDF98B','8C3E716E82074CC3A4764E5D9A88E621');
+
+-- 权限：组
+insert into t_resource(id,uri,uri_element) values('FC2E7B8569774588B8663B281D5A9213','group','add');
+insert into t_resource(id,uri,uri_element) values('E639959C30A344E097740DFB9C7C6596','group','delete');
+insert into t_resource(id,uri,uri_element) values('2BEED41C682440939C36FEA87BC453C2','group','update');
+insert into t_resource(id,uri,uri_element) values('9B343F19777540DE8C8DAA6B07085704','group','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('2A9BB0729F434C3CB4E90F6282F1BC0B','权限：组增加','','FC2E7B8569774588B8663B281D5A9213','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('9506399272784E90B8B322052E785C77','权限：组删除','','E639959C30A344E097740DFB9C7C6596','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('18F5CD90B883496691078E086569679F','权限：组修改','','2BEED41C682440939C36FEA87BC453C2','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('1C15DD845EC74E45952AB819899EAC25','权限：组查询','','9B343F19777540DE8C8DAA6B07085704','8C3E716E82074CC3A4764E5D9A88E621');
+
+-- 权限：组-用户
+insert into t_resource(id,uri,uri_element) values('7D2649DF0B954EA8820F2F019D4DAEFE','group-user','add');
+insert into t_resource(id,uri,uri_element) values('800C601955C5492096E7D7B581AC6C4B','group-user','delete');
+insert into t_resource(id,uri,uri_element) values('397E6DB2C9544F728174FF08B3799994','group-user','update');
+insert into t_resource(id,uri,uri_element) values('5D59F5AE9F5F4C259F7A8FEBE3CCC5ED','group-user','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('A3255E529C774522934C294BA53B1EE5','权限：组-用户增加','','7D2649DF0B954EA8820F2F019D4DAEFE','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('00F6C8C9EA184C6EBAEC03D4D4725C82','权限：组-用户删除','','800C601955C5492096E7D7B581AC6C4B','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('1B712E79FDD34EDBAD37397B13F2879D','权限：组-用户修改','','397E6DB2C9544F728174FF08B3799994','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('DE34B7FFC8B94F1E94D75E8622F0E75A','权限：组-用户查询','','5D59F5AE9F5F4C259F7A8FEBE3CCC5ED','8C3E716E82074CC3A4764E5D9A88E621');
+
+-- 权限：角色
+insert into t_resource(id,uri,uri_element) values('C332AF13E6E1444F8476333D09C39C1F','role','add');
+insert into t_resource(id,uri,uri_element) values('766ECAA12525477EA0019E6ECA3F085A','role','delete');
+insert into t_resource(id,uri,uri_element) values('2BBE701CCE6449E9B048F45015450FCA','role','update');
+insert into t_resource(id,uri,uri_element) values('387F7DBBC9C34FADAA7C7A8DA77AA53A','role','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('892B394659A4403F9B8CAA523A8AED38','权限：角色增加','','C332AF13E6E1444F8476333D09C39C1F','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('1B0955953A9A4CCE8F435B1F3822AADC','权限：角色删除','','766ECAA12525477EA0019E6ECA3F085A','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('2D40C9BA3662427696BF72AC52B007F6','权限：角色修改','','2BBE701CCE6449E9B048F45015450FCA','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('752D9C445762407AA2AF4B8F35BCDCFE','权限：角色查询','','387F7DBBC9C34FADAA7C7A8DA77AA53A','8C3E716E82074CC3A4764E5D9A88E621');
+
+-- 权限：组-角色
+insert into t_resource(id,uri,uri_element) values('491F0BF5838B46E98B5A563196E7E7BD','group-role','add');
+insert into t_resource(id,uri,uri_element) values('1D4B5E619E1D44DBBDAEF9009C96032D','group-role','delete');
+insert into t_resource(id,uri,uri_element) values('F8732C37872E485AA33466AD328ABDD0','group-role','update');
+insert into t_resource(id,uri,uri_element) values('A2150BDBF8C14A6E8BE8E6E9D95B3BFD','group-role','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('FF3E3D660015464FA66000D5F1DB197A','权限：组-角色增加','','491F0BF5838B46E98B5A563196E7E7BD','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('6E12ECEAB6EF4E48AA685511D9B8DA94','权限：组-角色删除','','1D4B5E619E1D44DBBDAEF9009C96032D','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('13197B0D162346CDB3D80A5CF3C39038','权限：组-角色修改','','F8732C37872E485AA33466AD328ABDD0','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('B9E2436C6C4D43D49B65E8BE9884E208','权限：组-角色查询','','A2150BDBF8C14A6E8BE8E6E9D95B3BFD','8C3E716E82074CC3A4764E5D9A88E621');
+
+-- 权限：角色-权限
+insert into t_resource(id,uri,uri_element) values('D526312BF51B405681EDE5B50C469743','role-permission','add');
+insert into t_resource(id,uri,uri_element) values('988401FB94404E8FBB97B6DD247ADA80','role-permission','delete');
+insert into t_resource(id,uri,uri_element) values('EAA61D84495747DA9C11B6F94DE6FFD7','role-permission','update');
+insert into t_resource(id,uri,uri_element) values('8606A0A77BB04792A59E004056621918','role-permission','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('FBD18B4127E44B55AFBBE69D0FCE8597','权限：角色-权限增加','','D526312BF51B405681EDE5B50C469743','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('7196B915D757468BA7AEA0E7930784AF','权限：角色-权限删除','','988401FB94404E8FBB97B6DD247ADA80','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('F0FC8DF438174B7B990B97EEDB75D3D2','权限：角色-权限修改','','EAA61D84495747DA9C11B6F94DE6FFD7','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('7CA3224309B449348C3BFF7F998A207E','权限：角色-权限查询','','8606A0A77BB04792A59E004056621918','8C3E716E82074CC3A4764E5D9A88E621');
+
+-- 权限：资源
+insert into t_resource(id,uri,uri_element) values('6B1F3E7B2628468BBD8E48F3B1AD83F3','permissionresource','add');
+insert into t_resource(id,uri,uri_element) values('FE946C0A858541E1AA88D9D542664AD2','permissionresource','delete');
+insert into t_resource(id,uri,uri_element) values('E3EB14CADB26468A9D95ABA23A09E3A9','permissionresource','update');
+insert into t_resource(id,uri,uri_element) values('16D9B45E31C947FA8A17A952A88BC5E2','permissionresource','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('CADF3BCFA6B44DE088EF8C014160E74D','权限：资源增加','','6B1F3E7B2628468BBD8E48F3B1AD83F3','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('5F90AEE387B7487AB0CD43B3618137C2','权限：资源删除','','FE946C0A858541E1AA88D9D542664AD2','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('E3A656CAC7C54E24BE465DD464B7CBDD','权限：资源修改','','E3EB14CADB26468A9D95ABA23A09E3A9','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('BCE59F6F65C84418AFCAA1ABA6294117','权限：资源查询','','16D9B45E31C947FA8A17A952A88BC5E2','8C3E716E82074CC3A4764E5D9A88E621');
+
+-- 权限：操作
+insert into t_resource(id,uri,uri_element) values('2BEC885FB994470A9837835FA701AC63','permissionoperator','add');
+insert into t_resource(id,uri,uri_element) values('761B09EFEB354B1B8F28B72C09839894','permissionoperator','delete');
+insert into t_resource(id,uri,uri_element) values('C3C32C200F42457AB452D918DF0C2350','permissionoperator','update');
+insert into t_resource(id,uri,uri_element) values('6A06D3B0B6CE49BD82E1059AA010505D','permissionoperator','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('4CA7125069AC4D4D8EFDB10469298198','权限：操作增加','','2BEC885FB994470A9837835FA701AC63','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('D1F053DA785C499885CD227900154B43','权限：操作删除','','761B09EFEB354B1B8F28B72C09839894','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('60C89BB14BDD41EAB464146DF0FE1AFC','权限：操作修改','','C3C32C200F42457AB452D918DF0C2350','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('CF6FBC25CEF84858AFBC3828063D3C1F','权限：操作查询','','6A06D3B0B6CE49BD82E1059AA010505D','8C3E716E82074CC3A4764E5D9A88E621');
+
+-- 权限：权限-资源
+insert into t_resource(id,uri,uri_element) values('FB60760D3F8A4C8CAF1BA8D0356DB9AA','permission-resource','add');
+insert into t_resource(id,uri,uri_element) values('E1D898F2D5164973815919F2ACCDDD04','permission-resource','delete');
+insert into t_resource(id,uri,uri_element) values('F9D150581AC5493FBACC7E2CF24E4A92','permission-resource','update');
+insert into t_resource(id,uri,uri_element) values('B523CC20C98B49E8964767501617EFD1','permission-resource','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('9C1CA99D99AC45028C32ECE83A487855','权限：权限-资源增加','','FB60760D3F8A4C8CAF1BA8D0356DB9AA','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('0BD68719915B44899A2CB7649BA66BAF','权限：权限-资源删除','','E1D898F2D5164973815919F2ACCDDD04','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('988CC28B43144C90B9007ED9CFAD1BCB','权限：权限-资源修改','','F9D150581AC5493FBACC7E2CF24E4A92','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('7DF5B26D2EC548F1BAD6ED01BDEE6C65','权限：权限-资源查询','','B523CC20C98B49E8964767501617EFD1','8C3E716E82074CC3A4764E5D9A88E621');
+
+
+-- 题库
+insert into t_resource(id,uri,uri_element) values('75809165FBCA4C7B83833ADBE7C868B7','database','add');
+insert into t_resource(id,uri,uri_element) values('A5286D57099E4858878DAA60DC461F20','database','delete');
+insert into t_resource(id,uri,uri_element) values('C5D2D6823CCE4940B8291309DBDD8C52','database','update');
+insert into t_resource(id,uri,uri_element) values('82BB4F21A30D44FA8FFE383C1988368B','database','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('9CF2C5EFD1FA4D1A8B2FB2AF6C4E88DD','题库增加','','75809165FBCA4C7B83833ADBE7C868B7','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('CAC32918C6834CF3A9E03FCADA22A325','题库删除','','A5286D57099E4858878DAA60DC461F20','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('650EE25809B94238959C5E3E30F7DC1F','题库修改','','C5D2D6823CCE4940B8291309DBDD8C52','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('CB3C972ABF97459CAD8A10D647C9941A','题库查询','','82BB4F21A30D44FA8FFE383C1988368B','8C3E716E82074CC3A4764E5D9A88E621');
+
+
+-- 题库日志类型
+insert into t_resource(id,uri,uri_element) values('37C61C06018D447BA62BD0F59AD99F75','databaseloggingtype','add');
+insert into t_resource(id,uri,uri_element) values('E59BA28789A440BC923CC064BDB507E3','databaseloggingtype','delete');
+insert into t_resource(id,uri,uri_element) values('CAC2D1F5DFFA44D9930EE02DFDA90D43','databaseloggingtype','update');
+insert into t_resource(id,uri,uri_element) values('BD6B9CEB104F406D9784E6F81F98F48F','databaseloggingtype','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('C0956F0C79F247F7B3EF8E1C947BEE14','题库日志类型增加','','37C61C06018D447BA62BD0F59AD99F75','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('B76CE88C8DF845DD8CE6DC9D44A06718','题库日志类型删除','','E59BA28789A440BC923CC064BDB507E3','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('F777C419EE4B49A6AA08FE4E7B142173','题库日志类型修改','','CAC2D1F5DFFA44D9930EE02DFDA90D43','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('CD83D03B4C93496188AC1773C4B487A6','题库日志类型查询','','BD6B9CEB104F406D9784E6F81F98F48F','8C3E716E82074CC3A4764E5D9A88E621');
+
+-- 作业类型
+insert into t_resource(id,uri,uri_element) values('CDC02EBA8BDB4A4FBF4294210A943419','itemkinds','add');
+insert into t_resource(id,uri,uri_element) values('006AEDE48F5D41E096DF2E075B3672D7','itemkinds','delete');
+insert into t_resource(id,uri,uri_element) values('2A19C1DD00B948D1A57D4C2EC57AFA29','itemkinds','update');
+insert into t_resource(id,uri,uri_element) values('F39ACA04EEF54D79A7595976DD562EAE','itemkinds','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('2AF39B9D203C48C0B0C74607DF990D5C','作业类型增加','','CDC02EBA8BDB4A4FBF4294210A943419','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('058ED52DD0614643B7304CACE8AB513B','作业类型删除','','006AEDE48F5D41E096DF2E075B3672D7','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('668A2068F7AF4D43B053B0256B407419','作业类型修改','','2A19C1DD00B948D1A57D4C2EC57AFA29','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('13D606CF88774FA88E37B615E5965F59','作业类型查询','','F39ACA04EEF54D79A7595976DD562EAE','8C3E716E82074CC3A4764E5D9A88E621');
+
+-- 题目类型
+insert into t_resource(id,uri,uri_element) values('C85DD694662B44799A6C43260D5A5BA8','itemtype','add');
+insert into t_resource(id,uri,uri_element) values('90263BD952CD4D1E923254F718561A1D','itemtype','delete');
+insert into t_resource(id,uri,uri_element) values('78728108A97347B2BEA6F1A8D3E197DC','itemtype','update');
+insert into t_resource(id,uri,uri_element) values('1662148028FB43718932008CF667D783','itemtype','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('BF218D4A3E98495197510B759A5887A4','题目类型增加','','C85DD694662B44799A6C43260D5A5BA8','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('61FF988411C840FD8AE88D838297C83A','题目类型删除','','90263BD952CD4D1E923254F718561A1D','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('6568550E0AB64108ACE9AE2F8797B0A8','题目类型修改','','78728108A97347B2BEA6F1A8D3E197DC','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('96F25E00AB874BC197290425D76B11E5','题目类型查询','','1662148028FB43718932008CF667D783','8C3E716E82074CC3A4764E5D9A88E621');
+
+
+-- 题目难度
+insert into t_resource(id,uri,uri_element) values('9B93304F08A4414C98A88AE86C408946','itemdifficulty','add');
+insert into t_resource(id,uri,uri_element) values('110164D220804A3DB875995A3E3CFE54','itemdifficulty','delete');
+insert into t_resource(id,uri,uri_element) values('EE04E4F4ACA74327A5D4D79E16552541','itemdifficulty','update');
+insert into t_resource(id,uri,uri_element) values('4FAE7CCEAD394EED82729AA16184DC8E','itemdifficulty','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('E6876DA4F5E94F7AB9CE7FF27F2F76B0','题目难度增加','','9B93304F08A4414C98A88AE86C408946','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('F9CDCAB8C51346C8A46AB35363768805','题目难度删除','','110164D220804A3DB875995A3E3CFE54','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('A7D052F4E9A0464AB833A9219C822FA5','题目难度修改','','EE04E4F4ACA74327A5D4D79E16552541','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('791CFDBE7C6E41258A8B46B775DFB181','题目难度查询','','4FAE7CCEAD394EED82729AA16184DC8E','8C3E716E82074CC3A4764E5D9A88E621');
+
+
+-- 考试类型
+insert into t_resource(id,uri,uri_element) values('CC0C4C9564654B608E4075B6594F0183','examinationtype','add');
+insert into t_resource(id,uri,uri_element) values('7BA411F1A2FE4FE087C4A1EE4BDC4223','examinationtype','delete');
+insert into t_resource(id,uri,uri_element) values('AB4CD717B55646A6B570890D8024F661','examinationtype','update');
+insert into t_resource(id,uri,uri_element) values('CF0E015FA38D40FC81E10C0A98431197','examinationtype','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('32473FF7848E4D1D8D118F6A60D7FCE5','考试类型增加','','CC0C4C9564654B608E4075B6594F0183','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('01D0B8CD9D844C9CBEB40FEC08025916','考试类型删除','','7BA411F1A2FE4FE087C4A1EE4BDC4223','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('4477D7FDCC2842FB9D0ECC8B3EC3D908','考试类型修改','','AB4CD717B55646A6B570890D8024F661','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('81409984EC1E47DDB916560729315E56','考试类型查询','','CF0E015FA38D40FC81E10C0A98431197','8C3E716E82074CC3A4764E5D9A88E621');
+
+-- 考试管理
+insert into t_resource(id,uri,uri_element) values('7EBD682A824941E9965D0F76A12642BC','examination','add');
+insert into t_resource(id,uri,uri_element) values('7EBD733F6C9D41A5BE11729D19E3CEA8','examination','delete');
+insert into t_resource(id,uri,uri_element) values('CAB59E35192F4898B4E53883F54DCFF1','examination','update');
+insert into t_resource(id,uri,uri_element) values('03A07F86A272477BADC7D603F9516390','examination','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('1B6F4BF75BD44F04BE74BC58B711E645','考试管理增加','','7EBD682A824941E9965D0F76A12642BC','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('021BA89515B748E7BE8C210D983E9EE5','考试管理删除','','7EBD733F6C9D41A5BE11729D19E3CEA8','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('839CD26B1E5E4668A45CE938D3F232CB','考试管理修改','','CAB59E35192F4898B4E53883F54DCFF1','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('560F384FA33742DDAD565DCC86FA25C4','考试管理查询','','03A07F86A272477BADC7D603F9516390','8C3E716E82074CC3A4764E5D9A88E621');
+
+-- 成绩
+insert into t_resource(id,uri,uri_element) values('B372B4105D71495980A243BA942BF1E0','score','add');
+insert into t_resource(id,uri,uri_element) values('0B6FD434FEA142E78751B5E2E1FB600C','score','delete');
+insert into t_resource(id,uri,uri_element) values('32AB83F2FEB1464AA89C858562E61190','score','update');
+insert into t_resource(id,uri,uri_element) values('F1A4FAE724F7401381D26DBE4A462260','score','select');
+
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('5185C97E2F45411E9A655BBF52401A5F','成绩增加','','B372B4105D71495980A243BA942BF1E0','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('2960DA408B7F4E538FB84A734A16DD6B','成绩删除','','0B6FD434FEA142E78751B5E2E1FB600C','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('62FCB7B3C93745178B8D9FB951AF2BB2','成绩修改','','32AB83F2FEB1464AA89C858562E61190','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('1AD5DF6DAAEC4165A378A7E8D5E3DF49','成绩查询','','F1A4FAE724F7401381D26DBE4A462260','8C3E716E82074CC3A4764E5D9A88E621');
+
+-- 角色权限
+-- 为“系统管理”角色添加权限
+
+-- 学院增加,删除,修改,查询
+insert into t_role_permission(id,t_role_id,t_permission_id) values('437C8F7703A64EB9B292793CBFE4073A','BB30E55CB0A54FCDA761E9B3D9D4AA51','8F338C38D60E4A2FA4D53D2BF407180F');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('6A2FD7336DB44D738BDA5EB14D772650','BB30E55CB0A54FCDA761E9B3D9D4AA51','0F08CDB276E14EFCA7505C8A8123D6CD');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('37CA79EE2A9F4871A3511DFE9AC8ADE0','BB30E55CB0A54FCDA761E9B3D9D4AA51','B491606682DB4997AC4ACB092B66FF7B');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('9B190606E1354E56A0FD22AAB6C270E3','BB30E55CB0A54FCDA761E9B3D9D4AA51','28B267DDD60440249B3454B1D9563082');
+
+-- 系部增加,删除,修改,查询
+insert into t_role_permission(id,t_role_id,t_permission_id) values('C60304661C5E4D3996EEE90E1A2C0D71','BB30E55CB0A54FCDA761E9B3D9D4AA51','D7CC033A5662449D8ACC509311403A63');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('F62EA716ECE041279AF26BB0ED62EE02','BB30E55CB0A54FCDA761E9B3D9D4AA51','B29580B0B3D14C88BB85B31A2C03F7CB');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('4FEED1B93CAD4AA9BE7ECBD0B19A9EB2','BB30E55CB0A54FCDA761E9B3D9D4AA51','9D2D07A990E5482BAA5D0F4175CF7233');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('EAECD0AA31BE445AB3EADA0996B7F3C4','BB30E55CB0A54FCDA761E9B3D9D4AA51','8F9B679CCC324EE6B58D5A5D6CC24710');
+
+-- 自然班
+insert into t_role_permission(id,t_role_id,t_permission_id) values('1B59B8B2488348FA8C45F6DA5F542062','BB30E55CB0A54FCDA761E9B3D9D4AA51','DA702EC09AFF4EE890BA6D522B557D22');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('DB296353CE064917B24465256DF721FB','BB30E55CB0A54FCDA761E9B3D9D4AA51','8ACE54BCBF2B4DF2AFC3B0FA42B59A4D');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('AC95F5E4A47C489E8212674D2E4EEC71','BB30E55CB0A54FCDA761E9B3D9D4AA51','ADF1F77FF70046AAB42C5C3C8C54DA83');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('C56F148FEF1542B1BEE538DDC6481B5E','BB30E55CB0A54FCDA761E9B3D9D4AA51','39E9D404C3064842A15DCC0AD16F5FDF');
+
+-- 考勤签到方式
+insert into t_role_permission(id,t_role_id,t_permission_id) values('10C98616293641148AC6899B59BF94AE','BB30E55CB0A54FCDA761E9B3D9D4AA51','00F23F64A8A14BEE82688A95ED088054');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('D5325BDBADFC48C194CC2A17C92F8C99','BB30E55CB0A54FCDA761E9B3D9D4AA51','1D4597E04FB5470AA0457E56B81EF737');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('F2EA24BA78694B30857160EBF35E6B84','BB30E55CB0A54FCDA761E9B3D9D4AA51','1C1C5181AE454C319879AE96E45D0219');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('8C4A0720EB634CB3A8FAFFB323D3FE82','BB30E55CB0A54FCDA761E9B3D9D4AA51','CBC3E8942548472CA3952E218F042711');
+
+-- 考勤状态 
+insert into t_role_permission(id,t_role_id,t_permission_id) values('D794276748F4496E8F7BC75B6F88D977','BB30E55CB0A54FCDA761E9B3D9D4AA51','251804BE34914527A46213BEABAB1389');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('682AE99BAF1B447DAA3562EC9D8DA460','BB30E55CB0A54FCDA761E9B3D9D4AA51','D803089472F444CCBD2724DEB137D755');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('D1D0453591C74A14ADF2CBB066CA78FC','BB30E55CB0A54FCDA761E9B3D9D4AA51','BDD998EA7F52498499992330ADC81523');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('13CECCC9B310414EBC90B8EF3F68364C','BB30E55CB0A54FCDA761E9B3D9D4AA51','4F10A0611E4C4E62B9E7B75688B819D9');
+
+-- 课程类型
+insert into t_role_permission(id,t_role_id,t_permission_id) values('F7A291BF36F540AABDE4B68BF3635426','BB30E55CB0A54FCDA761E9B3D9D4AA51','A581F2B6812F4A32BB8FA2A4C2D3B6E9');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('51B0B489AF0D4E83BD5A713AB11ADD72','BB30E55CB0A54FCDA761E9B3D9D4AA51','989CEF0512374B23B59D6CCF791B8F68');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('83E3D78231B4463DB7C0033B32EFB97A','BB30E55CB0A54FCDA761E9B3D9D4AA51','4F395F251DCF4E3B82384F264EA66CC2');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('B0717675E85843608E31943D6A8CFA76','BB30E55CB0A54FCDA761E9B3D9D4AA51','CFE5F914957C495885253232DCEA5B9C');
+
+-- 课程类别
+insert into t_role_permission(id,t_role_id,t_permission_id) values('5CA6BCEA1CAF4CD5A9D590A043F1FC54','BB30E55CB0A54FCDA761E9B3D9D4AA51','8F3FC194AAE144BA8ADBC299B237F19D');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('E727ECEDC7E447668090A41C965843CB','BB30E55CB0A54FCDA761E9B3D9D4AA51','E292F9BC6F5D4AD183C85683AFB40F74');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('57C196A3CF7F4BFFBC38B478D945158A','BB30E55CB0A54FCDA761E9B3D9D4AA51','744B6B75538C4673966D259A7B683675');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('292DF58D1D2942B1971C3059EC002D1A','BB30E55CB0A54FCDA761E9B3D9D4AA51','7D3ED706BB8C425CB5CE9680A63926DB');
+
+-- 课程
+insert into t_role_permission(id,t_role_id,t_permission_id) values('8CD0C4EF23664D5FB05EF26BE9DCCEDE','BB30E55CB0A54FCDA761E9B3D9D4AA51','009D5571939A409486B70A739B8DB3A5');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('0879DD4E80254BC793817C7694DC508B','BB30E55CB0A54FCDA761E9B3D9D4AA51','8D81BE8ADD354DC195F4BB393319820A');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('A58996336FEE4A99BC844182F2F93666','BB30E55CB0A54FCDA761E9B3D9D4AA51','6767D5743EE24AC48CA2AF5D05E3F064');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('3C15F5A936C3479BA4387923FE37F850','BB30E55CB0A54FCDA761E9B3D9D4AA51','8631695EE650462891E97EB1CFBB0F78');
+
+-- 教师授课类型
+insert into t_role_permission(id,t_role_id,t_permission_id) values('2CED4E22A00046F583E20BF3FBC7ADEF','BB30E55CB0A54FCDA761E9B3D9D4AA51','966387D8C7724D909D8BDF2D44A4BEC5');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('DEC60136B0B44AA1866D6B73CD3D1B98','BB30E55CB0A54FCDA761E9B3D9D4AA51','81506666760543BFA4446F487E0FD136');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('3B4DEACE0B164C35811B0C6C75E0171B','BB30E55CB0A54FCDA761E9B3D9D4AA51','CEE5C8D7E27447A8B7B11C93804F08D9');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('D258BA22D4394633AEE17E5B98114AA6','BB30E55CB0A54FCDA761E9B3D9D4AA51','4363ECC137EB4DF8B2F80D3801A2EFD3');
+
+-- 教学班
+insert into t_role_permission(id,t_role_id,t_permission_id) values('E13B9593A4234950958A5C0357146721','BB30E55CB0A54FCDA761E9B3D9D4AA51','54E3892BBE1E4680BAC4A9EBBA889091');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('8E3A15CE46C84D69A654C079810FC34E','BB30E55CB0A54FCDA761E9B3D9D4AA51','F30F8A509C1443EFA6A320ACD6C52E87');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('7ABF050AE6A347DE8D37B26CA0A497EF','BB30E55CB0A54FCDA761E9B3D9D4AA51','A1876BED5F0242FFAC298AEABD5E0831');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('0CDA5ED4BB354F76BE96E0ABC4B032C6','BB30E55CB0A54FCDA761E9B3D9D4AA51','BFC038DBA8E74D15995FD7358FACA74F');
+
+-- 教师
+insert into t_role_permission(id,t_role_id,t_permission_id) values('4D6CB3E19BD2487795FADD13E8C53295','BB30E55CB0A54FCDA761E9B3D9D4AA51','0DAB7F769634402FB6D3691EE873189C');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('4A71D3FD7ABE4D358B061F1AC6F7208C','BB30E55CB0A54FCDA761E9B3D9D4AA51','4BB595D9344E4294AF325F8A9BA9C77E');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('7D8BD4978FDE4B14B81F50F30F8A96ED','BB30E55CB0A54FCDA761E9B3D9D4AA51','6054E9B24D18496BB4C12E56DC35ABD4');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('8061119067C34A3D856D4D1183013E83','BB30E55CB0A54FCDA761E9B3D9D4AA51','AA472C6FD828412CBE8BAB7DBCFBC465');
+
+-- 学生
+insert into t_role_permission(id,t_role_id,t_permission_id) values('6CEC79389B4D49F6BF267D9D3E5CA4A1','BB30E55CB0A54FCDA761E9B3D9D4AA51','4975B71D33A64CF487F73E8382DAE44E');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('49101E4969A948C3AE4E4D179503D082','BB30E55CB0A54FCDA761E9B3D9D4AA51','DF94AF2D8127478D9F81B897964E3BD7');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('3BC47FF35B274DBE8720E83690167EC5','BB30E55CB0A54FCDA761E9B3D9D4AA51','DCA868C8A4D4480F9A8B4C62015045DC');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('0ACB509A7F3D4E75975B8D213DAA05E4','BB30E55CB0A54FCDA761E9B3D9D4AA51','60637E42582540C49579A1BB7136342C');
+
+-- 权限：组
+insert into t_role_permission(id,t_role_id,t_permission_id) values('AB12AAC1CF4A4A5690DBD594C7BBA2B0','BB30E55CB0A54FCDA761E9B3D9D4AA51','2A9BB0729F434C3CB4E90F6282F1BC0B');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('12B7756EB59F455E9C9D628D1047BCB8','BB30E55CB0A54FCDA761E9B3D9D4AA51','9506399272784E90B8B322052E785C77');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('17122318767F40938E7583F2B19FBE75','BB30E55CB0A54FCDA761E9B3D9D4AA51','18F5CD90B883496691078E086569679F');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('C375714DC05D466A8BBB72B662639D5C','BB30E55CB0A54FCDA761E9B3D9D4AA51','1C15DD845EC74E45952AB819899EAC25');
+
+-- 权限：组-用户
+insert into t_role_permission(id,t_role_id,t_permission_id) values('580AF779B88F4002820EC837CB152BED','BB30E55CB0A54FCDA761E9B3D9D4AA51','A3255E529C774522934C294BA53B1EE5');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('5C325A5161F24D4A9E00328CEEA7802C','BB30E55CB0A54FCDA761E9B3D9D4AA51','00F6C8C9EA184C6EBAEC03D4D4725C82');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('22ABEEC80C164C4B868097AE3EA0E2BB','BB30E55CB0A54FCDA761E9B3D9D4AA51','1B712E79FDD34EDBAD37397B13F2879D');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('9DF92669CDD344B2A86EC7327FEFED80','BB30E55CB0A54FCDA761E9B3D9D4AA51','DE34B7FFC8B94F1E94D75E8622F0E75A');
+
+-- 权限：角色
+insert into t_role_permission(id,t_role_id,t_permission_id) values('5168BDB06B514481B9B982DD8732EDB4','BB30E55CB0A54FCDA761E9B3D9D4AA51','892B394659A4403F9B8CAA523A8AED38');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('D32CD9883BFE4EDC91A1C4D1CEBEB2CB','BB30E55CB0A54FCDA761E9B3D9D4AA51','1B0955953A9A4CCE8F435B1F3822AADC');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('2A6E7D72C9E740278D1D7960BF650BC7','BB30E55CB0A54FCDA761E9B3D9D4AA51','2D40C9BA3662427696BF72AC52B007F6');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('4EB4F210424F499A83A0F4680A92ACA6','BB30E55CB0A54FCDA761E9B3D9D4AA51','752D9C445762407AA2AF4B8F35BCDCFE');
+
+-- 权限：组-角色
+insert into t_role_permission(id,t_role_id,t_permission_id) values('38322DDCDBE34BF995CE29ACAD3EF0B3','BB30E55CB0A54FCDA761E9B3D9D4AA51','FF3E3D660015464FA66000D5F1DB197A');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('EF052CAF0B0E4C118832602E85CA3539','BB30E55CB0A54FCDA761E9B3D9D4AA51','6E12ECEAB6EF4E48AA685511D9B8DA94');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('6F5047BFA74E43CAB5868EAF30E30E74','BB30E55CB0A54FCDA761E9B3D9D4AA51','13197B0D162346CDB3D80A5CF3C39038');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('98046F4DBE814CE5AC369229DCC393B1','BB30E55CB0A54FCDA761E9B3D9D4AA51','B9E2436C6C4D43D49B65E8BE9884E208');
+
+-- 权限：角色-权限
+insert into t_role_permission(id,t_role_id,t_permission_id) values('73986409D0A84C0C97E2486571463559','BB30E55CB0A54FCDA761E9B3D9D4AA51','FBD18B4127E44B55AFBBE69D0FCE8597');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('E18070160C724F7EB4CB1E3A9F7291E5','BB30E55CB0A54FCDA761E9B3D9D4AA51','7196B915D757468BA7AEA0E7930784AF');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('F8B6C79D38874FB981B4ECAE88FC4D91','BB30E55CB0A54FCDA761E9B3D9D4AA51','F0FC8DF438174B7B990B97EEDB75D3D2');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('3322B943AC1A4FE9B7A733705C1C2C00','BB30E55CB0A54FCDA761E9B3D9D4AA51','7CA3224309B449348C3BFF7F998A207E');
+
+-- 权限：资源
+insert into t_role_permission(id,t_role_id,t_permission_id) values('7366DD70A34D463FA9407A3ECC845D32','BB30E55CB0A54FCDA761E9B3D9D4AA51','CADF3BCFA6B44DE088EF8C014160E74D');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('D9CC3C289BBF4FCEA7BB9A3A48FB19CB','BB30E55CB0A54FCDA761E9B3D9D4AA51','5F90AEE387B7487AB0CD43B3618137C2');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('FBF5A81F24C64DECAC359E856A8BDCAB','BB30E55CB0A54FCDA761E9B3D9D4AA51','E3A656CAC7C54E24BE465DD464B7CBDD');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('54E0911920E7433FBED6B67FC03EB91F','BB30E55CB0A54FCDA761E9B3D9D4AA51','BCE59F6F65C84418AFCAA1ABA6294117');
+
+-- 权限：操作
+insert into t_role_permission(id,t_role_id,t_permission_id) values('5B97C63F179B46378160F3DAB7A5F76B','BB30E55CB0A54FCDA761E9B3D9D4AA51','4CA7125069AC4D4D8EFDB10469298198');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('A44181FFD85F4103AFA9F589620040A1','BB30E55CB0A54FCDA761E9B3D9D4AA51','D1F053DA785C499885CD227900154B43');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('4E7BE82AC73343569AFCAE6CB825FD11','BB30E55CB0A54FCDA761E9B3D9D4AA51','60C89BB14BDD41EAB464146DF0FE1AFC');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('AD37735E8B0649DDA6B5ED00F1C94288','BB30E55CB0A54FCDA761E9B3D9D4AA51','CF6FBC25CEF84858AFBC3828063D3C1F');
+
+-- 权限：权限-资源
+insert into t_role_permission(id,t_role_id,t_permission_id) values('8BE3C7670883418699A210D4262E9F16','BB30E55CB0A54FCDA761E9B3D9D4AA51','9C1CA99D99AC45028C32ECE83A487855');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('B1D4FFDCC8F74985BD54EA7B9045E14C','BB30E55CB0A54FCDA761E9B3D9D4AA51','0BD68719915B44899A2CB7649BA66BAF');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('3E34CAF3ABFA48C190CFAA9D358A8768','BB30E55CB0A54FCDA761E9B3D9D4AA51','988CC28B43144C90B9007ED9CFAD1BCB');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('479A585482F0493FA792C12674570492','BB30E55CB0A54FCDA761E9B3D9D4AA51','7DF5B26D2EC548F1BAD6ED01BDEE6C65');
+
+-- 题库
+insert into t_role_permission(id,t_role_id,t_permission_id) values('660751F77AD84A309265CD53D311B1A5','BB30E55CB0A54FCDA761E9B3D9D4AA51','9CF2C5EFD1FA4D1A8B2FB2AF6C4E88DD');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('4C095B58DDEE4C79AD30A70E1BD04E1E','BB30E55CB0A54FCDA761E9B3D9D4AA51','CAC32918C6834CF3A9E03FCADA22A325');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('13393C0743EE4492B3F8EE94DBD943A3','BB30E55CB0A54FCDA761E9B3D9D4AA51','650EE25809B94238959C5E3E30F7DC1F');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('6A9BC56A769C4760B0EB9200E785A901','BB30E55CB0A54FCDA761E9B3D9D4AA51','CB3C972ABF97459CAD8A10D647C9941A');
+
+-- 题库日志类型
+insert into t_role_permission(id,t_role_id,t_permission_id) values('8512A9B7D8BA4D2AA5A64A9F05D453F4','BB30E55CB0A54FCDA761E9B3D9D4AA51','C0956F0C79F247F7B3EF8E1C947BEE14');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('B1F589AC6EE940018AB71C5B02C2B399','BB30E55CB0A54FCDA761E9B3D9D4AA51','B76CE88C8DF845DD8CE6DC9D44A06718');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('0AADD88C2699402A880860E802D52D1F','BB30E55CB0A54FCDA761E9B3D9D4AA51','F777C419EE4B49A6AA08FE4E7B142173');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('F91FEB61986541F48156065C8484660D','BB30E55CB0A54FCDA761E9B3D9D4AA51','CD83D03B4C93496188AC1773C4B487A6');
+
+
+-- 作业类型
+insert into t_role_permission(id,t_role_id,t_permission_id) values('6D8DE06CF983403AAFDC1BF3578A7679','BB30E55CB0A54FCDA761E9B3D9D4AA51','2AF39B9D203C48C0B0C74607DF990D5C');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('816894FE0DBA427394752597399C4153','BB30E55CB0A54FCDA761E9B3D9D4AA51','058ED52DD0614643B7304CACE8AB513B');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('3AFFCA19FE674FC98A749BFD214AABCB','BB30E55CB0A54FCDA761E9B3D9D4AA51','668A2068F7AF4D43B053B0256B407419');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('D45F7B4ABEC04E02ABF321E88979FCDB','BB30E55CB0A54FCDA761E9B3D9D4AA51','13D606CF88774FA88E37B615E5965F59');
+
+
+-- 题目类型
+insert into t_role_permission(id,t_role_id,t_permission_id) values('2754D03B15EA4630949AA8D2AB8489CF','BB30E55CB0A54FCDA761E9B3D9D4AA51','BF218D4A3E98495197510B759A5887A4');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('6CED1D87C6294D369E5AF4A13E68BA34','BB30E55CB0A54FCDA761E9B3D9D4AA51','61FF988411C840FD8AE88D838297C83A');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('42CF5C1A88164FE0BAB9918241612469','BB30E55CB0A54FCDA761E9B3D9D4AA51','6568550E0AB64108ACE9AE2F8797B0A8');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('38F65A119ABE4CD3B5BAD6348DFDBFCF','BB30E55CB0A54FCDA761E9B3D9D4AA51','96F25E00AB874BC197290425D76B11E5');
+
+
+-- 题目难度
+insert into t_role_permission(id,t_role_id,t_permission_id) values('5B675DFDC1004ADBAA184EFAB51F8591','BB30E55CB0A54FCDA761E9B3D9D4AA51','E6876DA4F5E94F7AB9CE7FF27F2F76B0');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('01875C9F891546688FF49A20EB7B66BE','BB30E55CB0A54FCDA761E9B3D9D4AA51','F9CDCAB8C51346C8A46AB35363768805');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('64E4C73B5D014A44880637DE998E663D','BB30E55CB0A54FCDA761E9B3D9D4AA51','A7D052F4E9A0464AB833A9219C822FA5');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('F0E5BA7F665A45C69B87E2002614B100','BB30E55CB0A54FCDA761E9B3D9D4AA51','791CFDBE7C6E41258A8B46B775DFB181');
+
+
+-- 考试类型
+insert into t_role_permission(id,t_role_id,t_permission_id) values('BEFF1F55CC40417286D59CC4C27707FF','BB30E55CB0A54FCDA761E9B3D9D4AA51','32473FF7848E4D1D8D118F6A60D7FCE5');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('F0BCE33AA6F649E3B56E06CFF5E7FF13','BB30E55CB0A54FCDA761E9B3D9D4AA51','01D0B8CD9D844C9CBEB40FEC08025916');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('53F02539AFC84637958203F69103F891','BB30E55CB0A54FCDA761E9B3D9D4AA51','4477D7FDCC2842FB9D0ECC8B3EC3D908');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('50EBBA1FB8DA41EE9CDE53447C77F98C','BB30E55CB0A54FCDA761E9B3D9D4AA51','81409984EC1E47DDB916560729315E56');
+
+-- 考试管理
+insert into t_role_permission(id,t_role_id,t_permission_id) values('90ADE4C8D68E49869D368E88BAA717EB','BB30E55CB0A54FCDA761E9B3D9D4AA51','1B6F4BF75BD44F04BE74BC58B711E645');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('C0EF52341C0F4F5B9AD110BF39D5657A','BB30E55CB0A54FCDA761E9B3D9D4AA51','021BA89515B748E7BE8C210D983E9EE5');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('3E5C2DE5DE1B4E8FB1E69620629029BC','BB30E55CB0A54FCDA761E9B3D9D4AA51','839CD26B1E5E4668A45CE938D3F232CB');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('973F8831BAB64E1287DD7E0C48F711E1','BB30E55CB0A54FCDA761E9B3D9D4AA51','560F384FA33742DDAD565DCC86FA25C4');
+
+-- 成绩
+insert into t_role_permission(id,t_role_id,t_permission_id) values('7289B36C01B14BA395CEB105DDD04807','BB30E55CB0A54FCDA761E9B3D9D4AA51','5185C97E2F45411E9A655BBF52401A5F');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('B254FB3BEEDD42A5BBDBF4D1BEC39967','BB30E55CB0A54FCDA761E9B3D9D4AA51','2960DA408B7F4E538FB84A734A16DD6B');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('8FA80EFADDEA40B58BCCA4924071C533','BB30E55CB0A54FCDA761E9B3D9D4AA51','62FCB7B3C93745178B8D9FB951AF2BB2');
+insert into t_role_permission(id,t_role_id,t_permission_id) values('610F138FC0354F1E8A8350C8B0AC073D','BB30E55CB0A54FCDA761E9B3D9D4AA51','1AD5DF6DAAEC4165A378A7E8D5E3DF49');
