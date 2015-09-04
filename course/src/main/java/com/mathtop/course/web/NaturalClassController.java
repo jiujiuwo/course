@@ -23,7 +23,7 @@ import com.mathtop.course.domain.NaturalClass;
 import com.mathtop.course.domain.DepartmentNaturalClassViewData;
 import com.mathtop.course.domain.School;
 import com.mathtop.course.service.DepartmentService;
-import com.mathtop.course.service.NaturalClassSchoolService;
+import com.mathtop.course.service.DepartmentNaturalClassService;
 import com.mathtop.course.service.SchoolService;
 
 
@@ -46,7 +46,7 @@ public class NaturalClassController extends BaseController {
 	
 	
 	@Autowired
-	NaturalClassSchoolService naturalclassschoolService;
+	DepartmentNaturalClassService departmentNaturalClassService;
 	
 	
 	private final String strPageURI = "/naturalclass";
@@ -59,7 +59,7 @@ public class NaturalClassController extends BaseController {
 	}
 
 	/**
-	 * 添加学院
+	 * 添加自然班级
 	 * 
 	 * @param request
 	 * @param user
@@ -67,12 +67,12 @@ public class NaturalClassController extends BaseController {
 	 */
 	@RequestMapping(value = "/add")
 	public ModelAndView add(HttpServletRequest request, Department d) {
-		String t_school_id = request.getParameter("t_school_id");
+		
 		String t_department_id = request.getParameter("t_department_id");
 		String naturalclassname = request.getParameter("naturalclassname");
 		String naturalclassnote = request.getParameter("naturalclassnote");
 		
-		naturalclassschoolService.add(t_school_id, t_department_id, naturalclassname, naturalclassnote);
+		departmentNaturalClassService.add( t_department_id, naturalclassname, naturalclassnote);
 
 		ModelAndView mav = new ModelAndView();
 		
@@ -82,7 +82,7 @@ public class NaturalClassController extends BaseController {
 	}
 
 	/**
-	 * 删除
+	 * 删除自然班级
 	 * 
 	 * @param request
 	 * @param user
@@ -95,7 +95,7 @@ public class NaturalClassController extends BaseController {
 		String t_school_id=null;
 		
 		if (t_natural_class_id != null )
-			naturalclassschoolService.DELETE(t_natural_class_id);
+			departmentNaturalClassService.delete(t_natural_class_id);
 
 		Integer pageNo = 1;
 		return ListAll(t_school_id, pageNo);
@@ -113,7 +113,7 @@ public class NaturalClassController extends BaseController {
 	@ResponseBody
 	public List<NaturalClass> androidLogin(HttpServletRequest request,@PathVariable String t_department_id) {		
 		
-		 return naturalclassschoolService.getNaturalClassByt_department_id(t_department_id);
+		 return departmentNaturalClassService.getNaturalClassByt_department_id(t_department_id);
 		
 	}
 
@@ -183,9 +183,11 @@ public class NaturalClassController extends BaseController {
 	 */
 	@RequestMapping(value = "/list")
 	public ModelAndView ListAll(
-			@RequestParam(value = "t_school_id", required = false) String t_school_id,
+			@RequestParam(value = "t_depratment_id", required = false) String t_depratment_id,
 			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
 		ModelAndView view = new ModelAndView();
+		
+		
 		
 	//	System.out.println("NaturalClassControler:listall 0");
 
@@ -196,35 +198,48 @@ public class NaturalClassController extends BaseController {
 
 		view.addObject(PagedObjectConst.Paged_School, pagedSchool);
 		
+		String t_school_id=null;
 		
-
-		if (t_school_id == null) {
-
+		if(t_depratment_id==null){
+		
 			List<School> schools = pagedSchool.getResult();
 			if (schools.size() > 0) {
 				t_school_id = schools.get(0).getId();
+				
 			}
-
+		}else{
+			t_school_id=departmentService.getSchoolIdByDepartmentId(t_depratment_id);
 		}
 
-	//	System.out.println("NaturalClassControler:listall 1 "+t_school_id);
+		
+		
 		
 		
 		Page<Department> pagedDeparment = departmentService.getPage(t_school_id,
 				pageNo, CommonConstant.PAGE_SIZE);
 
 		view.addObject(PagedObjectConst.Paged_Department, pagedDeparment);
+		
+		
+		if(t_depratment_id==null){
+			
+			List<Department> departments = pagedDeparment.getResult();
+			if (departments.size() > 0) {
+				t_depratment_id = departments.get(0).getId();
+				
+			}
+		}
+		
+		
 
 		view.addObject(SelectedObjectConst.Selected_School_ID, t_school_id);
+		view.addObject(SelectedObjectConst.Selected_Department_ID, t_depratment_id);
 		
 		
-	//	System.out.println("NaturalClassControler:listall 2");
-		
-		
-		Page<DepartmentNaturalClassViewData> pagedNaturalClassSchoolViewData = naturalclassschoolService.getPage(t_school_id,pageNo,
+		Page<DepartmentNaturalClassViewData> pagedDepartmentNaturalClassViewData = departmentNaturalClassService.getPage(t_depratment_id,pageNo,
 				CommonConstant.PAGE_SIZE);
 
-		view.addObject(PagedObjectConst.Paged_NaturalClassSchoolViewData, pagedNaturalClassSchoolViewData);
+		view.addObject(PagedObjectConst.Paged_DepartmentNaturalClassViewData, pagedDepartmentNaturalClassViewData);
 		
 
 		view.setViewName("naturalclass/list");

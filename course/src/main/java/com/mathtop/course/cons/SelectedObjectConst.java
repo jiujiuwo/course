@@ -1,12 +1,20 @@
 package com.mathtop.course.cons;
 
 public class SelectedObjectConst {
+	
+	//学院、系部和自然班级
 	public static final String  Selected_School_ID="selectedt_school_id";
-	public static final String  Selected_TeachingClass_ID="selectedTeachingClassID";
-	public static final String  Selected_Group_ID="selectedGroupID";
-	public static final String  Selected_Role_ID="selectedRoleID";
 	public static final String  Selected_Department_ID="selectedt_department_id";
 	public static final String  Selected_Naturalclass_ID="selectedt_natural_class_id";
+	
+	//教学班级
+	public static final String  Selected_TeachingClass_ID="selectedTeachingClassID";
+	
+	//组、角色
+	public static final String  Selected_Group_ID="selectedGroupID";
+	public static final String  Selected_Role_ID="selectedRoleID";
+	
+	//教师学生视图
 	public static final String  Selected_StudentViewData="selectedStudentViewData";
 	public static final String  Selected_TeacherViewData="selectedTeacherViewData";
 	

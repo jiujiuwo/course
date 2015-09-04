@@ -30,7 +30,7 @@ import com.mathtop.course.exception.StudentExistException;
 import com.mathtop.course.service.ContactTypeService;
 import com.mathtop.course.service.DepartmentService;
 import com.mathtop.course.service.GroupService;
-import com.mathtop.course.service.NaturalClassSchoolService;
+import com.mathtop.course.service.DepartmentNaturalClassService;
 import com.mathtop.course.service.SchoolService;
 import com.mathtop.course.service.StudentService;
 import com.mathtop.course.service.UserGroupService;
@@ -55,7 +55,7 @@ public class StudentController extends BaseController {
 	private StudentService studentService;
 
 	@Autowired
-	NaturalClassSchoolService naturalclassschoolService;
+	DepartmentNaturalClassService departmentNaturalClassService;
 
 	@Autowired
 	private GroupService groupService;
@@ -156,7 +156,7 @@ public class StudentController extends BaseController {
 
 			if (t_department_id != null && t_natural_class_id == null) {
 
-				List<NaturalClass> naturalclasss = naturalclassschoolService.getNaturalClassByt_department_id(t_department_id);
+				List<NaturalClass> naturalclasss = departmentNaturalClassService.getNaturalClassByt_department_id(t_department_id);
 				if (naturalclasss.size() > 0) {
 					t_natural_class_id = naturalclasss.get(0).getId();
 				}
@@ -221,7 +221,7 @@ public class StudentController extends BaseController {
 
 			if (t_department_id != null && t_natural_class_id == null) {
 
-				List<NaturalClass> naturalclasss = naturalclassschoolService.getNaturalClassByt_department_id(t_department_id);
+				List<NaturalClass> naturalclasss = departmentNaturalClassService.getNaturalClassByt_department_id(t_department_id);
 				if (naturalclasss.size() > 0) {
 					t_natural_class_id = naturalclasss.get(0).getId();
 				}
@@ -381,7 +381,7 @@ public class StudentController extends BaseController {
 
 			if (t_department_id != null && t_natural_class_id == null) {
 
-				List<NaturalClass> naturalclasss = naturalclassschoolService.getNaturalClassByt_department_id(t_department_id);
+				List<NaturalClass> naturalclasss = departmentNaturalClassService.getNaturalClassByt_department_id(t_department_id);
 				if (naturalclasss.size() > 0) {
 					t_natural_class_id = naturalclasss.get(0).getId();
 				}
@@ -451,10 +451,10 @@ public class StudentController extends BaseController {
 
 			if (t_department_id != null && t_natural_class_id == null) {
 
-				Page<NaturalClass> pagedNaturalclass = naturalclassschoolService.getPageByt_department_id(t_department_id, 0, 0);
+				List<NaturalClass>ListNaturalclass = departmentNaturalClassService.getNaturalClassByt_department_id(t_department_id);
 
-				if (pagedNaturalclass.getResult().size() > 0) {
-					t_natural_class_id = pagedNaturalclass.getResult().get(0).getId();
+				if (ListNaturalclass.size() > 0) {
+					t_natural_class_id = ListNaturalclass.get(0).getId();
 				}
 			}
 		}
@@ -485,7 +485,7 @@ public class StudentController extends BaseController {
 		}
 
 		if (t_department_id != null) {
-			Page<NaturalClass> pagedNaturalclass = naturalclassschoolService.getPageByt_department_id(t_department_id, 0, 0);
+			Page<NaturalClass> pagedNaturalclass = departmentNaturalClassService.getNaturalClassPage(t_department_id, 0, 0);
 			mav.addObject(PagedObjectConst.Paged_Naturalclass, pagedNaturalclass);
 		}
 

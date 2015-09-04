@@ -62,8 +62,7 @@
 				<tr>
 					<td>
 						<div class="input-group input-group-sm">
-							<select id="SchoolSelectControl" class="form-control"
-								onchange="OnSelectControlChange(this)">
+							<select id="SchoolSelectControl" class="form-control">
 								<c:forEach var="school" items="${pagedSchool.result}">
 									<option value="${school.id}">${school.name}</option>
 								</c:forEach>
@@ -72,6 +71,19 @@
 
 
 
+						</div>
+					</td>
+					
+					<td style="width: 10px;"></td>
+					<td>
+						<div class="input-group input-group-sm">
+							<select id="departmentSelectControl" name="t_department_id"
+								class="form-control input-sm">
+								<c:forEach var="d" items="${pagedDepartment.result}">
+									<option value="${d.id}">${d.name}</option>
+								</c:forEach>
+
+							</select>
 						</div>
 					</td>
 
@@ -122,7 +134,7 @@
 
 
 			<c:choose>
-				<c:when test="${pagedNaturalClassSchoolViewData.totalCount >0}">
+				<c:when test="${pagedDepartmentNaturalClassViewData.totalCount >0}">
 
 
 					<div class="Course-Table">
@@ -142,17 +154,17 @@
 							<tbody>
 								<c:set var="index" value="1"></c:set>
 								<c:forEach var="dataitem"
-									items="${pagedNaturalClassSchoolViewData.result}">
+									items="${pagedDepartmentNaturalClassViewData.result}">
 									<tr>
 										<th scope="row"><input type="checkbox" value="">
-											${(pagedNaturalClassSchoolViewData.currentPageNo-1) * pagedNaturalClassSchoolViewData.pageSize +index}</th>
-										<td>${dataitem.t_department_name}</td>
-										<td>${dataitem.t_natural_class_name}</td>
+											${(pagedDepartmentNaturalClassViewData.currentPageNo-1) * pagedDepartmentNaturalClassViewData.pageSize +index}</th>
+										<td>${dataitem.department.name}</td>
+										<td>${dataitem.naturalclass.name}</td>
 										<td></td>
 										<td><button type="button" class="btn btn-default btn-xs"
-												onclick="onUpdate('${dataitem.t_natural_class_id}')">修改...</button>
+												onclick="onUpdate('${dataitem.naturalclass.id}')">修改...</button>
 											<button type="button" class="btn btn-default btn-xs"
-												onclick="onDelete('${dataitem.t_natural_class_id}','${dataitem.t_natural_class_name}')">删除</button></td>
+												onclick="onDelete('${dataitem.naturalclass.id}','${dataitem.naturalclass.name}')">删除</button></td>
 									</tr>
 									<c:set var="index" value="${index + 1}"></c:set>
 								</c:forEach>
@@ -160,7 +172,7 @@
 						</table>
 
 						<mathtop:PageBar pageUrl="/${pagedURI}/list.html"
-							pageAttrKey="pagedNaturalClassSchoolViewData" />
+							pageAttrKey="pagedDepartmentNaturalClassViewData" />
 
 					</div>
 
@@ -332,36 +344,49 @@
 	<script>
 		$(function() {
 
-			var ctrl = document.getElementById("SchoolSelectControl");
-			var schooledid = "${selectedt_school_id}";
+			//school
+			var ctrlschool = document.getElementById("SchoolSelectControl");
+			var schooledid = "${selectedt_school_id}";			
+			
 			var index = 0;
 
-			for (var i = 0; i < ctrl.options.length; i++)
-				if (ctrl.options[i].value == (schooledid))
+			for (var i = 0; i < ctrlschool.options.length; i++)
+				if (ctrlschool.options[i].value == (schooledid))
 					index = i;
-			ctrl.selectedIndex = index;
-			var schooltext = (ctrl.options[index].text);
+			ctrlschool.selectedIndex = index;
+			var schooltext = (ctrlschool.options[index].text);
+			
+			
+			
+			//department
+			
+			var ctrldepartment = document.getElementById("departmentSelectControl");
+			var departmentid = "${selectedt_department_id}";			
+			
+			
+
+			for (var i = 0; i < ctrldepartment.options.length; i++)
+				if (ctrldepartment.options[i].value == (departmentid))
+					index = i;
+			ctrldepartment.selectedIndex = index;
+			var departmenttext = (ctrldepartment.options[index].text);
+			
 
 			$('#addModal').find('.modal-body #schoolname').text(schooltext);
 			$('#updateModal').find('.modal-body #schoolname').text(schooltext);
+			
+			$('#addModal').find('.modal-body #departmentname').text(departmenttext);
+			$('#updateModal').find('.modal-body #departmentname').text(departmenttext);
 		});
 	</script>
 
 	<script>
 		//学院
-		function OnSelectControlChange(sel_obj) {
-			var index = sel_obj.selectedIndex;
-			var t_school_id = (sel_obj.options[index].value);
-			var schooltext = (sel_obj.options[index].text);
+		function OnDepartmentChange(t_depratment_id) {
+				
 
-			$('#addModal').find('.modal-body #t_school_id').val(t_school_id);
-			$('#updateModal').find('.modal-body #t_school_id').val(t_school_id);
-
-			$('#addModal').find('.modal-body #schoolname').text(schooltext);
-			$('#updateModal').find('.modal-body #schoolname').text(schooltext);
-
-			var url = "<c:url value='/naturalclass'/>" + "/list.html?t_school_id="
-					+ t_school_id;
+			var url = "<c:url value='/naturalclass'/>" + "/list.html?t_depratment_id="
+					+ t_depratment_id;
 			window.location.href = url;
 		}
 
@@ -406,19 +431,24 @@
 
 	<script type="text/javascript">
 		$(function() {
-			$("#SchoolSelectControlAdd").change(
+			
+			<%
+			//学院发生变化
+			%>
+			$("#SchoolSelectControl").change(
 					function() {
-						var selt_school_id = $("#SchoolSelectControlAdd").val();
+						var selt_school_id = $("#SchoolSelectControl").val();
 						var url = "<c:url value="/department/"/>"
 
 						url = url + "selectbyschool-" + selt_school_id + ".json";
 
 						var departmentjson;
-						$("#DepartmentSelectControlAdd").empty();
+						$("#departmentSelectControl").empty();
 						$.get(url, function(data, status) {
 							if (status == "success") {
+
 								for (var i = 0; i < data.length; i++) {
-									$("#DepartmentSelectControlAdd").append(
+									$("#departmentSelectControl").append(
 											"<option value='"+data[i].id+"'>"
 													+ data[i].name
 													+ "</option>");
@@ -427,10 +457,19 @@
 						});
 
 					});
+			
+			<%
+			//系部发生变化
+			%>
+			$("#departmentSelectControl").change(
+					function() {
+						var t_department_id = $("#departmentSelectControl").val();
+						OnDepartmentChange(t_department_id);
+
+					});
 
 		});
 	</script>
-
 
 
 

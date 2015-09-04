@@ -11,58 +11,32 @@ public class DepartmentNaturalClassViewData  extends BaseDomain{
 	 */
 	private static final long serialVersionUID = -1682374614815934739L;
 
-	public DepartmentNaturalClassViewData() {
-		// TODO Auto-generated constructor stub
+	private DepartmentNaturalClass departmentNaturalClass;
+	private School school;
+	private Department department;
+	private NaturalClass naturalclass;
+	public School getSchool() {
+		return school;
 	}
-	
-	private String id;
-	private String t_school_id;
-	private String t_school_name;
-	private String t_department_id;
-	private String t_department_name;
-	private String t_natural_class_id;
-	private String t_natural_class_name;
-
-	public String getId() {
-		return id;
+	public void setSchool(School school) {
+		this.school = school;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public Department getDepartment() {
+		return department;
 	}
-	public String getT_school_id() {
-		return t_school_id;
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
-	public void setT_school_id(String t_school_id) {
-		this.t_school_id = t_school_id;
+	public NaturalClass getNaturalclass() {
+		return naturalclass;
 	}
-	public String getT_school_name() {
-		return t_school_name;
+	public void setNaturalclass(NaturalClass naturalclass) {
+		this.naturalclass = naturalclass;
 	}
-	public void setT_school_name(String t_school_name) {
-		this.t_school_name = t_school_name;
+	public DepartmentNaturalClass getDepartmentNaturalClass() {
+		return departmentNaturalClass;
 	}
-	public String getT_department_id() {
-		return t_department_id;
-	}
-	public void setT_department_id(String t_department_id) {
-		this.t_department_id = t_department_id;
-	}
-	public String getT_department_name() {
-		return t_department_name;
-	}
-	public void setT_department_name(String t_department_name) {
-		this.t_department_name = t_department_name;
-	}
-	public String getT_natural_class_id() {
-		return t_natural_class_id;
-	}
-	public void setT_natural_class_id(String t_natural_class_id) {
-		this.t_natural_class_id = t_natural_class_id;
-	}
-	public String getT_natural_class_name() {
-		return t_natural_class_name;
-	}
-	public void setT_natural_class_name(String t_natural_class_name) {
-		this.t_natural_class_name = t_natural_class_name;
+	public void setDepartmentNaturalClass(DepartmentNaturalClass departmentNaturalClass) {
+		this.departmentNaturalClass = departmentNaturalClass;
 	}
 }

@@ -36,6 +36,10 @@ public class DepartmentService extends SimpleService<DepartmentDao,Department> {
 		schooldepartmentdao.DELETE(t_school_id, t_department_id);
 	}
 	
+	public String getSchoolIdByDepartmentId(String t_department_id){
+		return schooldepartmentdao.gett_school_idByt_department_id(t_department_id);
+	}
+	
 	
 	
 	/**

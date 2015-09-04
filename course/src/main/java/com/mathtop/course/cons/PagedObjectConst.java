@@ -14,7 +14,7 @@ public class PagedObjectConst {
 	public static final String Paged_ContactType = "pagedContactType";
 
 	// 自然班-学院
-	public static final String Paged_NaturalClassSchoolViewData = "pagedNaturalClassSchoolViewData";
+	public static final String Paged_DepartmentNaturalClassViewData = "pagedDepartmentNaturalClassViewData";
 
 	// 签到类型
 	public static final String Paged_AttendanceState = "pagedAttendanceState";
