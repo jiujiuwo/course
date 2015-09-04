@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.mathtop.course.dao.AttendanceDao;
 import com.mathtop.course.dao.TeachingClassStudentDao;
-import com.mathtop.course.dao.CourseTeachingClassTeacherDao;
+import com.mathtop.course.dao.TeachingClassTeacherDao;
 import com.mathtop.course.dao.DepartmentDao;
 import com.mathtop.course.dao.DepartmentNaturalClassDao;
 import com.mathtop.course.dao.DepartmentTeacherDao;
@@ -71,7 +71,7 @@ public class DeleteService {
 	TeacherDao teacherDao;
 
 	@Autowired
-	CourseTeachingClassTeacherDao courseTeachingClassTeacherDao;
+	TeachingClassTeacherDao courseTeachingClassTeacherDao;
 
 	@Autowired
 	TeachingClassStudentDao courseTeachingClassStudentDao;

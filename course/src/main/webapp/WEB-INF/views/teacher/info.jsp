@@ -4,8 +4,7 @@
 
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 
 	//设置左侧浏览状态
@@ -38,7 +37,7 @@
 <body class="home">
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
-	
+
 
 	<div class="DocumentPage">
 		<div class="DocumentPageLeftArea ">
@@ -251,8 +250,8 @@
 
 
 
-				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary">添加</button>
+				<div class="modal-footer col-md-7">
+					<button type="submit" class="btn btn-primary">确定</button>
 					<button type="button" class="btn btn-default"
 						onclick="window.history.back()">取消</button>
 				</div>

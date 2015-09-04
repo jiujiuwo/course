@@ -11,7 +11,7 @@ import com.mathtop.course.dao.Page;
 import com.mathtop.course.dao.StudentViewDataDao;
 import com.mathtop.course.dao.TeachingClassDao;
 import com.mathtop.course.dao.TeachingClassStudentDao;
-import com.mathtop.course.dao.CourseTeachingClassTeacherDao;
+import com.mathtop.course.dao.TeachingClassTeacherDao;
 import com.mathtop.course.dao.TeachingClassViewDataDao;
 import com.mathtop.course.domain.TeacherViewData;
 import com.mathtop.course.domain.CourseTeachingClassViewData;
@@ -27,7 +27,7 @@ public class TeachingClassService {
 	CourseTeachingClassDao courseteachingclassDao;
 
 	@Autowired
-	CourseTeachingClassTeacherDao teachingclassteacherDao;
+	TeachingClassTeacherDao teachingclassteacherDao;
 
 	@Autowired
 	TeachingClassStudentDao teachingclassstudentDao;
@@ -131,6 +131,9 @@ public class TeachingClassService {
 		List<CourseTeachingClassViewData> listCourseTeachingClass = teachingclassviewdataDao
 				.getCourseTeachingClassViewDataByUserId(t_user_id);
 		
+		if(listCourseTeachingClass==null)
+			return null;
+		
 		//将每个教学班的教师添加到列表中，注意教师不能重复
 		for (CourseTeachingClassViewData t : listCourseTeachingClass) {
 			
@@ -160,6 +163,10 @@ public class TeachingClassService {
 		// 得到该教师所有的教学班,然后将每个教学班的教师添加到列表中
 		List<CourseTeachingClassViewData> listCourseTeachingClass = teachingclassviewdataDao
 				.getCourseTeachingClassViewDataByUserId(t_user_id);
+		
+		if(listCourseTeachingClass==null)
+			return null;
+		
 		for (CourseTeachingClassViewData c : listCourseTeachingClass) {
 			
 			//得到每个教学班的列表

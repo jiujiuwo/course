@@ -96,7 +96,7 @@
 
 
 
-				<div class="modal-footer">
+				<div class="modal-footer  col-md-4">
 					<button type="submit" class="btn btn-primary">确定</button>
 					<button type="button" class="btn btn-default"
 						onclick="window.history.back()">取消</button>
