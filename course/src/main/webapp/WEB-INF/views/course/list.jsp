@@ -380,7 +380,7 @@
 			$('#addModal').find('.modal-body #schoolname').text(schooltext);
 			$('#updateModal').find('.modal-body #schoolname').text(schooltext);
 
-			var url = "<c:url value='/naturalclass'/>" + "/list.html?t_school_id="
+			var url = "<c:url value='/course'/>" + "/list.html?t_school_id="
 					+ t_school_id;
 			window.location.href = url;
 		}

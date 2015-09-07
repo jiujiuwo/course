@@ -96,6 +96,7 @@ public class UserSessionInfoDao extends BaseDao<UserSessionInfo> {
 
 		usi.setTeachingclassviewdata(teachingclassviewdataDao.getCourseTeachingClassViewDataByUserId(user_id));
 
+		
 		return usi;
 
 	}

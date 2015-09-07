@@ -88,7 +88,7 @@ public class StudentService {
 	 * */
 	public void UploadFromExcel(String[] groupId, MultipartFile file) throws Exception {
 		if (!file.isEmpty()) {
-			String localfilename = "d:/temp/" + file.getOriginalFilename();
+			String localfilename =  file.getOriginalFilename();
 			try {
 				File localfile = new File(localfilename);
 
@@ -100,6 +100,7 @@ public class StudentService {
 				String prefix = localfilename.substring(localfilename.lastIndexOf(".") + 1);
 
 				prefix = prefix.toLowerCase();
+				
 
 				if (prefix.equals("xls"))
 					ProcessExcel97(localfilename, groupId);
@@ -133,6 +134,7 @@ public class StudentService {
 			HSSFWorkbook hssfWorkbook = new HSSFWorkbook(poifsFileSystem);
 
 			int nCount = hssfWorkbook.getNumberOfSheets();
+			
 			for (int sheetindex = 0; sheetindex < nCount; sheetindex++) {
 				HSSFSheet sheet = hssfWorkbook.getSheetAt(sheetindex);
 
@@ -143,22 +145,34 @@ public class StudentService {
 				int nameIndex = -1;
 				int numIndex = -1;
 
+				
+				
+				
 				for (int i = rowstart; i <= rowEnd; i++) {
 
 					HSSFRow row = sheet.getRow(i);
 					if (null == row)
 						continue;
+					
+					System.out.println("i:"+i);
+					
+					
+					
 					int cellStart = row.getFirstCellNum();
 					int cellEnd = row.getLastCellNum();
 
 					String name = null;
 					String student_num = null;
 					String naturalclass = null;
+					
+					
 
 					for (int k = cellStart; k <= cellEnd; k++) {
 						HSSFCell cell = row.getCell(k);
 						if (null == cell)
 							continue;
+						
+						
 
 						String strIndexName = cell.getStringCellValue().trim();
 
@@ -182,12 +196,15 @@ public class StudentService {
 
 						}
 
-					}
+					}					
+				
 
 					if (naturalclass != null) {
 						try {
+							
 							AddStudent(naturalclass, name, student_num, groupId);
 						} catch (StudentExistException e) {
+							
 							// TODO Auto-generated catch block
 							// e.printStackTrace();
 							fis.close();
@@ -196,12 +213,17 @@ public class StudentService {
 					}
 
 				}
+				
+			
 
 			}
+			
+			
 
 			fis.close();
 
 		} catch (Exception e) {
+		
 			throw e;
 
 		}

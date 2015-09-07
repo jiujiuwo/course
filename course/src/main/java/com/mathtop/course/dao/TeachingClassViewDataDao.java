@@ -62,13 +62,19 @@ public class TeachingClassViewDataDao extends BaseDao<CourseTeachingClassViewDat
 		Teacher teacher=teacherDao.getTeacherByt_user_id(t_user_id);
 		if(teacher!=null){
 			
+			
+			
 			//根据教师id得到教学班
 			List<CourseTeachingClassTeacher> teachingclassteacherlist=teachingclassteacherDao.getTeachingClassTeacherByTeacherId(teacher.getId());
 			
 			for(CourseTeachingClassTeacher tct:teachingclassteacherlist){
 				//根据教学班得到教学班信息
-				List<CourseTeachingClassViewData> temp=GetTeachingClassViewDataByTeachingClassId(tct.getT_course_teaching_class_id());
-				list.addAll(temp);
+				
+				
+				CourseTeachingClassViewData temp=GetTeachingClassViewDataByCourseTeachingClassId(tct.getT_course_teaching_class_id());
+				
+				
+				list.add(temp);
 			}
 			
 		}else{
@@ -115,7 +121,7 @@ public class TeachingClassViewDataDao extends BaseDao<CourseTeachingClassViewDat
 
 			// 根据教学班得到教师信息
 			List<CourseTeachingClassTeacher> teachingclassteacherlist = teachingclassteacherDao
-					.getTeachingClassTeacherByTeachingClassId(tc.getId());
+					.getTeachingClassTeacherByTeachingClassId(ctc.getId());
 			if (teachingclassteacherlist.size() > 0) {
 
 				TeacherViewData[] tvd = new TeacherViewData[teachingclassteacherlist
@@ -164,13 +170,15 @@ public class TeachingClassViewDataDao extends BaseDao<CourseTeachingClassViewDat
 			tcvd.setTeachingclass(tc);
 
 			tcvd.setCourseteachingclass(ctc);
+			
+			
 
 			Course c = courseDao.getCourseById(ctc.getT_course_id());
 			tcvd.setCourse(c);
 
 			// 根据教学班得到教师信息
 			List<CourseTeachingClassTeacher> teachingclassteacherlist = teachingclassteacherDao
-					.getTeachingClassTeacherByTeachingClassId(tc.getId());
+					.getTeachingClassTeacherByTeachingClassId(ctc.getId());
 			if (teachingclassteacherlist.size() > 0) {
 
 				TeacherViewData[] tvd = new TeacherViewData[teachingclassteacherlist
@@ -188,7 +196,7 @@ public class TeachingClassViewDataDao extends BaseDao<CourseTeachingClassViewDat
 					index++;
 
 				}
-
+				
 				tcvd.setTeacher(tvd);
 				tcvd.setTeachingtype(tt);
 
@@ -196,6 +204,9 @@ public class TeachingClassViewDataDao extends BaseDao<CourseTeachingClassViewDat
 			
 		}
 
+		
+		
+		
 		if(tcvd.getCourse()!=null)
 			return tcvd;
 		

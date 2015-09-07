@@ -3,8 +3,7 @@
 
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 
 	//设置左侧浏览状态
@@ -37,7 +36,7 @@
 <body class="home" onLoad="ShowErrMsg()">
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
-	
+
 
 	<div class="DocumentPage">
 		<div class="DocumentPageLeftArea ">
@@ -73,7 +72,7 @@
 
 						</div>
 					</td>
-					
+
 					<td style="width: 10px;"></td>
 					<td>
 						<div class="input-group input-group-sm">
@@ -192,12 +191,12 @@
 
 						<div class="list-group">
 
-							<a href="#"
-								class="list-group-item" data-toggle="modal" data-target="#addModal">添加自然班</a> <a
+							<a href="#" class="list-group-item" data-toggle="modal"
+								data-target="#addModal">添加自然班</a> <a
 								href="<c:url value="/school/list.html"/>"
 								class="list-group-item">添加学院</a> <a
 								href="<c:url value="/department/list.html"/>"
-								class="list-group-item">添加系部</a> 
+								class="list-group-item">添加系部</a>
 
 						</div>
 
@@ -225,7 +224,7 @@
 
 
 				<form class="form-signin"
-					action="<c:url value="/${pagedURI}/add.html"/>" method="post">
+					action="<c:url value="/naturalclass/add.html"/>" method="post">
 
 
 					<div class="modal-body">
@@ -346,47 +345,55 @@
 
 			//school
 			var ctrlschool = document.getElementById("SchoolSelectControl");
-			var schooledid = "${selectedt_school_id}";			
+			var schooledid = "${selectedt_school_id}";
+			
+			
+			var ctrldepartment = document.getElementById("departmentSelectControl");
+			var departmentid = "${selectedt_department_id}";
+			
 			
 			var index = 0;
 
-			for (var i = 0; i < ctrlschool.options.length; i++)
-				if (ctrlschool.options[i].value == (schooledid))
-					index = i;
-			ctrlschool.selectedIndex = index;
-			var schooltext = (ctrlschool.options[index].text);
-			
-			
-			
+			if (ctrlschool.options.length > 0) {				
+
+				for (var i = 0; i < ctrlschool.options.length; i++)
+					if (ctrlschool.options[i].value == (schooledid))
+						index = i;
+				ctrlschool.selectedIndex = index;
+				var schooltext = (ctrlschool.options[index].text);
+
+				$('#addModal').find('.modal-body #schoolname').text(schooltext);
+				$('#updateModal').find('.modal-body #schoolname').text(
+						schooltext);
+			}
+
 			//department
-			
-			var ctrldepartment = document.getElementById("departmentSelectControl");
-			var departmentid = "${selectedt_department_id}";			
-			
-			
 
-			for (var i = 0; i < ctrldepartment.options.length; i++)
-				if (ctrldepartment.options[i].value == (departmentid))
-					index = i;
-			ctrldepartment.selectedIndex = index;
-			var departmenttext = (ctrldepartment.options[index].text);
 			
+			if (ctrldepartment.options.length > 0) {
 
-			$('#addModal').find('.modal-body #schoolname').text(schooltext);
-			$('#updateModal').find('.modal-body #schoolname').text(schooltext);
-			
-			$('#addModal').find('.modal-body #departmentname').text(departmenttext);
-			$('#updateModal').find('.modal-body #departmentname').text(departmenttext);
+				
+				for (var i = 0; i < ctrldepartment.options.length; i++)
+					if (ctrldepartment.options[i].value == (departmentid))
+						index = i;
+				ctrldepartment.selectedIndex = index;
+				var departmenttext = (ctrldepartment.options[index].text);
+
+				$('#addModal').find('.modal-body #departmentname').text(
+						departmenttext);
+				$('#updateModal').find('.modal-body #departmentname').text(
+						departmenttext);
+			}
+
 		});
 	</script>
 
 	<script>
 		//学院
 		function OnDepartmentChange(t_depratment_id) {
-				
 
-			var url = "<c:url value='/naturalclass'/>" + "/list.html?t_depratment_id="
-					+ t_depratment_id;
+			var url = "<c:url value='/naturalclass'/>"
+					+ "/list.html?t_depratment_id=" + t_depratment_id;
 			window.location.href = url;
 		}
 
@@ -422,7 +429,7 @@
 			$('#deleteModal').find('.modal-footer #deletebtn').attr("onclick",
 					url);
 
-			alert(url);
+			
 
 			$('#deleteModal').modal('show');
 
@@ -431,16 +438,16 @@
 
 	<script type="text/javascript">
 		$(function() {
-			
-			<%
-			//学院发生变化
-			%>
-			$("#SchoolSelectControl").change(
+	<%//学院发生变化%>
+		$("#SchoolSelectControl").change(
 					function() {
 						var selt_school_id = $("#SchoolSelectControl").val();
+						
 						var url = "<c:url value="/department/"/>"
 
-						url = url + "selectbyschool-" + selt_school_id + ".json";
+						url = url + "selectbyschool-" + selt_school_id
+								+ ".json";
+						
 
 						var departmentjson;
 						$("#departmentSelectControl").empty();
@@ -457,16 +464,12 @@
 						});
 
 					});
-			
-			<%
-			//系部发生变化
-			%>
-			$("#departmentSelectControl").change(
-					function() {
-						var t_department_id = $("#departmentSelectControl").val();
-						OnDepartmentChange(t_department_id);
+	<%//系部发生变化%>
+		$("#departmentSelectControl").change(function() {
+				var t_department_id = $("#departmentSelectControl").val();
+				OnDepartmentChange(t_department_id);
 
-					});
+			});
 
 		});
 	</script>

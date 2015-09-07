@@ -138,6 +138,7 @@ public class StudentController extends BaseController {
 	@RequestMapping(value = "/add")
 	public ModelAndView add(HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
+		
 		String t_school_id = null;
 		String t_department_id = null;
 		String t_natural_class_id = null;
@@ -202,6 +203,8 @@ public class StudentController extends BaseController {
 	public ModelAndView addfromexcel(HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
 		ModelAndView mav = new ModelAndView();
+		
+		/*FIX ME!!!
 
 		String t_school_id = null;
 		String t_department_id = null;
@@ -228,12 +231,18 @@ public class StudentController extends BaseController {
 			}
 		}
 
+		
+		System.out.println(t_school_id);
+		System.out.println(t_department_id);
+		System.out.println("t_natural_class_id"+t_natural_class_id);
 		if (t_school_id == null || t_department_id == null || t_natural_class_id == null) {
 
 			redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg, "不存在自然班，请先添加自然班才能够添加学生.");
 			mav.setViewName("redirect:/" + strPageURI + "/list.html");
 			return mav;
 		}
+		
+		*/
 
 		// 学院
 		Page<School> pagedSchool = schoolService.getPage(1, CommonConstant.PAGE_SIZE);

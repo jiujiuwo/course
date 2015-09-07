@@ -77,7 +77,7 @@ public class NaturalClassController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		
 
-		mav.setViewName("redirect:" + strPageURI+"/list.html");
+		mav.setViewName("redirect:" + strPageURI+"/list.html?t_depratment_id="+t_department_id);
 		return mav;
 	}
 

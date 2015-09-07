@@ -410,6 +410,8 @@ public class TeachingClassController extends BaseController {
 
 		String teachingclassid = request
 				.getParameter("selectedTeachingClassID");
+		
+		System.out.println(teachingclassid);
 
 		String[] teacherid = request.getParameterValues("teacherid");
 		String[] teachingtypeid = request.getParameterValues("teachingtypeid");

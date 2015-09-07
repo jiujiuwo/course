@@ -47,15 +47,15 @@ public class TeachingClassService {
 
 		String teachingclassid = teachingclassDao.add(teachingclass_name, "");
 
-		String id = courseteachingclassDao.add(courseId, teachingclassid, teaching_year_begin, teaching_year_end, teaching_term);
+		String t_course_teaching_class_id = courseteachingclassDao.add(courseId, teachingclassid, teaching_year_begin, teaching_year_end, teaching_term);
 
 		if (teacherid != null && teacherid.length > 0) {
 			for (int i = 0; i < teacherid.length; i++) {
-				teachingclassteacherDao.add(teachingclassid, teacherid[i], teachingtypetypeId[i]);
+				teachingclassteacherDao.add(t_course_teaching_class_id, teacherid[i], teachingtypetypeId[i]);
 			}
 		}
 
-		return id;
+		return t_course_teaching_class_id;
 
 	}
 
@@ -76,10 +76,10 @@ public class TeachingClassService {
 	 * 
 	 * @param user
 	 */
-	public void add(String teachingclassid, String[] teacherid, String[] teachingtypeid) {
+	public void add(String t_course_teaching_class_id, String[] teacherid, String[] teachingtypeid) {
 
 		// 1.删除旧的该课程所有授课教师信息
-		teachingclassteacherDao.deleteByTeachingClassId(teachingclassid);
+		teachingclassteacherDao.deleteByTeachingClassId(t_course_teaching_class_id);
 
 		if (teacherid == null || teachingtypeid == null)
 			return;
@@ -89,7 +89,7 @@ public class TeachingClassService {
 
 		// 2.增加新的授课教师信息
 		for (int i = 0; i < teacherid.length; i++) {
-			teachingclassteacherDao.add(teachingclassid, teacherid[i], teachingtypeid[i]);
+			teachingclassteacherDao.add(t_course_teaching_class_id, teacherid[i], teachingtypeid[i]);
 		}
 	}
 
@@ -136,6 +136,8 @@ public class TeachingClassService {
 		
 		//将每个教学班的教师添加到列表中，注意教师不能重复
 		for (CourseTeachingClassViewData t : listCourseTeachingClass) {
+			
+			
 			
 			for(TeacherViewData temp:t.getTeacher()){
 				

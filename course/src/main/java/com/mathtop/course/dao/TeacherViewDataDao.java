@@ -112,8 +112,9 @@ public class TeacherViewDataDao extends BaseDao<TeacherViewData> {
 
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
+				
 				TeacherViewData tvd = getTeacherViewDataByt_user_id(rs.getString("t_user_id"));
-
+			
 				list.add(tvd);
 
 			}

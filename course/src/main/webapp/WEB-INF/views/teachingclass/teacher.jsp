@@ -171,7 +171,7 @@
 
 							<input id='selectedTeachingClassID'
 								name='selectedTeachingClassID'
-								value='${selectedTeachingClassID}' type='hidden' />
+								value='${pagedTeachingClassViewData.result[0].courseteachingclass.id}' type='hidden' />
 
 
 
@@ -482,11 +482,11 @@
 							if (status == "success") {
 								for (var i = 0; i < data.length; i++) {
 									$("#teacherSelectControlAdd").append(
-											"<option value='"+data[i].id+"'>"
-													+ data[i].teachername + "("
-													+ data[i].teachernum + ","
-													+ data[i].deptname
-													+ ")</option>");
+											"<option value='"+data[i].teacher.id+"'>"
+											+ data[i].userbasicinfo.user_basic_info_name
+											 +"(" + data[i].teacher.teacher_num
+											+ "," + data[i].department.name
+											 +")</option>");
 								}
 							}
 						});
