@@ -195,21 +195,21 @@
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">添加课程资料类型</h4>
+					<h4 class="modal-title" id="myModalLabel">添加课程作业类型</h4>
 				</div>
 
 				<form class="form-signin"
-					action="<c:url value="/coursereferencetype/add-${selectedCourseTeachingClassID}.html"/>"
+					action="<c:url value="/coursehomeworktype/add-${selectedCourseTeachingClassID}.html"/>"
 					method="post">
 
 
 					<div class="modal-body">
-						<h4 class="form-signin-heading">请输入新加课程资料类型名称</h4>
+						<h4 class="form-signin-heading">请输入新加课程作业类型名称</h4>
 
 						<div class="form-group">
-							<label for="inputname" class="col-sm-3 control-label">课程资料类型名称</label>
+							<label for="inputname" class="col-sm-4 control-label">课程作业类型名称</label>
 							<input type="text" id="inputname" class="form-control"
-								name="name" placeholder="课程资料类型名称" required autofocus>
+								name="name" placeholder="课程作业类型名称" required autofocus>
 						</div>
 
 
@@ -218,9 +218,9 @@
 
 
 						<div class="form-group">
-							<label for="inputnote" class="col-sm-3 control-label">课程资料类型描述</label>
+							<label for="inputnote" class="col-sm-4 control-label">课程作业类型描述</label>
 							<input type="text" id="inputnote" class="form-control"
-								name="note" placeholder="课程资料类型描述">
+								name="note" placeholder="课程作业类型描述">
 						</div>
 
 					</div>
@@ -250,20 +250,20 @@
 				</div>
 
 				<form class="form-signin"
-					action="<c:url value="/coursereferencetype/update-${selectedCourseTeachingClassID}.html"/>"
+					action="<c:url value="/coursehomeworktype/update-${selectedCourseTeachingClassID}.html"/>"
 					method="post">
 
 
 					<div class="modal-body">
-						<h4 class="form-signin-heading">请修改课程资料类型</h4>
-						<label for="inputname" class="sr-only">课程资料类型名称</label> <input
+						<h4 class="form-signin-heading">请修改课程作业类型</h4>
+						<label for="inputname" class="sr-only">课程作业类型名称</label> <input
 							type="text" id="inputid" class="form-control" name="id" value=""
 							placeholder="id" style="display: none;"> <input
 							type="text" id="inputname" class="form-control" name="name"
-							value="" placeholder="课程资料类型名称" required autofocus> <label
-							for="inputnote" class="sr-only">课程资料类型描述</label> <input type="text"
+							value="" placeholder="课程作业类型名称" required autofocus> <label
+							for="inputnote" class="sr-only">课程作业类型描述</label> <input type="text"
 							id="inputnote" class="form-control" name="note" value=""
-							placeholder="课程资料类型描述">
+							placeholder="课程作业类型描述">
 
 					</div>
 

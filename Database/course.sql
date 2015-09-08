@@ -21,9 +21,9 @@ USE `coursedb` ;
 -- Table `coursedb`.`t_user`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_user` (
-  `id` VARCHAR(32) NOT NULL,
-  `user_name` VARCHAR(128) NULL,
-  `user_password` VARCHAR(32) NULL,
+  `id` CHAR(32) NOT NULL,
+  `user_name` VARCHAR(255) NULL,
+  `user_password` VARCHAR(255) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -32,9 +32,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_student`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_student` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_user_id` VARCHAR(32) NOT NULL,
-  `student_num` VARCHAR(32) NULL, 
+  `id` CHAR(32) NOT NULL,
+  `t_user_id` CHAR(32) NOT NULL,
+  `student_num` VARCHAR(255) NULL, 
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -43,9 +43,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_teacher`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_teacher` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_user_id` VARCHAR(32) NOT NULL,
-  `teacher_num` VARCHAR(45) NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_user_id` CHAR(32) NOT NULL,
+  `teacher_num` VARCHAR(255) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_t_teacher_t_user1_idx` (`t_user_id` ASC),
   CONSTRAINT `fk_t_teacher_t_user1`
@@ -60,12 +60,12 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_user_basic_info`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_user_basic_info` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_user_id` VARCHAR(32) NOT NULL,
-  `user_contact_info_name` VARCHAR(32) NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_user_id` CHAR(32) NOT NULL,
+  `user_contact_info_name` VARCHAR(255) NULL,
   `user_contact_info_birthday` DATETIME NULL,
   `user_contact_info_sex` INT NULL,
-  `user_contact_info_address` VARCHAR(128) NULL,
+  `user_contact_info_address` TEXT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_t_user_basic_info_t_user1_idx` (`t_user_id` ASC),
   CONSTRAINT `fk_t_user_basic_info_t_user1`
@@ -80,9 +80,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_user_contact_type`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_user_contact_type` (
-  `id` VARCHAR(32) NOT NULL,
-  `name` VARCHAR(128) NULL,
-  `note` VARCHAR(128) NULL,
+  `id` CHAR(32) NOT NULL,
+  `name` VARCHAR(255) NULL,
+  `note` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -91,10 +91,10 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_login`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_login` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_user_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_user_id` CHAR(32) NOT NULL,
   `login_datetime` DATETIME NOT NULL,
-  `login_ip` VARCHAR(64) NOT NULL,
+  `login_ip` CHAR(64) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_t_login_t_user_idx` (`t_user_id` ASC),
   CONSTRAINT `fk_t_login_t_user`
@@ -109,10 +109,10 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_user_contact_info`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_user_contact_info` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_user_id` VARCHAR(32) NOT NULL,
-  `t_user_contact_type_id` VARCHAR(32) NOT NULL,
-  `user_contact_value` VARCHAR(128) NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_user_id` CHAR(32) NOT NULL,
+  `t_user_contact_type_id` CHAR(32) NOT NULL,
+  `user_contact_value` TEXT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_t_user_contact_info_t_user1_idx` (`t_user_id` ASC),
   INDEX `fk_t_user_contact_info_t_user_contact_type1_idx` (`t_user_contact_type_id` ASC),
@@ -133,9 +133,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_school`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_school` (
-  `id` VARCHAR(32) NOT NULL,
-  `name` VARCHAR(128) NULL,
-  `note` VARCHAR(128) NULL,
+  `id` CHAR(32) NOT NULL,
+  `name` VARCHAR(255) NULL,
+  `note` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -144,16 +144,16 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_department`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_department` (
-  `id` VARCHAR(32) NOT NULL,
-  `name` VARCHAR(128) NULL,
-  `note` VARCHAR(128) NULL,
+  `id` CHAR(32) NOT NULL,
+  `name` VARCHAR(255) NULL,
+  `note` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 CREATE TABLE `coursedb`.`t_school_department` (
-  `id` VARCHAR(32) NOT NULL,
-`t_school_id` VARCHAR(32) NOT NULL,
-`t_department_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+`t_school_id` CHAR(32) NOT NULL,
+`t_department_id` CHAR(32) NOT NULL,
  PRIMARY KEY (`id`),
   INDEX `fk_t_school_department_t_school1_idx` (`t_school_id` ASC),
   INDEX `fk_t_school_department_t_department1_idx` (`t_department_id` ASC),
@@ -173,9 +173,9 @@ CREATE TABLE `coursedb`.`t_school_department` (
 -- Table `coursedb`.`t_department_teacher`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_department_teacher` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_department_id` VARCHAR(32) NOT NULL,
-  `t_teacher_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_department_id` CHAR(32) NOT NULL,
+  `t_teacher_id` CHAR(32) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_t_department_teacher_t_department1_idx` (`t_department_id` ASC),
   INDEX `fk_t_department_teacher_t_teacher1_idx` (`t_teacher_id` ASC),
@@ -196,18 +196,18 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_natural_class`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_natural_class` (
-  `id` VARCHAR(32) NOT NULL,
-  `name` VARCHAR(128) NULL,
-  `note` VARCHAR(128) NULL,
+  `id` CHAR(32) NOT NULL,
+  `name` VARCHAR(255) NULL,
+  `note` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
 
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_natural_class_department` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_department_id` VARCHAR(32) NOT NULL,
-  `t_natural_class_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_department_id` CHAR(32) NOT NULL,
+  `t_natural_class_id` CHAR(32) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_t_natural_class_school_t_department1_idx` (`t_department_id` ASC),
   INDEX `fk_t_natural_class_school_t_natural_class1_idx` (`t_natural_class_id` ASC),
@@ -228,9 +228,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_natural_class_student`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_natural_class_student` (
-  `id` VARCHAR(32) NOT NULL,  
-  `t_natural_class_id` VARCHAR(32) NOT NULL,
-  `t_student_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,  
+  `t_natural_class_id` CHAR(32) NOT NULL,
+  `t_student_id` CHAR(32) NOT NULL,
   PRIMARY KEY (`id`),  
   INDEX `fk_t_natural_class_student_t_t_natural_class1_idx` (`t_natural_class_id` ASC),
   INDEX `fk_t_natural_class_student_t_t_student1_idx` (`t_student_id` ASC),  
@@ -253,9 +253,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_course_type`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_course_type` (
-  `id` VARCHAR(32) NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `note` VARCHAR(45) NULL,
+  `id` CHAR(32) NOT NULL,
+  `name` VARCHAR(255) NULL,
+  `note` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -264,9 +264,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_course_style`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_course_style` (
-  `id` VARCHAR(32) NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `note` VARCHAR(45) NULL,
+  `id` CHAR(32) NOT NULL,
+  `name` VARCHAR(255) NULL,
+  `note` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -275,14 +275,14 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_course`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_course` (
-  `id` VARCHAR(32) NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
-  `num` VARCHAR(45) NOT NULL,
-  `english_name` VARCHAR(45) NULL,
+  `id` CHAR(32) NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `num` TEXT NOT NULL,
+  `english_name` VARCHAR(255) NULL,
   `experiment_hours` INT NOT NULL,
   `class_hours` INT NOT NULL,
-  `t_course_style_id` VARCHAR(32) NOT NULL,
-  `t_course_type_id` VARCHAR(32) NOT NULL,
+  `t_course_style_id` CHAR(32) NOT NULL,
+  `t_course_type_id` CHAR(32) NOT NULL,
   PRIMARY KEY (`id`),
    INDEX `fk_t_course_t_course_style1_idx` (`t_course_style_id` ASC),
   INDEX `fk_t_course_t_course_type1_idx` (`t_course_type_id` ASC),
@@ -304,9 +304,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_course_department`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_course_department` (
-  `id` VARCHAR(32) NOT NULL,  
-  `t_course_id` VARCHAR(32) NOT NULL,
-  `t_department_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,  
+  `t_course_id` CHAR(32) NOT NULL,
+  `t_department_id` CHAR(32) NOT NULL,
   PRIMARY KEY (`id`),
    INDEX `fk_t_course_department_t_course1_idx` (`t_course_id` ASC),
   INDEX `fk_t_course_department_t_department1_idx` (`t_department_id` ASC),
@@ -328,9 +328,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_precourse`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_precourse` (
-  `id` VARCHAR(32) NOT NULL,  
-  `t_course_id_this` VARCHAR(32) NOT NULL,
-  `t_course_id_pre` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,  
+  `t_course_id_this` CHAR(32) NOT NULL,
+  `t_course_id_pre` CHAR(32) NOT NULL,
   PRIMARY KEY (`id`),
    INDEX `fk_t_course_id_t_course1_idx` (`t_course_id_this` ASC),
     INDEX `fk_t_course_id_t_course2_idx` (`t_course_id_pre` ASC),
@@ -351,9 +351,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_teaching_class`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_teaching_class` (
-  `id` VARCHAR(32) NOT NULL,
-  `name` VARCHAR(128) NULL,
-  `note` VARCHAR(45) NULL,
+  `id` CHAR(32) NOT NULL,
+  `name` VARCHAR(255) NULL,
+  `note` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -362,9 +362,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_course_teaching_class`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_course_teaching_class` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_course_id` VARCHAR(32) NOT NULL,
-  `t_teaching_class_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_course_id` CHAR(32) NOT NULL,
+  `t_teaching_class_id` CHAR(32) NOT NULL,
   `teaching_year_begin` INT NOT NULL,
   `teaching_year_end` INT NOT NULL,
   `teaching_term` INT NOT NULL,
@@ -388,9 +388,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_teaching_class_student`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_teaching_class_student` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_teaching_class_id` VARCHAR(32) NOT NULL,
-  `t_student_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_teaching_class_id` CHAR(32) NOT NULL,
+  `t_student_id` CHAR(32) NOT NULL,
   PRIMARY KEY (`id`, `t_teaching_class_id`),
   INDEX `fk_t_teaching_class_student1_idx` (`t_teaching_class_id` ASC),
   INDEX `fk_t_teaching_class_student1_2dx` (`t_student_id` ASC),
@@ -411,9 +411,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_teaching_type`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_teaching_type` (
-  `id` VARCHAR(32) NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `note` VARCHAR(45) NULL,
+  `id` CHAR(32) NOT NULL,
+  `name` VARCHAR(255) NULL,
+  `note` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -422,10 +422,10 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_teaching_class_teacher`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_teaching_class_teacher` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_course_teaching_class_id` VARCHAR(32) NOT NULL,
-  `t_teacher_id` VARCHAR(32) NOT NULL,
-  `t_teaching_type_id` VARCHAR(32) NOT NULL,  
+  `id` CHAR(32) NOT NULL,
+  `t_course_teaching_class_id` CHAR(32) NOT NULL,
+  `t_teacher_id` CHAR(32) NOT NULL,
+  `t_teaching_type_id` CHAR(32) NOT NULL,  
   PRIMARY KEY (`id`, `t_teacher_id`),
   INDEX `fk_t_teaching_class_teacher1_idx` (`t_course_teaching_class_id` ASC),
   INDEX `fk_t_teaching_class_teacher2_idx` (`t_teaching_type_id` ASC),
@@ -452,10 +452,10 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_course_teaching_class_reference_type`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_course_teaching_class_reference_type` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_course_teaching_class_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_course_teaching_class_id` CHAR(32) NOT NULL,
   `name` VARCHAR(255) NOT NULL,
-  `note` VARCHAR(255) NOT NULL,  
+  `note` TEXT NULL,  
   PRIMARY KEY (`id`),
   INDEX `fk_t_course_teaching_class_reference_type_1_idx` (`t_course_teaching_class_id` ASC),
   CONSTRAINT `fk_t_course_teaching_class_reference_type_1_idx`
@@ -469,9 +469,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_course_teaching_class_reference`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_course_teaching_class_reference` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_course_teaching_class_id` VARCHAR(32) NOT NULL,
-  `t_teacher_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_course_teaching_class_id` CHAR(32) NOT NULL,
+  `t_teacher_id` CHAR(32) NOT NULL,
   `t_course_teaching_class_reference_type_id` VARCHAR(32) NOT NULL,
   `title` VARCHAR(255) NOT NULL,
   `content` LONGTEXT NOT NULL,
@@ -503,10 +503,10 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_course_teaching_class_reference_file`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_course_teaching_class_reference_file` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_course_teaching_class_reference_id` VARCHAR(32) NOT NULL,
-   `filename` VARCHAR(255) NOT NULL,
-  `filepath` VARCHAR(255) NOT NULL,   
+  `id` CHAR(32) NOT NULL,
+  `t_course_teaching_class_reference_id` CHAR(32) NOT NULL,
+   `filename` VARCHAR(1024) NOT NULL,
+  `filepath` VARCHAR(1024) NOT NULL,   
   PRIMARY KEY (`id`),
   INDEX `fk_t_course_teaching_class_reference_file_1_idx` (`t_course_teaching_class_reference_id` ASC), 
   CONSTRAINT `fk_t_course_teaching_class_reference_file_1_idx`
@@ -522,11 +522,11 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_course_teaching_class_forum_topic`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_course_teaching_class_forum_topic` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_course_teaching_class_id` VARCHAR(32) NOT NULL,
-  `t_user_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_course_teaching_class_id` CHAR(32) NOT NULL,
+  `t_user_id` CHAR(32) NOT NULL,
    `title` VARCHAR(255) NOT NULL,
-  `content` LONGTEXT NOT NULL,
+  `content` LONGTEXT NULL,
   `created_date` DATETIME NOT NULL,
   `last_modified_date` DATETIME NOT NULL,
   `view_count` INT NOT NULL,
@@ -551,10 +551,10 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_course_teaching_class_forum_topic_file`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_course_teaching_class_forum_topic_file` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_course_teaching_class_forum_topic_id` VARCHAR(32) NOT NULL,
-   `filename` VARCHAR(255) NOT NULL,
-  `filepath` VARCHAR(255) NOT NULL,   
+  `id` CHAR(32) NOT NULL,
+  `t_course_teaching_class_forum_topic_id` CHAR(32) NOT NULL,
+   `filename` VARCHAR(1024) NOT NULL,
+  `filepath` VARCHAR(1024) NOT NULL,   
   PRIMARY KEY (`id`),
   INDEX `fk_t_course_teaching_class_forum_topic_file1_idx` (`t_course_teaching_class_forum_topic_id` ASC), 
   CONSTRAINT `fk_t_course_teaching_class_forum_topic_file1_idx`
@@ -570,11 +570,11 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_course_teaching_class_forum_reply`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_course_teaching_class_forum_reply` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_course_teaching_class_forum_topic_id` VARCHAR(32) NOT NULL,
-  `t_user_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_course_teaching_class_forum_topic_id` CHAR(32) NOT NULL,
+  `t_user_id` CHAR(32) NOT NULL,
    `title` VARCHAR(255) NOT NULL,
-  `content` LONGTEXT NOT NULL,
+  `content` LONGTEXT NULL,
   `created_date` DATETIME NOT NULL,
   `last_modified_date` DATETIME NOT NULL,  
   PRIMARY KEY (`id`),
@@ -597,10 +597,10 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_course_teaching_class_forum_reply_file`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_course_teaching_class_forum_reply_file` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_course_teaching_class_forum_reply_id` VARCHAR(32) NOT NULL,
-   `filename` VARCHAR(255) NOT NULL,
-  `filepath` VARCHAR(255) NOT NULL,   
+  `id` CHAR(32) NOT NULL,
+  `t_course_teaching_class_forum_reply_id` CHAR(32) NOT NULL,
+   `filename` VARCHAR(1024) NOT NULL,
+  `filepath` VARCHAR(2014) NOT NULL,   
   PRIMARY KEY (`id`),
   INDEX `fk_t_course_teaching_class_forum_reply_file1_idx` (`t_course_teaching_class_forum_reply_id` ASC), 
   CONSTRAINT `fk_t_course_teaching_class_forum_reply_file1_idx`
@@ -615,9 +615,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_group`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_group` (
-  `id` VARCHAR(32) NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `note` VARCHAR(45) NULL,
+  `id` CHAR(32) NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `note` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -626,9 +626,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_user_group`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_user_group` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_group_id` VARCHAR(32) NOT NULL,
-  `t_user_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_group_id` CHAR(32) NOT NULL,
+  `t_user_id` CHAR(32) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_t_user_group_t_group1_idx` (`t_group_id` ASC),
   INDEX `fk_t_user_group_t_user1_idx` (`t_user_id` ASC),
@@ -649,7 +649,7 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_resource`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_resource` (
-  `id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
   `uri` VARCHAR(255) NULL,
   `uri_element` VARCHAR(255) NULL,
   PRIMARY KEY (`id`))
@@ -660,9 +660,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_role`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_role` (
-  `id` VARCHAR(32) NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `note` VARCHAR(45) NULL,
+  `id` CHAR(32) NOT NULL,
+  `name` VARCHAR(255) NULL,
+  `note` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -671,9 +671,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_group_role`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_group_role` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_group_id` VARCHAR(32) NOT NULL,
-  `t_role_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_group_id` CHAR(32) NOT NULL,
+  `t_role_id` CHAR(32) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_t_group_role_t_group1_idx` (`t_group_id` ASC),
   INDEX `fk_t_group_role_t_role1_idx` (`t_role_id` ASC),
@@ -694,9 +694,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_permission_operator`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_permission_operator` (
-  `id` VARCHAR(32) NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `note` VARCHAR(45) NULL,
+  `id` CHAR(32) NOT NULL,
+  `name` VARCHAR(255) NULL,
+  `note` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -705,11 +705,11 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_permission`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_permission` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_permission_operator_id` VARCHAR(32) NOT NULL,
-  `t_resource_id` VARCHAR(32) NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `note` VARCHAR(45) NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_permission_operator_id` CHAR(32) NOT NULL,
+  `t_resource_id` CHAR(32) NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `note` TEXT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_t_permission_t_permission_operator1_idx` (`t_permission_operator_id` ASC),
   INDEX `fk_t_permission_t_resource1_idx` (`t_resource_id` ASC),
@@ -730,9 +730,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_role_permission`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_role_permission` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_role_id` VARCHAR(32) NOT NULL,
-  `t_permission_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_role_id` CHAR(32) NOT NULL,
+  `t_permission_id` CHAR(32) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_t_role_permission_t_role1_idx` (`t_role_id` ASC),
   INDEX `fk_t_role_permission_t_permission1_idx` (`t_permission_id` ASC),
@@ -753,9 +753,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_item_difficulty`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_item_difficulty` (
-  `id` VARCHAR(32) NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `note` VARCHAR(45) NULL,
+  `id` CHAR(32) NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `note` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -764,9 +764,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_item_type`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_item_type` (
-  `id` VARCHAR(32) NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `note` VARCHAR(45) NULL,
+  `id` CHAR(32) NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `note` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -775,9 +775,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_item_kinds`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_item_kinds` (
-  `id` VARCHAR(32) NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `note` VARCHAR(45) NULL,
+  `id` CHAR(32) NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `note` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -786,10 +786,10 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_database`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_database` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_item_difficulty_id` VARCHAR(32) NOT NULL,
-  `t_item_type_id` VARCHAR(32) NOT NULL,
-  `t_item_kinds_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_item_difficulty_id` CHAR(32) NOT NULL,
+  `t_item_type_id` CHAR(32) NOT NULL,
+  `t_item_kinds_id` CHAR(32) NOT NULL,
   `content` LONGTEXT NULL,
   `answer` LONGTEXT NULL,
   `tips` MEDIUMTEXT NULL,
@@ -820,9 +820,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_course_database`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_course_database` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_database_id` VARCHAR(32) NOT NULL,
-  `t_user_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_database_id` CHAR(32) NOT NULL,
+  `t_user_id` CHAR(32) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_t_course_database_t_database1_idx` (`t_database_id` ASC),
   INDEX `fk_t_course_database_t_user1_idx` (`t_user_id` ASC),
@@ -843,9 +843,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_logging_type`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_database_logging_type` (
-  `id` VARCHAR(32) NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `note` VARCHAR(45) NULL,
+  `id` CHAR(32) NOT NULL,
+  `name` VARCHAR(255) NULL,
+  `note` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -854,10 +854,10 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_database_logging`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_database_logging` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_database_id` VARCHAR(32) NOT NULL,
-  `t_user_id` VARCHAR(32) NOT NULL,
-  `t_database_logging_type_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_database_id` CHAR(32) NOT NULL,
+  `t_user_id` CHAR(32) NOT NULL,
+  `t_database_logging_type_id` CHAR(32) NOT NULL,
   `logging_datetime` DATETIME NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_t_database_log_t_database1_idx` (`t_database_id` ASC),
@@ -885,9 +885,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_knowledgepoint_type`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_knowledgepoint_type` (
-  `id` VARCHAR(32) NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `note` VARCHAR(45) NULL,
+  `id` CHAR(32) NOT NULL,
+  `name` VARCHAR(255) NULL,
+  `note` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -896,14 +896,14 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_knowledgepoint`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_knowledgepoint` (
-  `id` VARCHAR(32) NOT NULL,
-  `content` VARCHAR(45) NULL,
-  `name` VARCHAR(45) NULL,
-  `t_knowledgepoint_type_id` VARCHAR(32) NOT NULL,
-  `t_item_difficulty_id` VARCHAR(32) NOT NULL,
-  `father` VARCHAR(32) NULL,
-  `next` VARCHAR(32) NULL,
-  `t_knowledgepointcol` VARCHAR(45) NULL,
+  `id` CHAR(32) NOT NULL,
+  `content` LONGTEXT NULL,
+  `name` VARCHAR(255) NULL,
+  `t_knowledgepoint_type_id` CHAR(32) NOT NULL,
+  `t_item_difficulty_id` CHAR(32) NOT NULL,
+  `father` CHAR(32) NULL,
+  `next` CHAR(32) NULL,
+  `t_knowledgepointcol` VARCHAR(255) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_t_knowledgepoint_t_knowledgepoint_type1_idx` (`t_knowledgepoint_type_id` ASC),
   INDEX `fk_t_knowledgepoint_t_item_difficulty1_idx` (`t_item_difficulty_id` ASC),
@@ -924,9 +924,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_database_knowledgepoint`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_database_knowledgepoint` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_knowledgepoint_id` VARCHAR(32) NOT NULL,
-  `t_database_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_knowledgepoint_id` CHAR(32) NOT NULL,
+  `t_database_id` CHAR(32) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_t_database_knowledgepoint_t_knowledgepoint1_idx` (`t_knowledgepoint_id` ASC),
   INDEX `fk_t_database_knowledgepoint_t_database1_idx` (`t_database_id` ASC),
@@ -947,9 +947,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_score_system_type`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_score_system_type` (
-  `id` VARCHAR(32) NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `note` VARCHAR(45) NULL,
+  `id` CHAR(32) NOT NULL,
+  `name` VARCHAR(255) NULL,
+  `note` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -958,10 +958,10 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_course_teaching_class_homework_type`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_course_teaching_class_homework_type` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_course_teaching_class_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_course_teaching_class_id` CHAR(32) NOT NULL,
   `name` VARCHAR(255) NOT NULL,
-  `note` VARCHAR(255) NOT NULL,  
+  `note` TEXT NULL,  
   PRIMARY KEY (`id`),
   INDEX `fk_t_homework_type_1_idx` (`t_course_teaching_class_id` ASC),
   CONSTRAINT `fk_t_homework_type_1_idx`
@@ -975,15 +975,15 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_course_teaching_class_homework_baseinfo`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_course_teaching_class_homework_baseinfo` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_course_teaching_class_id` VARCHAR(32) NOT NULL,
-  `t_teacher_id` VARCHAR(32) NOT NULL,
-  `t_course_teaching_class_homework_type_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_course_teaching_class_id` CHAR(32) NOT NULL,
+  `t_teacher_id` CHAR(32) NOT NULL,
+  `t_course_teaching_class_homework_type_id` CHAR(32) NOT NULL,
   `filetype` TEXT NOT NULL,
   `filenameformat` TEXT NOT NULL,
   `filecount` INT NOT NULL,
   `title` VARCHAR(255) NOT NULL,
-  `content` LONGTEXT NOT NULL,
+  `content` LONGTEXT NULL,
   `pubdate` DATETIME NOT NULL,
   `enddate` DATETIME NOT NULL,   
   PRIMARY KEY (`id`),
@@ -1012,10 +1012,10 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_course_teaching_class_homework_file`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_course_teaching_class_homework_file` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_course_teaching_class_homework_baseinfo_id` VARCHAR(32) NOT NULL,
-   `filename` VARCHAR(255) NOT NULL,
-  `filepath` VARCHAR(255) NOT NULL,   
+  `id` CHAR(32) NOT NULL,
+  `t_course_teaching_class_homework_baseinfo_id` CHAR(32) NOT NULL,
+   `filename` VARCHAR(1024) NOT NULL,
+  `filepath` VARCHAR(1024) NOT NULL,   
   PRIMARY KEY (`id`),
   INDEX `fk_t_course_teaching_class_homework_file_1_idx` (`t_course_teaching_class_homework_baseinfo_id` ASC), 
   CONSTRAINT `fk_t_course_teaching_class_homework_file_1_idx`
@@ -1030,8 +1030,8 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_course_teaching_class_homework_score`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_course_teaching_class_homework_score` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_course_teaching_class_homework_baseinfo_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_course_teaching_class_homework_baseinfo_id` CHAR(32) NOT NULL,
   `t_score_system_type_id` VARCHAR(32) NOT NULL,
    `score` VARCHAR(32) NOT NULL,     
   PRIMARY KEY (`id`),
@@ -1054,9 +1054,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_course_teaching_class_homework_delayed`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_course_teaching_class_homework_delayed` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_course_teaching_class_homework_baseinfo_id` VARCHAR(32) NOT NULL,
-   `t_teacher_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_course_teaching_class_homework_baseinfo_id` CHAR(32) NOT NULL,
+   `t_teacher_id` CHAR(32) NOT NULL,
    `pubdate` DATETIME NOT NULL,
   `enddate` DATETIME NOT NULL,   
   PRIMARY KEY (`id`),
@@ -1079,11 +1079,11 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_course_teaching_class_homework_submit_baseinfo`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_course_teaching_class_homework_submit_baseinfo` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_course_teaching_class_homework_baseinfo_id` VARCHAR(32) NOT NULL,
-  `t_student_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_course_teaching_class_homework_baseinfo_id` CHAR(32) NOT NULL,
+  `t_student_id` CHAR(32) NOT NULL,
   `title` VARCHAR(255) NOT NULL,
-  `content` LONGTEXT NOT NULL,
+  `content` LONGTEXT NULL,
   `submitdate` DATETIME NOT NULL,
   `modifieddate` DATETIME NOT NULL,   
   PRIMARY KEY (`id`),
@@ -1106,10 +1106,10 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_course_teaching_class_homework_submit_file`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_course_teaching_class_homework_submit_file` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_course_teaching_class_homework_submit_baseinfo_id` VARCHAR(32) NOT NULL,
-   `filename` VARCHAR(255) NOT NULL,
-  `filepath` VARCHAR(255) NOT NULL,   
+  `id` CHAR(32) NOT NULL,
+  `t_course_teaching_class_homework_submit_baseinfo_id` CHAR(32) NOT NULL,
+   `filename` VARCHAR(1024) NOT NULL,
+  `filepath` VARCHAR(1024) NOT NULL,   
   PRIMARY KEY (`id`),
   INDEX `fk_t_course_teaching_class_homework_submit_file_1_idx` (`t_course_teaching_class_homework_submit_baseinfo_id` ASC), 
   CONSTRAINT `fk_t_course_teaching_class_homework_submit_file_1_idx`
@@ -1124,11 +1124,11 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_course_teaching_class_homework_reply`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_course_teaching_class_homework_reply` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_course_teaching_class_homework_submit_baseinfo_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_course_teaching_class_homework_submit_baseinfo_id` CHAR(32) NOT NULL,
   `t_teacher_id` VARCHAR(32) NOT NULL,
   `title` VARCHAR(255) NOT NULL,
-  `content` LONGTEXT NOT NULL,
+  `content` LONGTEXT NULL,
   `submitdate` DATETIME NOT NULL,
   `modifieddate` DATETIME NOT NULL,   
   PRIMARY KEY (`id`),
@@ -1151,10 +1151,10 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_course_teaching_class_homework_reply_file`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_course_teaching_class_homework_reply_file` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_course_teaching_class_homework_reply_id` VARCHAR(32) NOT NULL,
-   `filename` VARCHAR(255) NOT NULL,
-  `filepath` VARCHAR(255) NOT NULL,   
+  `id` CHAR(32) NOT NULL,
+  `t_course_teaching_class_homework_reply_id` CHAR(32) NOT NULL,
+   `filename` VARCHAR(1024) NOT NULL,
+  `filepath` VARCHAR(1024) NOT NULL,   
   PRIMARY KEY (`id`),
   INDEX `fk_t_course_teaching_class_homework_reply_file_1_idx` (`t_course_teaching_class_homework_reply_id` ASC), 
   CONSTRAINT `fk_t_course_teaching_class_homework_reply_file_1_idx`
@@ -1168,9 +1168,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_examination_type`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_examination_type` (
-  `id` VARCHAR(32) NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `note` VARCHAR(45) NULL,
+  `id` CHAR(32) NOT NULL,
+  `name` VARCHAR(255) NULL,
+  `note` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -1179,9 +1179,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_examination_constitution_type`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_examination_constitution_type` (
-  `id` VARCHAR(32) NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `note` VARCHAR(45) NULL,
+  `id` CHAR(32) NOT NULL,
+  `name` VARCHAR(255) NULL,
+  `note` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -1190,14 +1190,14 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_examination`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_examination` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_teacher_id` VARCHAR(32) NOT NULL,
-  `t_examination_type_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_teacher_id` CHAR(32) NOT NULL,
+  `t_examination_type_id` CHAR(32) NOT NULL,
   `total_score` VARCHAR(45) NULL,
   `begin_datetime` DATETIME NULL,
   `end_datetime` DATETIME NULL,
-  `t_course_id` VARCHAR(32) NOT NULL,
-  `t_examination_constitution_type_id` VARCHAR(32) NOT NULL,
+  `t_course_id` CHAR(32) NOT NULL,
+  `t_examination_constitution_type_id` CHAR(32) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_t_examination_t_teacher1_idx` (`t_teacher_id` ASC),
   INDEX `fk_t_examination_t_examination_type1_idx` (`t_examination_type_id` ASC),
@@ -1230,9 +1230,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_examination_database`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_examination_database` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_examination_id` VARCHAR(32) NOT NULL,
-  `t_database_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_examination_id` CHAR(32) NOT NULL,
+  `t_database_id` CHAR(32) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_t_examination_database_t_examination1_idx` (`t_examination_id` ASC),
   INDEX `fk_t_examination_database_t_database1_idx` (`t_database_id` ASC),
@@ -1253,10 +1253,10 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_score`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_score` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_student_id` VARCHAR(32) NOT NULL,
-  `t_course_id` VARCHAR(32) NOT NULL,
-  `t_examination_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_student_id` CHAR(32) NOT NULL,
+  `t_course_id` CHAR(32) NOT NULL,
+  `t_examination_id` CHAR(32) NOT NULL,
   `score` FLOAT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_t_score_t_student1_idx` (`t_student_id` ASC),
@@ -1284,8 +1284,8 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_score_constitution`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_score_constitution` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_score_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_score_id` CHAR(32) NOT NULL,
   `percent` INT NULL,
   `note` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
@@ -1302,9 +1302,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_examination_constitution`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_examination_constitution` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_examination_id` VARCHAR(32) NOT NULL,
-  `t_item_type_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_examination_id` CHAR(32) NOT NULL,
+  `t_item_type_id` CHAR(32) NOT NULL,
   `item_count` INT NULL,
   `percent` INT NULL,
   PRIMARY KEY (`id`),
@@ -1333,11 +1333,11 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_knowledgepoint_logging`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_knowledgepoint_logging` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_database_knowledgepoint_id` VARCHAR(32) NOT NULL,
-  `t_user_id` VARCHAR(32) NOT NULL,
-  `t_logging_type_id` VARCHAR(32) NOT NULL,
-  `t_knowledgepoint_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_database_knowledgepoint_id` CHAR(32) NOT NULL,
+  `t_user_id` CHAR(32) NOT NULL,
+  `t_logging_type_id` CHAR(32) NOT NULL,
+  `t_knowledgepoint_id` CHAR(32) NOT NULL,
   `logging_datetime` DATETIME NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_t_knowledgepoint_logging_t_database_knowledgepoint1_idx` (`t_database_knowledgepoint_id` ASC),
@@ -1374,9 +1374,9 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_attendance_state`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_attendance_state` (
-  `id` VARCHAR(32) NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `note` VARCHAR(45) NULL,
+  `id` CHAR(32) NOT NULL,
+  `name` VARCHAR(255) NULL,
+  `note` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -1385,10 +1385,10 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_attendance_type`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_attendance_type` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_course_teaching_class_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_course_teaching_class_id` CHAR(32) NOT NULL,
   `name` VARCHAR(255) NOT NULL,
-  `note` VARCHAR(255) NOT NULL,  
+  `note` TEXT NULL,  
   PRIMARY KEY (`id`),
   INDEX `fk_t_attendance_type_1_idx` (`t_course_teaching_class_id` ASC),
   CONSTRAINT `fk_t_attendance_type_1_idx`
@@ -1403,8 +1403,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_attendance_mode` (
   `id` VARCHAR(32) NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `note` VARCHAR(45) NULL,
+  `name` VARCHAR(255) NULL,
+  `note` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -1413,10 +1413,10 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_attendance`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_attendance` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_course_teaching_class_id` VARCHAR(32) NOT NULL,
-  `t_attendance_type_id` VARCHAR(32) NOT NULL,
-  `t_teacher_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_course_teaching_class_id` CHAR(32) NOT NULL,
+  `t_attendance_type_id` CHAR(32) NOT NULL,
+  `t_teacher_id` CHAR(32) NOT NULL,
   `begin_datetime` DATETIME NULL,
   `end_datetime` DATETIME NULL,
   `note` TEXT NULL,
@@ -1446,11 +1446,11 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_attendance_student`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_attendance_student` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_attendance_id` VARCHAR(32) NOT NULL,
-  `t_student_id` VARCHAR(32) NOT NULL,
-  `t_attendance_state_id` VARCHAR(32) NOT NULL,
-   `t_attendance_mode_id` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_attendance_id` CHAR(32) NOT NULL,
+  `t_student_id` CHAR(32) NOT NULL,
+  `t_attendance_state_id` CHAR(32) NOT NULL,
+   `t_attendance_mode_id` CHAR(32) NOT NULL,
    `checking_in_datetime` DATETIME NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_t_attendance_student_t_attendance1_idx` (`t_attendance_id` ASC),
@@ -1483,12 +1483,12 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_mail_box_send`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_mail_box_send` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_user_id_from` VARCHAR(32) NOT NULL,
-  `t_user_id_to` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_user_id_from` CHAR(32) NOT NULL,
+  `t_user_id_to` CHAR(32) NOT NULL,
   `state` VARCHAR(255) NOT NULL,
   `subject` VARCHAR(255) NOT NULL,
-  `content` LONGTEXT NOT NULL,
+  `content` LONGTEXT NULL,
   `senddate` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_t_mail_box_send_1_idx` (`t_user_id_from` ASC),
@@ -1510,10 +1510,10 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_mail_box_send_file`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_mail_box_send_file` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_mail_box_send_id` VARCHAR(32) NOT NULL,
-   `filename` VARCHAR(255) NOT NULL,
-  `filepath` VARCHAR(255) NOT NULL,   
+  `id` CHAR(32) NOT NULL,
+  `t_mail_box_send_id` CHAR(32) NOT NULL,
+   `filename` VARCHAR(1024) NOT NULL,
+  `filepath` VARCHAR(1024) NOT NULL,   
   PRIMARY KEY (`id`),
   INDEX `fk_t_mail_box_send_file_1_idx` (`t_mail_box_send_id` ASC), 
   CONSTRAINT `fk_t_mail_box_send_file_1_idx`
@@ -1527,12 +1527,12 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_mail_box_received`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_mail_box_received` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_user_id_from` VARCHAR(32) NOT NULL,
-  `t_user_id_to` VARCHAR(32) NOT NULL,
+  `id` CHAR(32) NOT NULL,
+  `t_user_id_from` CHAR(32) NOT NULL,
+  `t_user_id_to` CHAR(32) NOT NULL,
   `state` VARCHAR(255) NOT NULL,
   `subject` VARCHAR(255) NOT NULL,
-  `content` LONGTEXT NOT NULL,
+  `content` LONGTEXT NULL,
   `senddate` DATETIME NOT NULL,
   `readdate` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
@@ -1555,10 +1555,10 @@ ENGINE = InnoDB;
 -- Table `coursedb`.`t_mail_box_received_file`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_mail_box_received_file` (
-  `id` VARCHAR(32) NOT NULL,
-  `t_mail_box_received_id` VARCHAR(32) NOT NULL,
-   `filename` VARCHAR(255) NOT NULL,
-  `filepath` VARCHAR(255) NOT NULL,   
+  `id` CHAR(32) NOT NULL,
+  `t_mail_box_received_id` CHAR(32) NOT NULL,
+   `filename` VARCHAR(1024) NOT NULL,
+  `filepath` VARCHAR(1024) NOT NULL,   
   PRIMARY KEY (`id`),
   INDEX `fk_t_mail_box_received_file_1_idx` (`t_mail_box_received_id` ASC), 
   CONSTRAINT `fk_t_mail_box_received_file_1_idx`

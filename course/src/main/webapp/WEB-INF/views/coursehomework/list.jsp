@@ -1,12 +1,11 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ include file="../../shared/taglib.jsp"%>
-<%@page import="java.util.*,java.text.*"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 
 	//设置左侧浏览状态
@@ -24,7 +23,7 @@
 <base href="<%=basePath%>" />
 
 <%@ include file="../../shared/importCss.jsp"%>
-<%@ include file="../../shared/importdatetimepickercss.jsp"%>
+
 
 
 <link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet"
@@ -90,7 +89,7 @@
 					<td style="width: 10px;"></td>
 					<td><div class="btn-group" role="group" aria-label="...">
 							<button type="button" class="btn btn-default btn-sm"
-								data-toggle="modal" data-target="#addModal">增加</button>
+								onclick="location='<c:url value="coursehomework/addhomework-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html"/>'">增加</button>
 
 							<button type="button" class="btn btn-default btn-sm"
 								data-toggle="modal" data-target="#myModal">删除</button>
@@ -123,640 +122,193 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 						<strong>暂未有${selectedCourseHomeworkTypeData.name}作业</strong>
-						<p class="text-info">请为<em>${selectedCourseHomeworkTypeData.name}</em>布置作业</p>
+						<p class="text-info">
+							请为<em>${selectedCourseHomeworkTypeData.name}</em>布置作业
+						</p>
 					</div>
 
 				</c:when>
 
 				<c:otherwise>
-				
-
-			<%
-				//显示具体内容
-			%>
-
-			<div class="Course-Table">
-
-				<div class="container-fluid" style="overflow: hidden;">
-					<div class="gridseparator"></div>
-					<div class="row show-grid">
-						<div class="col-md-1">
-							<strong>#</strong>
-						</div>
-						<div class="col-md-2">
-							<strong>标题</strong>
-						</div>
-
-						<div class="col-md-2">
-							<strong>附件</strong>
-						</div>
-
-						<div class="col-md-3">
-							<strong>提交文件要求</strong>
-						</div>
-
-						<div class="col-md-1">
-							<strong>发布日期</strong>
-						</div>
-
-						<div class="col-md-1">
-							<strong>截止日期</strong>
-						</div>
-
-						<div class="col-md-1">
-							<strong>操作</strong>
-						</div>
-
-						<div class="col-md-1">
-							<strong>查看与批复</strong>
-						</div>
-					</div>
-
-					<div class="gridseparator"></div>
 
 
-					<c:set var="index" value="0"></c:set>
-					<c:forEach var="data"
-						items="${pagedCourseTeachingClassHomeworkBaseinfoViewData.result}">
-						<div class="row show-grid">
-							<div class="col-md-1">
-								<input type="checkbox" value="">
-								${pagedCourseTeachingClassHomeworkBaseinfoViewData.totalCount-(pagedCourseTeachingClassHomeworkBaseinfoViewData.currentPageNo-1) * pagedCourseTeachingClassHomeworkBaseinfoViewData.pageSize -index}
+					<%
+						//显示具体内容
+					%>
+
+					<div class="Course-Table">
+
+						<div class="container-fluid" style="overflow: hidden;">
+							<div class="gridseparator"></div>
+							<div class="row show-grid">
+								<div class="col-md-1">
+									<strong>#</strong>
+								</div>
+								<div class="col-md-2">
+									<strong>标题</strong>
+								</div>
+
+								<div class="col-md-2">
+									<strong>附件</strong>
+								</div>
+
+								<div class="col-md-3">
+									<strong>提交文件要求</strong>
+								</div>
+
+								<div class="col-md-1">
+									<strong>发布日期</strong>
+								</div>
+
+								<div class="col-md-1">
+									<strong>截止日期</strong>
+								</div>
+
+								<div class="col-md-1">
+									<strong>操作</strong>
+								</div>
+
+								<div class="col-md-1">
+									<strong>查看与批复</strong>
+								</div>
 							</div>
 
-
-							<div class="col-md-2">
-								<strong>${data.homeworkbaseinfo.title}</strong>
-								<p>${data.homeworkbaseinfo.content}</p>
-							</div>
-
-							<div class="col-md-2">
+							<div class="gridseparator"></div>
 
 
+							<c:set var="index" value="0"></c:set>
+							<c:forEach var="data"
+								items="${pagedCourseTeachingClassHomeworkBaseinfoViewData.result}">
+								<div class="row show-grid">
+									<div class="col-md-1">
+										<input type="checkbox" value="">
+										${pagedCourseTeachingClassHomeworkBaseinfoViewData.totalCount-(pagedCourseTeachingClassHomeworkBaseinfoViewData.currentPageNo-1) * pagedCourseTeachingClassHomeworkBaseinfoViewData.pageSize -index}
+									</div>
 
-								<c:choose>
 
-									<c:when test="${fn:length(data.homeworkFileList)==1}">
-										<a
-											href="<c:url value="coursehomeworkfile/download-${data.homeworkFileList[0].id}.html"/>">
-											${data.homeworkFileList[0].filename}</a>
-									</c:when>
+									<div class="col-md-2">
+										<strong>${data.homeworkbaseinfo.title}</strong>
+										<p>${data.homeworkbaseinfo.content}</p>
+									</div>
 
-									<c:otherwise>
-										<ul>
-											<c:forEach var="datafile" items="${data.homeworkFileList}">
-												<li><a
-													href="<c:url value="coursehomeworkfile/download-${datafile.id}.html"/>">
-														${datafile.filename}</a></li>
-											</c:forEach>
-										</ul>
-									</c:otherwise>
-								</c:choose>
+									<div class="col-md-2">
 
 
 
-							</div>
+										<c:choose>
+
+											<c:when test="${fn:length(data.homeworkFileList)==1}">
+												<a
+													href="<c:url value="coursehomeworkfile/download-${data.homeworkFileList[0].id}.html"/>">
+													${data.homeworkFileList[0].filename}</a>
+											</c:when>
+
+											<c:otherwise>
+												<ul>
+													<c:forEach var="datafile" items="${data.homeworkFileList}">
+														<li><a
+															href="<c:url value="coursehomeworkfile/download-${datafile.id}.html"/>">
+																${datafile.filename}</a></li>
+													</c:forEach>
+												</ul>
+											</c:otherwise>
+										</c:choose>
 
 
-							<div class="col-md-3">
 
-								<c:choose>
+									</div>
 
-									<c:when test="${data.homeworkbaseinfo.filecount==0}">
+
+									<div class="col-md-3">
+
+										<c:choose>
+
+											<c:when test="${data.homeworkbaseinfo.filecount==0}">
 										不需要提交文件
 									</c:when>
-									<c:when test="${data.homeworkbaseinfo.filecount==-1}">
+											<c:when test="${data.homeworkbaseinfo.filecount==-1}">
 										提交多个文件（数目不限制）<br>文件类型:${data.homeworkbaseinfo.filetype}<br>文件名称格式:${data.homeworkbaseinfo.filenameformat}
 									</c:when>
 
-									<c:otherwise>
+											<c:otherwise>
 										提交${data.homeworkbaseinfo.filecount}个文件<br>文件类型:${data.homeworkbaseinfo.filetype}<br>文件名称格式:${data.homeworkbaseinfo.filenameformat}		
 									</c:otherwise>
-								</c:choose>
+										</c:choose>
 
 
-							</div>
+									</div>
 
 
-							<div class="col-md-1">
-								<fmt:formatDate value="${data.homeworkbaseinfo.pubdate}"
-									pattern="yyyy-MM-dd HH:mm" />
-							</div>
+									<div class="col-md-1">
+										<fmt:formatDate value="${data.homeworkbaseinfo.pubdate}"
+											pattern="yyyy-MM-dd HH:mm" />
+									</div>
 
-							<div class="col-md-1">
-								<fmt:formatDate value="${data.homeworkbaseinfo.enddate}"
-									pattern="yyyy-MM-dd HH:mm" />
-							</div>
-
-
+									<div class="col-md-1">
+										<fmt:formatDate value="${data.homeworkbaseinfo.enddate}"
+											pattern="yyyy-MM-dd HH:mm" />
+									</div>
 
 
-							<div class="col-md-1">
-								<button type="button" class="btn btn-default btn-xs"
-									onclick="onUpdateSimple('${data.homeworkbaseinfo.id}','${data.homeworkbaseinfo.title}','${data.homeworkbaseinfo.content}','${data.homeworkbaseinfo.enddate}')">简单修改...</button>
-									
-								<button type="button" class="btn btn-default btn-xs"
-									onclick="onUpdate('${data.homeworkbaseinfo.id}','${data.homeworkbaseinfo.title}','${data.homeworkbaseinfo.content}','${data.homeworkbaseinfo.enddate}')">修改...</button>
-								<button type="button" class="btn btn-default btn-xs"
-									onclick="onDelete('${data.homeworkbaseinfo.id}')">删除</button>
-							</div>
 
-							<div class="col-md-1">
-								<c:if test="${data.homeworkbaseinfo.canStudentSubmit==true }">
-									<button type="button" class="btn btn-default btn-xs"
-										onclick="location='<c:url value="/coursehomework/replylist-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">查看</button>
-								</c:if>
-								
-								<c:if test="${data.homeworkbaseinfo.canReply==true }">
-									<button type="button" class="btn btn-default btn-xs"
-										onclick="location='<c:url value="/coursehomework/statistics-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">统计</button>
-									<button type="button" class="btn btn-default btn-xs"
-										onclick="location='<c:url value="/coursehomework/replylist-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">批复</button>
-								</c:if>
-							</div>
+
+									<div class="col-md-1">
+										<button type="button" class="btn btn-default btn-sm"
+											onclick="location='<c:url value="coursehomework/updatehomework-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">修改</button>
+
+										<button type="button" class="btn btn-default btn-sm"
+											onclick="location='<c:url value="coursehomework/simpleupdatehomework-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">简单修改</button>
+
+										<button type="button" class="btn btn-default btn-xs"
+											onclick="onDelete('${data.homeworkbaseinfo.id}')">删除</button>
+									</div>
+
+									<div class="col-md-1">
+										<c:if test="${data.homeworkbaseinfo.canStudentSubmit==true }">
+											<button type="button" class="btn btn-default btn-xs"
+												onclick="location='<c:url value="/coursehomework/replylist-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">查看</button>
+										</c:if>
+
+										<c:if test="${data.homeworkbaseinfo.canReply==true }">
+											<button type="button" class="btn btn-default btn-xs"
+												onclick="location='<c:url value="/coursehomework/statistics-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">统计</button>
+											<button type="button" class="btn btn-default btn-xs"
+												onclick="location='<c:url value="/coursehomework/replylist-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">批复</button>
+										</c:if>
+									</div>
+								</div>
+								<c:set var="index" value="${index + 1}"></c:set>
+							</c:forEach>
+
+							<c:if
+								test="${pagedCourseTeachingClassHomeworkBaseinfoViewData.totalCount>0}">
+								<div class="gridseparator"></div>
+							</c:if>
+
 						</div>
-						<c:set var="index" value="${index + 1}"></c:set>
-					</c:forEach>
-
-					<c:if
-						test="${pagedCourseTeachingClassHomeworkBaseinfoViewData.totalCount>0}">
-						<div class="gridseparator"></div>
-					</c:if>
-
-				</div>
 
 
 
 
-				<mathtop:PageBar
-					pageUrl="/coursehomework/add-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html"
-					pageAttrKey="pagedCourseTeachingClassHomeworkBaseinfoViewData" />
+						<mathtop:PageBar
+							pageUrl="/coursehomework/add-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html"
+							pageAttrKey="pagedCourseTeachingClassHomeworkBaseinfoViewData" />
 
-			</div>
-			
-			</c:otherwise>
-											</c:choose>
+					</div>
+
+				</c:otherwise>
+			</c:choose>
 
 		</div>
 	</div>
 
 
-	<!-- 添加对话框 -->
-	<div class="modal fade" id="addModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">添加${selectedCourseHomeworkTypeData.name}要求</h4>
-				</div>
 
 
 
-				<form class="form-horizontal "
-					action="<c:url value="/coursehomework/add-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html"/>"
-					enctype="multipart/form-data" method="post">
-
-					<div class="modal-body"
-						style="margin-left: 10px; margin-right: 10px;">
-
-						<div class="form-group">
-							<label for="name" class=" control-label">标题</label> <input
-								type="text" id="name" class="form-control" name="title" value=""
-								placeholder="标题" required>
-						</div>
-
-
-						<div class="form-group">
-							<label for="note" class=" control-label">内容</label>
-							<textarea class="form-control" rows="5" name="content"></textarea>
-						</div>
-
-						<div class="form-group">
-							<label for="name" class=" control-label">文件数目</label> <input
-								type="radio" name="filecount" value="0"
-								onclick="onfilecountradio(0)" />0个 <input type="radio"
-								name="filecount" value="1" checked="checked"
-								onclick="onfilecountradio(1)" />1个 <input type="radio"
-								name="filecount" value="2" onclick="onfilecountradio(2)" />2个 <input
-								type="radio" name="filecount" value="3"
-								onclick="onfilecountradio(3)" />3个 <input type="radio"
-								name="filecount" value="4" onclick="onfilecountradio(4)" />4个 <input
-								type="radio" name="filecount" value="5"
-								onclick="onfilecountradio(5)" />5个 <input type="radio"
-								name="filecount" value="6" onclick="onfilecountradio(6)" />6个 <input
-								type="radio" name="filecount" value="7"
-								onclick="onfilecountradio(7)" />7个 <input type="radio"
-								name="filecount" value="8" onclick="onfilecountradio(8)" />8个 <input
-								type="radio" name="filecount" value="9"
-								onclick="onfilecountradio(9)" />9个 <input type="radio"
-								name="filecount" value="-1" onclick="onfilecountradio(-1)" />不限制个数
-						</div>
-
-
-						<div class="form-group" id="filetypegroup">
-							<label for="name" class=" control-label">文件类型</label> <input
-								type="radio" name="filetyperadio" checked="checked" value="0"
-								onclick="onfiletyperadio(0)" />具体文件类型 <input type="radio"
-								value="1" name="filetyperadio" onclick="onfiletyperadio(1)" />不限制文件类型
-
-
-
-							<div class="panel panel-default" id="filetypepanel0">
-								<div class="panel-heading">${selectedCourseHomeworkTypeData.name}文件类型</div>
-								<div class="panel-body" style="margin: 10px;">
-									<input type=checkbox name="filetype" value="*.doc;*.docx"
-										checked="checked">word文件 <input type=checkbox
-										name="filetype" value="*.xls;*.xlsx">excel文件 <input
-										type=checkbox name="filetype" value="*.ppt;*.pptx">ppt文件
-									<input type=checkbox name="filetype" value="*.txt">文本文件(txt)
-									<input type=checkbox name="filetype" value="*.pdf">pdf文件(pdf)
-									<input type=checkbox name="filetype" value="*.c;*.h">c文件
-									<input type=checkbox name="filetype"
-										value="*.cpp;*.c;*.h;*.cc;*.hh;*.hpp;*.hh">c++文件 <input
-										type=checkbox name="filetype" value="*.java">java文件
-									<p />
-									<label for="filetypecustom" class=" control-label">自定义类型(类型之间用分号隔开，例如“*.txt;*.dat”)</label>
-									<input type="text" id="filetypecustom" class="form-control"
-										name="filetypecustom" value="" placeholder="自定义类型">
-								</div>
-							</div>
-
-
-							<div class="panel panel-default" id="filetypepanel1"
-								style="display: none;">
-								<div class="panel-heading">不限制${selectedCourseHomeworkTypeData.name}附件类型</div>
-								<div class="panel-body">${selectedCourseHomeworkTypeData.name}附件可以为任意类型。</div>
-							</div>
-
-
-
-
-						</div>
-
-						<div class="form-group" id="filenameformatgroup">
-							<label for="filenameformatradio" class=" control-label">文件名称格式</label>
-
-							<input type="radio" name="filenameformatradio" checked="checked"
-								value="0" onclick="onfilenameformatradio(0)" />预定义格式 <input
-								type="radio" value="1" name="filenameformatradio"
-								onclick="onfilenameformatradio(1)" />自定义格式
-
-
-
-							<div class="panel panel-default" id="filenameformatpanel0">
-								<div class="panel-heading">预定义格式</div>
-								<div class="panel-body">
-									<input type="radio" name="filenameformat"
-										value="{作业类型}_{作业名称}_{自然班}_{学号}_{姓名}" checked="checked" />${selectedCourseHomeworkTypeData.name}_实验名称_班级_学号_姓名
-									<br> <input type="radio" name="filenameformat"
-										value="{作业类型}_{作业名称}_{学号}_{姓名}" />${selectedCourseHomeworkTypeData.name}_实验名称_学号_姓名
-									<br> <input type="radio" name="filenameformat"
-										value="{作业类型}_{自然班}_{学号}_{姓名}" />${selectedCourseHomeworkTypeData.name}_班级_学号_姓名
-									<br> <input type="radio" name="filenameformat"
-										value="{作业名称}_{自然班}_{学号}_{姓名}" />实验名称_班级_学号_姓名
-								</div>
-							</div>
-
-
-
-							<div class="panel panel-default" id="filenameformatpanel1"
-								style="display: none;">
-								<div class="panel-heading">自定义格式</div>
-								<div class="panel-body">
-									<p>"{}"为格式控制符。含义如下：</p>
-
-									<dl>
-										<dt>{学院}</dt>
-										<dd>学生所在的学院</dd>
-										<dt>{系别}</dt>
-										<dd>学生所在的系别</dd>
-										<dt>{课程名}</dt>
-										<dd>课程名称</dd>
-										<dt>{教学学年}</dt>
-										<dd>教学学年，例如：2015-2016学年</dd>
-										<dt>{教学学期}</dt>
-										<dd>教学学期，例如：第1学期</dd>
-										<dt>{教学班授课教师}</dt>
-										<dd></dd>
-										<dt>{教学班}</dt>
-										<dd>学生所在的教学班</dd>
-
-										<dt>{自然班}</dt>
-										<dd>学生所在的自然班（行政班）</dd>
-										<dt>{学号}</dt>
-										<dd>学生的学号</dd>
-										<dt>{姓名}</dt>
-										<dd>学生的姓名</dd>
-										<dt>{作业类型}</dt>
-										<dd>本次作业的类型（${selectedCourseHomeworkTypeData.name}）</dd>
-
-										<dt>{作业名称}</dt>
-										<dd>本次作业的名称</dd>
-
-										<dt>{数字}</dt>
-										<dd>数字，从0开始的整数，不能是负数或小数。</dd>
-
-										<dt>{?}</dt>
-										<dd>一个字符</dd>
-
-										<dt>{*}</dt>
-										<dd>任意长度的字符</dd>
-									</dl>
-
-									<input type="text" id="filenameformatcustom"
-										class="form-control" name="filenameformatcustom" value=""
-										placeholder="标题">
-								</div>
-							</div>
-
-
-						</div>
-
-
-						<%!Date getDateAfter(Date d, int day) {
-		Calendar now = Calendar.getInstance();
-		now.setTime(d);
-		now.set(Calendar.DATE, now.get(Calendar.DATE) + day);
-		return now.getTime();
-	}
-
-	String getNewDate() {
-		Date d = new Date();
-		d = getDateAfter(d, 15);
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String dateString = format.format(d);
-		return dateString;
-	}%>
-
-						<div class="form-group">
-							<label for="enddate" class="control-label">截止时间</label>
-
-							<div class="input-group date form_date col-sm-5" data-date=""
-								data-date-format="yyyy-mm-dd hh:ii "
-								data-link-field="dtp_input2" data-link-format="yyyy-mm-dd hh:ii">
-								<input class="form-control" size="16" type="text" id="enddate"
-									value="<%=getNewDate()%>" name="enddate" readonly required>
-								<span class="input-group-addon"><span
-									class="glyphicon glyphicon-remove"></span></span> <span
-									class="input-group-addon"><span
-									class="glyphicon glyphicon-calendar"></span></span>
-							</div>
-
-
-						</div>
-
-
-
-						<div class="form-group">
-
-							<label for="exampleInputFile" class=" control-label">附件</label>
-							<p class="help-block">任意文件类型均可。</p>
-							<input type="file" multiple="multiple" id="exampleInputFile"
-								name="file" />
-
-						</div>
-
-
-					</div>
-
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-primary">添加</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					</div>
-				</form>
-
-			</div>
-		</div>
-	</div>
-
-
-	<!-- 修改对话框 -->
-	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">修改${selectedCourseHomeworkTypeData.name}要求</h4>
-				</div>
-
-
-
-				<form class="form-horizontal" id="myUpdateForm" name="myUpdateForm"
-					enctype="multipart/form-data" method="post">
-
-					<div class="modal-body"
-						style="margin-left: 10px; margin-right: 10px;">
-
-						<div class="form-group">
-							<label for="name" class=" control-label">标题</label> <input
-								type="text" id="inputtitle" class="form-control"
-								name="updatetitle" value="" placeholder="标题" required>
-						</div>
-
-
-						<div class="form-group">
-							<label for="note" class=" control-label">内容</label>
-							<textarea class="form-control" id="inputcontent" rows="5"
-								name="updatecontent"></textarea>
-						</div>
-
-						<div class="form-group">
-							<label for="name" class=" control-label">文件数目</label> <input
-								type="radio" name="filecount" value="0"
-								onclick="onfilecountradio(0)" />0个 <input type="radio"
-								name="filecount" value="1" checked="checked"
-								onclick="onfilecountradio(1)" />1个 <input type="radio"
-								name="filecount" value="2" onclick="onfilecountradio(2)" />2个 <input
-								type="radio" name="filecount" value="3"
-								onclick="onfilecountradio(3)" />3个 <input type="radio"
-								name="filecount" value="4" onclick="onfilecountradio(4)" />4个 <input
-								type="radio" name="filecount" value="5"
-								onclick="onfilecountradio(5)" />5个 <input type="radio"
-								name="filecount" value="6" onclick="onfilecountradio(6)" />6个 <input
-								type="radio" name="filecount" value="7"
-								onclick="onfilecountradio(7)" />7个 <input type="radio"
-								name="filecount" value="8" onclick="onfilecountradio(8)" />8个 <input
-								type="radio" name="filecount" value="9"
-								onclick="onfilecountradio(9)" />9个 <input type="radio"
-								name="filecount" value="-1" onclick="onfilecountradio(-1)" />不限制个数
-						</div>
-
-
-						<div class="form-group" id="filetypegroup">
-							<label for="name" class=" control-label">文件类型</label> <input
-								type="radio" name="filetyperadio" checked="checked" value="0"
-								onclick="onfiletyperadio(0)" />具体文件类型 <input type="radio"
-								value="1" name="filetyperadio" onclick="onfiletyperadio(1)" />不限制文件类型
-
-
-
-							<div class="panel panel-default" id="filetypepanel0">
-								<div class="panel-heading">${selectedCourseHomeworkTypeData.name}文件类型</div>
-								<div class="panel-body" style="margin: 10px;">
-									<input type=checkbox name="filetype" value="*.doc;*.docx"
-										checked="checked">word文件 <input type=checkbox
-										name="filetype" value="*.xls;*.xlsx">excel文件 <input
-										type=checkbox name="filetype" value="*.ppt;*.pptx">ppt文件
-									<input type=checkbox name="filetype" value="*.txt">文本文件(txt)
-									<input type=checkbox name="filetype" value="*.pdf">pdf文件(pdf)
-									<input type=checkbox name="filetype" value="*.c;*.h">c文件
-									<input type=checkbox name="filetype"
-										value="*.cpp;*.c;*.h;*.cc;*.hh;*.hpp;*.hh">c++文件 <input
-										type=checkbox name="filetype" value="*.java">java文件
-									<p />
-									<label for="filetypecustom" class=" control-label">自定义类型(类型之间用分号隔开，例如“*.txt;*.dat”)</label>
-									<input type="text" id="filetypecustom" class="form-control"
-										name="filetypecustom" value="" placeholder="自定义类型">
-								</div>
-							</div>
-
-
-							<div class="panel panel-default" id="filetypepanel1"
-								style="display: none;">
-								<div class="panel-heading">不限制${selectedCourseHomeworkTypeData.name}附件类型</div>
-								<div class="panel-body">${selectedCourseHomeworkTypeData.name}附件可以为任意类型。</div>
-							</div>
-
-
-
-
-						</div>
-
-						<div class="form-group" id="filenameformatgroup">
-							<label for="filenameformatradio" class=" control-label">文件名称格式</label>
-
-							<input type="radio" name="filenameformatradio" checked="checked"
-								value="0" onclick="onfilenameformatradio(0)" />预定义格式 <input
-								type="radio" value="1" name="filenameformatradio"
-								onclick="onfilenameformatradio(1)" />自定义格式
-
-
-
-							<div class="panel panel-default" id="filenameformatpanel0">
-								<div class="panel-heading">预定义格式</div>
-								<div class="panel-body">
-									<input type="radio" name="filenameformat"
-										value="{作业类型}_{作业名称}_{自然班}_{学号}_{姓名}" checked="checked" />${selectedCourseHomeworkTypeData.name}_实验名称_班级_学号_姓名
-									<br> <input type="radio" name="filenameformat"
-										value="{作业类型}_{作业名称}_{学号}_{姓名}" />${selectedCourseHomeworkTypeData.name}_实验名称_学号_姓名
-									<br> <input type="radio" name="filenameformat"
-										value="{作业类型}_{自然班}_{学号}_{姓名}" />${selectedCourseHomeworkTypeData.name}_班级_学号_姓名
-									<br> <input type="radio" name="filenameformat"
-										value="{作业名称}_{自然班}_{学号}_{姓名}" />实验名称_班级_学号_姓名
-								</div>
-							</div>
-
-
-
-							<div class="panel panel-default" id="filenameformatpanel1"
-								style="display: none;">
-								<div class="panel-heading">自定义格式</div>
-								<div class="panel-body">
-									<p>"{}"为格式控制符。含义如下：</p>
-
-									<dl>
-										<dt>{学院}</dt>
-										<dd>学生所在的学院</dd>
-										<dt>{系别}</dt>
-										<dd>学生所在的系别</dd>
-										<dt>{课程名}</dt>
-										<dd>课程名称</dd>
-										<dt>{教学学年}</dt>
-										<dd>教学学年，例如：2015-2016学年</dd>
-										<dt>{教学学期}</dt>
-										<dd>教学学期，例如：第1学期</dd>
-										<dt>{教学班授课教师}</dt>
-										<dd></dd>
-										<dt>{教学班}</dt>
-										<dd>学生所在的教学班</dd>
-
-										<dt>{自然班}</dt>
-										<dd>学生所在的自然班（行政班）</dd>
-										<dt>{学号}</dt>
-										<dd>学生的学号</dd>
-										<dt>{姓名}</dt>
-										<dd>学生的姓名</dd>
-										<dt>{作业类型}</dt>
-										<dd>本次作业的类型（${selectedCourseHomeworkTypeData.name}）</dd>
-
-										<dt>{作业名称}</dt>
-										<dd>本次作业的名称</dd>
-
-										<dt>{数字}</dt>
-										<dd>数字，从0开始的整数，不能是负数或小数。</dd>
-
-										<dt>{?}</dt>
-										<dd>一个字符</dd>
-
-										<dt>{*}</dt>
-										<dd>任意长度的字符</dd>
-									</dl>
-
-									<input type="text" id="filenameformatcustom"
-										class="form-control" name="filenameformatcustom" value=""
-										placeholder="标题">
-								</div>
-							</div>
-
-
-						</div>
-
-
-
-
-						<div class="form-group">
-							<label for="enddate" class="control-label">截止时间</label>
-
-							<div class="input-group date form_date col-sm-5" data-date=""
-								data-date-format="yyyy-mm-dd hh:ii "
-								data-link-field="dtp_input2" data-link-format="yyyy-mm-dd hh:ii">
-								<input class="form-control" size="16" type="text" id="enddate"
-									value="<%=getNewDate()%>" name="enddate" readonly required>
-								<span class="input-group-addon"><span
-									class="glyphicon glyphicon-remove"></span></span> <span
-									class="input-group-addon"><span
-									class="glyphicon glyphicon-calendar"></span></span>
-							</div>
-
-
-						</div>
-
-
-
-						<div class="form-group">
-
-							<label for="exampleInputFile" class=" control-label">附件</label>
-							<p class="help-block">任意文件类型均可。</p>
-							<input type="file" multiple="multiple" id="exampleInputFile"
-								name="file" />
-
-						</div>
-
-
-					</div>
-
-					<div class="modal-footer">
-						<button type="submit" id="updatebtn" class="btn btn-primary">修改</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					</div>
-				</form>
-
-			</div>
-		</div>
-	</div>
-	
-	
 	<!-- 简单修改对话框 -->
-	<div class="modal fade" id="updateSimpleModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="updateSimpleModal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -769,48 +321,7 @@
 
 
 
-				<form class="form-horizontal" id="updateSimpleModalForm" name="updateSimpleModalForm"
-					enctype="multipart/form-data" method="post">
 
-					<div class="modal-body"
-						style="margin-left: 10px; margin-right: 10px;">
-
-						<div class="form-group">
-							<label for="name" class=" control-label">标题</label> <input
-								type="text" id="inputtitle" class="form-control"
-								name="updatetitle" value="" placeholder="标题" required>
-						</div>
-
-
-						<div class="form-group">
-							<label for="note" class=" control-label">内容</label>
-							<textarea class="form-control" id="inputcontent" rows="5"
-								name="updatecontent"></textarea>
-						</div>
-			
-						<div class="form-group">
-							<label for="enddate" class="control-label">截止时间</label>
-
-							<div class="input-group date form_date col-sm-5" data-date=""
-								data-date-format="yyyy-mm-dd hh:ii "
-								data-link-field="dtp_input2" data-link-format="yyyy-mm-dd hh:ii">
-								<input class="form-control" size="16" type="text" id="enddate"
-									value="<%=getNewDate()%>" name="enddate" readonly required>
-								<span class="input-group-addon"><span
-									class="glyphicon glyphicon-remove"></span></span> <span
-									class="input-group-addon"><span
-									class="glyphicon glyphicon-calendar"></span></span>
-							</div>
-
-						</div>						
-
-					</div>
-
-					<div class="modal-footer">
-						<button type="submit" id="updatebtn" class="btn btn-primary">修改</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					</div>
-				</form>
 
 			</div>
 		</div>
@@ -822,7 +333,7 @@
 	<%@ include file="../../shared/pageFooter.jsp"%>
 
 	<%@ include file="../../shared/importJs.jsp"%>
-	<%@ include file="../../shared/importdatetimepickerjs.jsp"%>
+
 
 
 	<script type="text/javascript">
@@ -834,18 +345,7 @@
 
 
 
-	<script>
-		$('.form_date').datetimepicker({
-			language : 'zh-CN',
-			weekStart : 1,
-			todayBtn : 1,
-			autoclose : 1,
-			todayHighlight : 1,
-			startView : 2,
-			minView : 0,
-			forceParse : 0
-		});
-	</script>
+
 
 	<script>
 		function onSearch() {
@@ -872,68 +372,38 @@
 
 		}
 
-		function onUpdate(id, title, content, enddate) {
-			var url = "coursehomework/update-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-"
-					+ id + ".html";
-			$('#updateModal').find('.modal-body #inputid').val(id);
-			$('#updateModal').find('.modal-body #inputtitle').val(title);
-			$('#updateModal').find('.modal-body #inputcontent').val(content);
-			$('#updateModal').find('.modal-body #inputenddate').val(enddate);
-
-			$("#myUpdateForm").attr("action", url);
-
-			$('#updateModal').modal('show');
-
-		}
 		
-		function onUpdateSimple(id, title, content, enddate) {
-			var url = "coursehomework/updatesimple-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-"
-					+ id + ".html";
-			$('#updateSimpleModal').find('.modal-body #inputid').val(id);
-			$('#updateSimpleModal').find('.modal-body #inputtitle').val(title);
-			$('#updateSimpleModal').find('.modal-body #inputcontent').val(content);
-			$('#updateSimpleModal').find('.modal-body #inputenddate').val(enddate);
 
-			$("#updateSimpleModalForm").attr("action", url);
-
-			$('#updateSimpleModal').modal('show');
-
-		}
-		
-		
-		function onfiletyperadio(type){
-			if(type==0){
+		function onfiletyperadio(type) {
+			if (type == 0) {
 				//具体类型
 				$('#filetypepanel0').show();
 				$('#filetypepanel1').hide();
-			}
-			else{
+			} else {
 				//不限制类型
 				$('#filetypepanel1').show();
 				$('#filetypepanel0').hide();
 			}
 		}
-		
-		function onfilenameformatradio(type){
-			if(type==0){
+
+		function onfilenameformatradio(type) {
+			if (type == 0) {
 				//具体类型
 				$('#filenameformatpanel0').show();
 				$('#filenameformatpanel1').hide();
-			}
-			else{
+			} else {
 				//自定义类型
 				$('#filenameformatpanel1').show();
 				$('#filenameformatpanel0').hide();
 			}
 		}
-		
-		function onfilecountradio(type){
-			if(type==0){
+
+		function onfilecountradio(type) {
+			if (type == 0) {
 				//具体类型
 				$('#filetypegroup').hide();
 				$('#filenameformatgroup').hide();
-			}
-			else{
+			} else {
 				//自定义类型
 				$('#filetypegroup').show();
 				$('#filenameformatgroup').show();

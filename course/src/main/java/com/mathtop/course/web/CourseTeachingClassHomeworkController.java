@@ -69,6 +69,31 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 	 * @param user
 	 * @return
 	 */
+	@RequestMapping(value = "/addhomework-{t_course_teaching_class_id}-{t_course_teaching_class_homeworktype_id}")
+	public ModelAndView addhomework(HttpServletRequest request, RedirectAttributes redirectAttributes,
+			@PathVariable String t_course_teaching_class_id, @PathVariable String t_course_teaching_class_homeworktype_id) {
+
+		ModelAndView view = new ModelAndView();
+
+		// 设置课程基本信息，包括授课、作业类型等
+		SetCourseTeachingClassBaseInfo(view, t_course_teaching_class_id);
+
+		// 课程类型
+		CourseTeachingClassHomeworkType selectedCourseHomeworkTypeData = homeworktypeService
+				.getByID(t_course_teaching_class_homeworktype_id);
+		view.addObject(SelectedObjectConst.Selected_CourseHomeworkTypeData, selectedCourseHomeworkTypeData);
+
+		view.setViewName("coursehomework/new");
+		return view;
+	}
+
+	/**
+	 * 添加
+	 * 
+	 * @param request
+	 * @param user
+	 * @return
+	 */
 	@RequestMapping(value = "/add-{t_course_teaching_class_id}-{t_course_teaching_class_homeworktype_id}")
 	public ModelAndView add(HttpServletRequest request, RedirectAttributes redirectAttributes,
 			@PathVariable String t_course_teaching_class_id, @PathVariable String t_course_teaching_class_homeworktype_id,
@@ -78,6 +103,7 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
+		
 		String enddate = request.getParameter("enddate");
 		String filetype = "*.*";
 		String filenameformat = "{*}";
@@ -92,7 +118,7 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 
 				/**
 				 * 文件类型 正确格式为*.doc;*.docx;*.txt
-				 * */
+				 */
 				String[] filetypes = request.getParameterValues("filetype");
 				filetype = "";
 				for (String s : filetypes) {
@@ -118,7 +144,7 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 
 			/**
 			 * 文件名称格式 文件格式:{}{}等格式
-			 * */
+			 */
 			String filenameformatradio = request.getParameter("filenameformatradio");
 
 			if (filenameformatradio.equals("0")) {
@@ -150,16 +176,16 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 			Teacher teacher = userinfo.getTeacher();
 			if (teacher != null) {
 
-				homeworkService.Add(request, t_course_teaching_class_id, t_course_teaching_class_homeworktype_id, teacher.getId(),
-						filetype, filenameformat, nfilecount, title, content, enddate, files);
+				homeworkService.Add(request, t_course_teaching_class_id, t_course_teaching_class_homeworktype_id, teacher.getId(), filetype,
+						filenameformat, nfilecount, title, content, enddate, files);
 
 			}
 		}
 
 		// mav.addObject(SelectedObjectConst.Selected_CourseTeachingClassID,
 		// t_course_teaching_class_id);
-		mav.setViewName("redirect:/coursehomework/list-" + t_course_teaching_class_id + "-" + t_course_teaching_class_homeworktype_id
-				+ ".html");
+		mav.setViewName(
+				"redirect:/coursehomework/list-" + t_course_teaching_class_id + "-" + t_course_teaching_class_homeworktype_id + ".html");
 
 		return mav;
 	}
@@ -173,16 +199,50 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 	 */
 	@RequestMapping(value = "/DELETE-{t_course_teaching_class_id}-{t_course_teaching_class_homeworktype_id}-{t_course_teaching_class_homework_baseinfo_id}", method = RequestMethod.GET)
 	public ModelAndView DELETE(HttpServletRequest request, @PathVariable String t_course_teaching_class_id,
-			@PathVariable String t_course_teaching_class_homeworktype_id, @PathVariable String t_course_teaching_class_homework_baseinfo_id) {
+			@PathVariable String t_course_teaching_class_homeworktype_id,
+			@PathVariable String t_course_teaching_class_homework_baseinfo_id) {
 
 		homeworkService.DeleteByID(request, t_course_teaching_class_homework_baseinfo_id);
 
 		ModelAndView mav = new ModelAndView();
 
-		mav.setViewName("redirect:/coursehomework/list-" + t_course_teaching_class_id + "-" + t_course_teaching_class_homeworktype_id
-				+ ".html");
+		mav.setViewName(
+				"redirect:/coursehomework/list-" + t_course_teaching_class_id + "-" + t_course_teaching_class_homeworktype_id + ".html");
 
 		return mav;
+	}
+
+	/**
+	 * 修改
+	 * 
+	 * @param request
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "/updatehomework-{t_course_teaching_class_id}-{t_course_teaching_class_homeworktype_id}-{t_course_teaching_class_homework_baseinfo_id}")
+	public ModelAndView updatehomework(HttpServletRequest request, RedirectAttributes redirectAttributes,
+			@PathVariable String t_course_teaching_class_id, @PathVariable String t_course_teaching_class_homeworktype_id,
+			@PathVariable String t_course_teaching_class_homework_baseinfo_id) {
+
+		ModelAndView view = new ModelAndView();
+		
+		// 作业基本信息
+				CourseTeachingClassHomeworkBaseinfoViewData selectedCourseHomeworkBasicInfoViewData = homeworkService
+						.getCourseTeachingClassHomeworkBaseinfoViewDataByID(t_course_teaching_class_homework_baseinfo_id);
+
+				view.addObject(SelectedObjectConst.Selected_CourseHomeworkBasicInfoViewData, selectedCourseHomeworkBasicInfoViewData);
+		
+
+		// 设置课程基本信息，包括授课、作业类型等
+		SetCourseTeachingClassBaseInfo(view, t_course_teaching_class_id);
+
+		// 课程类型
+		CourseTeachingClassHomeworkType selectedCourseHomeworkTypeData = homeworktypeService
+				.getByID(t_course_teaching_class_homeworktype_id);
+		view.addObject(SelectedObjectConst.Selected_CourseHomeworkTypeData, selectedCourseHomeworkTypeData);
+
+		view.setViewName("coursehomework/update");
+		return view;
 	}
 
 	/**
@@ -200,7 +260,7 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 
 		String updatetitle = request.getParameter("updatetitle");
 		String updatecontent = request.getParameter("updatecontent");
-
+	
 		String updateenddate = request.getParameter("enddate");
 
 		String filetype = "*.*";
@@ -216,7 +276,7 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 
 				/**
 				 * 文件类型 正确格式为*.doc;*.docx;*.txt
-				 * */
+				 */
 				String[] filetypes = request.getParameterValues("filetype");
 				filetype = "";
 				for (String s : filetypes) {
@@ -242,7 +302,7 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 
 			/**
 			 * 文件名称格式 文件格式:{}{}等格式
-			 * */
+			 */
 			String filenameformatradio = request.getParameter("filenameformatradio");
 
 			if (filenameformatradio.equals("0")) {
@@ -281,14 +341,47 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 			}
 		}
 
-		mav.setViewName("redirect:/coursehomework/list-" + t_course_teaching_class_id + "-" + t_course_teaching_class_homeworktype_id
-				+ ".html");
+		mav.setViewName(
+				"redirect:/coursehomework/list-" + t_course_teaching_class_id + "-" + t_course_teaching_class_homeworktype_id + ".html");
 
 		return mav;
 
 	}
-
 	
+	/**
+	 * 修改
+	 * 
+	 * @param request
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "/simpleupdatehomework-{t_course_teaching_class_id}-{t_course_teaching_class_homeworktype_id}-{t_course_teaching_class_homework_baseinfo_id}")
+	public ModelAndView simpleupdatehomework(HttpServletRequest request, RedirectAttributes redirectAttributes,
+			@PathVariable String t_course_teaching_class_id, @PathVariable String t_course_teaching_class_homeworktype_id,
+			@PathVariable String t_course_teaching_class_homework_baseinfo_id) {
+
+		ModelAndView view = new ModelAndView();
+		
+		// 作业基本信息
+				CourseTeachingClassHomeworkBaseinfoViewData selectedCourseHomeworkBasicInfoViewData = homeworkService
+						.getCourseTeachingClassHomeworkBaseinfoViewDataByID(t_course_teaching_class_homework_baseinfo_id);
+
+				view.addObject(SelectedObjectConst.Selected_CourseHomeworkBasicInfoViewData, selectedCourseHomeworkBasicInfoViewData);
+		
+
+		// 设置课程基本信息，包括授课、作业类型等
+		SetCourseTeachingClassBaseInfo(view, t_course_teaching_class_id);
+
+		// 课程类型
+		CourseTeachingClassHomeworkType selectedCourseHomeworkTypeData = homeworktypeService
+				.getByID(t_course_teaching_class_homeworktype_id);
+		view.addObject(SelectedObjectConst.Selected_CourseHomeworkTypeData, selectedCourseHomeworkTypeData);
+
+		view.setViewName("coursehomework/simpleupdate");
+		return view;
+	}
+
+
 	/**
 	 * 修改
 	 * 
@@ -307,28 +400,25 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 
 		String updateenddate = request.getParameter("enddate");
 
-		
-
 		UserSessionInfo userinfo = getSessionUser(request);
 
 		if (userinfo != null) {
 			Teacher teacher = userinfo.getTeacher();
 			if (teacher != null) {
 
-				homeworkService.Update(request, t_course_teaching_class_homework_baseinfo_id, teacher.getId()
-						, updatetitle, updatecontent, updateenddate);
+				homeworkService.Update(request, t_course_teaching_class_homework_baseinfo_id, teacher.getId(), updatetitle, updatecontent,
+						updateenddate);
 
 			}
 		}
 
-		mav.setViewName("redirect:/coursehomework/list-" + t_course_teaching_class_id + "-" + t_course_teaching_class_homeworktype_id
-				+ ".html");
+		mav.setViewName(
+				"redirect:/coursehomework/list-" + t_course_teaching_class_id + "-" + t_course_teaching_class_homeworktype_id + ".html");
 
 		return mav;
 
 	}
 
-	
 	/**
 	 * 添加
 	 * 
@@ -359,8 +449,8 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 			}
 		}
 
-		mav.setViewName("redirect:/coursehomework/reply-" + t_course_teaching_class_id + "-" + t_course_teaching_class_homeworktype_id
-				+ "-" + t_course_teaching_class_homework_baseinfo_id + "-" + t_student_id + ".html");
+		mav.setViewName("redirect:/coursehomework/reply-" + t_course_teaching_class_id + "-" + t_course_teaching_class_homeworktype_id + "-"
+				+ t_course_teaching_class_homework_baseinfo_id + "-" + t_student_id + ".html");
 
 		return mav;
 	}
@@ -381,8 +471,8 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 
 		ModelAndView mav = new ModelAndView();
 
-		mav.setViewName("redirect:/coursehomework/reply-" + t_course_teaching_class_id + "-" + t_course_teaching_class_homeworktype_id
-				+ "-" + t_course_teaching_class_homework_baseinfo_id + "-" + t_student_id + ".html");
+		mav.setViewName("redirect:/coursehomework/reply-" + t_course_teaching_class_id + "-" + t_course_teaching_class_homeworktype_id + "-"
+				+ t_course_teaching_class_homework_baseinfo_id + "-" + t_student_id + ".html");
 
 		return mav;
 	}
@@ -416,8 +506,8 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 			}
 		}
 
-		mav.setViewName("redirect:/coursehomework/reply-" + t_course_teaching_class_id + "-" + t_course_teaching_class_homeworktype_id
-				+ "-" + t_course_teaching_class_homework_baseinfo_id + "-" + t_student_id + ".html");
+		mav.setViewName("redirect:/coursehomework/reply-" + t_course_teaching_class_id + "-" + t_course_teaching_class_homeworktype_id + "-"
+				+ t_course_teaching_class_homework_baseinfo_id + "-" + t_student_id + ".html");
 
 		return mav;
 
@@ -432,14 +522,16 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 	 */
 	@RequestMapping(value = "/list-{t_course_teaching_class_id}-{t_course_teaching_class_homeworktype_id}")
 	public ModelAndView ListAll(HttpServletRequest request, @PathVariable String t_course_teaching_class_id,
-			@PathVariable String t_course_teaching_class_homeworktype_id, @RequestParam(value = "pageNo", required = false) Integer pageNo) {
+			@PathVariable String t_course_teaching_class_homeworktype_id,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
 		ModelAndView view = new ModelAndView();
 
 		pageNo = pageNo == null ? 1 : pageNo;
-		Page<CourseTeachingClassHomeworkBaseinfoViewData> pagedCourseTeachingClassHomeworkBaseinfoViewData = homeworkService.getPage(
-				t_course_teaching_class_id, t_course_teaching_class_homeworktype_id,pageNo, CommonConstant.PAGE_SIZE);
+		Page<CourseTeachingClassHomeworkBaseinfoViewData> pagedCourseTeachingClassHomeworkBaseinfoViewData = homeworkService
+				.getPage(t_course_teaching_class_id, t_course_teaching_class_homeworktype_id, pageNo, CommonConstant.PAGE_SIZE);
 
-		view.addObject(PagedObjectConst.Paged_CourseTeachingClassHomeworkBaseinfoViewData, pagedCourseTeachingClassHomeworkBaseinfoViewData);
+		view.addObject(PagedObjectConst.Paged_CourseTeachingClassHomeworkBaseinfoViewData,
+				pagedCourseTeachingClassHomeworkBaseinfoViewData);
 
 		// 设置课程基本信息，包括授课、作业类型等
 		SetCourseTeachingClassBaseInfo(view, t_course_teaching_class_id);
@@ -472,7 +564,8 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 	 */
 	@RequestMapping(value = "/statistics-{t_course_teaching_class_id}-{t_course_teaching_class_homeworktype_id}-{t_course_teaching_class_homework_baseinfo_id}", method = RequestMethod.GET)
 	public ModelAndView statistics(HttpServletRequest request, @PathVariable String t_course_teaching_class_id,
-			@PathVariable String t_course_teaching_class_homeworktype_id, @PathVariable String t_course_teaching_class_homework_baseinfo_id) {
+			@PathVariable String t_course_teaching_class_homeworktype_id,
+			@PathVariable String t_course_teaching_class_homework_baseinfo_id) {
 
 		ModelAndView view = new ModelAndView();
 
@@ -515,8 +608,7 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 	 */
 	@RequestMapping(value = "/replylist-{t_course_teaching_class_id}-{t_course_teaching_class_homeworktype_id}-{t_course_teaching_class_homework_baseinfo_id}", method = RequestMethod.GET)
 	public ModelAndView replylist(HttpServletRequest request, @PathVariable String t_course_teaching_class_id,
-			@PathVariable String t_course_teaching_class_homeworktype_id,
-			@PathVariable String t_course_teaching_class_homework_baseinfo_id,
+			@PathVariable String t_course_teaching_class_homeworktype_id, @PathVariable String t_course_teaching_class_homework_baseinfo_id,
 			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
 
 		pageNo = pageNo == null ? 1 : pageNo;
@@ -558,8 +650,8 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 	 */
 	@RequestMapping(value = "/reply-{t_course_teaching_class_id}-{t_course_teaching_class_homeworktype_id}-{t_course_teaching_class_homework_baseinfo_id}-{t_student_id}", method = RequestMethod.GET)
 	public ModelAndView reply(HttpServletRequest request, @PathVariable String t_course_teaching_class_id,
-			@PathVariable String t_course_teaching_class_homeworktype_id,
-			@PathVariable String t_course_teaching_class_homework_baseinfo_id, @PathVariable String t_student_id) {
+			@PathVariable String t_course_teaching_class_homeworktype_id, @PathVariable String t_course_teaching_class_homework_baseinfo_id,
+			@PathVariable String t_student_id) {
 
 		ModelAndView view = new ModelAndView();
 
@@ -588,7 +680,7 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 
 					// 作业批复
 					Page<CourseTeachingClassHomeworkReplyViewData> pagedCourseTeachingClassHomeworkReplyBaseinfoViewData = replyService
-							.getPage(t_course_teaching_class_homework_submit_baseinfo_id,t_student_id, 1, CommonConstant.PAGE_SIZE);
+							.getPage(t_course_teaching_class_homework_submit_baseinfo_id, t_student_id, 1, CommonConstant.PAGE_SIZE);
 
 					view.addObject(PagedObjectConst.Paged_CourseTeachingClassHomeworkReplyBaseinfoViewData,
 							pagedCourseTeachingClassHomeworkReplyBaseinfoViewData);
