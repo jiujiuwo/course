@@ -59,7 +59,7 @@ public class MailBoxSendService {
 
 			String idfilename = GUID.getGUID();
 
-			String localfilename = dir + "\\" + idfilename + "." + prefix;
+			String localfilename = dir + RealPathConst.RealPath_PathSeparator + idfilename + "." + prefix;
 			String hreffilename = idfilename + "." + prefix;
 			
 
@@ -137,7 +137,7 @@ public class MailBoxSendService {
 		if (list != null) {
 
 			for (MailBoxSendFile homeworkfile : list) {
-				String path = dir + "\\" + homeworkfile.getFilepath();
+				String path = dir + RealPathConst.RealPath_PathSeparator + homeworkfile.getFilepath();
 
 				File localfile = new File(path);
 

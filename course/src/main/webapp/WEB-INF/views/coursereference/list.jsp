@@ -238,7 +238,7 @@
 
 
 											<button type="button" class="btn btn-default btn-xs"
-												onclick="onDelete('${data.reference.id}')">删除</button>
+												onclick="onDelete('${data.reference.id}','${data.reference.title}')">删除</button>
 										</div>
 									</c:if>
 
@@ -298,8 +298,8 @@
 
 		}
 
-		function onDelete(id) {
-			var url = "location='coursereference/DELETE-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-"
+		function onDelete(id,name) {
+			var url = "location='coursereference/DELETE-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}-"
 					+ id + ".html'";
 
 			$('#deleteModal').find('.modal-body #deleteinfo').text(name);

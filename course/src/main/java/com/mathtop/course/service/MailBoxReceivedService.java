@@ -39,8 +39,8 @@ public class MailBoxReceivedService {
 		
 		for(MailBoxFileName f:list){
 			
-			 File srcFile = new File(dir + "\\" +f.getIDFileName());
-			 File destFile = new File(dir + "\\" +f.getID0FileName());
+			 File srcFile = new File(dir + RealPathConst.RealPath_PathSeparator +f.getIDFileName());
+			 File destFile = new File(dir + RealPathConst.RealPath_PathSeparator +f.getID0FileName());
 			try {
 				FileUtils.copyFile(srcFile, destFile);
 				fileDao.add(t_mail_box_id, f.getOriginalFilename(), f.getID0FileName());
@@ -97,7 +97,7 @@ public class MailBoxReceivedService {
 		if (list != null) {
 
 			for (MailBoxReceivedFile homeworkfile : list) {
-				String path = dir + "\\" + homeworkfile.getFilepath();
+				String path = dir + RealPathConst.RealPath_PathSeparator + homeworkfile.getFilepath();
 
 				File localfile = new File(path);
 

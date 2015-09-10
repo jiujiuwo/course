@@ -61,7 +61,6 @@ public class CourseTeachingClassReferenceController extends CourseTeachingClassB
 				.getByID(t_course_teaching_class_reference_type_id);
 		view.addObject(SelectedObjectConst.Selected_CourseReferenceTypeData, selectedCourseReferenceTypeData);
 
-	
 		view.setViewName("coursereference/add");
 		return view;
 
@@ -109,12 +108,12 @@ public class CourseTeachingClassReferenceController extends CourseTeachingClassB
 	 * @param user
 	 * @return
 	 */
-	@RequestMapping(value = "/DELETE-{t_course_teaching_class_id}-{t_course_teaching_class_reference_type_id}-{t_course_teaching_class_homework_baseinfo_id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/DELETE-{t_course_teaching_class_id}-{t_course_teaching_class_reference_type_id}-{t_course_teaching_class_reference_id}", method = RequestMethod.GET)
 	public ModelAndView DELETE(HttpServletRequest request, @PathVariable String t_course_teaching_class_id,
 			@PathVariable String t_course_teaching_class_reference_type_id,
-			@PathVariable String t_course_teaching_class_homework_baseinfo_id) {
+			@PathVariable String t_course_teaching_class_reference_id) {
 
-		referenceService.DeleteByID(request, t_course_teaching_class_homework_baseinfo_id);
+		referenceService.DeleteByID(request, t_course_teaching_class_reference_id);
 
 		ModelAndView mav = new ModelAndView();
 
@@ -151,7 +150,6 @@ public class CourseTeachingClassReferenceController extends CourseTeachingClassB
 				.getByID(t_course_teaching_class_reference_type_id);
 		view.addObject(SelectedObjectConst.Selected_CourseReferenceTypeData, selectedCourseReferenceTypeData);
 
-		
 		view.setViewName("coursereference/update");
 		return view;
 
@@ -218,7 +216,6 @@ public class CourseTeachingClassReferenceController extends CourseTeachingClassB
 				.getByID(t_course_teaching_class_reference_type_id);
 		view.addObject(SelectedObjectConst.Selected_CourseReferenceTypeData, selectedCourseReferenceTypeData);
 
-		
 		view.setViewName("coursereference/content");
 		return view;
 
@@ -251,7 +248,6 @@ public class CourseTeachingClassReferenceController extends CourseTeachingClassB
 				.getByID(t_course_teaching_class_reference_type_id);
 		view.addObject(SelectedObjectConst.Selected_CourseReferenceTypeData, selectedCourseReferenceTypeData);
 
-	
 		view.setViewName("coursereference/list");
 		return view;
 	}

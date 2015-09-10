@@ -2,6 +2,9 @@ package com.mathtop.course.cons;
 
 public class RealPathConst {
 	
+	//路径分隔符
+	public static final String RealPath_PathSeparator="/";
+	
 	//课程-参考资料路径
 	public static final String RealPath_ReferenceFile="/WEB-INF/coursereferencefile";
 	

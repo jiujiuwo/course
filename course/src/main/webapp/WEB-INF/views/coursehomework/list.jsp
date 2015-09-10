@@ -108,8 +108,6 @@
 				</tr>
 			</table>
 
-
-
 			<c:choose>
 
 				<c:when
@@ -131,173 +129,213 @@
 
 				<c:otherwise>
 
+					<div class="panel-group" id="accordion" role="tablist"
+						style="margin-right: 5px; margin-top: 10px;"
+						aria-multiselectable="true">
 
-					<%
-						//显示具体内容
-					%>
 
-					<div class="Course-Table">
 
-						<div class="container-fluid" style="overflow: hidden;">
-							<div class="gridseparator"></div>
-							<div class="row show-grid">
-								<div class="col-md-1">
-									<strong>#</strong>
+						<c:set var="index" value="0"></c:set>
+						<c:forEach var="data"
+							items="${pagedCourseTeachingClassHomeworkBaseinfoViewData.result}">
+
+
+							<div
+								class="panel 
+					<c:if test="${data.homeworkbaseinfo.canStudentSubmit==true }"> 
+						panel-primary
+						</c:if>
+						
+						<c:if test="${data.homeworkbaseinfo.canStudentSubmit==false }"> 
+						panel-default
+						</c:if>
+					
+					">
+								<div class="panel-heading" role="tab"
+									id="heading${data.homeworkbaseinfo.id}">
+									<h4 class="panel-title">
+										<a role="button" data-toggle="collapse"
+											data-parent="#accordion"
+											href="#collapse${data.homeworkbaseinfo.id}"
+											aria-expanded="true"
+											aria-controls="collapse${data.homeworkbaseinfo.id}">
+											${pagedCourseTeachingClassHomeworkBaseinfoViewData.totalCount-(pagedCourseTeachingClassHomeworkBaseinfoViewData.currentPageNo-1) * pagedCourseTeachingClassHomeworkBaseinfoViewData.pageSize -index}：${selectedCourseHomeworkTypeData.name}-${data.homeworkbaseinfo.title}-具体内容
+										</a>
+									</h4>
 								</div>
-								<div class="col-md-2">
-									<strong>标题</strong>
-								</div>
+								<div id="collapse${data.homeworkbaseinfo.id}"
+									class="panel-collapse collapse
+						<c:if test="${data.homeworkbaseinfo.canStudentSubmit==true }"> 
+						in
+						</c:if>
+						"
+									style="overflow: hidden;" role="tabpanel"
+									aria-labelledby="heading${data.homeworkbaseinfo.id}">
+									<div class="panel-body">
 
-								<div class="col-md-2">
-									<strong>附件</strong>
-								</div>
 
-								<div class="col-md-3">
-									<strong>提交文件要求</strong>
-								</div>
+										<div class="container-fluid" style="overflow: hidden;">
 
-								<div class="col-md-1">
-									<strong>发布日期</strong>
-								</div>
+											<%
+												//操作
+											%>
+											<div class="row show-grid">
+												<div class="col-md-12">
+													<button type="button" class="btn btn-default btn-xs"
+														onclick="location='<c:url value="coursehomework/updatehomework-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">修改</button>
 
-								<div class="col-md-1">
-									<strong>截止日期</strong>
-								</div>
+													<button type="button" class="btn btn-default btn-xs"
+														onclick="location='<c:url value="coursehomework/simpleupdatehomework-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">简单修改</button>
 
-								<div class="col-md-1">
-									<strong>操作</strong>
-								</div>
+													<button type="button" class="btn btn-default btn-xs"
+														onclick="onDelete('${data.homeworkbaseinfo.id}')">删除</button>
 
-								<div class="col-md-1">
-									<strong>查看与批复</strong>
+
+
+													<c:if
+														test="${data.homeworkbaseinfo.canStudentSubmit==true }">
+														<button type="button" class="btn btn-default btn-xs"
+															onclick="location='<c:url value="/coursehomework/replylist-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">查看</button>
+													</c:if>
+
+													<c:if test="${data.homeworkbaseinfo.canReply==true }">
+														<button type="button" class="btn btn-default btn-xs"
+															onclick="location='<c:url value="/coursehomework/statistics-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">统计</button>
+														<button type="button" class="btn btn-default btn-xs"
+															onclick="location='<c:url value="/coursehomework/replylist-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">批复</button>
+													</c:if>
+												</div>
+
+
+											</div>
+
+
+											<div class="row show-grid">
+												<div class="col-md-1 text-right">
+													<strong>标题</strong>
+												</div>
+												<div class="col-md-10">
+													<strong>${data.homeworkbaseinfo.title}</strong>
+												</div>
+											</div>
+
+											<div class="row show-grid">
+												<div class="col-md-1 text-right">
+													<strong>内容</strong>
+												</div>
+												<div class="col-md-10">${data.homeworkbaseinfo.content}</div>
+											</div>
+
+
+											<div class="row show-grid">
+												<div class="col-md-1 text-right">
+													<strong>附件</strong>
+												</div>
+												<div class="col-md-10">
+													<c:choose>
+
+														<c:when test="${fn:length(data.homeworkFileList)==0}">
+													无
+												</c:when>
+
+														<c:when test="${fn:length(data.homeworkFileList)==1}">
+															<a
+																href="<c:url value="coursehomeworkfile/download-${data.homeworkFileList[0].id}.html"/>">
+																${data.homeworkFileList[0].filename}</a>
+														</c:when>
+
+														<c:otherwise>
+															<ul>
+																<c:forEach var="datafile"
+																	items="${data.homeworkFileList}">
+																	<li><a
+																		href="<c:url value="coursehomeworkfile/download-${datafile.id}.html"/>">
+																			${datafile.filename}</a></li>
+																</c:forEach>
+															</ul>
+														</c:otherwise>
+													</c:choose>
+												</div>
+											</div>
+
+											<div class="row show-grid">
+												<div class="col-md-1 text-right">
+													<strong>发布日期</strong>
+												</div>
+												<div class="col-md-10">
+													<fmt:formatDate value="${data.homeworkbaseinfo.pubdate}"
+														pattern="yyyy-MM-dd HH:mm" />
+												</div>
+											</div>
+
+											<div class="row show-grid">
+												<div class="col-md-1 text-right">
+													<strong>截止日期</strong>
+												</div>
+												<div class="col-md-10">
+													<fmt:formatDate value="${data.homeworkbaseinfo.enddate}"
+														pattern="yyyy-MM-dd HH:mm" />
+												</div>
+											</div>
+
+
+											<div class="row show-grid">
+												<div class="col-md-1 text-right">
+													<strong>提交文件要求</strong>
+												</div>
+												<div class="col-md-10">
+													<c:choose>
+
+														<c:when test="${data.homeworkbaseinfo.filecount==0}">
+													不需要提交文件
+												</c:when>
+														<c:when test="${data.homeworkbaseinfo.filecount==-1}">
+													提交多个文件（数目不限制）<br>文件类型:${data.homeworkbaseinfo.filetype}<br>文件名称格式:${data.homeworkbaseinfo.filenameformat}
+												</c:when>
+
+														<c:otherwise>
+													提交${data.homeworkbaseinfo.filecount}个文件<br>文件类型:${data.homeworkbaseinfo.filetype}<br>文件名称格式:${data.homeworkbaseinfo.filenameformat}		
+												</c:otherwise>
+													</c:choose>
+
+
+													<c:if test="${data.homeworkbaseinfo.filecount!=0}">
+														<br>
+														<button type="button" class="btn btn-default btn-xs"
+															onclick="ongetexample('${data.homeworkbaseinfo.id}')">取得合法文件名示例</button>
+														<ul class="list-group"
+															id="examplefilenames${data.homeworkbaseinfo.id}">
+
+														</ul>
+													</c:if>
+
+
+												</div>
+											</div>
+
+
+										</div>
+
+
+									</div>
 								</div>
 							</div>
 
-							<div class="gridseparator"></div>
 
-
-							<c:set var="index" value="0"></c:set>
-							<c:forEach var="data"
-								items="${pagedCourseTeachingClassHomeworkBaseinfoViewData.result}">
-								<div class="row show-grid">
-									<div class="col-md-1">
-										<input type="checkbox" value="">
-										${pagedCourseTeachingClassHomeworkBaseinfoViewData.totalCount-(pagedCourseTeachingClassHomeworkBaseinfoViewData.currentPageNo-1) * pagedCourseTeachingClassHomeworkBaseinfoViewData.pageSize -index}
-									</div>
-
-
-									<div class="col-md-2">
-										<strong>${data.homeworkbaseinfo.title}</strong>
-										<p>${data.homeworkbaseinfo.content}</p>
-									</div>
-
-									<div class="col-md-2">
-
-
-
-										<c:choose>
-
-											<c:when test="${fn:length(data.homeworkFileList)==1}">
-												<a
-													href="<c:url value="coursehomeworkfile/download-${data.homeworkFileList[0].id}.html"/>">
-													${data.homeworkFileList[0].filename}</a>
-											</c:when>
-
-											<c:otherwise>
-												<ul>
-													<c:forEach var="datafile" items="${data.homeworkFileList}">
-														<li><a
-															href="<c:url value="coursehomeworkfile/download-${datafile.id}.html"/>">
-																${datafile.filename}</a></li>
-													</c:forEach>
-												</ul>
-											</c:otherwise>
-										</c:choose>
-
-
-
-									</div>
-
-
-									<div class="col-md-3">
-
-										<c:choose>
-
-											<c:when test="${data.homeworkbaseinfo.filecount==0}">
-										不需要提交文件
-									</c:when>
-											<c:when test="${data.homeworkbaseinfo.filecount==-1}">
-										提交多个文件（数目不限制）<br>文件类型:${data.homeworkbaseinfo.filetype}<br>文件名称格式:${data.homeworkbaseinfo.filenameformat}
-									</c:when>
-
-											<c:otherwise>
-										提交${data.homeworkbaseinfo.filecount}个文件<br>文件类型:${data.homeworkbaseinfo.filetype}<br>文件名称格式:${data.homeworkbaseinfo.filenameformat}		
-									</c:otherwise>
-										</c:choose>
-
-
-									</div>
-
-
-									<div class="col-md-1">
-										<fmt:formatDate value="${data.homeworkbaseinfo.pubdate}"
-											pattern="yyyy-MM-dd HH:mm" />
-									</div>
-
-									<div class="col-md-1">
-										<fmt:formatDate value="${data.homeworkbaseinfo.enddate}"
-											pattern="yyyy-MM-dd HH:mm" />
-									</div>
-
-
-
-
-									<div class="col-md-1">
-										<button type="button" class="btn btn-default btn-sm"
-											onclick="location='<c:url value="coursehomework/updatehomework-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">修改</button>
-
-										<button type="button" class="btn btn-default btn-sm"
-											onclick="location='<c:url value="coursehomework/simpleupdatehomework-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">简单修改</button>
-
-										<button type="button" class="btn btn-default btn-xs"
-											onclick="onDelete('${data.homeworkbaseinfo.id}')">删除</button>
-									</div>
-
-									<div class="col-md-1">
-										<c:if test="${data.homeworkbaseinfo.canStudentSubmit==true }">
-											<button type="button" class="btn btn-default btn-xs"
-												onclick="location='<c:url value="/coursehomework/replylist-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">查看</button>
-										</c:if>
-
-										<c:if test="${data.homeworkbaseinfo.canReply==true }">
-											<button type="button" class="btn btn-default btn-xs"
-												onclick="location='<c:url value="/coursehomework/statistics-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">统计</button>
-											<button type="button" class="btn btn-default btn-xs"
-												onclick="location='<c:url value="/coursehomework/replylist-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">批复</button>
-										</c:if>
-									</div>
-								</div>
-								<c:set var="index" value="${index + 1}"></c:set>
-							</c:forEach>
-
-							<c:if
-								test="${pagedCourseTeachingClassHomeworkBaseinfoViewData.totalCount>0}">
-								<div class="gridseparator"></div>
-							</c:if>
-
-						</div>
-
-
-
-
-						<mathtop:PageBar
-							pageUrl="/coursehomework/add-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html"
-							pageAttrKey="pagedCourseTeachingClassHomeworkBaseinfoViewData" />
+							<c:set var="index" value="${index + 1}"></c:set>
+						</c:forEach>
 
 					</div>
+					<mathtop:PageBar
+						pageUrl="/coursehomework/add-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html"
+						pageAttrKey="pagedCourseTeachingClassHomeworkBaseinfoViewData" />
 
 				</c:otherwise>
 			</c:choose>
+
+
+
+
 
 		</div>
 	</div>
@@ -371,8 +409,6 @@
 			$('#deleteModal').modal('show');
 
 		}
-
-		
 
 		function onfiletyperadio(type) {
 			if (type == 0) {

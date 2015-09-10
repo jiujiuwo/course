@@ -53,7 +53,7 @@ public class CourseTeachingClassHomeworkService {
 
 			String idfilename = GUID.getGUID();
 
-			String localfilename = dir + "\\" + idfilename + "." + prefix;
+			String localfilename = dir + RealPathConst.RealPath_PathSeparator + idfilename + "." + prefix;
 			String hreffilename = idfilename + "." + prefix;
 
 			try {
@@ -119,7 +119,7 @@ public class CourseTeachingClassHomeworkService {
 		if (list != null) {
 
 			for (CourseTeachingClassHomeworkFile homeworkfile : list) {
-				String path = dir + "\\" + homeworkfile.getFilepath();
+				String path = dir + RealPathConst.RealPath_PathSeparator + homeworkfile.getFilepath();
 
 				File localfile = new File(path);
 

@@ -52,7 +52,7 @@ public class CourseTeachingClassForumTopicDownloadController extends CourseTeach
 		ServletContext sc = request.getSession().getServletContext();
 		String dir = sc.getRealPath(RealPathConst.RealPath_ForumTopicFile); // 设定文件保存的目录
 		String filename = plan.getFilename();
-		String path = dir + "\\" + plan.getFilepath();
+		String path = dir + RealPathConst.RealPath_PathSeparator + plan.getFilepath();
 		File file = new File(path);
 		HttpHeaders headers = new HttpHeaders();
 		String fileName = new String(filename.getBytes("UTF-8"), "iso-8859-1");// 为了解决中文名称乱码问题

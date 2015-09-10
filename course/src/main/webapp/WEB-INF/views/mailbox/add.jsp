@@ -255,7 +255,7 @@
 					</c:if>
 
 					<div class="col-md-3">
-						<input type="checkbox" name="receiverUser"
+						<input type="checkbox" name="receiverStudent"
 							value="${dataitem.user.id}" />${dataitem.student.student_num}-${dataitem.userbasicinfo.user_basic_info_name}
 						<input type="text" class="form-control" style="display: none;"
 							id="user${dataitem.user.id}"
@@ -365,25 +365,55 @@
 								}
 
 							});
+			
+			
+			$("input[name='receiverStudent']:checked")
+			.each(
+					function() {
+
+						if ($('#receivers').val() != "") {
+							$('#receiversdetails')
+									.text(
+											$('#receiversdetails')
+													.text()
+													+ ";"
+													+ $(
+															"#user"
+																	+ $(
+																			this)
+																			.val())
+															.val());
+							$('#receivers').val(
+									$('#receivers').val() + ";"
+											+ $(this).val());
+						} else {
+
+							$('#receiversdetails').text(
+									$("#user" + $(this).val()).val());
+							$('#receivers').val($(this).val());
+						}
+
+					});
+			
 			$('#addModal').modal('hide');
 
 		}
 	<%//选择全部学生%>
 		function onSelectAllStudent() {
-			$("input[name='receiverstudent']").each(function() {
-				$(this).attr("checked", true);
+			$("input[name='receiverStudent']").each(function() {
+				$(this).prop("checked", true);
 			});
 		}
 	<%//全部学生不选择%>
 		function onDeleteSelectAllStudent() {
-			$("input[name='receiverstudent']").each(function() {
-				$(this).attr("checked", false);
+			$("input[name='receiverStudent']").each(function() {
+				$(this).prop("checked", false);
 			});
 		}
 	<%//反选学生%>
 		function onAntiSelectAllStudent() {
-			$("input[name='receiverstudent']").each(function() {
-				$(this).attr("checked", !this.checked);
+			$("input[name='receiverStudent']").each(function() {
+				$(this).prop("checked", !this.checked);
 			});
 		}
 	</script>

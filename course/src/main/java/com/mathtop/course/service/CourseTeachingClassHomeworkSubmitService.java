@@ -79,7 +79,7 @@ public class CourseTeachingClassHomeworkSubmitService {
 
 			String idfilename = GUID.getGUID();
 
-			String localfilename = dir + "\\" + idfilename + "." + prefix;
+			String localfilename = dir + RealPathConst.RealPath_PathSeparator + idfilename + "." + prefix;
 			String hreffilename = idfilename + "." + prefix;
 
 			try {
@@ -144,7 +144,7 @@ public class CourseTeachingClassHomeworkSubmitService {
 		if (list != null) {
 
 			for (CourseTeachingClassHomeworkSubmitFile homeworkfile : list) {
-				String path = dir + "\\" + homeworkfile.getFilepath();
+				String path = dir + RealPathConst.RealPath_PathSeparator + homeworkfile.getFilepath();
 
 				File localfile = new File(path);
 
@@ -231,7 +231,7 @@ public class CourseTeachingClassHomeworkSubmitService {
 					zipfilename.setZipDir(zipDir);
 					zipfilename.setZipFileName(file.getFilename());
 
-					String path = dir + "\\" + file.getFilepath();
+					String path = dir + RealPathConst.RealPath_PathSeparator + file.getFilepath();
 					zipfilename.setRealFilePath(path);
 
 					filenames.add(zipfilename);

@@ -52,7 +52,7 @@ public class CourseTeachingClassReferenceService {
 
 			String idfilename = GUID.getGUID();
 
-			String localfilename = dir + "\\" + idfilename + "." + prefix;
+			String localfilename = dir + RealPathConst.RealPath_PathSeparator + idfilename + "." + prefix;
 			String hreffilename = idfilename + "." + prefix;
 
 			try {
@@ -103,6 +103,8 @@ public class CourseTeachingClassReferenceService {
 
 		// 1.删除文件
 		DeleteFilesByReferenceId(request, t_course_teaching_class_reference_id);
+		
+		
 
 		// 2.删除基本信息
 		referencedao.deleteById(t_course_teaching_class_reference_id);
@@ -118,7 +120,7 @@ public class CourseTeachingClassReferenceService {
 		if (list != null) {
 
 			for (CourseTeachingClassReferenceFile homeworkfile : list) {
-				String path = dir + "\\" + homeworkfile.getFilepath();
+				String path = dir + RealPathConst.RealPath_PathSeparator + homeworkfile.getFilepath();
 
 				File localfile = new File(path);
 
