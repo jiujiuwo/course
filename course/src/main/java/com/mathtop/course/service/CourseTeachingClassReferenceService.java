@@ -164,9 +164,72 @@ public class CourseTeachingClassReferenceService {
 		return referencedao.getCourseTeachingClassHomeworkBaseinfoViewDataByID(id);
 	}
 
-	public Page<CourseTeachingClassReferenceViewData> getPage(String t_course_teaching_class_id,
+	private String getFileLength(HttpServletRequest request,  String filepath) {
+
+		
+
+			
+
+			ServletContext sc = request.getSession().getServletContext();
+			String dir = sc.getRealPath(RealPathConst.RealPath_ReferenceFile); // 设定文件保存的目录
+
+			
+			String localfilename = dir + RealPathConst.RealPath_PathSeparator + filepath;
+			File file = new File(localfilename);
+			
+			String strLen="";
+			java.text.DecimalFormat   df=new   java.text.DecimalFormat("#.##"); 
+			if(file.exists() && file.isFile()){
+				long n=file.length();
+				if(n<1024)
+					strLen=n+"字节";
+				else if(n<1024*1024){
+					 double   d=n;   
+					strLen=df.format(d/1024)+"K";
+				}
+				else if(n<1024*1024*1024){
+					double   d=n;   
+					strLen=df.format(d/(1024*1024))+"M";
+				}
+				else if(n<1024*1024*1024*1024){
+					double   d=n;   
+					strLen=df.format(d/(1024*1024*1024))+"G";
+				}
+			}
+
+			return strLen;
+			
+	}
+
+
+	/**
+	 * 获得每个文件长度
+	 * */
+	private void getFileLength(HttpServletRequest request,Page<CourseTeachingClassReferenceViewData> page){
+		if(page==null)
+			return;
+		
+		List<CourseTeachingClassReferenceViewData> list=page.getResult();
+		if(list==null)
+			return;
+		
+		for(CourseTeachingClassReferenceViewData data:list){
+			List<CourseTeachingClassReferenceFile> fileList=data.getFileList();
+			if(fileList==null)
+				continue;
+			for(CourseTeachingClassReferenceFile f:fileList){
+				f.setFilelength(getFileLength(request,f.getFilepath()));
+			}
+		}
+			
+		
+	}
+	
+	public Page<CourseTeachingClassReferenceViewData> getPage(HttpServletRequest request,String t_course_teaching_class_id,
 			String t_course_teaching_class_homeworktype_id, int pageNo, int pageSize) {
-		return referencedao.getPage(t_course_teaching_class_id, t_course_teaching_class_homeworktype_id, pageNo, pageSize);
+		Page<CourseTeachingClassReferenceViewData> page= referencedao.getPage(t_course_teaching_class_id, t_course_teaching_class_homeworktype_id, pageNo, pageSize);
+		getFileLength(request,page);
+		return page;
 	}
 
 

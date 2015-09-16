@@ -202,10 +202,13 @@ public class CourseTeachingClassReferenceDao extends BaseDao<CourseTeachingClass
 		data.setType(type);
 
 		List<CourseTeachingClassReferenceFile> fileList = referencefileDao.getByCourseTeachingClassHomeworkBaseInfoID(reference.getId());
+		
 		data.setFileList(fileList);
 
 		return data;
 	}
+	
+	
 
 	private List<CourseTeachingClassReferenceViewData> PageQuery(String t_course_teaching_class_id,
 			String t_course_teaching_class_homeworktype_id, int PageBegin, int PageSize) {

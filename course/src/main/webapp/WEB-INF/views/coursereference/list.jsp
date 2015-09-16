@@ -60,7 +60,11 @@
 				<li class="active">Data</li>
 			</ol>
 
-			<div class="CourseContentHeader">${selectedCourseReferenceTypeData.name}管理</div>
+			<div class="CourseContentHeader">${selectedCourseReferenceTypeData.name}
+				<c:if test="${sessionScope.USER_CONTEXT.teacher!=null}">
+			管理
+			</c:if>
+			</div>
 
 			<div class="CourseContentHeaderSeparatorLine"></div>
 
@@ -115,7 +119,7 @@
 			<c:choose>
 
 				<c:when
-					test="${pagedCourseTeachingClassHomeworkBaseinfoViewData.totalCount==0}">
+					test="${pagedCourseTeachingClassReferenceViewData.totalCount==0}">
 
 					<div class="alert alert-warning alert-dismissible fade in"
 						role="alert">
@@ -123,10 +127,13 @@
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
-						<strong>暂未有${selectedCourseReferenceTypeData.name}作业</strong>
-						<p class="text-info">
-							请为<em>${selectedCourseReferenceTypeData.name}</em>布置作业
-						</p>
+						<strong>暂未有${selectedCourseReferenceTypeData.name}资料</strong>
+
+						<c:if test="${sessionScope.USER_CONTEXT.teacher!=null}">
+							<p class="text-info">
+								请为<em>${selectedCourseReferenceTypeData.name}</em>布置作业
+							</p>
+						</c:if>
 					</div>
 
 				</c:when>
@@ -146,11 +153,11 @@
 								<div class="col-md-1">
 									<strong>#</strong>
 								</div>
-								<div class="col-md-2">
+								<div class="col-md-3">
 									<strong>标题</strong>
 								</div>
 
-								<div class="col-md-2">
+								<div class="col-md-4">
 									<strong>附件</strong>
 								</div>
 
@@ -178,17 +185,22 @@
 								items="${pagedCourseTeachingClassReferenceViewData.result}">
 								<div class="row show-grid">
 									<div class="col-md-1">
-										<input type="checkbox" value="">
+										<c:if test="${sessionScope.USER_CONTEXT.teacher!=null}">
+											<input type="checkbox" value="">
+										</c:if>
 										${pagedCourseTeachingClassReferenceViewData.totalCount-(pagedCourseTeachingClassReferenceViewData.currentPageNo-1) * pagedCourseTeachingClassReferenceViewData.pageSize -index}
 									</div>
 
 
-									<div class="col-md-2">
+									<div class="col-md-3">
 										<a
 											href="<c:url value="/coursereference/content-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}-${data.reference.id}.html"/>">${data.reference.title}</a>
 									</div>
 
-									<div class="col-md-2">
+									<div class="col-md-4">
+										<%
+											//附件
+										%>
 
 
 
@@ -197,7 +209,7 @@
 											<c:when test="${fn:length(data.fileList)==1}">
 												<a
 													href="<c:url value="coursereferencefile/download-${data.fileList[0].id}.html"/>">
-													${data.fileList[0].filename}</a>
+													${data.fileList[0].filename}</a>(${data.fileList[0].filelength})
 											</c:when>
 
 											<c:otherwise>
@@ -205,7 +217,7 @@
 													<c:forEach var="datafile" items="${data.fileList}">
 														<li><a
 															href="<c:url value="coursereferencefile/download-${datafile.id}.html"/>">
-																${datafile.filename}</a></li>
+																${datafile.filename}</a>(${datafile.filelength})</li>
 													</c:forEach>
 												</ul>
 											</c:otherwise>
@@ -298,7 +310,7 @@
 
 		}
 
-		function onDelete(id,name) {
+		function onDelete(id, name) {
 			var url = "location='coursereference/DELETE-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}-"
 					+ id + ".html'";
 

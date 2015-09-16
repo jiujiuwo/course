@@ -13,6 +13,7 @@ public class CourseTeachingClassReferenceFile extends BaseDomain {
 	 private String t_course_teaching_class_reference_id;
 	 private String filename;
 	 private String filepath;
+	 private String filelength;
 	public String getId() {
 		return id;
 	}
@@ -37,6 +38,12 @@ public class CourseTeachingClassReferenceFile extends BaseDomain {
 	}
 	public void setT_course_teaching_class_reference_id(String t_course_teaching_class_reference_id) {
 		this.t_course_teaching_class_reference_id = t_course_teaching_class_reference_id;
+	}
+	public String getFilelength() {
+		return filelength;
+	}
+	public void setFilelength(String filelength) {
+		this.filelength = filelength;
 	}   
 	
 }

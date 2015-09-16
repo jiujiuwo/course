@@ -236,7 +236,7 @@ public class CourseTeachingClassReferenceController extends CourseTeachingClassB
 
 		pageNo = pageNo == null ? 1 : pageNo;
 		Page<CourseTeachingClassReferenceViewData> pagedCourseTeachingClassReferenceViewData = referenceService
-				.getPage(t_course_teaching_class_id, t_course_teaching_class_reference_type_id, pageNo, CommonConstant.PAGE_SIZE);
+				.getPage(request,t_course_teaching_class_id, t_course_teaching_class_reference_type_id, pageNo, CommonConstant.PAGE_SIZE);
 
 		view.addObject(PagedObjectConst.Paged_CourseTeachingClassReferenceViewData, pagedCourseTeachingClassReferenceViewData);
 

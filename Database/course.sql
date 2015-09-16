@@ -62,9 +62,9 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_user_basic_info` (
   `id` CHAR(32) NOT NULL,
   `t_user_id` CHAR(32) NOT NULL,
-  `user_contact_info_name` VARCHAR(255) NULL,
-  `user_contact_info_birthday` DATETIME NULL,
-  `user_contact_info_sex` INT NULL,
+  `user_contact_info_name` VARCHAR(255) NOT NULL,
+  `user_contact_info_birthday` DATETIME NOT NULL,
+  `user_contact_info_sex` INT NOT NULL,
   `user_contact_info_address` TEXT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_t_user_basic_info_t_user1_idx` (`t_user_id` ASC),
@@ -276,9 +276,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_course` (
   `id` CHAR(32) NOT NULL,
-  `name` VARCHAR(255) NOT NULL,
+  `name` VARCHAR(1024) NOT NULL,
   `num` TEXT NOT NULL,
-  `english_name` VARCHAR(255) NULL,
+  `english_name` VARCHAR(1024) NULL,
   `experiment_hours` INT NOT NULL,
   `class_hours` INT NOT NULL,
   `t_course_style_id` CHAR(32) NOT NULL,
@@ -352,7 +352,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `coursedb`.`t_teaching_class` (
   `id` CHAR(32) NOT NULL,
-  `name` VARCHAR(255) NULL,
+  `name` VARCHAR(1024) NULL,
   `note` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;

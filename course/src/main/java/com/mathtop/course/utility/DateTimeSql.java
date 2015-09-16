@@ -23,6 +23,10 @@ public class DateTimeSql {
 	
 	
 	public static Date GetDate(String strdate) {
+		
+		if(strdate==null)
+			return new Date();
+		
 		SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd");
 		
 		try {
@@ -37,6 +41,10 @@ public class DateTimeSql {
 	}
 	
 	public static Timestamp GetDateTime(String strdate) {
+		
+		if(strdate==null)
+			return Now();
+		
 		SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date;
 		try {
@@ -52,6 +60,10 @@ public class DateTimeSql {
 	}
 	
 	public static Timestamp GetDateTimeNotIncludingSecond(String strdate) {
+		
+		if(strdate==null)
+			return Now();
+		
 		SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		Date date;
 		try {
