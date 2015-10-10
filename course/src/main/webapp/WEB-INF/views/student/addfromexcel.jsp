@@ -82,7 +82,7 @@
 
 							<div class="col-md-3">
 								<img alt="Excel文件格式"
-									src="<c:url value="image/addstufromexcel.png"/>" />
+									src="<c:url value="/image/addstufromexcel.png"/>" />
 							</div>
 
 

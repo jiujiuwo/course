@@ -61,11 +61,15 @@ public class StudentViewDataDao extends BaseDao<TeacherViewData> {
 	private final String GET_PAGED_STUDENTVIEWDATA_BY_t_natural_class_id = "select id,t_user_id "
 			+ " from t_student where id in(select t_student_id from t_natural_class_student where t_natural_class_id=?) order by student_num limit ?,?";
 
-	private final String GET_STUDENTVIEWDATA_BY_TEACHINGCLASSID = "select id,t_user_id "
-			+ " from t_student where id in(select t_student_id from t_teaching_class_student where t_teaching_class_id =?) order by student_num limit ?,?";
+	private final String GET_STUDENTVIEWDATA_BY_TEACHINGCLASSID = "select t_student.id,t_user_id " + " from t_student ,t_natural_class"
+			+ " where t_student.id in(select t_student_id from t_teaching_class_student where t_teaching_class_id =?) and "
+			+ " t_natural_class.id in (select t_natural_class_id from t_natural_class_student where t_student_id=t_student.id)"
+			+ " order by name,student_num limit ?,?";
 
-	private final String GET_ALL_STUDENTVIEWDATA_BY_TEACHINGCLASSID = "select id,t_user_id "
-			+ " from t_student where id in(select t_student_id from t_teaching_class_student where t_teaching_class_id =?) order by student_num";
+	private final String GET_ALL_STUDENTVIEWDATA_BY_TEACHINGCLASSID = "select t_student.id,t_user_id " + " from t_student ,t_natural_class"
+			+ " where t_student.id in(select t_student_id from t_teaching_class_student where t_teaching_class_id =?) and "
+			+ " t_natural_class.id in (select t_natural_class_id from t_natural_class_student where t_student_id=t_student.id)"
+			+ " order by name,student_num";
 
 	private final String GET_STUDENTRVIEWDATA_COUNT_t_natural_class_id = "select count(*)" + " from t_student"
 			+ " where id in(select t_student_id from t_natural_class_student where t_natural_class_id=?)";

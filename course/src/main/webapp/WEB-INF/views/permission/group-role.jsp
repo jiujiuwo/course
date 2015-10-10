@@ -327,7 +327,7 @@
 
 		function onDelete(id, name) {
 			var groupid = "${selectedGroupID}";
-			var url = "location='permission/group-role/DELETE-"+
+			var url = "location='<c:url value="permission/group-role/DELETE-"/>"+
 			groupid + "-" + id + ".html'";
 
 			$('#deleteModal').find('.modal-body #deleteinfo').text(name);

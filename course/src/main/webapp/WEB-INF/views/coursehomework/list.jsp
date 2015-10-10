@@ -89,7 +89,7 @@
 					<td style="width: 10px;"></td>
 					<td><div class="btn-group" role="group" aria-label="...">
 							<button type="button" class="btn btn-default btn-sm"
-								onclick="location='<c:url value="coursehomework/addhomework-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html"/>'">增加</button>
+								onclick="location='<c:url value="/coursehomework/addhomework-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html"/>'">增加</button>
 
 							<button type="button" class="btn btn-default btn-sm"
 								data-toggle="modal" data-target="#myModal">删除</button>
@@ -182,10 +182,10 @@
 											<div class="row show-grid">
 												<div class="col-md-12">
 													<button type="button" class="btn btn-default btn-xs"
-														onclick="location='<c:url value="coursehomework/updatehomework-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">修改</button>
+														onclick="location='<c:url value="/coursehomework/updatehomework-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">修改</button>
 
 													<button type="button" class="btn btn-default btn-xs"
-														onclick="location='<c:url value="coursehomework/simpleupdatehomework-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">简单修改</button>
+														onclick="location='<c:url value="/coursehomework/simpleupdatehomework-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">简单修改</button>
 
 													<button type="button" class="btn btn-default btn-xs"
 														onclick="onDelete('${data.homeworkbaseinfo.id}')">删除</button>
@@ -399,7 +399,7 @@
 		}
 
 		function onDelete(id) {
-			var url = "location='coursehomework/DELETE-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-"
+			var url = "location='<c:url value="coursehomework/DELETE-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-"/>"
 					+ id + ".html'";
 
 			$('#deleteModal').find('.modal-body #deleteinfo').text(name);

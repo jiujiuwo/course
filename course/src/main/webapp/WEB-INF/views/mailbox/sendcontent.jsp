@@ -79,7 +79,30 @@
 
 			<div class="CourseContentHeaderSeparatorLine"></div>
 
+<table>
+				<tr>
+					<td><div class="btn-group" role="group" aria-label="...">
+							<c:choose>
+								<c:when test="${selectedCourseTeachingClassID==null}">
+									<button type="button" class="btn btn-default btn-sm"
+										onclick="location='<c:url value="/mailbox/newMailToOtherWithoutCourse-${selectedMailBoxSendViewData.userFrom.user.id}.html"/>'">回信</button>
 
+								</c:when>
+								<c:otherwise>
+									<button type="button" class="btn btn-default btn-sm"
+										onclick="location='<c:url value="/mailbox/newmailtoother-${selectedCourseTeachingClassID}-${selectedMailBoxSendViewData.userFrom.user.id}.html"/>'">回信</button>
+
+								</c:otherwise>
+							</c:choose>
+
+							<button type="button" class="btn btn-default btn-sm"
+								onclick="onDelete('${selectedMailBoxSendViewData.send.id}','${selectedMailBoxSendViewData.send.subject}')">删除</button>
+
+
+						</div></td>
+
+				</tr>
+			</table>
 
 
 			<div class="Course-Table">
@@ -135,7 +158,7 @@
 
 								<c:when test="${fn:length(selectedMailBoxSendViewData.sendfile)==1}">
 									<a
-										href="<c:url value="mailboxfile/downloadreceived-${selectedMailBoxSendViewData.sendfile[0].id}.html"/>">
+										href="<c:url value="/mailboxfile/downloadreceived-${selectedMailBoxSendViewData.sendfile[0].id}.html"/>">
 										${selectedMailBoxSendViewData.sendfile[0].filename}</a>
 								</c:when>
 
@@ -143,7 +166,7 @@
 									<ul>
 										<c:forEach var="datafile" items="${selectedMailBoxSendViewData.sendfile}">
 											<li><a
-												href="<c:url value="mailboxfile/downloadreceived-${datafile.id}.html"/>">
+												href="<c:url value="/mailboxfile/downloadreceived-${datafile.id}.html"/>">
 													${datafile.filename}</a></li>
 										</c:forEach>
 									</ul>
@@ -185,7 +208,42 @@
 
 	<%@ include file="../../shared/pageFooter.jsp"%>
 
+<script>
+		function onSearch() {
+			var st = document.getElementById("SearchText").value;
 
+			if (st != null && st.trim().length > 0) {
+				var url = "select-" + st + ".html";
+
+				window.location.href = url;
+			} else
+				ShowInfoMsg("搜索内容不能为空");
+
+		}
+
+		function onDelete(id,name) {
+			
+			<c:choose>
+			<c:when test="${selectedCourseTeachingClassID!=null}">
+			var url = "location='<c:url value="/mailbox/deletesendwithcourse-${selectedCourseTeachingClassID}-"/>"
+				+ id + ".html'";
+			</c:when>
+			<c:otherwise>
+			var url = "location='<c:url value="/mailbox/deletesend-"/>"
+				+ id + ".html'";
+			</c:otherwise>
+		</c:choose>
+			
+			
+
+			$('#deleteModal').find('.modal-body #deleteinfo').text(name);
+			$('#deleteModal').find('.modal-footer #deletebtn').attr("onclick",
+					url);
+
+			$('#deleteModal').modal('show');
+
+		}
+	</script>
 
 
 	<c:if test="${!empty errorMsg}">

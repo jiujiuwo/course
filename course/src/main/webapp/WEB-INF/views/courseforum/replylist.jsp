@@ -122,7 +122,7 @@
 												
 												<c:if test="${selectedCourseForumTopicViewData.userbasicinfoviewdata.user.id!=sessionScope.USER_CONTEXT.user.id}">
 												<button type="button" class="btn btn-default btn-xs"
-													onclick="location='<c:url value="mailbox/newmailtoother-${selectedCourseTeachingClassID}-${selectedCourseForumTopicViewData.userbasicinfoviewdata.user.id}.html"/>'">回信</button>
+													onclick="location='<c:url value="/mailbox/newmailtoother-${selectedCourseTeachingClassID}-${selectedCourseForumTopicViewData.userbasicinfoviewdata.user.id}.html"/>'">回信</button>
 
 												</c:if>
 											</p>
@@ -136,7 +136,7 @@
 													<c:when
 														test="${fn:length(selectedCourseForumTopicViewData.topicFileList)==1}">
 														<a
-															href="<c:url value="courseforumtopicfile/download-${selectedCourseForumTopicViewData.topicFileList[0].id}.html"/>">
+															href="<c:url value="/courseforumtopicfile/download-${selectedCourseForumTopicViewData.topicFileList[0].id}.html"/>">
 															${selectedCourseForumTopicViewData.topicFileList[0].filename}</a>
 													</c:when>
 
@@ -145,7 +145,7 @@
 															<c:forEach var="datafile"
 																items="${selectedCourseForumTopicViewData.topicFileList}">
 																<li><a
-																	href="<c:url value="courseforumtopicfile/download-${datafile.id}.html"/>">
+																	href="<c:url value="/courseforumtopicfile/download-${datafile.id}.html"/>">
 																		${datafile.filename}</a></li>
 															</c:forEach>
 														</ul>
@@ -222,7 +222,7 @@
 
 													<c:when test="${fn:length(data.replyFileList)==1}">
 														<a
-															href="<c:url value="courseforumreplyfile/download-${data.replyFileList[0].id}.html"/>">
+															href="<c:url value="/courseforumreplyfile/download-${data.replyFileList[0].id}.html"/>">
 															${data.replyFileList[0].filename}</a>
 													</c:when>
 
@@ -230,7 +230,7 @@
 														<ul>
 															<c:forEach var="datafile" items="${data.replyFileList}">
 																<li><a
-																	href="<c:url value="courseforumreplyfile/download-${datafile.id}.html"/>">
+																	href="<c:url value="/courseforumreplyfile/download-${datafile.id}.html"/>">
 																		${datafile.filename}</a></li>
 															</c:forEach>
 														</ul>
@@ -292,7 +292,7 @@
 		}
 
 		function onDelete(id) {
-			var url = "location='courseforumreply/DELETE-${selectedCourseTeachingClassID}-${selectedCourseForumTopicID}-"
+			var url = "location='<c:url value="/courseforumreply/DELETE-${selectedCourseTeachingClassID}-${selectedCourseForumTopicID}-"/>"
 					+ id + ".html'";
 
 			$('#deleteModal').find('.modal-body #deleteinfo').text(name);

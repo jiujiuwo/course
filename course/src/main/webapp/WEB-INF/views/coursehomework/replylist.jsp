@@ -4,8 +4,7 @@
 
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 
 	//设置左侧浏览状态
@@ -88,50 +87,29 @@
 								<div class="container-fluid" style="overflow: hidden;">
 
 									<div class="row show-grid">
-
-										<div class="col-md-2">
+										<div class="col-md-1 text-right">
 											<strong>内容</strong>
 										</div>
-
-										<div class="col-md-2">
-											<strong>附件</strong>
-										</div>
-
-										<div class="col-md-2">
-											<strong>发布日期</strong>
-										</div>
-
-										<div class="col-md-2">
-											<strong>截止日期</strong>
-										</div>
-
-										<c:if
-											test="${pagedCourseTeachingClassHomeworkSubmitBaseinfoViewData.totalCount>0}">
-											<div class="col-md-2">
-												<strong>下载</strong>
-											</div>
-										</c:if>
-
+										<div class="col-md-10">${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.content}</div>
 									</div>
 
 
 									<div class="row show-grid">
-
-
-										<div class="col-md-2">
-
-											<p>${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.content}</p>
+										<div class="col-md-1 text-right">
+											<strong>附件</strong>
 										</div>
-
-										<div class="col-md-2">
-
-
+										<div class="col-md-10">
 											<c:choose>
+
+												<c:when
+													test="${fn:length(selectedCourseHomeworkBasicInfoViewData.homeworkFileList)==0}">
+													无
+												</c:when>
 
 												<c:when
 													test="${fn:length(selectedCourseHomeworkBasicInfoViewData.homeworkFileList)==1}">
 													<a
-														href="<c:url value="coursehomeworkfile/download-${selectedCourseHomeworkBasicInfoViewData.homeworkFileList[0].id}.html"/>">
+														href="<c:url value="/coursehomeworkfile/download-${selectedCourseHomeworkBasicInfoViewData.homeworkFileList[0].id}.html"/>">
 														${selectedCourseHomeworkBasicInfoViewData.homeworkFileList[0].filename}</a>
 												</c:when>
 
@@ -140,39 +118,80 @@
 														<c:forEach var="datafile"
 															items="${selectedCourseHomeworkBasicInfoViewData.homeworkFileList}">
 															<li><a
-																href="<c:url value="coursehomeworksubmitfile/download-${datafile.id}.html"/>">
+																href="<c:url value="/coursehomeworkfile/download-${datafile.id}.html"/>">
 																	${datafile.filename}</a></li>
 														</c:forEach>
 													</ul>
 												</c:otherwise>
 											</c:choose>
-
 										</div>
+									</div>
 
-										<div class="col-md-2">
+									<div class="row show-grid">
+										<div class="col-md-1 text-right">
+											<strong>发布日期</strong>
+										</div>
+										<div class="col-md-10">
 											<fmt:formatDate
 												value="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.pubdate}"
 												pattern="yyyy-MM-dd HH:mm" />
 										</div>
+									</div>
 
-										<div class="col-md-2">
+									<div class="row show-grid">
+										<div class="col-md-1 text-right">
+											<strong>截止日期</strong>
+										</div>
+										<div class="col-md-10">
 											<fmt:formatDate
 												value="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.enddate}"
 												pattern="yyyy-MM-dd HH:mm" />
 										</div>
-
-										<c:if
-											test="${pagedCourseTeachingClassHomeworkSubmitBaseinfoViewData.totalCount>0}">
-											<div class="col-md-2">
-												<a
-													href="<c:url value="coursehomeworksubmitfile/downloadall-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}.html"/>">
-													全体学生实验报告</a> <a
-													href="<c:url value="coursehomeworkfile/download-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}.html"/>">
-													全体学生实验批复</a>
-											</div>
-										</c:if>
-
 									</div>
+
+
+									<div class="row show-grid">
+										<div class="col-md-1 text-right">
+											<strong>提交文件要求</strong>
+										</div>
+										<div class="col-md-10">
+											<c:choose>
+
+												<c:when
+													test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filecount==0}">
+													不需要提交文件
+												</c:when>
+												<c:when
+													test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filecount==-1}">
+													提交多个文件（数目不限制）<br>文件类型:${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filetype}<br>文件名称格式:${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filenameformat}
+												</c:when>
+
+												<c:otherwise>
+													提交${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filecount}个文件<br>文件类型:${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filetype}<br>文件名称格式:${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filenameformat}		
+												</c:otherwise>
+											</c:choose>
+										</div>
+									</div>
+									
+									<div class="row show-grid">
+										<div class="col-md-1 text-right">
+											<strong>操作</strong>
+										</div>
+										<div class="col-md-10">
+											<c:if
+											test="${pagedCourseTeachingClassHomeworkSubmitBaseinfoViewData.totalCount>0}">
+											
+												<a
+													href="<c:url value="/coursehomeworksubmitfile/downloadall-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}.html"/>">
+													全体学生实验报告</a> <a
+													href="<c:url value="/coursehomeworkfile/download-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}.html"/>">
+													全体学生实验批复</a>
+									
+										</c:if>
+										</div>
+										</div>
+
+
 								</div>
 							</div>
 
@@ -259,6 +278,10 @@
 									</div>
 									<div class="col-md-1">
 										${data.student.student.student_num}-${data.student.userbasicinfo.user_basic_info_name}
+										<button type="button" class="btn btn-default btn-xs"
+													onclick="location='<c:url value="/mailbox/newmailtoother-${selectedCourseTeachingClassID}-${data.student.user.id}.html"/>'">回信</button>
+										
+										
 									</div>
 
 									<div class="col-md-2">
@@ -274,15 +297,15 @@
 
 											<c:when test="${fn:length(data.homeworksubmitFileList)==1}">
 												<a
-													href="<c:url value="coursehomeworkfile/download-${data.homeworksubmitFileList[0].id}.html"/>">
+													href="<c:url value="/coursehomeworkfile/download-${data.homeworksubmitFileList[0].id}.html"/>">
 													${data.homeworksubmitFileList[0].filename}</a>
 											</c:when>
 
 											<c:otherwise>
 												<ul>
-													<c:forEach var="datafile" items="${data.homeworkFileList}">
+													<c:forEach var="datafile" items="${data.homeworksubmitFileList}">
 														<li><a
-															href="<c:url value="coursehomeworkfile/download-${datafile.id}.html"/>">
+															href="<c:url value="/coursehomeworkfile/download-${datafile.id}.html"/>">
 																${datafile.filename}</a></li>
 													</c:forEach>
 												</ul>
@@ -559,7 +582,7 @@
 		}
 
 		function onDelete(id) {
-			var url = "location='coursehomework/DELETE-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-"
+			var url = "location='<c:url value="/coursehomework/DELETE-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-"/>"
 					+ id + ".html'";
 
 			$('#deleteModal').find('.modal-body #deleteinfo').text(name);
@@ -571,7 +594,7 @@
 		}
 
 		function onUpdate(id, title, content, enddate) {
-			var url = "coursehomework/update-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-"
+			var url = "/coursehomework/update-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-"
 					+ id + ".html";
 			$('#updateModal').find('.modal-body #inputid').val(id);
 			$('#updateModal').find('.modal-body #inputtitle').val(title);

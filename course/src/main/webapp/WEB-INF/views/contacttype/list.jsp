@@ -249,7 +249,7 @@
 		}
 
 		function onUpdate(id, name, note) {
-			var url = "location='contacttype/update-" + id + ".html'";
+			var url = "location='<c:url value="/contacttype/update-"/>" + id + ".html'";
 			$('#updateModal').find('.modal-body #inputid').val(id);
 			$('#updateModal').find('.modal-body #inputname').val(name);
 			$('#updateModal').find('.modal-body #inputnote').val(note);
@@ -261,7 +261,7 @@
 		}
 
 		function onDelete(id, name) {
-			var url = "location='contacttype/DELETE-" + id + ".html'";
+			var url = "location='<c:url value="/contacttype/DELETE-"/>" + id + ".html'";
 
 			$('#deleteModal').find('.modal-body #deleteinfo').text(name);
 			$('#deleteModal').find('.modal-footer #deletebtn').attr("onclick",

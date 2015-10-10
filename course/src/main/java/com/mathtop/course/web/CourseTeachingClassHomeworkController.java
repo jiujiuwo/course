@@ -20,6 +20,7 @@ import com.mathtop.course.cons.CourseMessage;
 import com.mathtop.course.cons.PagedObjectConst;
 import com.mathtop.course.cons.SelectedObjectConst;
 import com.mathtop.course.dao.Page;
+import com.mathtop.course.domain.CourseTeachingClassHomeworkBaseinfoStudentViewData;
 import com.mathtop.course.domain.CourseTeachingClassHomeworkBaseinfoViewData;
 import com.mathtop.course.domain.CourseTeachingClassHomeworkReplyViewData;
 import com.mathtop.course.domain.CourseTeachingClassHomeworkStatisticsViewData;
@@ -527,11 +528,7 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 		ModelAndView view = new ModelAndView();
 
 		pageNo = pageNo == null ? 1 : pageNo;
-		Page<CourseTeachingClassHomeworkBaseinfoViewData> pagedCourseTeachingClassHomeworkBaseinfoViewData = homeworkService
-				.getPage(t_course_teaching_class_id, t_course_teaching_class_homeworktype_id, pageNo, CommonConstant.PAGE_SIZE);
-
-		view.addObject(PagedObjectConst.Paged_CourseTeachingClassHomeworkBaseinfoViewData,
-				pagedCourseTeachingClassHomeworkBaseinfoViewData);
+		
 
 		// 设置课程基本信息，包括授课、作业类型等
 		SetCourseTeachingClassBaseInfo(view, t_course_teaching_class_id);
@@ -544,11 +541,32 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 		UserSessionInfo userinfo = getSessionUser(request);
 		if (userinfo != null) {
 			Teacher teacher = userinfo.getTeacher();
-			if (teacher != null)
+			if (teacher != null){
+				//作业信息
+				Page<CourseTeachingClassHomeworkBaseinfoViewData> pagedCourseTeachingClassHomeworkBaseinfoViewData = homeworkService
+						.getPage(t_course_teaching_class_id, t_course_teaching_class_homeworktype_id, pageNo, CommonConstant.PAGE_SIZE);
+
+				view.addObject(PagedObjectConst.Paged_CourseTeachingClassHomeworkBaseinfoViewData,
+						pagedCourseTeachingClassHomeworkBaseinfoViewData);
+				
 				view.setViewName("coursehomework/list");
+			}
 			else {
+				Student student=userinfo.getStudent();
+				if(student!=null){
+					String t_student_id=student.getId();
+				
+				//作业信息
+				Page<CourseTeachingClassHomeworkBaseinfoStudentViewData> pagedCourseTeachingClassHomeworkBaseinfoViewData = homeworkService
+						.getPage(t_course_teaching_class_id, t_course_teaching_class_homeworktype_id,t_student_id, pageNo, CommonConstant.PAGE_SIZE);
+				
+				
+
+				view.addObject(PagedObjectConst.Paged_CourseTeachingClassHomeworkBaseinfoViewData,
+						pagedCourseTeachingClassHomeworkBaseinfoViewData);
 
 				view.setViewName("coursehomework/studentshowlist");
+				}
 			}
 		} else
 			view.setViewName("coursehomework/list");

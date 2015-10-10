@@ -221,7 +221,7 @@ public class CourseTeachingClassHomeworkSubmitBaseinfoDao extends BaseDao<Course
 	}
 
 	
-	long getCount(String t_course_teaching_class_homework_baseinfo_id,String t_student_id) {
+	public long getCount(String t_course_teaching_class_homework_baseinfo_id,String t_student_id) {
 
 		return getJdbcTemplate().queryForObject(GET_COUNT_BY_COURSE_TEACHING_CLASS_ID_AND_STUDENT_ID, new Object[] { t_course_teaching_class_homework_baseinfo_id,t_student_id }, new int[] { Types.VARCHAR,Types.VARCHAR }, Long.class);
 	}

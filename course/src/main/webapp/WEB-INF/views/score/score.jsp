@@ -248,28 +248,7 @@
 
 		}
 
-		function onUpdate(id, name, note) {
-			var url = "location='update-" + id + ".html'";
-			$('#updateModal').find('.modal-body #inputid').val(id);
-			$('#updateModal').find('.modal-body #inputname').val(name);
-			$('#updateModal').find('.modal-body #inputnote').val(note);
-			$('#updateModal').find('.modal-footer #updatebtn').attr("onclick",
-					url);
-
-			$('#updateModal').modal('show');
-
-		}
-
-		function onDelete(id, name) {
-			var url = "location='DELETE-" + id + ".html'";
-
-			$('#deleteModal').find('.modal-body #deleteinfo').text(name);
-			$('#deleteModal').find('.modal-footer #deletebtn').attr("onclick",
-					url);
-
-			$('#deleteModal').modal('show');
-
-		}
+		
 	</script>
 
 

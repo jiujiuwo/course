@@ -359,6 +359,26 @@
 
 
 	<script>
+	
+	//系部
+	function OnDepartmentChange() {
+
+		var t_department_id = $("#departmentSelectControl").val();
+		var url = "<c:url value="/naturalclass/"/>"
+
+		url = url + "selectbyt_department_id-" + t_department_id + ".json";
+
+		$.get(url, function(data, status) {
+			if (status == "success") {
+
+				for (var i = 0; i < data.length; i++) {
+
+					AddNaturalClassRow(data[i].id, data[i].name);
+				}
+			}
+		});
+	}
+	
 		function onSearch() {
 			var st = document.getElementById("SearchText").value;
 
@@ -372,7 +392,7 @@
 		}
 
 		function onUpdate(id, name, note) {
-			var url = "location='update-" + id + ".html'";
+			var url = "location='<c:url value="/update-"/>" + id + ".html'";
 			$('#updateModal').find('.modal-body #inputid').val(id);
 			$('#updateModal').find('.modal-body #inputname').val(name);
 			$('#updateModal').find('.modal-body #inputnote').val(note);
@@ -385,7 +405,7 @@
 
 		function onDelete(t_department_id, departmentname) {
 			var t_school_id = gett_school_id();
-			var url = "location='DELETE-" + t_school_id + "-" + t_department_id
+			var url = "location='<c:url value="/DELETE-"/>" + t_school_id + "-" + t_department_id
 					+ ".html'";
 
 			$('#deleteModal').find('.modal-body #deleteinfo').text(
@@ -782,26 +802,19 @@
 													+ data[i].name
 													+ "</option>");
 								}
+								
+								if(data.length>0){
+									$("#departmentSelectControl").get(0).selectedIndex = 0;
+									
+									OnDepartmentChange();
+								}
 							}
 						});
 
 					});
 
 			$("#departmentSelectControl").change(function() {
-				var t_department_id = $("#departmentSelectControl").val();
-				var url = "<c:url value="/naturalclass/"/>"
-
-				url = url + "selectbyt_department_id-" + t_department_id + ".json";
-
-				$.get(url, function(data, status) {
-					if (status == "success") {
-
-						for (var i = 0; i < data.length; i++) {
-
-							AddNaturalClassRow(data[i].id, data[i].name);
-						}
-					}
-				});
+				OnDepartmentChange();
 
 			});
 

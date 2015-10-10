@@ -61,10 +61,10 @@ public class MailBoxDownloadController extends CourseTeachingClassBaseController
 		String path = dir + RealPathConst.RealPath_PathSeparator + plan.getFilepath();
 		File file = new File(path);
 		HttpHeaders headers = new HttpHeaders();
-		String fileName = new String(filename.getBytes("UTF-8"), "iso-8859-1");// 为了解决中文名称乱码问题
+		String fileName = new String(filename.getBytes("GB18030"), "ISO8859-1");// 为了解决中文名称乱码问题
 		headers.setContentDispositionFormData("attachment", fileName);
 		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
+		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.OK);
 	}
 	
 	
@@ -89,10 +89,10 @@ public class MailBoxDownloadController extends CourseTeachingClassBaseController
 		String path = dir + RealPathConst.RealPath_PathSeparator + plan.getFilepath();
 		File file = new File(path);
 		HttpHeaders headers = new HttpHeaders();
-		String fileName = new String(filename.getBytes("UTF-8"), "iso-8859-1");// 为了解决中文名称乱码问题
+		String fileName = new String(filename.getBytes("GB18030"), "ISO8859-1");// 为了解决中文名称乱码问题
 		headers.setContentDispositionFormData("attachment", fileName);
 		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
+		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.OK);
 	}
 
 }

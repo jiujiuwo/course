@@ -240,7 +240,7 @@
 
 
 		function onDelete(id) {
-			var url = "location='courseforum/DELETE-${selectedCourseTeachingClassID}-"
+			var url = "location='<c:url value="/courseforum/DELETE-${selectedCourseTeachingClassID}-"/>"
 					+ id + ".html'";
 
 			$('#deleteModal').find('.modal-body #deleteinfo').text(name);

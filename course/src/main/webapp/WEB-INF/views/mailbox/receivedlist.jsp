@@ -270,11 +270,11 @@
 			
 			<c:choose>
 			<c:when test="${selectedCourseTeachingClassID!=null}">
-			var url = "location='mailbox/deletereceivedwithcourse-${selectedCourseTeachingClassID}-"
+			var url = "location='<c:url value="mailbox/deletereceivedwithcourse-${selectedCourseTeachingClassID}-"/>"
 				+ id + ".html'";
 			</c:when>
 			<c:otherwise>
-			var url = "location='mailbox/deletereceived-"
+			var url = "location='<c:url value="mailbox/deletereceived-"/>"
 				+ id + ".html'";
 			</c:otherwise>
 		</c:choose>

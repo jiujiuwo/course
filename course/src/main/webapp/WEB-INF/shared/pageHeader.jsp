@@ -7,7 +7,7 @@
 		<div class="container-fluid">
 
 			<div class="navbar-header">
-				<h3 class="navbar-text" style="margin-bottom: 0px;">课程系统</h3>
+				<h3 class="navbar-text" style="margin-bottom: 0px;"><a href='<c:url value="/account/doLogin.html"/>'>课程系统</a></h3>
 
 			</div>
 

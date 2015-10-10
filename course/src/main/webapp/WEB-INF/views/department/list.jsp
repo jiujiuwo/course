@@ -313,7 +313,7 @@
 		}
 
 		function onUpdate(id, name, note) {
-			var url = "location='department/update-" + id + ".html'";
+			var url = "location='<c:url value="/department/update-"/>" + id + ".html'";
 			$('#updateModal').find('.modal-body #inputid').val(id);
 			$('#updateModal').find('.modal-body #inputname').val(name);
 			$('#updateModal').find('.modal-body #inputnote').val(note);
@@ -326,7 +326,7 @@
 
 		function onDelete(t_department_id, departmentname) {
 			var t_school_id=gett_school_id();
-			var url = "location='department/DELETE-"+t_school_id+"-" + t_department_id + ".html'";
+			var url = "location='<c:url value="/department/DELETE-"/>"+t_school_id+"-" + t_department_id + ".html'";
 
 			$('#deleteModal').find('.modal-body #deleteinfo').text(departmentname);
 			$('#deleteModal').find('.modal-footer #deletebtn').attr("onclick",

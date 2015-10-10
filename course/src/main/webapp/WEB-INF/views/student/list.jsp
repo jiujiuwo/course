@@ -376,6 +376,37 @@
 
 	<script>
 	
+	//系部
+	function OnDepartmentChange() {
+
+		var t_department_id = $("#departmentSelectControl").val();
+		var url = "<c:url value="/naturalclass/"/>"
+
+		url = url + "selectbyt_department_id-" + t_department_id + ".json";
+
+		var naturalclassjson;
+		$("#naturalclassSelectControl").empty();
+		$.get(url, function(data, status) {
+			if (status == "success") {
+
+				for (var i = 0; i < data.length; i++) {
+					$("#naturalclassSelectControl").append(
+							"<option value='"+data[i].id+"'>"
+									+ data[i].name
+									+ "</option>");
+				}
+				
+				if(data.length>0){
+					$("#naturalclassSelectControl").get(0).selectedIndex = 0;
+					
+					OnNaturalClassSelectControlChange($("#naturalclassSelectControl"));
+				}
+				
+			}
+		});
+	}
+	
+	
 	//学院
 	function OnNaturalClassSelectControlChange(sel_obj) {
 		var t_school_id = $("#SchoolSelectControl").val();
@@ -506,6 +537,13 @@
 													+ data[i].name
 													+ "</option>");
 								}
+								
+								if(data.length>0){
+									$("#departmentSelectControl").get(0).selectedIndex = 0;
+									
+									OnDepartmentChange();
+								}
+								
 							}
 						});
 
@@ -516,24 +554,7 @@
 			%>
 			$("#departmentSelectControl").change(
 					function() {
-						var t_department_id = $("#departmentSelectControl").val();
-						var url = "<c:url value="/naturalclass/"/>"
-
-						url = url + "selectbyt_department_id-" + t_department_id + ".json";
-
-						var naturalclassjson;
-						$("#naturalclassSelectControl").empty();
-						$.get(url, function(data, status) {
-							if (status == "success") {
-
-								for (var i = 0; i < data.length; i++) {
-									$("#naturalclassSelectControl").append(
-											"<option value='"+data[i].id+"'>"
-													+ data[i].name
-													+ "</option>");
-								}
-							}
-						});
+						OnDepartmentChange();
 
 					});
 

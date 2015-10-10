@@ -39,9 +39,9 @@
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 	<c:if test="${selectedCourseTeachingClassID!=null}">
-		
-			<%@ include file="../../shared/CourseTeachingClassInfo.jsp"%>
-		
+
+		<%@ include file="../../shared/CourseTeachingClassInfo.jsp"%>
+
 		<div id="DocumentPageTopSeparatorLine"></div>
 	</c:if>
 
@@ -79,7 +79,30 @@
 
 			<div class="CourseContentHeaderSeparatorLine"></div>
 
+			<table>
+				<tr>
+					<td><div class="btn-group" role="group" aria-label="...">
+							<c:choose>
+								<c:when test="${selectedCourseTeachingClassID==null}">
+									<button type="button" class="btn btn-default btn-sm"
+										onclick="location='<c:url value="/mailbox/newMailToOtherWithoutCourse-${selectedMailBoxReceivedViewData.userFrom.user.id}.html"/>'">回信</button>
 
+								</c:when>
+								<c:otherwise>
+									<button type="button" class="btn btn-default btn-sm"
+										onclick="location='<c:url value="/mailbox/newmailtoother-${selectedCourseTeachingClassID}-${selectedMailBoxReceivedViewData.userFrom.user.id}.html"/>'">回信</button>
+
+								</c:otherwise>
+							</c:choose>
+
+							<button type="button" class="btn btn-default btn-sm"
+								onclick="onDelete('${selectedMailBoxReceivedViewData.received.id}','${selectedMailBoxReceivedViewData.received.subject}')">删除</button>
+
+
+						</div></td>
+
+				</tr>
+			</table>
 
 
 			<div class="Course-Table">
@@ -88,7 +111,7 @@
 
 					<div class="row show-grid">
 						<div class="col-md-1">
-							<strong>发件人</strong>
+							<strong>收件人</strong>
 						</div>
 						<div class="col-md-10">
 							<c:if
@@ -102,7 +125,7 @@
 
 					<div class="row show-grid">
 						<div class="col-md-1">
-							<strong>收件人</strong>
+							<strong>发件人</strong>
 						</div>
 						<div class="col-md-10">
 							<c:if
@@ -137,7 +160,7 @@
 								<c:when
 									test="${fn:length(selectedMailBoxReceivedViewData.receivedfile)==1}">
 									<a
-										href="<c:url value="mailboxfile/downloadreceived-${selectedMailBoxReceivedViewData.receivedfile[0].id}.html"/>">
+										href="<c:url value="/mailboxfile/downloadreceived-${selectedMailBoxReceivedViewData.receivedfile[0].id}.html"/>">
 										${selectedMailBoxReceivedViewData.receivedfile[0].filename}</a>
 								</c:when>
 
@@ -146,7 +169,7 @@
 										<c:forEach var="datafile"
 											items="${selectedMailBoxReceivedViewData.receivedfile}">
 											<li><a
-												href="<c:url value="mailboxfile/downloadreceived-${datafile.id}.html"/>">
+												href="<c:url value="/mailboxfile/downloadreceived-${datafile.id}.html"/>">
 													${datafile.filename}</a></li>
 										</c:forEach>
 									</ul>
@@ -188,7 +211,42 @@
 
 	<%@ include file="../../shared/pageFooter.jsp"%>
 
+	<script>
+		function onSearch() {
+			var st = document.getElementById("SearchText").value;
 
+			if (st != null && st.trim().length > 0) {
+				var url = "select-" + st + ".html";
+
+				window.location.href = url;
+			} else
+				ShowInfoMsg("搜索内容不能为空");
+
+		}
+
+		function onDelete(id,name) {
+			
+			<c:choose>
+			<c:when test="${selectedCourseTeachingClassID!=null}">
+			var url = "location='<c:url value="mailbox/deletereceivedwithcourse-${selectedCourseTeachingClassID}-"/>"
+				+ id + ".html'";
+			</c:when>
+			<c:otherwise>
+			var url = "location='<c:url value="mailbox/deletereceived-"/>"
+				+ id + ".html'";
+			</c:otherwise>
+		</c:choose>
+			
+			
+
+			$('#deleteModal').find('.modal-body #deleteinfo').text(name);
+			$('#deleteModal').find('.modal-footer #deletebtn').attr("onclick",
+					url);
+
+			$('#deleteModal').modal('show');
+
+		}
+	</script>
 
 
 

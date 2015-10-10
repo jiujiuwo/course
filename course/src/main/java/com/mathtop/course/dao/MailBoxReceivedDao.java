@@ -31,8 +31,12 @@ public class MailBoxReceivedDao extends BaseDao<MailBoxReceived> {
 
 	// select
 	private final String GET_VIEWDATA_BY_USER_ID_TO = "SELECT id FROM t_mail_box_received WHERE t_user_id_to=? order by senddate desc limit ?,?";
+	private final String GET_VIEWDATA_NOT_READ_BY_USER_ID_TO = "SELECT id FROM t_mail_box_received WHERE t_user_id_to=? and state not like '%r%' order by senddate desc limit ?,?";
+	
 	private final String GET_COUNT_BY_USER_ID_TO = "SELECT count(*) FROM t_mail_box_received WHERE t_user_id_to=?";
+	private final String GET_COUNT_NOT_READ_BY_USER_ID_TO = "SELECT count(*) FROM t_mail_box_received WHERE t_user_id_to=? and state not like '%r%'";
 	private final String GET_COUNT_BY_USER_ID_FROM_AND_USER_ID_TO = "SELECT count(*) FROM t_mail_box_received WHERE t_user_id_to=? and t_user_id_to=?";
+	
 	private final String GET_BY_ID = "SELECT t_user_id_from, t_user_id_to, state,subject,content,senddate ,readdate FROM t_mail_box_received WHERE id=?";
 	private final String GET_BY_USER_FROM_ID = "SELECT id, t_user_id_to, state,subject,content,senddate ,readdate FROM t_mail_box_received WHERE t_user_id_from=?";
 	private final String GET_BY_USER_TO_ID = "SELECT id, t_user_id_from, state,subject,content,senddate ,readdate FROM t_mail_box_received WHERE t_user_id_to=?";
@@ -194,18 +198,37 @@ public class MailBoxReceivedDao extends BaseDao<MailBoxReceived> {
 		getJdbcTemplate().update(DELETE_BY_USER_ID_TO, params, types);
 	}
 
+	/**
+	 * 所有邮件数目
+	 * */
 	long getCount(String t_user_id_to) {
 
 		return getJdbcTemplate().queryForObject(GET_COUNT_BY_USER_ID_TO, new Object[] { t_user_id_to }, new int[] { Types.VARCHAR },
 				Long.class);
-	}
+	}	
+	
+	/**
+	 * 没有读取的邮件数目
+	 * */
+	long getCountNotRead(String t_user_id_to) {
 
+		return getJdbcTemplate().queryForObject(GET_COUNT_NOT_READ_BY_USER_ID_TO, new Object[] { t_user_id_to }, new int[] { Types.VARCHAR },
+				Long.class);
+	}
+	
+
+	/**
+	 * 从指定发件人发送过来的邮件数目
+	 * */
 	long getCount(String t_user_id_from, String t_user_id_to) {
 
 		return getJdbcTemplate().queryForObject(GET_COUNT_BY_USER_ID_FROM_AND_USER_ID_TO, new Object[] { t_user_id_from, t_user_id_to },
 				new int[] { Types.VARCHAR, Types.VARCHAR }, Long.class);
 	}
-
+	
+		
+	
+	
 	public MailBoxReceivedViewData getMailBoxReceivedViewDataByID(String id) {
 		MailBoxReceivedViewData data = new MailBoxReceivedViewData();
 
@@ -246,6 +269,29 @@ public class MailBoxReceivedDao extends BaseDao<MailBoxReceived> {
 				});
 		return list;
 	}
+	
+	private List<MailBoxReceivedViewData> PageQueryNotRead(String t_user_to, int PageBegin, int PageSize) {
+
+		PageBegin -= 1;
+		if (PageBegin < 0)
+			PageBegin = 0;
+
+		List<MailBoxReceivedViewData> list = new ArrayList<MailBoxReceivedViewData>();
+
+		getJdbcTemplate().query(GET_VIEWDATA_NOT_READ_BY_USER_ID_TO, new Object[] { t_user_to, PageBegin * PageSize, PageSize },
+				new RowCallbackHandler() {
+
+					@Override
+					public void processRow(ResultSet rs) throws SQLException {
+						MailBoxReceivedViewData data = getMailBoxReceivedViewDataByID(rs.getString("id"));
+						if (data != null)
+							list.add(data);
+						// System.out.println(rs.getString("t_user_id"));
+					}
+
+				});
+		return list;
+	}
 
 	public Page<MailBoxReceivedViewData> getPage(String t_user_to, int pageNo, int pageSize) {
 		long totalCount = getCount(t_user_to);
@@ -256,6 +302,20 @@ public class MailBoxReceivedDao extends BaseDao<MailBoxReceived> {
 		int startIndex = Page.getStartOfPage(pageNo, pageSize);
 
 		List<MailBoxReceivedViewData> data = PageQuery(t_user_to, pageNo - 1, pageSize);
+
+		return new Page<MailBoxReceivedViewData>(startIndex, totalCount, pageSize, data);
+
+	}
+	
+	public Page<MailBoxReceivedViewData> getPageNotRead(String t_user_to, int pageNo, int pageSize) {
+		long totalCount = getCountNotRead(t_user_to);
+		if (totalCount < 1)
+			return new Page<MailBoxReceivedViewData>();
+
+		// 实际查询返回分页对象
+		int startIndex = Page.getStartOfPage(pageNo, pageSize);
+
+		List<MailBoxReceivedViewData> data = PageQueryNotRead(t_user_to, pageNo - 1, pageSize);
 
 		return new Page<MailBoxReceivedViewData>(startIndex, totalCount, pageSize, data);
 

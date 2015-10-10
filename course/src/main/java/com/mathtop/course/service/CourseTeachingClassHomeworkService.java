@@ -2,6 +2,7 @@ package com.mathtop.course.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,8 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.mathtop.course.cons.RealPathConst;
 import com.mathtop.course.dao.CourseTeachingClassHomeworkBaseinfoDao;
 import com.mathtop.course.dao.CourseTeachingClassHomeworkFileDao;
+import com.mathtop.course.dao.CourseTeachingClassHomeworkSubmitBaseinfoDao;
 import com.mathtop.course.dao.Page;
 import com.mathtop.course.domain.CourseTeachingClassHomeworkBaseinfo;
+import com.mathtop.course.domain.CourseTeachingClassHomeworkBaseinfoStudentViewData;
 import com.mathtop.course.domain.CourseTeachingClassHomeworkBaseinfoViewData;
 import com.mathtop.course.domain.CourseTeachingClassHomeworkFile;
 import com.mathtop.course.utility.DateTimeSql;
@@ -30,6 +33,9 @@ public class CourseTeachingClassHomeworkService {
 
 	@Autowired
 	CourseTeachingClassHomeworkFileDao homeworkfileDao;
+	
+	@Autowired
+	CourseTeachingClassHomeworkSubmitBaseinfoDao submitDao;
 
 	public CourseTeachingClassHomeworkFile getFileByID(String id) {
 		return homeworkfileDao.getByID(id);
@@ -169,6 +175,31 @@ public class CourseTeachingClassHomeworkService {
 	public Page<CourseTeachingClassHomeworkBaseinfoViewData> getPage(String t_course_teaching_class_id, String t_course_teaching_class_homeworktype_id,int pageNo, int pageSize) {
 		return homeworkbaseinfodao.getPage(t_course_teaching_class_id, t_course_teaching_class_homeworktype_id,pageNo, pageSize);
 	}
+	
+	public Page<CourseTeachingClassHomeworkBaseinfoStudentViewData> getPage(String t_course_teaching_class_id, String t_course_teaching_class_homeworktype_id,String t_student_id,int pageNo, int pageSize) {
+		
+		Page<CourseTeachingClassHomeworkBaseinfoViewData> page= homeworkbaseinfodao.getPage(t_course_teaching_class_id, t_course_teaching_class_homeworktype_id,pageNo, pageSize);
+		List<CourseTeachingClassHomeworkBaseinfoViewData> listtemp=page.getResult();
+		
+		
+		Page<CourseTeachingClassHomeworkBaseinfoStudentViewData> result=null;
+		if(listtemp!=null){
+			List<CourseTeachingClassHomeworkBaseinfoStudentViewData> list=new ArrayList<CourseTeachingClassHomeworkBaseinfoStudentViewData>();
+			for(CourseTeachingClassHomeworkBaseinfoViewData d:listtemp){
+				CourseTeachingClassHomeworkBaseinfoStudentViewData s=new CourseTeachingClassHomeworkBaseinfoStudentViewData(d);
+				
+				String t_course_teaching_class_homework_baseinfo_id=d.getHomeworkbaseinfo().getId();
+				s.setStudentSubmitted(submitDao.getCount(t_course_teaching_class_homework_baseinfo_id,t_student_id)>0);
+				list.add(s);
+			}
+			
+			result=new Page<CourseTeachingClassHomeworkBaseinfoStudentViewData>(page.getStart(),page.getTotalCount(),page.getPageSize(),list);
+		}
+		
+		return result;
+	}
+	
+	
 
 	public void update(String id, String t_course_teaching_class_id, String t_teacher_id, String t_item_kinds_id, String filetype,
 			String filenameformat, Integer filecount, String title, String content, Date pubdate, Date enddate, String filename,

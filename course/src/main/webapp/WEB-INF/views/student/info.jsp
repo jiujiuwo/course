@@ -5,8 +5,7 @@
 
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 
 	//设置左侧浏览状态
@@ -39,7 +38,7 @@
 <body class="home">
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
-	
+
 
 	<div class="DocumentPage">
 		<div class="DocumentPageLeftArea ">
@@ -71,7 +70,8 @@
 
 
 			<form class="form-horizontal" style="overflow: hidden;"
-				action="<c:url value="/student/infoupdate.html"/>" method="post">
+				action="<c:url value="/student/infoupdate.html"/>" method="post"
+				onsubmit="onSubmit();">
 
 				<input type="hidden" name="t_user_id"
 					value="${selectedStudentViewData.user.id }">
@@ -138,20 +138,20 @@
 						<input type="hidden" id="dtp_input2" value="" /><br />
 					</div>
 				</div>
-				
-			
+
+
 
 				<div class="form-group">
 					<label for="user_basic_info_sex" class="col-sm-1 control-label">性别</label>
 					<div class="col-md-3">
 						<label class="radio-inline"> <input type="radio" value="0"
-						<c:if test="${selectedStudentViewData.userbasicinfo.user_basic_info_sex<1}">
+							<c:if test="${selectedStudentViewData.userbasicinfo.user_basic_info_sex<1}">
 							checked="checked"
 							</c:if>
-							 name="user_basic_info_sex" id="inlineRadio1"
-							value="option1"> 男
+							name="user_basic_info_sex" id="inlineRadio1" value="option1">
+							男
 						</label> <label class="radio-inline"> <input type="radio"
-						<c:if test="${selectedStudentViewData.userbasicinfo.user_basic_info_sex>0}">
+							<c:if test="${selectedStudentViewData.userbasicinfo.user_basic_info_sex>0}">
 							checked="checked"
 							</c:if>
 							value="1" name="user_basic_info_sex" id="inlineRadio2"
@@ -234,8 +234,9 @@
 										<tr id="contactrow${dataitem.usercontacttype.id}">
 											<th scope="row">${index}</th>
 											<td><input type="hidden" name="contacttypeId"
-					value="${dataitem.usercontacttype.id }">${dataitem.usercontacttype.name}</td>
-											<td><input type="text" name="user_contact_value" value="${dataitem.usercontactinfo.user_contact_value}"></td>
+												value="${dataitem.usercontacttype.id }">${dataitem.usercontacttype.name}</td>
+											<td><input type="text" name="user_contact_value"
+												value="${dataitem.usercontactinfo.user_contact_value}"></td>
 											<td><button type='button' class='btn btn-default btn-sm'
 													onclick='DeleteContactRow("contactrow${dataitem.usercontacttype.id}")'>删除</button></td>
 										</tr>
@@ -253,7 +254,7 @@
 
 
 				<div class="modal-footer col-md-7">
-					<button type="submit" class="btn btn-primary">确定</button>
+					<button type="submit" class="btn btn-primary" onclick="onAdd()">确定</button>
 					<button type="button" class="btn btn-default"
 						onclick="window.history.back()">取消</button>
 				</div>
@@ -300,12 +301,26 @@
 
 
 	<script>
-		
+		function onAdd() {
+			var birthday = $('#user_basic_info_birthday').val();
 
-		
-		
-		
-		
+			if (!birthday) {
+				
+				alert("生日不能为空");
+
+			}
+
+		}
+		function onSubmit() {
+			var birthday = $('#user_basic_info_birthday').val();
+
+			if (!birthday) {
+
+				return false;
+
+			}
+			return true;
+		}
 
 		function AddContactRow() {
 			var table = document.getElementById("contacttable");
@@ -342,20 +357,17 @@
 			}
 
 		}
-		
-		
+
 		function DeleteContactRow(rowid) {
 			var table = document.getElementById("contacttable");
 			var trCnt = table.tBodies[0].rows.length;
-		
+
 			for (var i = 0; i < trCnt; i++) {
 				if (table.tBodies[0].rows[i].id == rowid)
 					table.tBodies[0].deleteRow(i);
 			}
 
 		}
-		
-		
 	</script>
 
 

@@ -254,7 +254,7 @@
 		}
 
 		function onUpdate(id, name, note) {
-			var url = "location='${pagedURI}/update-" + id + ".html'";
+			var url = "location='<c:url value="/${pagedURI}/update-"/>" + id + ".html'";
 			$('#updateModal').find('.modal-body #inputid').val(id);
 			$('#updateModal').find('.modal-body #inputname').val(name);
 			$('#updateModal').find('.modal-body #inputnote').val(note);
@@ -266,7 +266,7 @@
 		}
 
 		function onDelete(id, name) {
-			var url = "location='${pagedURI}/DELETE-" + id + ".html'";
+			var url = "location='<c:url value="/${pagedURI}/DELETE-"/>" + id + ".html'";
 
 			$('#deleteModal').find('.modal-body #deleteinfo').text(name);
 			$('#deleteModal').find('.modal-footer #deletebtn').attr("onclick",

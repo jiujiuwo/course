@@ -270,5 +270,5 @@ public class CourseTeachingClassHomeworkBaseinfoDao extends BaseDao<CourseTeachi
 
 		return new Page<CourseTeachingClassHomeworkBaseinfoViewData>(startIndex, totalCount, pageSize, data);
 
-	}
+	}	
 }

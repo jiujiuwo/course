@@ -208,16 +208,16 @@
 
 											<c:when test="${fn:length(data.fileList)==1}">
 												<a
-													href="<c:url value="coursereferencefile/download-${data.fileList[0].id}.html"/>">
-													${data.fileList[0].filename}</a>(${data.fileList[0].filelength})
+													href="<c:url value="/coursereferencefile/download-${data.fileList[0].id}.html"/>">
+													<span class="glyphicon glyphicon-download" aria-hidden="true"></span>${data.fileList[0].filename}</a>(${data.fileList[0].filelength})
 											</c:when>
 
 											<c:otherwise>
 												<ul>
 													<c:forEach var="datafile" items="${data.fileList}">
 														<li><a
-															href="<c:url value="coursereferencefile/download-${datafile.id}.html"/>">
-																${datafile.filename}</a>(${datafile.filelength})</li>
+															href="<c:url value="/coursereferencefile/download-${datafile.id}.html"/>">
+																<span class="glyphicon glyphicon-download" aria-hidden="true"></span>${datafile.filename}</a>(${datafile.filelength})</li>
 													</c:forEach>
 												</ul>
 											</c:otherwise>
@@ -311,7 +311,7 @@
 		}
 
 		function onDelete(id, name) {
-			var url = "location='coursereference/DELETE-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}-"
+			var url = "location='<c:url value="coursereference/DELETE-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}-"/>"
 					+ id + ".html'";
 
 			$('#deleteModal').find('.modal-body #deleteinfo').text(name);

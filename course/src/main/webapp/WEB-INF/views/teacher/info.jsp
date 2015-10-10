@@ -77,7 +77,7 @@
 			</div>
 
 
-			<form class="form-horizontal" style="overflow: hidden;"
+			<form class="form-horizontal" style="overflow: hidden;" onsubmit="onSubmit();"
 				action="<c:url value="/teacher/infoupdate.html"/>" method="post">
 
 				<input type="hidden" name="t_user_id"
@@ -295,6 +295,28 @@
 
 
 	<script>
+	
+	function onAdd() {
+		var birthday = $('#user_basic_info_birthday').val();
+
+		if (!birthday) {
+			
+			alert("生日不能为空");
+
+		}
+
+	}
+	function onSubmit() {
+		var birthday = $('#user_basic_info_birthday').val();
+
+		if (!birthday) {
+
+			return false;
+
+		}
+		return true;
+	}
+	
 		function AddContactRow() {
 			var table = document.getElementById("contacttable");
 			var trCnt = table.tBodies[0].rows.length;

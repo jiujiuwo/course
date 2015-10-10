@@ -110,7 +110,7 @@
 											<c:when
 												test="${fn:length(selectedCourseHomeworkBasicInfoViewData.homeworkFileList)==1}">
 												<a
-													href="<c:url value="coursehomeworkfile/download-${selectedCourseHomeworkBasicInfoViewData.homeworkFileList[0].id}.html"/>">
+													href="<c:url value="/coursehomeworkfile/download-${selectedCourseHomeworkBasicInfoViewData.homeworkFileList[0].id}.html"/>">
 													${selectedCourseHomeworkBasicInfoViewData.homeworkFileList[0].filename}</a>
 											</c:when>
 
@@ -119,7 +119,7 @@
 													<c:forEach var="datafile"
 														items="${selectedCourseHomeworkBasicInfoViewData.homeworkFileList}">
 														<li><a
-															href="<c:url value="coursehomeworkfile/download-${datafile.id}.html"/>">
+															href="<c:url value="/coursehomeworkfile/download-${datafile.id}.html"/>">
 																${datafile.filename}</a></li>
 													</c:forEach>
 												</ul>
@@ -287,7 +287,7 @@
 														<c:when
 															test="${fn:length(data.homeworksubmitFileList)==1}">
 															<a
-																href="<c:url value="coursehomeworkfile/download-${data.homeworksubmitFileList[0].id}.html"/>">
+																href="<c:url value="/coursehomeworkfile/download-${data.homeworksubmitFileList[0].id}.html"/>">
 																${data.homeworksubmitFileList[0].filename}</a>
 														</c:when>
 
@@ -296,7 +296,7 @@
 																<c:forEach var="datafile"
 																	items="${data.homeworksubmitFileList}">
 																	<li><a
-																		href="<c:url value="coursehomeworksubmitfile/download-${datafile.id}.html"/>">
+																		href="<c:url value="/coursehomeworksubmitfile/download-${datafile.id}.html"/>">
 																			${datafile.filename}</a></li>
 																</c:forEach>
 															</ul>
@@ -481,7 +481,7 @@
 
 														<c:when test="${fn:length(data.repplyFileList)==1}">
 															<a
-																href="<c:url value="coursehomeworkreplyfile/download-${data.repplyFileList[0].id}.html"/>">
+																href="<c:url value="/coursehomeworkreplyfile/download-${data.repplyFileList[0].id}.html"/>">
 																${data.repplyFileList[0].filename}</a>
 														</c:when>
 
@@ -489,7 +489,7 @@
 															<ul>
 																<c:forEach var="datafile" items="${data.repplyFileList}">
 																	<li><a
-																		href="<c:url value="coursehomeworkreplyfile/download-${datafile.id}.html"/>">
+																		href="<c:url value="/coursehomeworkreplyfile/download-${datafile.id}.html"/>">
 																			${datafile.filename}</a></li>
 																</c:forEach>
 															</ul>
@@ -733,7 +733,7 @@
 		}
 
 		function onDelete(id) {
-			var url = "location='coursehomework/replydelete-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-"
+			var url = "location='<c:url value="/coursehomework/replydelete-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-"/>"
 					+ id
 					+ "-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}-${t_student_id}.html'";
 
@@ -746,7 +746,7 @@
 		}
 
 		function onUpdate(id, title, content) {
-			var url = "coursehomework/replyupdate-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-"
+			var url = "/coursehomework/replyupdate-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-"
 					+ id
 					+ "-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}-${t_student_id}.html";
 			$('#updateModal').find('.modal-body #inputid').val(id);

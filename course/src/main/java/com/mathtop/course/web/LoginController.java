@@ -15,9 +15,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mathtop.course.cons.CommonConstant;
 import com.mathtop.course.cons.CourseMessage;
+import com.mathtop.course.cons.PagedObjectConst;
+import com.mathtop.course.dao.Page;
+import com.mathtop.course.domain.MailBoxReceivedViewData;
 import com.mathtop.course.domain.User;
 import com.mathtop.course.domain.UserSessionInfo;
 import com.mathtop.course.service.LoginService;
+import com.mathtop.course.service.MailBoxReceivedService;
 import com.mathtop.course.service.UserService;
 import com.mathtop.course.service.UserSessionInfoService;
 
@@ -36,6 +40,10 @@ public class LoginController extends BaseController {
 	
 	@Autowired
 	UserSessionInfoService usersessioninfoService;
+	
+	//邮箱服务
+	@Autowired
+	private MailBoxReceivedService mailboxReceivedService;
 
 	@RequestMapping(value = "androidLogin", method = RequestMethod.POST)
 	@ResponseBody
@@ -74,6 +82,28 @@ public class LoginController extends BaseController {
 	}
 
 	/**
+	 * 取得当前用户的未读取邮件列表
+	 * */
+	private void SetMailBosReceived(String t_user_id, Integer pageNo, ModelAndView view) {		
+		
+			
+			if (t_user_id != null) {
+
+				pageNo = pageNo == null ? 1 : pageNo;
+				Page<MailBoxReceivedViewData> pagedMailBoxReceivedViewData = mailboxReceivedService.getPageNotRead(t_user_id, pageNo,
+						CommonConstant.PAGE_SIZE);
+				
+
+				view.addObject(PagedObjectConst.Paged_MailBoxReceivedViewData, pagedMailBoxReceivedViewData);
+				
+				
+
+		
+		}
+
+	}
+	
+	/**
 	 * 用户登陆
 	 * 
 	 * @param request
@@ -85,11 +115,15 @@ public class LoginController extends BaseController {
 
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("account/login");
+		
+		UserSessionInfo userinfo = getSessionUser(request);
 
 		// 如果用户已经登录，则直接进入到主页面
-		if (getSessionUser(request) != null) {
-			String toUrl = "/index.html";
-			mav.setViewName("redirect:" + toUrl);
+		if (userinfo != null) {
+			String t_user_id = userinfo.getUser().getId();
+			SetMailBosReceived(t_user_id,1,mav);			
+			mav.setViewName("index");
+			
 			return mav;
 		}
 
@@ -115,14 +149,18 @@ public class LoginController extends BaseController {
 			String toUrl = (String) request.getSession().getAttribute(
 					CommonConstant.LOGIN_TO_URL);
 			request.getSession().removeAttribute(CommonConstant.LOGIN_TO_URL);
+			
+			
 
 			// 如果当前会话中没有保存登录之前的请求URL，则直接跳转到主页
 			if (StringUtils.isEmpty(toUrl)) {
-				toUrl = "/index.html";
+				
+				SetMailBosReceived(dbUser.getId(),1,mav);
+				mav.addObject(dbUser);
+				mav.setViewName("index");
 			}
-
-			mav.addObject(dbUser);
-			mav.setViewName("redirect:" + toUrl);
+			else
+				mav.setViewName("redirect:" + toUrl);			
 		}
 		return mav;
 	}

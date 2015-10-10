@@ -3,14 +3,12 @@ package com.mathtop.course.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.mathtop.course.cons.RealPathConst;
 import com.mathtop.course.dao.CourseTeachingClassHomeworkBaseinfoDao;
 import com.mathtop.course.dao.StudentViewDataDao;
 import com.mathtop.course.dao.TeachingClassViewDataDao;
@@ -27,7 +25,7 @@ import com.mathtop.course.domain.TeacherViewData;
  * 支持下列操作符 {学院}:学生所在的学院 {系别}:学生所在的系别 {教学班}:学生所在的教学班 {自然班}:学生所在的自然班（行政班）
  * {学号}:学生的学号 {姓名}:学生的姓名 {作业类型}:本次作业的类型 {作业名称}:本次作业的名称 {数字}:数字，从0开始的整数，不能是负数或小数。
  * {?}:一个字符 {*}:任意长度的字符
- * */
+ */
 @Service
 public class FileNameFormatParser {
 
@@ -115,7 +113,7 @@ public class FileNameFormatParser {
 
 	/**
 	 * 是否符合格式 只有支持的操作符才能够识别
-	 * */
+	 */
 	public boolean IsFileNameFormatRight(String strFormat) {
 
 		TokenValue tv = getNextOperator(strFormat);
@@ -301,22 +299,19 @@ public class FileNameFormatParser {
 
 	/**
 	 * 文件后缀是否正确，例如要求doc，用户上传了xls文件则错误
-	 * */
+	 */
 	private boolean IsSubmitFileNamePoxfixRight(String filename, CourseTeachingClassHomeworkBaseinfoViewData homeworkviewdata) {
 
 		String prefix = filename.substring(filename.lastIndexOf(".") + 1);
-		
-		
 
 		prefix = prefix.toLowerCase();
 
 		String filetype = homeworkviewdata.getHomeworkbaseinfo().getFiletype().toLowerCase();
-		
-		
+
 		String filetypes[] = filetype.split(";");
-		
+
 		for (String t : filetypes) {
-			
+
 			int index = t.lastIndexOf('.');
 			if (index < 0) {
 				index = 0;
@@ -326,15 +321,13 @@ public class FileNameFormatParser {
 					return true;
 			} else {
 				String s = t.substring(index + 1);
-				
+
 				if (s.equals("*"))
 					return true;
 				else if (s.equals(prefix))
 					return true;
 			}
 		}
-		
-		
 
 		return false;
 	}
@@ -360,7 +353,6 @@ public class FileNameFormatParser {
 		}
 	}
 
-	
 	private int findnum(String strFilename) {
 		int i = 0;
 		for (i = 0; i < strFilename.length(); i++)
@@ -460,24 +452,24 @@ public class FileNameFormatParser {
 
 		ContainValue v = new ContainValue();
 		int nsize = strSubFileName.length();
-		
+
 		if (nsize == 0) {
 			v.setFlag(true);
 			v.setNext(strFilename);
 			return v;
 		}
 		if (bMultiplechar) {
-			int beginindex=strFilename.indexOf(strSubFileName);
-			if(beginindex==-1){
+			int beginindex = strFilename.indexOf(strSubFileName);
+			if (beginindex == -1) {
 				v.setFlag(false);
 				return v;
 			}
-			
+
 			v.setFlag(true);
-			v.setNext(strFilename.substring(beginindex+nsize));
-			
+			v.setNext(strFilename.substring(beginindex + nsize));
+
 		} else {
-			
+
 			if (strFilename.substring(0, nsize).equals(strSubFileName)) {
 				v.setFlag(true);
 				v.setNext(strFilename.substring(nsize));
@@ -491,7 +483,7 @@ public class FileNameFormatParser {
 
 	/**
 	 * 文件名是否正确，例如要求按照{班级}_{学号}格式上传，是否符合该格式
-	 * */
+	 */
 	private boolean IsSubmitFileNamePrefixRight(String filename, CourseTeachingClassHomeworkBaseinfoViewData homeworkviewdata,
 			CourseTeachingClassViewData courseteachingclassviewdata, StudentViewData student) {
 
@@ -534,13 +526,13 @@ public class FileNameFormatParser {
 				}
 
 			} else {// 非操作符
-				String s= tv.getValue();
+				String s = tv.getValue();
 				v = trimprefix(filename, s, bMultiplechar);
 				if (v.isFlag())
 					filename = v.getNext();
 				else
 					return false;// 错误，不符合要求
-				
+
 				bMultiplechar = false;
 
 			}
@@ -557,20 +549,53 @@ public class FileNameFormatParser {
 	private boolean IsSubmitFileNameFormatRight(String strSubmitFileName, CourseTeachingClassHomeworkBaseinfoViewData homeworkviewdata,
 			CourseTeachingClassViewData courseteachingclassviewdata, StudentViewData student) {
 
-		
-		
 		if (!IsSubmitFileNamePoxfixRight(strSubmitFileName, homeworkviewdata))
 			return false;
-		
-		
 
 		if (!IsSubmitFileNamePrefixRight(strSubmitFileName, homeworkviewdata, courseteachingclassviewdata, student))
 			return false;
 		return true;
 	}
 
+	
 	/**
+	 * 计算文件个数,注意文件个数不等于files.length
 	 * */
+	private int GetFilesCount(MultipartFile[] files){
+		if(files==null)
+			return 0;
+		int nCount=0;
+		for(int i=0;i<files.length;i++){
+			MultipartFile file = files[i];
+			if(file.isEmpty())
+				continue;
+			nCount++;
+		}
+		return nCount;
+		
+	}
+	/**
+	 * 提交的文件个数是否符合要求,符合要求返回true,否则返回false
+	 */
+	public boolean IsSubmitFileCountRight(HttpServletRequest request, MultipartFile[] files,
+			String t_course_teaching_class_homework_baseinfo_id) {
+		// 作业基本信息
+		CourseTeachingClassHomeworkBaseinfo homeworkbaseinfo = homeworkbaseinfoDao.getByID(t_course_teaching_class_homework_baseinfo_id);
+		if (homeworkbaseinfo == null)
+			return false;
+		
+		int nFilesCount=GetFilesCount(files);		
+		int nNeedFilesCount=homeworkbaseinfo.getFilecount();		
+
+		if (nFilesCount!= nNeedFilesCount)
+			return false;
+
+		return true;
+	}
+
+	/**
+	 * 提交的文件名称是否符合要求,符合要求返回true,否则返回false
+	 */
 	public boolean IsSubmitFileNameFormatRight(HttpServletRequest request, MultipartFile[] files,
 			String t_course_teaching_class_homework_baseinfo_id, String t_student_id) {
 
@@ -594,7 +619,7 @@ public class FileNameFormatParser {
 
 		// 不需要文件
 		if (homeworkbaseinfo.getFilecount() == 0)
-			return false;
+			return true;
 
 		for (int i = 0; i < files.length; i++) {
 			MultipartFile file = files[i];

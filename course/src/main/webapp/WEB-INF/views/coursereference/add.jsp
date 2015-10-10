@@ -4,8 +4,7 @@
 
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 
 	//设置左侧浏览状态
@@ -24,6 +23,21 @@
 
 <%@ include file="../../shared/importCss.jsp"%>
 <%@ include file="../../shared/importJs.jsp"%>
+
+<!-- file upload -->
+<link
+	href="<c:url value='/plugins/kartik-v-bootstrap-fileinput-965e950/css/fileinput.min.css'/>"
+	rel="stylesheet" type="text/css" />
+<script
+	src="<c:url value='/plugins/kartik-v-bootstrap-fileinput-965e950/js/plugins/canvas-to-blob.min.js'/>"
+	type="text/javascript"></script>
+<script
+	src="<c:url value='/plugins/kartik-v-bootstrap-fileinput-965e950/js/fileinput.min.js'/>"
+	type="text/javascript"></script>
+<script
+	src="<c:url value='/plugins/kartik-v-bootstrap-fileinput-965e950/js/fileinput_locale_zh.js'/>"
+	type="text/javascript"></script>
+
 
 <link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet"
 	type="text/css" />
@@ -80,6 +94,7 @@
 			<div class="Course-Table">
 
 
+
 				<form
 					action="<c:url value="/coursereference/add-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html"/>"
 					enctype="multipart/form-data" method="post">
@@ -122,6 +137,7 @@
 
 
 
+
 			</div>
 
 		</div>
@@ -152,6 +168,25 @@
 		//  maxHeight: null,             // set maximum height of editor
 
 		//  focus: true,                 // set focus to editable area after initializing summernote
+		});
+	</script>
+
+	<script>
+		$("#input-id").fileinput({
+			type : "POST",
+			language : "zh",
+			uploadUrl : "/file-upload-batch/2",
+			showUpload : false,
+			showUploadedThumbs:false,
+			previewFileIcon : '<i class="fa fa-file"></i>',
+			allowedPreviewTypes : [ 'image', 'text' ], // allow only preview of image & text files
+			previewFileIconSettings : {
+				'docx' : '<i class="fa fa-file-word-o text-primary"></i>',
+				'xlsx' : '<i class="fa fa-file-excel-o text-success"></i>',
+				'pptx' : '<i class="fa fa-file-powerpoint-o text-danger"></i>',
+				'pdf' : '<i class="fa fa-file-pdf-o text-danger"></i>',
+				'zip' : '<i class="fa fa-file-archive-o text-muted"></i>',
+			}
 		});
 	</script>
 

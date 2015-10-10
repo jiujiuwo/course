@@ -128,7 +128,7 @@
 												<c:when
 													test="${fn:length(selectedCourseHomeworkBasicInfoViewData.homeworkFileList)==1}">
 													<a
-														href="<c:url value="coursehomeworkfile/download-${selectedCourseHomeworkBasicInfoViewData.homeworkFileList[0].id}.html"/>">
+														href="<c:url value="/coursehomeworkfile/download-${selectedCourseHomeworkBasicInfoViewData.homeworkFileList[0].id}.html"/>">
 														${selectedCourseHomeworkBasicInfoViewData.homeworkFileList[0].filename}</a>
 												</c:when>
 
@@ -137,7 +137,7 @@
 														<c:forEach var="datafile"
 															items="${selectedCourseHomeworkBasicInfoViewData.homeworkFileList}">
 															<li><a
-																href="<c:url value="coursehomeworksubmitfile/download-${datafile.id}.html"/>">
+																href="<c:url value="/coursehomeworksubmitfile/download-${datafile.id}.html"/>">
 																	${datafile.filename}</a></li>
 														</c:forEach>
 													</ul>
@@ -159,9 +159,9 @@
 										</div>
 										<div class="col-md-2">
 											<a
-												href="<c:url value="coursehomeworksubmitfile/downloadall-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}.html"/>">
+												href="<c:url value="/coursehomeworksubmitfile/downloadall-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}.html"/>">
 												全体学生实验报告</a> <a
-												href="<c:url value="coursehomeworkfile/download-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}.html"/>">
+												href="<c:url value="/coursehomeworkfile/download-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}.html"/>">
 												全体学生实验批复</a>
 										</div>
 

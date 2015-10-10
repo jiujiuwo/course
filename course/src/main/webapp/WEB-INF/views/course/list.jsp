@@ -398,7 +398,7 @@
 		}
 
 		function onUpdate(id) {
-			var url = "location='${pagedURI}/update-" + id + ".html'";
+			var url = "location='<c:url value="/${pagedURI}/update-"/>" + id + ".html'";
 			$('#updateModal').find('.modal-body #inputid').val(id);
 
 			$('#updateModal').find('.modal-footer #updatebtn').attr("onclick",

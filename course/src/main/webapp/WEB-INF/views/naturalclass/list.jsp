@@ -346,15 +346,14 @@
 			//school
 			var ctrlschool = document.getElementById("SchoolSelectControl");
 			var schooledid = "${selectedt_school_id}";
-			
-			
-			var ctrldepartment = document.getElementById("departmentSelectControl");
+
+			var ctrldepartment = document
+					.getElementById("departmentSelectControl");
 			var departmentid = "${selectedt_department_id}";
-			
-			
+
 			var index = 0;
 
-			if (ctrlschool.options.length > 0) {				
+			if (ctrlschool.options.length > 0) {
 
 				for (var i = 0; i < ctrlschool.options.length; i++)
 					if (ctrlschool.options[i].value == (schooledid))
@@ -369,10 +368,8 @@
 
 			//department
 
-			
 			if (ctrldepartment.options.length > 0) {
 
-				
 				for (var i = 0; i < ctrldepartment.options.length; i++)
 					if (ctrldepartment.options[i].value == (departmentid))
 						index = i;
@@ -389,7 +386,7 @@
 	</script>
 
 	<script>
-		//学院
+		//系部
 		function OnDepartmentChange(t_depratment_id) {
 
 			var url = "<c:url value='/naturalclass'/>"
@@ -410,7 +407,7 @@
 		}
 
 		function onUpdate(id) {
-			var url = "location='${pagedURI}/update-" + id + ".html'";
+			var url = "location='<c:url value="/${pagedURI}/update-"/>" + id + ".html'";
 			$('#updateModal').find('.modal-body #inputid').val(id);
 
 			$('#updateModal').find('.modal-footer #updatebtn').attr("onclick",
@@ -429,8 +426,6 @@
 			$('#deleteModal').find('.modal-footer #deletebtn').attr("onclick",
 					url);
 
-			
-
 			$('#deleteModal').modal('show');
 
 		}
@@ -442,12 +437,11 @@
 		$("#SchoolSelectControl").change(
 					function() {
 						var selt_school_id = $("#SchoolSelectControl").val();
-						
-						var url = "<c:url value="/department/"/>"
+
+						var url = "<c:url value='/department/'/>"
 
 						url = url + "selectbyschool-" + selt_school_id
 								+ ".json";
-						
 
 						var departmentjson;
 						$("#departmentSelectControl").empty();
@@ -459,6 +453,12 @@
 											"<option value='"+data[i].id+"'>"
 													+ data[i].name
 													+ "</option>");
+								}
+								
+								if(data.length>0){
+									$("#departmentSelectControl").get(0).selectedIndex = 0;
+									
+									OnDepartmentChange($("#departmentSelectControl").val());
 								}
 							}
 						});

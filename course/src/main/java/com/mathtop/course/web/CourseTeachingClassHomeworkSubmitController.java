@@ -53,7 +53,7 @@ public class CourseTeachingClassHomeworkSubmitController extends CourseTeachingC
 	FileNameFormatParser filenameformatparser;
 
 	/**
-	 * 添加学院
+	 * 学生提交作业
 	 * 
 	 * @param request
 	 * @param user
@@ -76,9 +76,27 @@ public class CourseTeachingClassHomeworkSubmitController extends CourseTeachingC
 			}
 		}
 
-		if (t_student_id == null
-				|| !filenameformatparser.IsSubmitFileNameFormatRight(request, files, t_course_teaching_class_homework_baseinfo_id,
-						t_student_id)) {
+		if (t_student_id == null) {
+			redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg, "学生不能为空，请修改.");
+
+			mav.setViewName("redirect:/coursehomeworksubmit/list-" + t_course_teaching_class_id + "-"
+					+ t_course_teaching_class_homeworktype_id + "-" + t_course_teaching_class_homework_baseinfo_id + ".html");
+			return mav;
+
+		}
+		
+		
+		if (!filenameformatparser.IsSubmitFileCountRight(request, files, t_course_teaching_class_homework_baseinfo_id)) {
+
+			redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg, "文件个数不符合要求，请修改.");
+
+			mav.setViewName("redirect:/coursehomeworksubmit/list-" + t_course_teaching_class_id + "-"
+					+ t_course_teaching_class_homeworktype_id + "-" + t_course_teaching_class_homework_baseinfo_id + ".html");
+			return mav;
+		}
+		
+
+		if (!filenameformatparser.IsSubmitFileNameFormatRight(request, files, t_course_teaching_class_homework_baseinfo_id, t_student_id)) {
 
 			redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg, "文件名称不符合要求，请修改.");
 
@@ -86,6 +104,8 @@ public class CourseTeachingClassHomeworkSubmitController extends CourseTeachingC
 					+ t_course_teaching_class_homeworktype_id + "-" + t_course_teaching_class_homework_baseinfo_id + ".html");
 			return mav;
 		}
+
+		
 
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
@@ -178,8 +198,7 @@ public class CourseTeachingClassHomeworkSubmitController extends CourseTeachingC
 	 */
 	@RequestMapping(value = "/list-{t_course_teaching_class_id}-{t_course_teaching_class_homeworktype_id}-{t_course_teaching_class_homework_baseinfo_id}")
 	public ModelAndView ListAll(HttpServletRequest request, @PathVariable String t_course_teaching_class_id,
-			@PathVariable String t_course_teaching_class_homeworktype_id,
-			@PathVariable String t_course_teaching_class_homework_baseinfo_id,
+			@PathVariable String t_course_teaching_class_homeworktype_id, @PathVariable String t_course_teaching_class_homework_baseinfo_id,
 			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
 		ModelAndView view = new ModelAndView();
 

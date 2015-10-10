@@ -2,7 +2,6 @@ package com.mathtop.course.web;
 
 import java.io.File;
 import java.io.IOException;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -44,21 +43,31 @@ public class CourseTeachingClassHomeworkDownloadController extends CourseTeachin
 	@RequestMapping(value = "/download-{t_course_teaching_class_homework_file_id}")
 	public ResponseEntity<byte[]> download(HttpServletRequest request, @PathVariable String t_course_teaching_class_homework_file_id)
 			throws IOException {
+		
+		
 
 		CourseTeachingClassHomeworkFile plan  =exprimentService.getFileByID(t_course_teaching_class_homework_file_id);
 		if (plan == null)
 			return null;
+		
+		
 
 		ServletContext sc = request.getSession().getServletContext();
 		String dir = sc.getRealPath(RealPathConst.RealPath_HomeworkFile); // 设定文件保存的目录
 		String filename = plan.getFilename();
 		String path = dir + RealPathConst.RealPath_PathSeparator + plan.getFilepath();
+		
+		
+		
 		File file = new File(path);
 		HttpHeaders headers = new HttpHeaders();
-		String fileName = new String(filename.getBytes("UTF-8"), "iso-8859-1");// 为了解决中文名称乱码问题
+		String fileName = new String(filename.getBytes("GB18030"), "ISO8859-1");// 为了解决中文名称乱码问题
+	
+	
 		headers.setContentDispositionFormData("attachment", fileName);
+		
 		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
+		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.OK);
 	}
 
 }

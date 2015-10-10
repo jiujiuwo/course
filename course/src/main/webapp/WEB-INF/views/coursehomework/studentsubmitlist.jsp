@@ -4,8 +4,7 @@
 
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 
 	//设置左侧浏览状态
@@ -61,7 +60,7 @@
 			</ol>
 
 
-			<div class="CourseContentHeader">${selectedCourseHomeworkTypeData.name}-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.title}提交管理</div>
+			<div class="CourseContentHeader">${selectedCourseHomeworkTypeData.name}-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.title}</div>
 
 
 			<div class="CourseContentHeaderSeparatorLine"></div>
@@ -110,7 +109,7 @@
 											<c:when
 												test="${fn:length(selectedCourseHomeworkBasicInfoViewData.homeworkFileList)==1}">
 												<a
-													href="<c:url value="coursehomeworkfile/download-${selectedCourseHomeworkBasicInfoViewData.homeworkFileList[0].id}.html"/>">
+													href="<c:url value="/coursehomeworkfile/download-${selectedCourseHomeworkBasicInfoViewData.homeworkFileList[0].id}.html"/>">
 													${selectedCourseHomeworkBasicInfoViewData.homeworkFileList[0].filename}</a>
 											</c:when>
 
@@ -119,7 +118,7 @@
 													<c:forEach var="datafile"
 														items="${selectedCourseHomeworkBasicInfoViewData.homeworkFileList}">
 														<li><a
-															href="<c:url value="coursehomeworkfile/download-${datafile.id}.html"/>">
+															href="<c:url value="/coursehomeworkfile/download-${datafile.id}.html"/>">
 																${datafile.filename}</a></li>
 													</c:forEach>
 												</ul>
@@ -301,7 +300,7 @@
 														<c:when
 															test="${fn:length(data.homeworksubmitFileList)==1}">
 															<a
-																href="<c:url value="coursehomeworkfile/download-${data.homeworksubmitFileList[0].id}.html"/>">
+																href="<c:url value="/coursehomeworkfile/download-${data.homeworksubmitFileList[0].id}.html"/>">
 																${data.homeworksubmitFileList[0].filename}</a>
 														</c:when>
 
@@ -310,7 +309,7 @@
 																<c:forEach var="datafile"
 																	items="${data.homeworksubmitFileList}">
 																	<li><a
-																		href="<c:url value="coursehomeworksubmitfile/download-${datafile.id}.html"/>">
+																		href="<c:url value="/coursehomeworksubmitfile/download-${datafile.id}.html"/>">
 																			${datafile.filename}</a></li>
 																</c:forEach>
 															</ul>
@@ -463,7 +462,7 @@
 
 														<c:when test="${fn:length(data.repplyFileList)==1}">
 															<a
-																href="<c:url value="coursehomeworkreplyfile/download-${data.repplyFileList[0].id}.html"/>">
+																href="<c:url value="/coursehomeworkreplyfile/download-${data.repplyFileList[0].id}.html"/>">
 																${data.repplyFileList[0].filename}</a>
 														</c:when>
 
@@ -471,7 +470,7 @@
 															<ul>
 																<c:forEach var="datafile" items="${data.repplyFileList}">
 																	<li><a
-																		href="<c:url value="coursehomeworkreplyfile/download-${datafile.id}.html"/>">
+																		href="<c:url value="/coursehomeworkreplyfile/download-${datafile.id}.html"/>">
 																			${datafile.filename}</a></li>
 																</c:forEach>
 															</ul>
@@ -542,7 +541,8 @@
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">添加${selectedCourseHomeworkTypeData.name}</h4>
+					<h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
+  提交${selectedCourseHomeworkTypeData.name}</h4>
 				</div>
 
 
@@ -555,9 +555,24 @@
 						style="margin-left: 10px; margin-right: 10px;">
 
 						<div class="form-group">
-							<label for="name" class=" control-label">标题</label> <input
-								type="text" id="name" class="form-control" name="title" value=""
-								placeholder="标题" required>
+							<label for="name" class=" control-label">标题</label>
+							<c:choose>
+								<c:when test="${sessionScope.USER_CONTEXT.student!=null}">
+									<c:if
+										test="${sessionScope.USER_CONTEXT.userbasicinfo.user_basic_info_name!=null}">
+										<input type="text" id="name" class="form-control" name="title"
+											value="${sessionScope.USER_CONTEXT.userbasicinfo.user_basic_info_name}(${sessionScope.USER_CONTEXT.user.user_name})-${selectedCourseHomeworkTypeData.name}-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.title}"
+											placeholder="标题" required />
+
+									</c:if>
+								</c:when>
+								<c:otherwise>
+									<input type="text" id="name" class="form-control" name="title"
+										value="${selectedCourseHomeworkTypeData.name}-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.title}"
+										placeholder="标题" required />
+								</c:otherwise>
+							</c:choose>
+
 						</div>
 
 
@@ -726,7 +741,7 @@
 		}
 
 		function onDelete(id) {
-			var url = "location='coursehomeworksubmit/DELETE-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-"
+			var url = "location='<c:url value="/coursehomeworksubmit/DELETE-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-"/>"
 					+ id + ".html'";
 
 			$('#deleteModal').find('.modal-body #deleteinfo').text(name);
@@ -738,7 +753,7 @@
 		}
 
 		function onUpdate(id, title, content) {
-			var url = "coursehomeworksubmit/update-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-"
+			var url = "/coursehomeworksubmit/update-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-"
 					+ id + ".html";
 			$('#updateModal').find('.modal-body #inputid').val(id);
 			$('#updateModal').find('.modal-body #inputtitle').val(title);
@@ -758,7 +773,7 @@
 	<c:if test="${!empty errorMsg}">
 		<script>
 			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
+				ShowInfoMsg("错误","${errorMsg}");
 
 			}
 		</script>

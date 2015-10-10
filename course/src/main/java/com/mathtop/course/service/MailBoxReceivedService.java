@@ -125,8 +125,12 @@ public class MailBoxReceivedService {
 		return maiboxdao.getMailBoxReceivedViewDataByID(id);
 	}
 
-	public Page<MailBoxReceivedViewData> getPage(String t_user_id_to,			 int pageNo, int pageSize) {
+	public Page<MailBoxReceivedViewData> getPage(String t_user_id_to, int pageNo, int pageSize) {
 		return maiboxdao.getPage(t_user_id_to,  pageNo, pageSize);
+	}
+	
+	public Page<MailBoxReceivedViewData> getPageNotRead(String t_user_id_to, int pageNo, int pageSize) {
+		return maiboxdao.getPageNotRead(t_user_id_to,  pageNo, pageSize);
 	}
 
 

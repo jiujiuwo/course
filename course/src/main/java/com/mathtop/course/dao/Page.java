@@ -145,4 +145,9 @@ public class Page<T> implements Serializable {
 	public String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
+
+	public long getStart() {
+		return start;
+	}
+	
 }

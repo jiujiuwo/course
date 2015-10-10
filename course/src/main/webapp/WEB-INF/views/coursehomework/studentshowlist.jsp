@@ -4,8 +4,7 @@
 
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 
 	//设置左侧浏览状态
@@ -60,7 +59,7 @@
 				<li class="active">Data</li>
 			</ol>
 
-			<div class="CourseContentHeader">${selectedCourseHomeworkTypeData.name}管理</div>
+			<div class="CourseContentHeader">${selectedCourseHomeworkTypeData.name}</div>
 
 			<div class="CourseContentHeaderSeparatorLine"></div>
 
@@ -98,13 +97,30 @@
 
 							<div
 								class="panel 
-					<c:if test="${data.homeworkbaseinfo.canStudentSubmit==true }"> 
-						panel-primary
-						</c:if>
-						
-						<c:if test="${data.homeworkbaseinfo.canStudentSubmit==false }"> 
-						panel-default
-						</c:if>
+								
+								
+								<c:choose>													
+													<c:when test="${data.homeworkbaseinfo.canReply}">
+														panel-default
+													</c:when>
+													<c:otherwise>
+														<c:choose>
+															<c:when test="${data.studentSubmitted}">
+																panel-success
+															</c:when>
+															<c:when test="${data.homeworkbaseinfo.canStudentSubmit}">
+																panel-primary
+															</c:when>
+															<c:otherwise>
+															panel-warning
+															</c:otherwise>
+															
+														</c:choose>
+													</c:otherwise>
+												</c:choose>
+												
+												
+					
 					
 					">
 								<div class="panel-heading" role="tab"
@@ -121,9 +137,22 @@
 								</div>
 								<div id="collapse${data.homeworkbaseinfo.id}"
 									class="panel-collapse collapse
-						<c:if test="${data.homeworkbaseinfo.canStudentSubmit==true }"> 
-						in
-						</c:if>
+						<c:choose>													
+													<c:when test="${data.homeworkbaseinfo.canReply}">
+														
+													</c:when>
+													<c:otherwise>
+														<c:choose>
+															<c:when test="${data.studentSubmitted}">
+																
+															</c:when>
+															<c:when test="${data.homeworkbaseinfo.canStudentSubmit}">
+																in
+															</c:when>
+															
+														</c:choose>
+													</c:otherwise>
+												</c:choose>
 						"
 									style="overflow: hidden;" role="tabpanel"
 									aria-labelledby="heading${data.homeworkbaseinfo.id}">
@@ -153,7 +182,7 @@
 
 														<c:when test="${fn:length(data.homeworkFileList)==1}">
 															<a
-																href="<c:url value="coursehomeworkfile/download-${data.homeworkFileList[0].id}.html"/>">
+																href="<c:url value="/coursehomeworkfile/download-${data.homeworkFileList[0].id}.html"/>">
 																${data.homeworkFileList[0].filename}</a>
 														</c:when>
 
@@ -162,7 +191,7 @@
 																<c:forEach var="datafile"
 																	items="${data.homeworkFileList}">
 																	<li><a
-																		href="<c:url value="coursehomeworkfile/download-${datafile.id}.html"/>">
+																		href="<c:url value="/coursehomeworkfile/download-${datafile.id}.html"/>">
 																			${datafile.filename}</a></li>
 																</c:forEach>
 															</ul>
@@ -231,19 +260,26 @@
 
 										<div style="margin: 10px;">
 
-											<c:if test="${data.homeworkbaseinfo.canReply==true }">
-												<button type="button" class="btn btn-default btn-xs"
-													onclick="location='coursehomeworksubmit/list-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html'">查看作业</button>
+											<button type="button" class="btn btn-default btn-xs"
+												onclick="location='<c:url value="/coursehomeworksubmit/list-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html'"/>">
 
-											</c:if>
-											<c:if test="${data.homeworkbaseinfo.canStudentSubmit==true }">
-												<button type="button" class="btn btn-default btn-xs"
-													onclick="location='coursehomeworksubmit/list-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html'">提交作业</button>
+												<c:choose>
+													<c:when test="${data.homeworkbaseinfo.canReply}">
+														查看已提交作业
+													</c:when>
+													<c:otherwise>
+														<c:choose>
+															<c:when test="${data.studentSubmitted}">
+																查看或修改已提交作业
+															</c:when>
+															<c:when test="${data.homeworkbaseinfo.canStudentSubmit}">
+																提交作业
+															</c:when>
 
-											</c:if>
-
-
-
+														</c:choose>
+													</c:otherwise>
+												</c:choose>
+											</button>
 										</div>
 									</div>
 								</div>

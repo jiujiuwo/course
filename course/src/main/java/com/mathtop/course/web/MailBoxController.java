@@ -98,6 +98,33 @@ public class MailBoxController extends CourseTeachingClassBaseController {
 
 	}
 
+	
+	
+	/**
+	 * 向特定人发送邮件
+	 * 
+	 * @param request
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "/newMailToOtherWithoutCourse-{t_user_id_to}")
+	public ModelAndView newMailToOtherWithoutCourse(HttpServletRequest request, 
+			@PathVariable String t_user_id_to) {
+
+		
+		ModelAndView view = new ModelAndView();
+		
+		setTeacherAndStudentReceiver(request,view);
+
+		UserBasicInfoViewData selectedMailBoxNewReceiver = userinfoDao.getUserBasicInfoViewDataByt_user_id(t_user_id_to);
+		view.addObject(SelectedObjectConst.Selected_MailBoxNewReceiver, selectedMailBoxNewReceiver);
+
+
+		view.setViewName("mailbox/add");
+		return view;
+
+	}
+
 	/**
 	 * 添加
 	 * 

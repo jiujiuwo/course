@@ -105,7 +105,7 @@
 								<c:when
 									test="${fn:length(selectedCourseReferenceViewData.fileList)==1}">
 									<a
-										href="<c:url value="coursereferencefile/download-${selectedCourseReferenceViewData.fileList[0].id}.html"/>">
+										href="<c:url value="/coursereferencefile/download-${selectedCourseReferenceViewData.fileList[0].id}.html"/>">
 										${selectedCourseReferenceViewData.fileList[0].filename}</a>
 								</c:when>
 
@@ -114,7 +114,7 @@
 										<c:forEach var="datafile"
 											items="${selectedCourseReferenceViewData.fileList}">
 											<li><a
-												href="<c:url value="coursereferencefile/download-${datafile.id}.html"/>">
+												href="<c:url value="/coursereferencefile/download-${datafile.id}.html"/>">
 													${datafile.filename}</a></li>
 										</c:forEach>
 									</ul>
