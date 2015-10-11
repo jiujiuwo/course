@@ -25,6 +25,7 @@ import com.mathtop.course.domain.Group;
 import com.mathtop.course.domain.NaturalClass;
 import com.mathtop.course.domain.School;
 import com.mathtop.course.domain.StudentViewData;
+import com.mathtop.course.domain.User;
 import com.mathtop.course.domain.UserContactType;
 import com.mathtop.course.exception.StudentExistException;
 import com.mathtop.course.service.ContactTypeService;
@@ -34,6 +35,7 @@ import com.mathtop.course.service.DepartmentNaturalClassService;
 import com.mathtop.course.service.SchoolService;
 import com.mathtop.course.service.StudentService;
 import com.mathtop.course.service.UserGroupService;
+import com.mathtop.course.service.UserService;
 
 @Controller
 @RequestMapping("/student")
@@ -42,6 +44,11 @@ public class StudentController extends BaseController {
 	/**
 	 * 自动注入
 	 */
+	
+	@Autowired
+	private UserService userService;
+
+	
 	@Autowired
 	private SchoolService schoolService;
 
@@ -419,7 +426,87 @@ public class StudentController extends BaseController {
 
 		return mav;
 	}
+	
+	
+	/**
+	 * 修改学生密码
+	 * 
+	 * @param request
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "/setstudentpwd-{t_school_id}-{t_department_id}-{t_natural_class_id}-{t_student_id}-{pageNo}")
+	public ModelAndView updateStudentPasswor(HttpServletRequest request, @PathVariable String t_school_id, @PathVariable String t_department_id,
+			@PathVariable String t_natural_class_id, @PathVariable String t_student_id,@PathVariable Integer pageNo) {
+	
 
+		
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject(SelectedObjectConst.Selected_School_ID, t_school_id);
+		mav.addObject(SelectedObjectConst.Selected_Department_ID, t_department_id);
+		mav.addObject(SelectedObjectConst.Selected_Naturalclass_ID, t_natural_class_id);
+		mav.addObject(SelectedObjectConst.Selected_PageNo, pageNo);
+
+		StudentViewData selectedStudentViewData = studentService.getStudentViewByStudentId(t_student_id);
+
+		mav.addObject(SelectedObjectConst.Selected_StudentViewData, selectedStudentViewData);
+
+		Page<Group> pagedGroup = usergroupService.getGroupPageByt_user_id(selectedStudentViewData.getUser().getId());
+		mav.addObject(PagedObjectConst.Paged_Group, pagedGroup);
+
+		// 得到联系方式类型
+		Page<UserContactType> pagedContactType = contacttypeService.getPage(1, CommonConstant.PAGE_SIZE);
+
+		mav.addObject(PagedObjectConst.Paged_ContactType, pagedContactType);
+
+		mav.setViewName(strPageURI + "/updatepwd");
+
+		return mav;
+	}
+
+	
+	/**
+	 * 修改学生密码
+	 * 
+	 * @param request
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "/updatestudentpwd")
+	public ModelAndView updatestudentpwd(HttpServletRequest request) {
+		
+	
+		String t_school_id=request.getParameter("t_school_id");
+		String t_department_id=request.getParameter("t_department_id");;
+		String t_natural_class_id=request.getParameter("t_natural_class_id");
+		
+		String new_user_password=request.getParameter("user_password");
+		String t_user_id=request.getParameter("t_user_id");
+		String pageNo=request.getParameter("pageNo");
+		
+		User user=new User();
+		
+		
+		user.setUser_password(new_user_password);
+		user.EncoderPassword();
+		
+		
+		
+		userService.UpdateUserPassword(t_user_id, user.getUser_password());
+
+		
+		
+		
+		ModelAndView mav = new ModelAndView();		
+
+		mav.setViewName("redirect:/student/listwithpath-"+t_school_id+"-"+t_department_id+"-"+t_natural_class_id+"-"+pageNo+".html");
+		return mav;
+
+	
+	}
+
+	
 	/**
 	 * 列出指定学院、系部、班级的学生
 	 * 
@@ -481,6 +568,55 @@ public class StudentController extends BaseController {
 
 		return mav;
 	}
+	
+	@RequestMapping(value = "/listwithpath-{t_school_id}-{t_department_id}-{t_natural_class_id}-{pageNo}")
+	public ModelAndView listWithPath(@PathVariable String t_school_id, @PathVariable String t_department_id,
+			@PathVariable String t_natural_class_id,  @PathVariable int pageNo) {
+
+		ModelAndView mav = new ModelAndView();
+
+		
+
+		if (t_school_id == null) {
+
+			List<School> schools = schoolService.getAll();
+			if (schools.size() > 0) {
+				t_school_id = schools.get(0).getId();
+			}
+		}
+
+		if (t_school_id != null && t_department_id == null) {
+
+			List<Department> departments = departmentService.getAll(t_school_id);
+			if (departments.size() > 0) {
+				t_department_id = departments.get(0).getId();
+			}
+
+			if (t_department_id != null && t_natural_class_id == null) {
+
+				List<NaturalClass>ListNaturalclass = departmentNaturalClassService.getNaturalClassByt_department_id(t_department_id);
+
+				if (ListNaturalclass.size() > 0) {
+					t_natural_class_id = ListNaturalclass.get(0).getId();
+				}
+			}
+		}
+
+		SetPage(mav, t_school_id, t_department_id, t_natural_class_id, pageNo);
+
+		Page<StudentViewData> pagedStudentViewData = studentService.getPageByt_natural_class_id(t_natural_class_id, pageNo,
+				CommonConstant.PAGE_SIZE);
+
+		mav.addObject(PagedObjectConst.Paged_StudentViewData, pagedStudentViewData);
+
+		SetPageURI(mav);
+
+		mav.setViewName(strPageURI + "/list");
+
+		return mav;
+	}
+
+	
 
 	private void SetPage(ModelAndView mav, String t_school_id, String t_department_id, String t_natural_class_id, Integer pageNo) {
 		// 得到学院

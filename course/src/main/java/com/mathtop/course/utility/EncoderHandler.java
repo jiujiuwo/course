@@ -5,9 +5,9 @@ import java.security.MessageDigest;
 public class EncoderHandler {
 	private static final String ALGORITHM_MD5 = "MD5";
 	private static final String ALGORITHM_SHA_1 = "SHA-1";
-//	private static final String ALGORITHM_SHA_256 = "SHA-256";
-//	private static final String ALGORITHM_SHA_384 = "SHA-384";
-//	private static final String ALGORITHM_SHA_512 = "SHA-512";
+	private static final String ALGORITHM_SHA_256 = "SHA-256";
+	private static final String ALGORITHM_SHA_384 = "SHA-384";
+	private static final String ALGORITHM_SHA_512 = "SHA-512";
 	
 
 	private static final char[] HEX_DIGITS = { '0', '1', '2', '3', '4', '5',
@@ -62,6 +62,69 @@ public class EncoderHandler {
 		}
 		try {
 			MessageDigest messageDigest = MessageDigest.getInstance(ALGORITHM_SHA_1);
+			messageDigest.update(str.getBytes());
+			return byteToString(messageDigest.digest());
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+	}
+	
+	/**
+	 * 散列码
+	 *
+	 * @param algorithm
+	 * @param str
+	 * @return String
+	 */
+	public static String encodeBySHA256(String str) {
+		if (str == null) {
+			return null;
+		}
+		try {
+			MessageDigest messageDigest = MessageDigest.getInstance(ALGORITHM_SHA_256);
+			messageDigest.update(str.getBytes());
+			return byteToString(messageDigest.digest());
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+	}
+	
+	/**
+	 * 散列码
+	 *
+	 * @param algorithm
+	 * @param str
+	 * @return String
+	 */
+	public static String encodeBySHA384(String str) {
+		if (str == null) {
+			return null;
+		}
+		try {
+			MessageDigest messageDigest = MessageDigest.getInstance(ALGORITHM_SHA_384);
+			messageDigest.update(str.getBytes());
+			return byteToString(messageDigest.digest());
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+	}
+	
+	/**
+	 * 散列码
+	 *
+	 * @param algorithm
+	 * @param str
+	 * @return String
+	 */
+	public static String encodeBySHA512(String str) {
+		if (str == null) {
+			return null;
+		}
+		try {
+			MessageDigest messageDigest = MessageDigest.getInstance(ALGORITHM_SHA_512);
 			messageDigest.update(str.getBytes());
 			return byteToString(messageDigest.digest());
 		} catch (Exception e) {

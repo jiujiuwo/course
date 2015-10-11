@@ -40,7 +40,7 @@ public class CourseTeachingClassHomeworkSubmitBaseinfoDao extends BaseDao<Course
 	private final String INSERT_PLAN = "INSERT INTO t_course_teaching_class_homework_submit_baseinfo( id,t_course_teaching_class_homework_baseinfo_id, t_student_id,  title, content, submitdate, modifieddate) VALUES(?,?,?,?,?,?,?)";
 
 	// select
-	private final String GET_VIEWDATA_BY_COURSE_TEACHING_CLASS_ID = "SELECT id FROM t_course_teaching_class_homework_submit_baseinfo WHERE t_course_teaching_class_homework_baseinfo_id=?   limit ?,?";
+	private final String GET_VIEWDATA_BY_COURSE_TEACHING_CLASS_ID = "SELECT id FROM t_course_teaching_class_homework_submit_baseinfo WHERE t_course_teaching_class_homework_baseinfo_id=?  order by modifieddate DESC limit ?,?";
 	private final String GET_VIEWDATA_BY_COURSE_TEACHING_CLASS_ID_AND_STUDENT_ID = "SELECT id FROM t_course_teaching_class_homework_submit_baseinfo WHERE t_course_teaching_class_homework_baseinfo_id=?  and t_student_id=?  limit ?,?";
 	private final String GET_VIEWDATA_BY_COURSE_TEACHING_CLASS_ID_AND_STUDENT_ID_WITHOUT_PAGED = "SELECT id FROM t_course_teaching_class_homework_submit_baseinfo WHERE t_course_teaching_class_homework_baseinfo_id=?  and t_student_id=?";
 	private final String GET_COUNT_BY_COURSE_TEACHING_CLASS_HOMEWORK_BASEINFO_ID = "SELECT count(*) FROM t_course_teaching_class_homework_submit_baseinfo WHERE t_course_teaching_class_homework_baseinfo_id=?";
@@ -247,7 +247,7 @@ public class CourseTeachingClassHomeworkSubmitBaseinfoDao extends BaseDao<Course
 	
 	private List<CourseTeachingClassHomeworkSubmitBaseinfoViewData> PageQuery(String t_course_teaching_class_id, int PageBegin, int PageSize) {
 
-		PageBegin -= 1;
+		
 		if (PageBegin < 0)
 			PageBegin = 0;
 

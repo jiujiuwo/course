@@ -567,6 +567,7 @@ public class FileNameFormatParser {
 		int nCount=0;
 		for(int i=0;i<files.length;i++){
 			MultipartFile file = files[i];
+			
 			if(file.isEmpty())
 				continue;
 			nCount++;
@@ -574,6 +575,11 @@ public class FileNameFormatParser {
 		return nCount;
 		
 	}
+	
+	
+	
+	
+	
 	/**
 	 * 提交的文件个数是否符合要求,符合要求返回true,否则返回false
 	 */
@@ -584,7 +590,10 @@ public class FileNameFormatParser {
 		if (homeworkbaseinfo == null)
 			return false;
 		
-		int nFilesCount=GetFilesCount(files);		
+		int nFilesCount=GetFilesCount(files);
+		
+		
+		
 		int nNeedFilesCount=homeworkbaseinfo.getFilecount();		
 
 		if (nFilesCount!= nNeedFilesCount)
@@ -592,6 +601,28 @@ public class FileNameFormatParser {
 
 		return true;
 	}
+	
+	/**
+	 * 提交的文件是否有为空的文件,不为空，则发挥true，否则返回false
+	 * */
+	
+	public boolean IsSubmitFileContentIsNotNull(HttpServletRequest request, MultipartFile[] files
+			) {		
+		
+		
+		for(int i=0;i<files.length;i++){
+			MultipartFile file = files[i];
+			
+			
+			if(file.getOriginalFilename().length()>0 && file.getSize()==0)
+				return false;
+			
+		}
+		
+		
+		return true;
+	}
+	
 
 	/**
 	 * 提交的文件名称是否符合要求,符合要求返回true,否则返回false

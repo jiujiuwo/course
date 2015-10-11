@@ -369,9 +369,12 @@
 
 
 
-						<mathtop:PageBar
-							pageUrl="/coursehomework/add-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html"
-							pageAttrKey="pagedCourseTeachingClassHomeworkSubmitBaseinfoViewData" />
+						<c:if
+							test="${not empty selectedCourseTeachingClassID}">
+							<mathtop:PageBar
+								pageUrl="/coursehomework/replylist-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}.html"
+								pageAttrKey="pagedCourseTeachingClassHomeworkSubmitBaseinfoViewData" />
+						</c:if>
 
 					</div>
 

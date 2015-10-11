@@ -2,6 +2,9 @@ package com.mathtop.course.cons;
 
 public class SelectedObjectConst {
 	
+	//页码
+	public static final String  Selected_PageNo="selectedtpageNo";
+	
 	//学院、系部和自然班级
 	public static final String  Selected_School_ID="selectedt_school_id";
 	public static final String  Selected_Department_ID="selectedt_department_id";

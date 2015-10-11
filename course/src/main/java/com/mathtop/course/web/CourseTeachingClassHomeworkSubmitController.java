@@ -85,6 +85,15 @@ public class CourseTeachingClassHomeworkSubmitController extends CourseTeachingC
 
 		}
 		
+		if (!filenameformatparser.IsSubmitFileContentIsNotNull(request, files)) {
+
+			redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg, "文件内容为空，请修改.");
+
+			mav.setViewName("redirect:/coursehomeworksubmit/list-" + t_course_teaching_class_id + "-"
+					+ t_course_teaching_class_homeworktype_id + "-" + t_course_teaching_class_homework_baseinfo_id + ".html");
+			return mav;
+		}
+		
 		
 		if (!filenameformatparser.IsSubmitFileCountRight(request, files, t_course_teaching_class_homework_baseinfo_id)) {
 

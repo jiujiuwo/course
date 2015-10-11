@@ -154,18 +154,18 @@
 
 
 						<table class="table table-hover table-bordered"
-							style="margin-bottom: -10px;">
+							style="margin-bottom: -10px; width=100%;">
 							<thead>
 								<tr>
-									<th style="width: 10%;">#</th>
-									<th style="width: 10%;">学号</th>
-									<th style="width: 10%;">姓名</th>
-									<th style="width: 10%;">系部</th>
-									<th style="width: 10%;">班级</th>
-									<th style="width: 10%;">性别</th>
-									<th style="width: 10%;">生日</th>
-									<th style="width: 20%;">联系方式</th>
-									<th style="width: 20%;">操作</th>
+									<th style="width: 50px;">#</th>
+									<th style="width: 100px;">学号</th>
+									<th style="width: 100px;">姓名</th>
+									<th style="width: 200px;">系部</th>
+									<th style="width: 100px;">班级</th>
+									<th style="width: 50px;">性别</th>
+									<th style="width: 100px;">生日</th>
+									<th style="width: 200px;">联系方式</th>
+									<th >操作</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -199,18 +199,14 @@
 													</div>
 												</c:forEach>
 											</div>
-
-
-
-
-
-										</td>
-										
+										</td>				
 										
 										
 
 										<td><button type="button" class="btn btn-default btn-xs"
 												onclick="location='<c:url value="/student/update-${selectedt_school_id}-${selectedt_department_id}-${selectedt_natural_class_id}-${dataitem.student.id}.html"/>'">修改...</button>
+										<button type="button" class="btn btn-default btn-xs"
+												onclick="location='<c:url value="/student/setstudentpwd-${selectedt_school_id}-${selectedt_department_id}-${selectedt_natural_class_id}-${dataitem.student.id}-${pagedStudentViewData.currentPageNo }.html"/>'">修改密码...</button>
 											<button type="button" class="btn btn-default btn-xs"
 												onclick="onDelete('${dataitem.student.id}','${dataitem.student.student_num}','${dataitem.userbasicinfo.user_basic_info_name}','${dataitem.naturalclass.name}')">删除</button></td>
 									</tr>
