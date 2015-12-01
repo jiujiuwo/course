@@ -54,11 +54,11 @@
 
 
 			<ol class="breadcrumb">
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Library</a></li>
-				<li class="active">Data</li>
+				<li><a href="#">课程系统</a></li>
+				<li><a href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseteachingclass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
+				<li class="active">${selectedCourseHomeworkTypeData.name}</li>
 			</ol>
-
+			
 			<div class="CourseContentHeader">${selectedCourseHomeworkTypeData.name}管理</div>
 
 			<div class="CourseContentHeaderSeparatorLine"></div>
@@ -183,9 +183,9 @@
 											
 												<a
 													href="<c:url value="/coursehomeworksubmitfile/downloadall-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}.html"/>">
-													全体学生实验报告</a> <a
-													href="<c:url value="/coursehomeworkfile/download-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}.html"/>">
-													全体学生实验批复</a>
+													下载全部学生的<strong>${selectedCourseHomeworkTypeData.name}-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.title}</strong>的作业</a><p/> <a
+													href="<c:url value="/coursehomeworkreplyfile/download-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}.html"/>">
+													下载全部学生的<strong>${selectedCourseHomeworkTypeData.name}-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.title}</strong>的批复</a>
 									
 										</c:if>
 										</div>
@@ -345,7 +345,7 @@
 											</c:when>
 
 											<c:otherwise>
-												<c:if test="${data.homeworkbaseinfo.canReply==true }">
+												<c:if test="${data.homeworkbaseinfoViewData.homeworkbaseinfo.canReply==true }">
 													<button type="button" class="btn btn-default btn-xs"
 														onclick="location='<c:url value="/coursehomework/reply-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}-${data.student.student.id}.html"/>'">批复</button>
 												</c:if>

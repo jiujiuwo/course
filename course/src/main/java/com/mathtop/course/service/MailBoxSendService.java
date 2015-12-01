@@ -39,7 +39,7 @@ public class MailBoxSendService {
 		return fileDao.getByID(id);
 	}
 
-	private List<MailBoxFileName> AddFiles(HttpServletRequest request, String t_mail_box_id, MultipartFile[] files) {
+	private List<MailBoxFileName> addFiles(HttpServletRequest request, String t_mail_box_id, MultipartFile[] files) {
 
 		List<MailBoxFileName> list=new ArrayList<MailBoxFileName>();
 		
@@ -92,7 +92,7 @@ public class MailBoxSendService {
 	}
 
 	// 增加
-	public List<MailBoxFileName> Add(HttpServletRequest request, String t_user_id_from, String t_user_id_to,
+	public List<MailBoxFileName> add(HttpServletRequest request, String t_user_id_from, String t_user_id_to,
 			  String subject, String content, 
 			MultipartFile[] files) {
 		
@@ -101,34 +101,70 @@ public class MailBoxSendService {
 		String t_mail_box_send_id = maiboxdao.add(t_user_id_from, t_user_id_to,
 				state.getState(),  subject, content);
 
-		return AddFiles(request, t_mail_box_send_id, files);
+		return addFiles(request, t_mail_box_send_id, files);
 
 	}
 
 	// 删除
-	public void DeleteByID(HttpServletRequest request, String t_mail_box_send_id) {
+	public void deleteByID(HttpServletRequest request, String t_mail_box_send_id) {
 
 		// 删除基本信息及其附件文件
-		DeleteBaseInfoByID(request, t_mail_box_send_id);
+		deleteBaseInfoByID(request, t_mail_box_send_id);
 
 		// TODO：删除其他数据
 	}
 
 	// 删除基本信息及其附件文件
-	private void DeleteBaseInfoByID(HttpServletRequest request, String t_mail_box_send_id) {
+	private void deleteBaseInfoByID(HttpServletRequest request, String t_mail_box_send_id) {
 		MailBoxSend plan = getByID(t_mail_box_send_id);
 		if (plan == null)
 			return;
 
 		// 1.删除文件
-		DeleteFilesByMailBoxSendId(request, t_mail_box_send_id);
+		deleteFilesByMailBoxSendId(request, t_mail_box_send_id);
 
 		// 2.删除基本信息
 		maiboxdao.deleteById(t_mail_box_send_id);
 	}
+	
+	/**
+	 * 根据t_user_id删除邮件
+	 * */
+	public void deleteByUserId(HttpServletRequest request, String t_user_id){
+		deleteFromUserByUserId(request,t_user_id);
+		deleteToUserByUserId(request,t_user_id);
+	}
+	
+	/**
+	 * 根据t_user_id删除邮件
+	 * */
+	public void deleteFromUserByUserId(HttpServletRequest request, String t_user_id){
+		List<MailBoxSend> listfrom=maiboxdao.getByUserIdFrom(t_user_id);
+		if(listfrom!=null){
+			for(MailBoxSend s:listfrom){
+				deleteByID(request,s.getId());
+			}
+		}
+		
+		
+	}
+	
+	/**
+	 * 根据t_user_id删除邮件
+	 * */
+	public void deleteToUserByUserId(HttpServletRequest request, String t_user_id){
+		
+		
+		List<MailBoxSend> listto=maiboxdao.getByUserIdTo(t_user_id);
+		if(listto!=null){
+			for(MailBoxSend s:listto){
+				deleteByID(request,s.getId());
+			}
+		}
+	}
 
 	// 删除文件
-	private void DeleteFilesByMailBoxSendId(HttpServletRequest request, String t_mail_box_send_id) {
+	private void deleteFilesByMailBoxSendId(HttpServletRequest request, String t_mail_box_send_id) {
 		ServletContext sc = request.getSession().getServletContext();
 		String dir = sc.getRealPath(RealPathConst.RealPath_MailBoxFile); // 设定文件保存的目录
 

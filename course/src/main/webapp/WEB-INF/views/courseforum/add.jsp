@@ -65,9 +65,9 @@
 
 
 			<ol class="breadcrumb">
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Library</a></li>
-				<li class="active">Data</li>
+				<li><a href="#">课程系统</a></li>
+				<li><a href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseteachingclass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
+				<li class="active">课程论坛</li>
 			</ol>
 
 			<div class="CourseContentHeader">添加${selectedCourseTeachingClassViewData.teachingclass.name}论坛主题</div>

@@ -40,6 +40,7 @@ import com.mathtop.course.domain.Student;
 import com.mathtop.course.domain.StudentViewData;
 import com.mathtop.course.domain.User;
 import com.mathtop.course.domain.UserBasicInfo;
+import com.mathtop.course.domain.UserContactInfo;
 import com.mathtop.course.exception.NaturalClassNotExistException;
 import com.mathtop.course.exception.StudentExistException;
 import com.mathtop.course.utility.DateTimeSql;
@@ -435,6 +436,49 @@ public class StudentService {
 
 	}
 
+	
+	public void updateStudent(Student student, UserBasicInfo userbasicinfo,
+			UserContactInfo[] usercontactinfos, String[] groupId) {
+		
+		if(student==null)
+			return;
+		String t_student_id=student.getId();
+		
+		if(t_student_id==null)
+			return ;
+		String student_num=student.getStudent_num();
+		
+		student=studentDao.getStudentByID(t_student_id);
+		String t_user_id=student.getT_user_id();
+		try {			
+
+			// 修改学生
+			studentDao.UpdateStudentNumById(t_student_id, student_num);
+			
+			
+			
+			//  修改用户基本信息
+			userbasicinfo.setT_user_id(t_user_id);
+			userbasicinfoDao.UpdateByt_user_id(t_user_id, userbasicinfo);
+
+			//  修改联系方式
+			
+			usercontactinfoDao.UpdateContactInfo(t_user_id,usercontactinfos);
+			
+
+			// groupid			
+			usergroupDao.update(t_user_id,groupId);
+			
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+	}
+
+	
 	public void AddStudent(String naturalclassname, String name, String student_num, String[] groupId) throws StudentExistException {
 		try {
 

@@ -56,6 +56,11 @@ public class UserGroupDao extends BaseDao<UserGroupDao> {
 	private final String GET_USERGROUP_BY_GROUP_ID = "SELECT id,t_user_id FROM t_user_group WHERE t_group_id=? limit ?,?";
 	private final String GET_t_user_id_COUNT_BY_GROUP_ID = "SELECT count(*) FROM t_user_group WHERE t_group_id=?";
 	private final String GET_GROUPID_COUNT_BY_USER_ID = "SELECT count(*) FROM t_user_group WHERE t_user_id=?";
+	
+	private final String DELETE_USER_GROUP_BY_ID = "DELETE FROM t_user_group WHERE id=?";
+	private final String DELETE_USER_GROUP_BY_USER_ID = "DELETE FROM t_user_group WHERE t_user_id=?";
+	private final String DELETE_USER_GROUP_BY_GROUP_ID = "DELETE FROM t_user_group WHERE t_group_id=?";
+	
 	private final String INSERT_USER_GROUP = "INSERT INTO t_user_group(id,t_group_id,t_user_id) VALUES(?,?,?)";
 
 	/**
@@ -69,6 +74,52 @@ public class UserGroupDao extends BaseDao<UserGroupDao> {
 		return id;
 	}
 	
+	
+	public void update( String t_user_id,String[] groupId) {
+		if(groupId==null)
+			return;
+		
+		deleteByUserId(t_user_id);
+		
+		for(String g:groupId){
+			add(g,t_user_id);
+		}
+	}
+	
+	
+	/*
+	 * 
+	 */
+	public void deleteById(String id) {
+
+		Object params[] = new Object[] { id };
+		int types[] = new int[] { Types.VARCHAR};
+		getJdbcTemplate().update(DELETE_USER_GROUP_BY_ID, params, types);
+		
+	}
+	
+	/*
+	 * 
+	 */
+	public void deleteByUserId(String t_user_id) {
+
+		Object params[] = new Object[] { t_user_id };
+		int types[] = new int[] { Types.VARCHAR};
+		getJdbcTemplate().update(DELETE_USER_GROUP_BY_USER_ID, params, types);
+		
+	}
+	
+	
+	/*
+	 * 
+	 */
+	public void deleteByGroupId(String t_group_id) {
+
+		Object params[] = new Object[] { t_group_id };
+		int types[] = new int[] { Types.VARCHAR};
+		getJdbcTemplate().update(DELETE_USER_GROUP_BY_GROUP_ID, params, types);
+		
+	}
 	
 	/**
 	 * 根据人得到所有组

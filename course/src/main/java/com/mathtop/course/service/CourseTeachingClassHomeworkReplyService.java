@@ -33,12 +33,12 @@ public class CourseTeachingClassHomeworkReplyService {
 	public CourseTeachingClassHomeworkReplyFile getFileByID(String id) {
 		return replyfiledao.getByID(id);
 	}
-	
-	private void AddFiles(HttpServletRequest request,String t_course_teaching_class_homework_reply_id,MultipartFile[] files){		
+
+	private void addFiles(HttpServletRequest request, String t_course_teaching_class_homework_reply_id, MultipartFile[] files) {
 
 		for (int i = 0; i < files.length; i++) {
 			MultipartFile file = files[i];
-			if(file.isEmpty())
+			if (file.isEmpty())
 				continue;
 
 			String filename = file.getOriginalFilename();
@@ -63,8 +63,6 @@ public class CourseTeachingClassHomeworkReplyService {
 
 				file.transferTo(localfile);
 
-				
-				
 				replyfiledao.add(t_course_teaching_class_homework_reply_id, filename, hreffilename);
 
 			} catch (IllegalStateException | IOException e) {
@@ -76,51 +74,69 @@ public class CourseTeachingClassHomeworkReplyService {
 	}
 
 	// 增加
-	public void Add(HttpServletRequest request,String t_course_teaching_class_homework_submit_baseinfo_id ,
-			String t_teacher_id, String title, String content,  MultipartFile[] files) {
-		
+	public void add(HttpServletRequest request, String t_course_teaching_class_homework_submit_baseinfo_id, String t_teacher_id,
+			String title, String content, MultipartFile[] files) {
 
-			String t_course_teaching_class_homework_reply_id = replydao.add(t_course_teaching_class_homework_submit_baseinfo_id, t_teacher_id,
-					 title, content, new Date(), new Date());
+		String t_course_teaching_class_homework_reply_id = replydao.add(t_course_teaching_class_homework_submit_baseinfo_id, t_teacher_id,
+				title, content, new Date(), new Date());
 
-			AddFiles(request,t_course_teaching_class_homework_reply_id,files);
-			
-			
-		
+		addFiles(request, t_course_teaching_class_homework_reply_id, files);
+
 	}
 
 	// 删除
-	public void DeleteByID(HttpServletRequest request, String t_course_teaching_class_homework_reply_id) {
+	public void deleteByID(HttpServletRequest request, String t_course_teaching_class_homework_reply_id) {
 
 		// 删除基本信息及其附件文件
-		DeleteBaseInfoByID(request, t_course_teaching_class_homework_reply_id);
+		deleteBaseInfoByID(request, t_course_teaching_class_homework_reply_id);
 
 		// TODO：删除其他数据
 	}
 
+	
+	/**
+	 * 根据t_teacher_id删除回复
+	 * */
+	public void deleteByTeacherID(HttpServletRequest request, String t_teacher_id) {
+		List<CourseTeachingClassHomeworkReply> list=replydao.getByTeacherID(t_teacher_id);
+		if(list==null)
+			return;
+		for(CourseTeachingClassHomeworkReply r:list){
+			deleteByID(request,r.getId());
+		}
+	}
+
+	public void deleteByCourseTeachingClassHomeworkSubmitBaseinfoID(HttpServletRequest request,
+			String t_course_teaching_class_homework_submit_baseinfo_id) {
+		List<CourseTeachingClassHomeworkReply> list=replydao.getByCourseTeachingClassHomeworkSubmitBaseInfoID(t_course_teaching_class_homework_submit_baseinfo_id);
+		if(list==null)
+			return;
+		for(CourseTeachingClassHomeworkReply r:list){
+			deleteByID(request,r.getId());
+		}
+	}
+
 	// 删除基本信息及其附件文件
-	private void DeleteBaseInfoByID(HttpServletRequest request, String t_course_teaching_class_homework_reply_id) {
+	private void deleteBaseInfoByID(HttpServletRequest request, String t_course_teaching_class_homework_reply_id) {
 		CourseTeachingClassHomeworkReply plan = getByID(t_course_teaching_class_homework_reply_id);
 		if (plan == null)
 			return;
 
 		// 1.删除文件
-		DeleteFilesByHomeworkBaseInfoId(request, t_course_teaching_class_homework_reply_id);
+		deleteFilesByHomeworkBaseInfoId(request, t_course_teaching_class_homework_reply_id);
 
 		// 2.删除基本信息
 		replydao.deleteById(t_course_teaching_class_homework_reply_id);
 	}
 
 	// 删除文件
-	private void DeleteFilesByHomeworkBaseInfoId(HttpServletRequest request, String t_course_teaching_class_homework_reply_id) {
+	private void deleteFilesByHomeworkBaseInfoId(HttpServletRequest request, String t_course_teaching_class_homework_reply_id) {
 		ServletContext sc = request.getSession().getServletContext();
 		String dir = sc.getRealPath(RealPathConst.RealPath_HomeworkReplyFile); // 设定文件保存的目录
 
 		List<CourseTeachingClassHomeworkReplyFile> list = replyfiledao
 				.getByCourseTeachingClassHomeworkReplyID(t_course_teaching_class_homework_reply_id);
 		if (list != null) {
-
-		
 
 			for (CourseTeachingClassHomeworkReplyFile homeworkfile : list) {
 				String path = dir + RealPathConst.RealPath_PathSeparator + homeworkfile.getFilepath();
@@ -136,35 +152,34 @@ public class CourseTeachingClassHomeworkReplyService {
 		}
 	}
 
-	public void Update(HttpServletRequest request, String t_course_teaching_class_homework_reply_id, String t_teacher_id, String title,
+	public void update(HttpServletRequest request, String t_course_teaching_class_homework_reply_id, String t_teacher_id, String title,
 			String content, MultipartFile[] files) {
 
 		// 1.删除文件
-		DeleteFilesByHomeworkBaseInfoId(request, t_course_teaching_class_homework_reply_id);
+		deleteFilesByHomeworkBaseInfoId(request, t_course_teaching_class_homework_reply_id);
 
 		// 2.更改基本信息
-		replydao.update(t_course_teaching_class_homework_reply_id,  title, content,
-				new Date());
+		replydao.update(t_course_teaching_class_homework_reply_id, title, content, new Date());
 
 		// 3.增加文件
-		AddFiles(request,t_course_teaching_class_homework_reply_id,files);
+		addFiles(request, t_course_teaching_class_homework_reply_id, files);
 	}
 
 	public CourseTeachingClassHomeworkReply getByID(String id) {
 		return replydao.getByID(id);
 	}
-	
+
 	public CourseTeachingClassHomeworkReplyViewData getCourseTeachingClassHomeworkReplyViewDataByID(String id) {
 		return replydao.getCourseTeachingClassHomeworkReplyViewDataByID(id);
 	}
 
-	public Page<CourseTeachingClassHomeworkReplyViewData> getPage(String t_course_teaching_class_homework_baseinfo_id, String t_student_id,int pageNo,
-			int pageSize) {
-		return replydao.getPage(t_course_teaching_class_homework_baseinfo_id, t_student_id,pageNo, pageSize);
+	public Page<CourseTeachingClassHomeworkReplyViewData> getPage(String t_course_teaching_class_homework_baseinfo_id, String t_student_id,
+			int pageNo, int pageSize) {
+		return replydao.getPage(t_course_teaching_class_homework_baseinfo_id, t_student_id, pageNo, pageSize);
 	}
 
-	public void update(String id,  String title, String content, Date modifieddate, String filename, String filepath) {
-		replydao.update(id,  title, content, modifieddate);
+	public void update(String id, String title, String content, Date modifieddate, String filename, String filepath) {
+		replydao.update(id, title, content, modifieddate);
 	}
 
 }

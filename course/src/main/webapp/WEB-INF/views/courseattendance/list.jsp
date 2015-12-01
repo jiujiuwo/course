@@ -53,9 +53,9 @@
 
 
 			<ol class="breadcrumb">
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Library</a></li>
-				<li class="active">Data</li>
+				<li><a href="#">课程系统</a></li>
+				<li><a href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseteachingclass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
+				<li class="active">${selectedCourseAttendanceTypeData.name}</li>
 			</ol>
 
 			<div class="CourseContentHeader">${selectedCourseAttendanceTypeData.name}管理</div>
@@ -187,8 +187,12 @@
 
 
 
-				<mathtop:PageBar pageUrl="/school/list.html"
-					pageAttrKey="pagedSchool" />
+				<c:if
+							test="${not empty selectedCourseTeachingClassID}">
+							<mathtop:PageBar
+								pageUrl="/courseattendance/list-${selectedCourseTeachingClassID}-${selectedCourseAttendanceTypeData.id}.html"
+								pageAttrKey="pagedAttendanceViewData" />        
+						</c:if>
 
 			</div>
 

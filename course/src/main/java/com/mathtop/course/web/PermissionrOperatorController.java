@@ -73,7 +73,7 @@ public class PermissionrOperatorController extends BaseController {
 			
 
 		} else {
-			permissionoperatorService.Add(ct.getName(), ct.getNote());
+			permissionoperatorService.add(ct.getName(), ct.getNote());
 
 			String toUrl = ("list.html");
 			mav.setViewName("redirect:" + toUrl);
@@ -92,7 +92,7 @@ public class PermissionrOperatorController extends BaseController {
 	@RequestMapping(value = "/DELETE-{ctId}", method = RequestMethod.GET)
 	public ModelAndView DELETE(@PathVariable String ctId) {
 		if (ctId != null)
-			permissionoperatorService.DELETE(ctId);
+			permissionoperatorService.deleteById(ctId);
 
 		ModelAndView mav = new ModelAndView();
 		String toUrl = ("list.html");

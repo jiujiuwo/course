@@ -12,11 +12,18 @@ public class AttendanceTypeService {
 	
 	@Autowired
 	protected AttendanceTypeDao dao;
+	
+	@Autowired
+	AttendanceService attendanceService;
 
 	public AttendanceType getByID(String id){
 		return dao.getByID(id);
 	}
 	public void deleteById(String id) {
+		//1.删除t_attandance表中数据
+		attendanceService.deleteByAttendanceTypeId(id);
+		
+		//2.删除自己数据
 		dao.deleteById(id);
 	}
 	public String add(String t_course_teaching_class_id, String name, String note) {		

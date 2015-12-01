@@ -131,7 +131,7 @@
 					<label for="user_password" class="col-sm-1 control-label">初始密码</label>
 					<div class="col-md-3">
 						<input name="user_password"
-							class="form-control placeholder-no-fix" value="12345"
+							class="form-control placeholder-no-fix" value="${selectedStudentViewData.student.student_num}"
 							autocomplete="off" placeholder="初始密码" />
 					</div>
 				</div>
@@ -227,10 +227,8 @@
 										items="${selectedStudentViewData.usercontactinfoviewdata}">
 										<tr id="contactrow${dataitem.usercontacttype.id}">
 											<th scope="row">${index}</th>
-											<td><input type="hidden" name="contacttypeId"
-												value="${dataitem.usercontacttype.id }">${dataitem.usercontacttype.name}</td>
-											<td><input type="text" name="user_contact_value"
-												value="${dataitem.usercontactinfo.user_contact_value}"></td>
+											<td>${dataitem.usercontacttype.name}</td>
+											<td>${dataitem.usercontactinfo.user_contact_value}</td>
 
 										</tr>
 										<c:set var="index" value="${index + 1}"></c:set>
@@ -260,50 +258,6 @@
 
 
 
-
-	<!-- 修改对话框 -->
-	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">修改系部</h4>
-				</div>
-
-				<form class="form-signin"
-					action="<c:url value="/department/update.html"/>" method="post">
-
-
-					<div class="modal-body">
-						<h4 class="form-signin-heading">
-							请修改<span class="text-danger" id="schoolname"></span>系部属性
-						</h4>
-
-						<INPUT type="hidden" id="t_school_id" name="t_school_id"
-							value="${selectedt_school_id}"> <label for="inputname"
-							class="sr-only">系部名称</label> <input type="text" id="inputid"
-							class="form-control" name="id" value="" placeholder="id"
-							style="display: none;"> <input type="text" id="inputname"
-							class="form-control" name="name" value="" placeholder="系部名称"
-							required autofocus> <label for="inputnote"
-							class="sr-only">系部描述</label> <input type="text" id="inputnote"
-							class="form-control" name="note" value="" placeholder="系部描述">
-
-					</div>
-
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-primary">修改</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					</div>
-
-				</form>
-			</div>
-		</div>
-	</div>
 
 
 

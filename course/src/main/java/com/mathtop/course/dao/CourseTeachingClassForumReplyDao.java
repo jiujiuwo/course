@@ -38,6 +38,8 @@ public class CourseTeachingClassForumReplyDao extends BaseDao<CourseTeachingClas
 
 	private final String GET_BY_COURSE_FORUM_TOPIC_ID = "SELECT id,t_user_id ,title,content,created_date,last_modified_date FROM t_course_teaching_class_forum_reply WHERE t_course_teaching_class_forum_topic_id=?";
 	private final String GET_BY_ID = "SELECT t_course_teaching_class_forum_topic_id,t_user_id ,title,content,created_date,last_modified_date FROM t_course_teaching_class_forum_reply WHERE id=?";
+	private final String GET_BY_USER_ID = "SELECT id,t_course_teaching_class_forum_topic_id ,title,content,created_date,last_modified_date FROM t_course_teaching_class_forum_reply WHERE t_user_id=?";
+	private final String GET_BY_COURSE_FORUM_TOPIC_ID_AND_USER_ID = "SELECT id,title,content,created_date,last_modified_date FROM t_course_teaching_class_forum_reply WHERE t_course_teaching_class_forum_topic_id=? and t_user_id=?";
 
 	private String DELETE_BY_ID = "DELETE FROM t_course_teaching_class_forum_reply WHERE id=?";
 	private String DELETE_BY_COURSE_FORUM_TOPIC_ID = "DELETE FROM t_course_teaching_class_forum_reply WHERE t_course_teaching_class_forum_topic_id=?";
@@ -114,7 +116,66 @@ public class CourseTeachingClassForumReplyDao extends BaseDao<CourseTeachingClas
 
 		return list;
 	}
+	
+	
+	/**
+	 * 根据t_user_id得到论坛id
+	 * */
+	public List<CourseTeachingClassForumReply> getByUserID(String t_user_id) {
 
+		List<CourseTeachingClassForumReply> list = new ArrayList<CourseTeachingClassForumReply>();
+
+		getJdbcTemplate().query(GET_BY_USER_ID, new Object[] { t_user_id }, new RowCallbackHandler() {
+
+			@Override
+			public void processRow(ResultSet rs) throws SQLException {
+				CourseTeachingClassForumReply topic = new CourseTeachingClassForumReply();
+				topic.setId(rs.getString("id"));
+				topic.setT_course_teaching_class_forum_topic_id(rs.getString("t_course_teaching_class_forum_topic_id"));
+				topic.setT_user_id(t_user_id);
+				topic.setCreated_date(DateTimeSql.GetDateTime(rs.getString("created_date")));
+				topic.setLast_modified_date(DateTimeSql.GetDateTime(rs.getString("last_modified_date")));
+				topic.setTitle(rs.getString("title"));
+				topic.setContent(rs.getString("content"));
+
+				list.add(topic);
+
+			}
+
+		});
+
+		return list;
+	}
+	
+	/**
+	 * 根据t_user_id得到论坛id
+	 * */
+	public List<CourseTeachingClassForumReply> getByCourseTeachingClassIdAndUserID(String t_course_teaching_class_id,String t_user_id) {
+
+		List<CourseTeachingClassForumReply> list = new ArrayList<CourseTeachingClassForumReply>();
+
+		getJdbcTemplate().query(GET_BY_COURSE_FORUM_TOPIC_ID_AND_USER_ID, new Object[] { t_course_teaching_class_id,t_user_id }, new RowCallbackHandler() {
+
+			@Override
+			public void processRow(ResultSet rs) throws SQLException {
+				CourseTeachingClassForumReply topic = new CourseTeachingClassForumReply();
+				topic.setId(rs.getString("id"));
+				topic.setT_course_teaching_class_forum_topic_id(t_course_teaching_class_id);
+				topic.setT_user_id(t_user_id);
+				topic.setCreated_date(DateTimeSql.GetDateTime(rs.getString("created_date")));
+				topic.setLast_modified_date(DateTimeSql.GetDateTime(rs.getString("last_modified_date")));
+				topic.setTitle(rs.getString("title"));
+				topic.setContent(rs.getString("content"));
+
+				list.add(topic);
+
+			}
+
+		});
+
+		return list;
+	}
+	
 	public String add(String t_course_teaching_class_forum_topic_id, String t_user_id, String title, String content, String created_date,
 			String last_modified_date) {
 		return add(t_course_teaching_class_forum_topic_id, t_user_id, title, content, DateTimeSql.GetDateTime(created_date),

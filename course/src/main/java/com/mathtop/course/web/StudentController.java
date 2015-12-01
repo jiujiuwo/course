@@ -3,6 +3,7 @@ package com.mathtop.course.web;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,18 +25,23 @@ import com.mathtop.course.domain.Department;
 import com.mathtop.course.domain.Group;
 import com.mathtop.course.domain.NaturalClass;
 import com.mathtop.course.domain.School;
+import com.mathtop.course.domain.Student;
 import com.mathtop.course.domain.StudentViewData;
 import com.mathtop.course.domain.User;
+import com.mathtop.course.domain.UserBasicInfo;
+import com.mathtop.course.domain.UserContactInfo;
 import com.mathtop.course.domain.UserContactType;
 import com.mathtop.course.exception.StudentExistException;
 import com.mathtop.course.service.ContactTypeService;
+import com.mathtop.course.service.DeleteService;
+import com.mathtop.course.service.DepartmentNaturalClassService;
 import com.mathtop.course.service.DepartmentService;
 import com.mathtop.course.service.GroupService;
-import com.mathtop.course.service.DepartmentNaturalClassService;
 import com.mathtop.course.service.SchoolService;
 import com.mathtop.course.service.StudentService;
 import com.mathtop.course.service.UserGroupService;
 import com.mathtop.course.service.UserService;
+import com.mathtop.course.utility.DateTimeSql;
 
 @Controller
 @RequestMapping("/student")
@@ -44,11 +50,10 @@ public class StudentController extends BaseController {
 	/**
 	 * 自动注入
 	 */
-	
+
 	@Autowired
 	private UserService userService;
 
-	
 	@Autowired
 	private SchoolService schoolService;
 
@@ -69,6 +74,9 @@ public class StudentController extends BaseController {
 
 	@Autowired
 	private UserGroupService usergroupService;
+	
+	@Autowired
+	DeleteService deleteService;
 
 	private final String strPageURI = "student";
 
@@ -142,31 +150,29 @@ public class StudentController extends BaseController {
 	 * @param user
 	 * @return
 	 */
-	@RequestMapping(value = "/add")
-	public ModelAndView add(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+	@RequestMapping(value = "/add-{t_school_id}-{t_department_id}-{t_natural_class_id}")
+	public ModelAndView add(HttpServletRequest request, RedirectAttributes redirectAttributes, @PathVariable String t_school_id,
+			@PathVariable String t_department_id, @PathVariable String t_natural_class_id) {
 
-		
-		String t_school_id = null;
-		String t_department_id = null;
-		String t_natural_class_id = null;
-
-		List<School> schools = schoolService.getAll();
-		if (schools.size() > 0) {
-			t_school_id = schools.get(0).getId();
-		}
-
-		if (t_school_id != null && t_department_id == null) {
-
-			List<Department> departments = departmentService.getAll(t_school_id);
-			if (departments.size() > 0) {
-				t_department_id = departments.get(0).getId();
+		if (t_school_id == null) {
+			List<School> schools = schoolService.getAll();
+			if (schools.size() > 0) {
+				t_school_id = schools.get(0).getId();
 			}
 
-			if (t_department_id != null && t_natural_class_id == null) {
+			if (t_school_id != null && t_department_id == null) {
 
-				List<NaturalClass> naturalclasss = departmentNaturalClassService.getNaturalClassByt_department_id(t_department_id);
-				if (naturalclasss.size() > 0) {
-					t_natural_class_id = naturalclasss.get(0).getId();
+				List<Department> departments = departmentService.getAll(t_school_id);
+				if (departments.size() > 0) {
+					t_department_id = departments.get(0).getId();
+				}
+
+				if (t_department_id != null && t_natural_class_id == null) {
+
+					List<NaturalClass> naturalclasss = departmentNaturalClassService.getNaturalClassByt_department_id(t_department_id);
+					if (naturalclasss.size() > 0) {
+						t_natural_class_id = naturalclasss.get(0).getId();
+					}
 				}
 			}
 		}
@@ -206,50 +212,45 @@ public class StudentController extends BaseController {
 	 * @param user
 	 * @return
 	 */
-	@RequestMapping(value = "/addfromexcel")
-	public ModelAndView addfromexcel(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+	@RequestMapping(value = "/addfromexcel-{t_school_id}-{t_department_id}-{t_natural_class_id}")
+	public ModelAndView addfromexcel(HttpServletRequest request, RedirectAttributes redirectAttributes, @PathVariable String t_school_id,
+			@PathVariable String t_department_id, @PathVariable String t_natural_class_id) {
 
 		ModelAndView mav = new ModelAndView();
-		
-		/*FIX ME!!!
 
-		String t_school_id = null;
-		String t_department_id = null;
-		String t_natural_class_id = null;
-
-		List<School> schools = schoolService.getAll();
-		if (schools.size() > 0) {
-			t_school_id = schools.get(0).getId();
-		}
-
-		if (t_school_id != null && t_department_id == null) {
-
-			List<Department> departments = departmentService.getAll(t_school_id);
-			if (departments.size() > 0) {
-				t_department_id = departments.get(0).getId();
-			}
-
-			if (t_department_id != null && t_natural_class_id == null) {
-
-				List<NaturalClass> naturalclasss = departmentNaturalClassService.getNaturalClassByt_department_id(t_department_id);
-				if (naturalclasss.size() > 0) {
-					t_natural_class_id = naturalclasss.get(0).getId();
-				}
-			}
-		}
-
-		
-		System.out.println(t_school_id);
-		System.out.println(t_department_id);
-		System.out.println("t_natural_class_id"+t_natural_class_id);
-		if (t_school_id == null || t_department_id == null || t_natural_class_id == null) {
-
-			redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg, "不存在自然班，请先添加自然班才能够添加学生.");
-			mav.setViewName("redirect:/" + strPageURI + "/list.html");
-			return mav;
-		}
-		
-		*/
+		/*
+		 * FIX ME!!!
+		 * 
+		 * String t_school_id = null; String t_department_id = null; String
+		 * t_natural_class_id = null;
+		 * 
+		 * List<School> schools = schoolService.getAll(); if (schools.size() >
+		 * 0) { t_school_id = schools.get(0).getId(); }
+		 * 
+		 * if (t_school_id != null && t_department_id == null) {
+		 * 
+		 * List<Department> departments = departmentService.getAll(t_school_id);
+		 * if (departments.size() > 0) { t_department_id =
+		 * departments.get(0).getId(); }
+		 * 
+		 * if (t_department_id != null && t_natural_class_id == null) {
+		 * 
+		 * List<NaturalClass> naturalclasss =
+		 * departmentNaturalClassService.getNaturalClassByt_department_id(
+		 * t_department_id); if (naturalclasss.size() > 0) { t_natural_class_id
+		 * = naturalclasss.get(0).getId(); } } }
+		 * 
+		 * 
+		 * System.out.println(t_school_id); System.out.println(t_department_id);
+		 * System.out.println("t_natural_class_id"+t_natural_class_id); if
+		 * (t_school_id == null || t_department_id == null || t_natural_class_id
+		 * == null) {
+		 * 
+		 * redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg,
+		 * "不存在自然班，请先添加自然班才能够添加学生."); mav.setViewName("redirect:/" + strPageURI
+		 * + "/list.html"); return mav; }
+		 * 
+		 */
 
 		// 学院
 		Page<School> pagedSchool = schoolService.getPage(1, CommonConstant.PAGE_SIZE);
@@ -306,7 +307,9 @@ public class StudentController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/addstudent")
-	public ModelAndView addteacher(HttpServletRequest request) {
+	public ModelAndView addstudent(HttpServletRequest request) {
+		String t_school_id = request.getParameter("t_school_id");
+		String t_department_id = request.getParameter("t_department_id");
 		String t_natural_class_id = request.getParameter("t_natural_class_id");
 		String user_password = request.getParameter("user_password");
 		String student_num = request.getParameter("student_num");
@@ -323,7 +326,8 @@ public class StudentController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		// SetPage(mav, t_school_id, 1);
 
-		mav.setViewName("redirect:/" + strPageURI + "/list.html");
+		mav.setViewName("redirect:/" + strPageURI + "/list.html?t_school_id=" + t_school_id + "&t_department_id=" + t_department_id
+				+ "&t_natural_class_id=" + t_natural_class_id);
 		return mav;
 
 	}
@@ -335,15 +339,70 @@ public class StudentController extends BaseController {
 	 * @param user
 	 * @return
 	 */
-	@RequestMapping(value = "/DELETE-{t_school_id}-{t_department_id}-{t_natural_class_id}-{t_student_id}", method = RequestMethod.GET)
-	public ModelAndView DELETE(@PathVariable String t_school_id, @PathVariable String t_department_id,
+	@RequestMapping(value = "/delete-{t_school_id}-{t_department_id}-{t_natural_class_id}-{t_student_id}-{pageNo}", method = RequestMethod.GET)
+	public ModelAndView delete(HttpServletRequest request, @PathVariable String t_school_id, @PathVariable String t_department_id,
+			@PathVariable String t_natural_class_id, @PathVariable String t_student_id, @PathVariable Integer pageNo) {
+
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject(SelectedObjectConst.Selected_School_ID, t_school_id);
+		mav.addObject(SelectedObjectConst.Selected_Department_ID, t_department_id);
+		mav.addObject(SelectedObjectConst.Selected_Naturalclass_ID, t_natural_class_id);
+		mav.addObject(SelectedObjectConst.Selected_PageNo, pageNo);
+
+		// 学生
+		StudentViewData selectedStudentViewData = studentService.getStudentViewByStudentId(t_student_id);
+		mav.addObject(SelectedObjectConst.Selected_StudentViewData, selectedStudentViewData);
+
+		Page<Group> pagedGroup = usergroupService.getGroupPageByt_user_id(selectedStudentViewData.getUser().getId());
+		mav.addObject(PagedObjectConst.Paged_Group, pagedGroup);
+
+		// 得到联系方式类型
+		Page<UserContactType> pagedContactType = contacttypeService.getPage(1, CommonConstant.PAGE_SIZE);
+
+		mav.addObject(PagedObjectConst.Paged_ContactType, pagedContactType);
+
+		mav.setViewName(strPageURI + "/delete");
+
+		return mav;
+	}
+
+	/**
+	 * 删除
+	 * 
+	 * @param request
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "/deletestudent-{t_school_id}-{t_department_id}-{t_natural_class_id}-{t_student_id}")
+	public ModelAndView deletestudent(HttpServletRequest request,RedirectAttributes redirectAttributes,HttpSession session,
+			@PathVariable String t_school_id, @PathVariable String t_department_id,
 			@PathVariable String t_natural_class_id, @PathVariable String t_student_id) {
 
-		if (t_student_id!=null)
-			studentService.deleteById(t_student_id);
+		ModelAndView mav = new ModelAndView();
+		
+		String user_verifycode=request.getParameter("user_verifycode");
+		if (!(user_verifycode.equalsIgnoreCase(session.getAttribute("code").toString()))) {  //忽略验证码大小写
+           
+            
+            redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg, "验证码不正确.");
 
-		Integer pageNo = 1;
-		return list(t_school_id, t_department_id, t_natural_class_id, pageNo);
+			mav.setViewName("redirect:/student/list.html?t_school_id=" + t_school_id + "&t_department_id="
+					+ t_department_id + "&t_natural_class_id-" + t_natural_class_id + "");
+			
+            return mav;
+        }
+		
+		
+		if (t_student_id != null)
+			deleteService.deleteStudentById(request,t_student_id);
+
+		
+		mav.setViewName("redirect:/student/list.html?t_school_id=" + t_school_id + "&t_department_id="
+				+ t_department_id + "&t_natural_class_id-" + t_natural_class_id + "");
+		return mav;
+
+		
 	}
 
 	/**
@@ -381,42 +440,45 @@ public class StudentController extends BaseController {
 	@RequestMapping(value = "/update-{t_school_id}-{t_department_id}-{t_natural_class_id}-{t_student_id}")
 	public ModelAndView update(HttpServletRequest request, @PathVariable String t_school_id, @PathVariable String t_department_id,
 			@PathVariable String t_natural_class_id, @PathVariable String t_student_id) {
-	
+		if (t_school_id == null) {
 
-		List<School> schools = schoolService.getAll();
-		if (schools.size() > 0) {
-			t_school_id = schools.get(0).getId();
-		}
-
-		if (t_school_id != null && t_department_id == null) {
-
-			List<Department> departments = departmentService.getAll(t_school_id);
-			if (departments.size() > 0) {
-				t_department_id = departments.get(0).getId();
+			List<School> schools = schoolService.getAll();
+			if (schools.size() > 0) {
+				t_school_id = schools.get(0).getId();
 			}
 
-			if (t_department_id != null && t_natural_class_id == null) {
+			if (t_school_id != null && t_department_id == null) {
 
-				List<NaturalClass> naturalclasss = departmentNaturalClassService.getNaturalClassByt_department_id(t_department_id);
-				if (naturalclasss.size() > 0) {
-					t_natural_class_id = naturalclasss.get(0).getId();
+				List<Department> departments = departmentService.getAll(t_school_id);
+				if (departments.size() > 0) {
+					t_department_id = departments.get(0).getId();
+				}
+
+				if (t_department_id != null && t_natural_class_id == null) {
+
+					List<NaturalClass> naturalclasss = departmentNaturalClassService.getNaturalClassByt_department_id(t_department_id);
+					if (naturalclasss.size() > 0) {
+						t_natural_class_id = naturalclasss.get(0).getId();
+					}
 				}
 			}
 		}
 
 		ModelAndView mav = new ModelAndView();
 
-		
-
-		// 学院
-		Page<School> pagedSchool = schoolService.getPage(1, CommonConstant.PAGE_SIZE);
-		mav.addObject(PagedObjectConst.Paged_School, pagedSchool);
-
 		SetPage(mav, t_school_id, t_department_id, t_natural_class_id, 1);
+
+		// 学生
+		StudentViewData selectedStudentViewData = studentService.getStudentViewByStudentId(t_student_id);
+		mav.addObject(SelectedObjectConst.Selected_StudentViewData, selectedStudentViewData);
 
 		// 组
 		Page<Group> pagedGroup = groupService.getPage(1, CommonConstant.PAGE_SIZE);
 		mav.addObject(PagedObjectConst.Paged_Group, pagedGroup);
+
+		// 组-用户
+		Page<Group> pagedGroupSpecificUserId = usergroupService.getGroupPageByt_user_id(selectedStudentViewData.getUser().getId());
+		mav.addObject(PagedObjectConst.Paged_GroupSpecificUserId, pagedGroupSpecificUserId);
 
 		// 得到联系方式类型
 		Page<UserContactType> pagedContactType = contacttypeService.getPage(1, CommonConstant.PAGE_SIZE);
@@ -426,8 +488,70 @@ public class StudentController extends BaseController {
 
 		return mav;
 	}
-	
-	
+
+	/**
+	 * 添加学院
+	 * 
+	 * @param request
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "/updatestudent-{t_student_id}")
+	public ModelAndView updatestudent(HttpServletRequest request, @PathVariable String t_student_id) {
+		String t_school_id = request.getParameter("t_school_id");
+		String t_department_id = request.getParameter("t_department_id");
+		String t_natural_class_id = request.getParameter("t_natural_class_id");
+
+		String student_num = request.getParameter("student_num");
+		String user_basic_info_name = request.getParameter("user_basic_info_name");
+		String user_basic_info_birthday = request.getParameter("user_basic_info_birthday");
+		String user_basic_info_sex = request.getParameter("user_basic_info_sex");
+		String[] contacttypeId = request.getParameterValues("contacttypeId");
+		String[] user_contact_value = request.getParameterValues("user_contact_value");
+		String[] groupId = request.getParameterValues("groupId");
+
+		int contactCount = 0;
+		if (contacttypeId != null) {
+			contactCount = contacttypeId.length;
+
+		}
+
+		Student student = new Student();
+		student.setStudent_num(student_num);
+		student.setNatural_class_id(t_natural_class_id);
+		student.setId(t_student_id);
+
+		UserBasicInfo userbasicinfo = new UserBasicInfo();
+		userbasicinfo.setUser_basic_info_name(user_basic_info_name);
+		userbasicinfo.setUser_basic_info_birthday(DateTimeSql.GetDate(user_basic_info_birthday));
+		userbasicinfo.setUser_basic_info_sex(Integer.parseInt(user_basic_info_sex));
+
+		if (contactCount > 0) {
+
+			UserContactInfo[] usercontactinfos = new UserContactInfo[contactCount];
+
+			for (int i = 0; i < contactCount; i++) {
+
+				usercontactinfos[i] = new UserContactInfo();
+
+				usercontactinfos[i].setT_user_contact_type_id(contacttypeId[i]);
+				usercontactinfos[i].setUser_contact_value(user_contact_value[i]);
+			}
+
+			studentService.updateStudent(student, userbasicinfo, usercontactinfos, groupId);
+		} else {
+			studentService.updateStudent(student, userbasicinfo, null, groupId);
+		}
+
+		ModelAndView mav = new ModelAndView();
+		// SetPage(mav, t_school_id, 1);
+
+		mav.setViewName("redirect:/" + strPageURI + "/list.html?t_school_id=" + t_school_id + "&t_department_id=" + t_department_id
+				+ "&t_natural_class_id=" + t_natural_class_id);
+		return mav;
+
+	}
+
 	/**
 	 * 修改学生密码
 	 * 
@@ -436,11 +560,10 @@ public class StudentController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/setstudentpwd-{t_school_id}-{t_department_id}-{t_natural_class_id}-{t_student_id}-{pageNo}")
-	public ModelAndView updateStudentPasswor(HttpServletRequest request, @PathVariable String t_school_id, @PathVariable String t_department_id,
-			@PathVariable String t_natural_class_id, @PathVariable String t_student_id,@PathVariable Integer pageNo) {
-	
+	public ModelAndView updateStudentPasswor(HttpServletRequest request, @PathVariable String t_school_id,
+			@PathVariable String t_department_id, @PathVariable String t_natural_class_id, @PathVariable String t_student_id,
+			@PathVariable Integer pageNo) {
 
-		
 		ModelAndView mav = new ModelAndView();
 
 		mav.addObject(SelectedObjectConst.Selected_School_ID, t_school_id);
@@ -448,8 +571,8 @@ public class StudentController extends BaseController {
 		mav.addObject(SelectedObjectConst.Selected_Naturalclass_ID, t_natural_class_id);
 		mav.addObject(SelectedObjectConst.Selected_PageNo, pageNo);
 
+		// 学生
 		StudentViewData selectedStudentViewData = studentService.getStudentViewByStudentId(t_student_id);
-
 		mav.addObject(SelectedObjectConst.Selected_StudentViewData, selectedStudentViewData);
 
 		Page<Group> pagedGroup = usergroupService.getGroupPageByt_user_id(selectedStudentViewData.getUser().getId());
@@ -465,7 +588,6 @@ public class StudentController extends BaseController {
 		return mav;
 	}
 
-	
 	/**
 	 * 修改学生密码
 	 * 
@@ -475,38 +597,31 @@ public class StudentController extends BaseController {
 	 */
 	@RequestMapping(value = "/updatestudentpwd")
 	public ModelAndView updatestudentpwd(HttpServletRequest request) {
-		
-	
-		String t_school_id=request.getParameter("t_school_id");
-		String t_department_id=request.getParameter("t_department_id");;
-		String t_natural_class_id=request.getParameter("t_natural_class_id");
-		
-		String new_user_password=request.getParameter("user_password");
-		String t_user_id=request.getParameter("t_user_id");
-		String pageNo=request.getParameter("pageNo");
-		
-		User user=new User();
-		
-		
+
+		String t_school_id = request.getParameter("t_school_id");
+		String t_department_id = request.getParameter("t_department_id");
+		;
+		String t_natural_class_id = request.getParameter("t_natural_class_id");
+
+		String new_user_password = request.getParameter("user_password");
+		String t_user_id = request.getParameter("t_user_id");
+		String pageNo = request.getParameter("pageNo");
+
+		User user = new User();
+
 		user.setUser_password(new_user_password);
 		user.EncoderPassword();
-		
-		
-		
-		userService.UpdateUserPassword(t_user_id, user.getUser_password());
 
-		
-		
-		
-		ModelAndView mav = new ModelAndView();		
+		userService.updateUserPassword(t_user_id, user.getUser_password());
 
-		mav.setViewName("redirect:/student/listwithpath-"+t_school_id+"-"+t_department_id+"-"+t_natural_class_id+"-"+pageNo+".html");
+		ModelAndView mav = new ModelAndView();
+
+		mav.setViewName("redirect:/student/listwithpath-" + t_school_id + "-" + t_department_id + "-" + t_natural_class_id + "-" + pageNo
+				+ ".html");
 		return mav;
 
-	
 	}
 
-	
 	/**
 	 * 列出指定学院、系部、班级的学生
 	 * 
@@ -547,7 +662,7 @@ public class StudentController extends BaseController {
 
 			if (t_department_id != null && t_natural_class_id == null) {
 
-				List<NaturalClass>ListNaturalclass = departmentNaturalClassService.getNaturalClassByt_department_id(t_department_id);
+				List<NaturalClass> ListNaturalclass = departmentNaturalClassService.getNaturalClassByt_department_id(t_department_id);
 
 				if (ListNaturalclass.size() > 0) {
 					t_natural_class_id = ListNaturalclass.get(0).getId();
@@ -568,14 +683,12 @@ public class StudentController extends BaseController {
 
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "/listwithpath-{t_school_id}-{t_department_id}-{t_natural_class_id}-{pageNo}")
 	public ModelAndView listWithPath(@PathVariable String t_school_id, @PathVariable String t_department_id,
-			@PathVariable String t_natural_class_id,  @PathVariable int pageNo) {
+			@PathVariable String t_natural_class_id, @PathVariable int pageNo) {
 
 		ModelAndView mav = new ModelAndView();
-
-		
 
 		if (t_school_id == null) {
 
@@ -594,7 +707,7 @@ public class StudentController extends BaseController {
 
 			if (t_department_id != null && t_natural_class_id == null) {
 
-				List<NaturalClass>ListNaturalclass = departmentNaturalClassService.getNaturalClassByt_department_id(t_department_id);
+				List<NaturalClass> ListNaturalclass = departmentNaturalClassService.getNaturalClassByt_department_id(t_department_id);
 
 				if (ListNaturalclass.size() > 0) {
 					t_natural_class_id = ListNaturalclass.get(0).getId();
@@ -615,8 +728,6 @@ public class StudentController extends BaseController {
 
 		return mav;
 	}
-
-	
 
 	private void SetPage(ModelAndView mav, String t_school_id, String t_department_id, String t_natural_class_id, Integer pageNo) {
 		// 得到学院

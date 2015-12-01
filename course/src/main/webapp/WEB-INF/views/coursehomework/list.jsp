@@ -55,9 +55,10 @@
 
 
 			<ol class="breadcrumb">
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Library</a></li>
-				<li class="active">Data</li>
+				<li><a href="#">课程系统</a></li>
+				<li><a
+					href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseteachingclass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
+				<li class="active">${selectedCourseHomeworkTypeData.name}</li>
 			</ol>
 
 			<div class="CourseContentHeader">${selectedCourseHomeworkTypeData.name}管理</div>
@@ -203,6 +204,9 @@
 															onclick="location='<c:url value="/coursehomework/statistics-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">统计</button>
 														<button type="button" class="btn btn-default btn-xs"
 															onclick="location='<c:url value="/coursehomework/replylist-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">批复</button>
+
+														<button type="button" class="btn btn-default btn-xs"
+															onclick="location='<c:url value="/coursehomework/newdelayhomework-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">布置迟交作业</button>
 													</c:if>
 												</div>
 
@@ -298,20 +302,117 @@
 												</c:otherwise>
 													</c:choose>
 
+													<c:if test="${sessionScope.USER_CONTEXT.student!=null}">
+														<c:if test="${data.homeworkbaseinfo.filecount!=0}">
+															<br>
+															<button type="button" class="btn btn-default btn-xs"
+																onclick="ongetexample('${data.homeworkbaseinfo.id}')">取得合法文件名示例</button>
+															<ul class="list-group"
+																id="examplefilenames${data.homeworkbaseinfo.id}">
 
-													<c:if test="${data.homeworkbaseinfo.filecount!=0}">
-														<br>
-														<button type="button" class="btn btn-default btn-xs"
-															onclick="ongetexample('${data.homeworkbaseinfo.id}')">取得合法文件名示例</button>
-														<ul class="list-group"
-															id="examplefilenames${data.homeworkbaseinfo.id}">
-
-														</ul>
+															</ul>
+														</c:if>
 													</c:if>
 
 
 												</div>
 											</div>
+
+
+
+
+
+
+											<c:if test="${fn:length(data.homeworkDelayedList)>0}">
+
+												<div class="row show-grid">
+
+													<div class="col-md-1 text-right">
+														<strong>迟交作业</strong>
+													</div>
+													<div class="col-md-10">
+
+														<div class="panel-group" id="accordion" role="tablist"
+															style="margin-right: 5px; margin-top: 10px;"
+															aria-multiselectable="true">
+
+
+
+															<c:set var="delayindex" value="1"></c:set>
+
+															<c:forEach var="dataDelay"
+																items="${data.homeworkDelayedList}">
+																<div
+																	class="panel 
+					<c:if test="${dataDelay.canStudentSubmit==true }"> 
+						panel-primary
+						</c:if>
+						
+						<c:if test="${dataDelay.canStudentSubmit==false }"> 
+						panel-default
+						</c:if>
+					
+					">
+
+																	<div class="panel-heading" role="tab"
+																		id="heading${dataDelay.id}">
+																		<h4 class="panel-title">
+																			<a role="button" data-toggle="collapse"
+																				data-parent="#accordion"
+																				href="#collapse${dataDelay.id}"
+																				aria-expanded="true"
+																				aria-controls="collapse${dataDelay.id}">
+																				迟交${delayindex}：${selectedCourseHomeworkTypeData.name}-${data.homeworkbaseinfo.title}
+																			</a>
+																		</h4>
+																	</div>
+																	<div id="collapse${dataDelay.id}"
+																		class="panel-collapse collapse
+						<c:if test="${data.homeworkbaseinfo.canStudentSubmit==true }"> 
+						in
+						</c:if>
+						"
+																		style="overflow: hidden;" role="tabpanel"
+																		aria-labelledby="heading${dataDelay.id}">
+																		<div class="panel-body">
+
+																			<div class="container-fluid"
+																				style="overflow: hidden;">
+																				<div class="row show-grid">
+																					<div class="col-md-1 text-right">
+																						<strong>发布日期</strong>
+																					</div>
+																					<div class="col-md-10">
+																						<fmt:formatDate value="${dataDelay.pubdate}"
+																							pattern="yyyy-MM-dd HH:mm" />
+																					</div>
+																				</div>
+
+																				<div class="row show-grid">
+																					<div class="col-md-1 text-right">
+																						<strong>截止日期</strong>
+																					</div>
+																					<div class="col-md-10">
+																						<fmt:formatDate value="${dataDelay.enddate}"
+																							pattern="yyyy-MM-dd HH:mm" />
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+
+
+
+															</c:forEach>
+
+														</div>
+													</div>
+												</div>
+											</c:if>
+
+
+
 
 
 										</div>
@@ -326,9 +427,11 @@
 						</c:forEach>
 
 					</div>
-					<mathtop:PageBar
-						pageUrl="/coursehomework/add-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html"
-						pageAttrKey="pagedCourseTeachingClassHomeworkBaseinfoViewData" />
+					<c:if test="${not empty selectedCourseTeachingClassID}">
+						<mathtop:PageBar
+							pageUrl="/coursehomework/list-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html"
+							pageAttrKey="pagedCourseTeachingClassHomeworkBaseinfoViewData" />
+					</c:if>
 
 				</c:otherwise>
 			</c:choose>

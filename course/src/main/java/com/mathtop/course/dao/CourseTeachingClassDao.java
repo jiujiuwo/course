@@ -21,8 +21,13 @@ public class CourseTeachingClassDao extends BaseDao<CourseTeachingClass> {
 	private final String GET_COURSE_TEACHING_CLASS_BY_COURSE_ID_TEACHINGCLASS_ID = "SELECT id,teaching_year_begin,teaching_year_end,teaching_term FROM t_course_teaching_class WHERE t_course_id=? and t_teaching_class_id=?";
 	private final String GET_COURSE_TEACHING_CLASS_BY_YEAR = "SELECT id,t_course_id,t_teaching_class_id FROM t_course_teaching_class WHERE teaching_year_begin =? and teaching_term=?";
 	
+	private String DELETE_BY_ID = "DELETE FROM t_course_teaching_class WHERE id=?";
+	private String DELETE_BY_COURSE_ID = "DELETE FROM t_course_teaching_class WHERE t_course_id=?";
+	private String DELETE_BY_TEACHING_CLASS_ID = "DELETE FROM t_course_teaching_class WHERE t_teaching_class_id=?";
+	
 	
 	private final String INSERT_COURSE_TEACHING_CLASS = "INSERT INTO t_course_teaching_class(id,t_course_id,t_teaching_class_id,teaching_year_begin,teaching_year_end,teaching_term) VALUES(?,?,?,?,?,?)";
+	private final String UPDATE_COURSE_TEACHING_CLASS = "update  t_course_teaching_class set t_course_id=?,t_teaching_class_id=?,teaching_year_begin=?,teaching_year_end=?,teaching_term=? where id=?";
 
 	/* 增加 */
 	public String add(String t_course_id, String t_teaching_class_id,
@@ -37,6 +42,43 @@ public class CourseTeachingClassDao extends BaseDao<CourseTeachingClass> {
 
 		return id;
 	}
+	
+	/* 增加 */
+	public String update(String id,String t_course_id, String t_teaching_class_id,
+			int teaching_year_begin, int teaching_year_end, int teaching_term) {
+		
+
+		Object params[] = new Object[] {  t_course_id, t_teaching_class_id,
+				teaching_year_begin, teaching_year_end, teaching_term ,id};
+		int types[] = new int[] {Types.VARCHAR, Types.VARCHAR,
+				Types.INTEGER, Types.INTEGER, Types.INTEGER, Types.VARCHAR };
+		getJdbcTemplate().update(UPDATE_COURSE_TEACHING_CLASS, params, types);
+
+		return id;
+	}
+	
+	public void deleteById(String id) {
+		Object params[] = new Object[] { id };
+		int types[] = new int[] { Types.VARCHAR };
+		getJdbcTemplate().update(DELETE_BY_ID, params, types);
+	}
+	
+	public void deleteByCourseId(String t_course_id) {
+		Object params[] = new Object[] { t_course_id };
+		int types[] = new int[] { Types.VARCHAR };
+		getJdbcTemplate().update(DELETE_BY_COURSE_ID, params, types);
+	}
+	
+	
+	public void deleteByTeachingClassId(String t_teaching_class_id) {
+		Object params[] = new Object[] { t_teaching_class_id };
+		int types[] = new int[] { Types.VARCHAR };
+		getJdbcTemplate().update(DELETE_BY_TEACHING_CLASS_ID, params, types);
+	}
+	
+	
+	
+
 
 	//根据id
 	public CourseTeachingClass getCourseTeachingClassById(String id) {
@@ -65,17 +107,19 @@ public class CourseTeachingClassDao extends BaseDao<CourseTeachingClass> {
 		return null;
 	}
 
-	//根据课程id
-	public List<CourseTeachingClass> getCourseTeachingClassByCourseId(String courseId) {
+	/**
+	 * 根据课程id
+	 * */
+	public List<CourseTeachingClass> getCourseTeachingClassByCourseId(String t_course_id) {
 		List<CourseTeachingClass> list=new ArrayList<CourseTeachingClass>();
 		getJdbcTemplate().query(GET_COURSE_TEACHING_CLASS_BY_COURSE_ID,
-				new Object[] { courseId }, new RowCallbackHandler() {
+				new Object[] { t_course_id }, new RowCallbackHandler() {
 
 					@Override
 					public void processRow(ResultSet rs) throws SQLException {
 						CourseTeachingClass ctc=new CourseTeachingClass();
 						ctc.setId(rs.getString("id"));
-						ctc.setT_course_id(courseId);
+						ctc.setT_course_id(t_course_id);
 						ctc.setT_teaching_class_id(rs.getString("t_teaching_class_id"));
 						ctc.setTeaching_year_begin(Integer.parseInt(rs.getString("teaching_year_begin")));
 						ctc.setTeaching_year_end(Integer.parseInt(rs.getString("teaching_year_end")));
@@ -89,19 +133,21 @@ public class CourseTeachingClassDao extends BaseDao<CourseTeachingClass> {
 		return list;
 	}
 
-	//根据教学班id
+	/**
+	 * 根据教学班id
+	 * */
 	public List<CourseTeachingClass> getCourseTeachingClassByTeachingClassId(
-			String teachingclassId) {
+			String t_teaching_class_id) {
 		List<CourseTeachingClass> list=new ArrayList<CourseTeachingClass>();
 		getJdbcTemplate().query(GET_COURSE_TEACHING_CLASS_BY_TEACHINGCLASS_ID,
-				new Object[] { teachingclassId }, new RowCallbackHandler() {
+				new Object[] { t_teaching_class_id }, new RowCallbackHandler() {
 
 					@Override
 					public void processRow(ResultSet rs) throws SQLException {
 						CourseTeachingClass ctc=new CourseTeachingClass();
 						ctc.setId(rs.getString("id"));
 						ctc.setT_course_id(rs.getString("t_course_id"));
-						ctc.setT_teaching_class_id(teachingclassId);
+						ctc.setT_teaching_class_id(t_teaching_class_id);
 						ctc.setTeaching_year_begin(Integer.parseInt(rs.getString("teaching_year_begin")));
 						ctc.setTeaching_year_end(Integer.parseInt(rs.getString("teaching_year_end")));
 						ctc.setTeaching_term(Integer.parseInt(rs.getString("teaching_term")));
@@ -114,19 +160,21 @@ public class CourseTeachingClassDao extends BaseDao<CourseTeachingClass> {
 		return list;
 	}
 
-	//根据课程id和教学班id
+	/**
+	 * 根据课程id和教学班id
+	 * */
 	public List<CourseTeachingClass> getCourseTeachingClassByCourseIdTeachingClassId(
-			String courseId, String teachingclassId) {
+			String courseId, String t_teaching_class_id) {
 		List<CourseTeachingClass> list=new ArrayList<CourseTeachingClass>();
 		getJdbcTemplate().query(GET_COURSE_TEACHING_CLASS_BY_COURSE_ID_TEACHINGCLASS_ID,
-				new Object[] { courseId ,teachingclassId}, new RowCallbackHandler() {
+				new Object[] { courseId ,t_teaching_class_id}, new RowCallbackHandler() {
 
 					@Override
 					public void processRow(ResultSet rs) throws SQLException {
 						CourseTeachingClass ctc=new CourseTeachingClass();
 						ctc.setId(rs.getString("id"));
 						ctc.setT_course_id(courseId);
-						ctc.setT_teaching_class_id(teachingclassId);
+						ctc.setT_teaching_class_id(t_teaching_class_id);
 						ctc.setTeaching_year_begin(Integer.parseInt(rs.getString("teaching_year_begin")));
 						ctc.setTeaching_year_end(Integer.parseInt(rs.getString("teaching_year_end")));
 						ctc.setTeaching_term(Integer.parseInt(rs.getString("teaching_term")));

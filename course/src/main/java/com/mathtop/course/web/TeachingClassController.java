@@ -3,6 +3,7 @@ package com.mathtop.course.web;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,29 +12,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mathtop.course.cons.CommonConstant;
+import com.mathtop.course.cons.CourseMessage;
 import com.mathtop.course.cons.PagedObjectConst;
 import com.mathtop.course.cons.SelectedObjectConst;
 import com.mathtop.course.dao.Page;
-import com.mathtop.course.domain.Course;
+import com.mathtop.course.domain.CourseTeachingClassViewData;
+import com.mathtop.course.domain.CourseViewData;
 import com.mathtop.course.domain.Department;
 import com.mathtop.course.domain.School;
 import com.mathtop.course.domain.StudentViewData;
 import com.mathtop.course.domain.TeacherViewData;
-import com.mathtop.course.domain.CourseTeachingClassViewData;
 import com.mathtop.course.domain.TeachingType;
 import com.mathtop.course.service.CourseService;
+import com.mathtop.course.service.DeleteService;
 import com.mathtop.course.service.DepartmentService;
 import com.mathtop.course.service.SchoolService;
 import com.mathtop.course.service.StudentService;
 import com.mathtop.course.service.TeacherService;
-import com.mathtop.course.service.TeachingClassService;
+import com.mathtop.course.service.CourseTeachingClassService;
 import com.mathtop.course.service.TeachingTypeService;
 
 /**
  * 自然班管理
- * */
+ */
 
 @Controller
 @RequestMapping("/teachingclass")
@@ -49,7 +53,7 @@ public class TeachingClassController extends BaseController {
 	private DepartmentService departmentService;
 
 	@Autowired
-	TeachingClassService teachingclassService;
+	CourseTeachingClassService teachingclassService;
 
 	@Autowired
 	private TeacherService teacherService;
@@ -63,6 +67,9 @@ public class TeachingClassController extends BaseController {
 	@Autowired
 	private StudentService studentService;
 
+	@Autowired
+	DeleteService deleteService;
+
 	private final String strPageURI = "teachingclass";
 
 	// paged object
@@ -72,27 +79,25 @@ public class TeachingClassController extends BaseController {
 	}
 
 	/**
-	 * 添加学院
+	 * 添加教学班
 	 * 
 	 * @param request
 	 * @param user
 	 * @return
 	 */
 	@RequestMapping(value = "/add")
-	public ModelAndView add(HttpServletRequest request, Department d) {
+	public ModelAndView add(HttpServletRequest request) {
 
 		ModelAndView mav = new ModelAndView();
 
-		Page<Course> pagedCourse = courseService.getPage(1,
-				CommonConstant.PAGE_SIZE);
-		mav.addObject(PagedObjectConst.Paged_Course, pagedCourse);
+		Page<CourseViewData> pagedCourseViewData = courseService.getAllPage();
+		mav.addObject(PagedObjectConst.Paged_CourseViewData, pagedCourseViewData);
 
 		String t_school_id = null;
 		int pageNo = 1;
 
 		// 学院
-		Page<School> pagedSchool = schoolService.getPage(pageNo,
-				CommonConstant.PAGE_SIZE);
+		Page<School> pagedSchool = schoolService.getPage(pageNo, CommonConstant.PAGE_SIZE);
 
 		List<School> schools = pagedSchool.getResult();
 		if (schools.size() > 0) {
@@ -102,23 +107,20 @@ public class TeachingClassController extends BaseController {
 		mav.addObject(PagedObjectConst.Paged_School, pagedSchool);
 
 		// 教师
-		Page<TeacherViewData> pagedTeacherViewData = teacherService.getPage(
-				t_school_id, pageNo, CommonConstant.PAGE_SIZE);
-		mav.addObject(PagedObjectConst.Paged_TeacherViewData,
-				pagedTeacherViewData);
+		Page<TeacherViewData> pagedTeacherViewData = teacherService.getPage(t_school_id, pageNo, CommonConstant.PAGE_SIZE);
+		mav.addObject(PagedObjectConst.Paged_TeacherViewData, pagedTeacherViewData);
 
 		// 授课类型
-		Page<TeachingType> pagedTeachingType = teachingtypeService.getPage(
-				pageNo, CommonConstant.PAGE_SIZE);
+		Page<TeachingType> pagedTeachingType = teachingtypeService.getPage(pageNo, CommonConstant.PAGE_SIZE);
 
 		mav.addObject(PagedObjectConst.Paged_TeachingType, pagedTeachingType);
 
-		mav.setViewName(strPageURI + "/add");
+		mav.setViewName("teachingclass/add");
 		return mav;
 	}
 
 	/**
-	 * 添加学院
+	 * 添加教学班
 	 * 
 	 * @param request
 	 * @param user
@@ -128,20 +130,89 @@ public class TeachingClassController extends BaseController {
 	public ModelAndView addteachingclass(HttpServletRequest request) {
 
 		String courseId = request.getParameter("courseId");
-		int teaching_year_begin = Integer.parseInt(request
-				.getParameter("teaching_year_begin"));
-		int teaching_year_end = Integer.parseInt(request
-				.getParameter("teaching_year_end"));
-		int teaching_term = Integer.parseInt(request
-				.getParameter("teaching_term"));
+		int teaching_year_begin = Integer.parseInt(request.getParameter("teaching_year_begin"));
+		int teaching_year_end = Integer.parseInt(request.getParameter("teaching_year_end"));
+		int teaching_term = Integer.parseInt(request.getParameter("teaching_term"));
 		String teachingclass_name = request.getParameter("teachingclass_name");
 		String[] teacherid = request.getParameterValues("teacherid");
-		String[] teachingtypetypeId = request
-				.getParameterValues("teachingtypetypeId");
+		String[] teachingtypetypeId = request.getParameterValues("teachingtypetypeId");
 
-		teachingclassService.add(courseId, teaching_year_begin,
-				teaching_year_end, teaching_term, teachingclass_name,
-				teacherid, teachingtypetypeId);
+		teachingclassService.add(courseId, teaching_year_begin, teaching_year_end, teaching_term, teachingclass_name, teacherid,
+				teachingtypetypeId);
+
+		ModelAndView mav = new ModelAndView();
+
+		mav.setViewName("redirect:/teachingclass/update.html");
+		return mav;
+	}
+
+	/**
+	 * 修改
+	 * 
+	 * @param request
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "/update-{t_course_teaching_class_id}")
+	public ModelAndView update(HttpServletRequest request, @PathVariable String t_course_teaching_class_id) {
+
+		ModelAndView mav = new ModelAndView();
+
+		Page<CourseViewData> pagedCourseViewData = courseService.getAllPage();
+		mav.addObject(PagedObjectConst.Paged_CourseViewData, pagedCourseViewData);
+
+		// 课程授课等信息
+		CourseTeachingClassViewData selectedCourseTeachingClassViewData = teachingclassService
+				.GetTeachingClassViewDataByCourseTeachingClassId(t_course_teaching_class_id);
+
+		mav.addObject(SelectedObjectConst.Selected_CourseTeachingClassViewData, selectedCourseTeachingClassViewData);
+
+		String t_school_id = null;
+		int pageNo = 1;
+
+		// 学院
+		Page<School> pagedSchool = schoolService.getPage(pageNo, CommonConstant.PAGE_SIZE);
+
+		List<School> schools = pagedSchool.getResult();
+		if (schools.size() > 0) {
+			t_school_id = schools.get(0).getId();
+		}
+
+		mav.addObject(PagedObjectConst.Paged_School, pagedSchool);
+
+		// 教师
+		Page<TeacherViewData> pagedTeacherViewData = teacherService.getPage(t_school_id, pageNo, CommonConstant.PAGE_SIZE);
+		mav.addObject(PagedObjectConst.Paged_TeacherViewData, pagedTeacherViewData);
+
+		// 授课类型
+		Page<TeachingType> pagedTeachingType = teachingtypeService.getPage(pageNo, CommonConstant.PAGE_SIZE);
+
+		mav.addObject(PagedObjectConst.Paged_TeachingType, pagedTeachingType);
+
+		mav.setViewName("teachingclass/update");
+		return mav;
+	}
+
+	/**
+	 * 添加教学班
+	 * 
+	 * @param request
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "/updateteachingclass-{t_course_teaching_class_id}")
+	public ModelAndView updateteachingclass(HttpServletRequest request, @PathVariable String t_course_teaching_class_id) {
+
+		String courseId = request.getParameter("courseId");
+		int teaching_year_begin = Integer.parseInt(request.getParameter("teaching_year_begin"));
+		int teaching_year_end = Integer.parseInt(request.getParameter("teaching_year_end"));
+		int teaching_term = Integer.parseInt(request.getParameter("teaching_term"));
+		String teachingclass_name = request.getParameter("teachingclass_name");
+		String[] teacherid = request.getParameterValues("teacherid");
+		String[] teachingtypetypeId = request.getParameterValues("teachingtypetypeId");
+
+		teachingclassService.update(t_course_teaching_class_id, courseId, teaching_year_begin, teaching_year_end, teaching_term,
+				teachingclass_name, teacherid, teachingtypetypeId);
 
 		ModelAndView mav = new ModelAndView();
 
@@ -159,8 +230,7 @@ public class TeachingClassController extends BaseController {
 	@RequestMapping(value = "/addstudent2teachingclass")
 	public ModelAndView addstudent2teachingclass(HttpServletRequest request) {
 
-		String teachingclassid = request
-				.getParameter("selectedTeachingClassID");
+		String teachingclassid = request.getParameter("selectedTeachingClassID");
 
 		String[] studentid = request.getParameterValues("studentid");
 
@@ -168,7 +238,7 @@ public class TeachingClassController extends BaseController {
 
 		ModelAndView mav = new ModelAndView();
 
-		mav.setViewName("redirect:/" + strPageURI + "/list.html");
+		mav.setViewName("redirect:/teachingclass/list.html");
 		return mav;
 	}
 
@@ -179,19 +249,40 @@ public class TeachingClassController extends BaseController {
 	 * @param user
 	 * @return
 	 */
-	@RequestMapping(value = "/DELETE-{t_teachingclass_id}", method = RequestMethod.GET)
-	public ModelAndView DELETE(@PathVariable String t_teachingclass_id) {
-
-		
-	//	System.out.println(t_teachingclass_id);
-		
-		
+	@RequestMapping(value = "/deleteteachingclass-{pageNo}", method = RequestMethod.GET)
+	public ModelAndView deleteteachingclass(HttpServletRequest request, @PathVariable Integer pageNo) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/teachingclass/list.html");
-
+		mav.addObject(SelectedObjectConst.Selected_PageNo, pageNo);
 		return mav;
 	}
+	
+	
 
+	/**
+	 * 删除
+	 * 
+	 * @param request
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "/deletestudent-{t_course_teaching_class_id}-{t_student_id}-{pageNo}", method = RequestMethod.GET)
+	public ModelAndView deletestudent(HttpServletRequest request, @PathVariable String t_course_teaching_class_id,
+			@PathVariable String t_student_id, @PathVariable Integer pageNo) {
+	
+		ModelAndView mav = new ModelAndView();
+		mav.addObject(SelectedObjectConst.Selected_PageNo, pageNo);
+
+		// 学生
+		StudentViewData selectedStudentViewData = studentService.getStudentViewByStudentId(t_student_id);
+		mav.addObject(SelectedObjectConst.Selected_StudentViewData, selectedStudentViewData);
+
+		CourseTeachingClassViewData selectedCourseTeachingClassViewData = teachingclassService
+				.GetTeachingClassViewDataByCourseTeachingClassId(t_course_teaching_class_id);
+
+		mav.addObject(SelectedObjectConst.Selected_CourseTeachingClassViewData, selectedCourseTeachingClassViewData);
+		mav.setViewName("teachingclass/deletestudent");
+		return mav;
+	}
 	
 	/**
 	 * 删除
@@ -200,19 +291,35 @@ public class TeachingClassController extends BaseController {
 	 * @param user
 	 * @return
 	 */
-	@RequestMapping(value = "/deletestudent-{t_teachingclass_id}-{t_student_id}", method = RequestMethod.GET)
-	public ModelAndView deletestudent(@PathVariable String t_teachingclass_id,@PathVariable String t_student_id) {
-
-		
-	//	System.out.println(t_teachingclass_id);
-		
-		
+	@RequestMapping(value = "/dodeletestudent-{t_course_teaching_class_id}-{t_student_id}-{pageNo}")
+	public ModelAndView dodeletestudent(HttpServletRequest request,RedirectAttributes redirectAttributes,HttpSession session, @PathVariable String t_course_teaching_class_id,
+			@PathVariable String t_student_id, @PathVariable Integer pageNo) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/teachingclass/list.html");
+		
+		/*
+		String user_verifycode=request.getParameter("user_verifycode");
+		if (!(user_verifycode.equalsIgnoreCase(session.getAttribute("code").toString()))) {  //忽略验证码大小写
+           
+            
+            redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg, "验证码不正确.");
 
+			mav.setViewName("redirect:/teachingclass/list.html-"+t_course_teaching_class_id+".html?pageNo="+pageNo);
+			
+            return mav;
+        }*/
+		
+		
+		
+		if (t_student_id != null)
+			deleteService.deleteStudentFromCourseTeachingClass(request, t_course_teaching_class_id, t_student_id);
+
+		
+		mav.setViewName("redirect:/teachingclass/list.html-"+t_course_teaching_class_id+".html?pageNo="+pageNo);
 		return mav;
+		
 	}
-	
+
+
 	/**
 	 * 查找
 	 * 
@@ -224,16 +331,15 @@ public class TeachingClassController extends BaseController {
 	public ModelAndView select(@PathVariable String departmentname) {
 
 		ModelAndView view = new ModelAndView();
-		view.setViewName(strPageURI + "/list.html");
+		view.setViewName("teachingclass/list.html");
 
 		if (departmentname != null && departmentname.length() > 0) {
 
 			int pageNo = 1;
-			Page<School> pagedSchool = schoolService.select(departmentname,
-					pageNo, CommonConstant.PAGE_SIZE);
+			Page<School> pagedSchool = schoolService.select(departmentname, pageNo, CommonConstant.PAGE_SIZE);
 
 			view.addObject(PagedObjectConst.Paged_School, pagedSchool);
-			view.setViewName(strPageURI + "/list.html");
+			view.setViewName("teachingclass/list.html");
 
 		}
 		return view;
@@ -250,7 +356,7 @@ public class TeachingClassController extends BaseController {
 	public ModelAndView update(HttpServletRequest request, Department d) {
 
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName(strPageURI + "/list");
+		mav.setViewName("teachingclass/list");
 
 		return mav;
 	}
@@ -258,41 +364,35 @@ public class TeachingClassController extends BaseController {
 	/**
 	 * 根据教学班列出学生
 	 * 
-	 * @param request
-	 * @param user
+	 * @param t_course_teaching_class_id:课程-教学班-id
+	 * @param pageNo
+	 *            页码
 	 * @return
 	 */
-	@RequestMapping(value = "/student-{teachingclassid}", method = RequestMethod.GET)
-	public ModelAndView student(@PathVariable String teachingclassid,
+	@RequestMapping(value = "/student-{t_course_teaching_class_id}", method = RequestMethod.GET)
+	public ModelAndView student(@PathVariable String t_course_teaching_class_id,
 			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
 
 		ModelAndView mav = new ModelAndView();
 
 		pageNo = pageNo == null ? 1 : pageNo;
-		
-		
-		
+
+		mav.addObject(SelectedObjectConst.Selected_CourseTeachingClassID, t_course_teaching_class_id);
+
+		CourseTeachingClassViewData selected_CourseTeachingClassViewData = teachingclassService
+				.GetTeachingClassViewDataByCourseTeachingClassId(t_course_teaching_class_id);
+
+		mav.addObject(SelectedObjectConst.Selected_CourseTeachingClassViewData, selected_CourseTeachingClassViewData);
+
+		String t_teaching_class_id = selected_CourseTeachingClassViewData.getTeachingclass().getId();
 
 		// 学生信息
-		Page<StudentViewData> pagedStudentViewData = studentService
-				.getPageByTeachingClassId(teachingclassid, pageNo,
-						CommonConstant.PAGE_SIZE);
+		Page<StudentViewData> pagedStudentViewData = studentService.getPageByTeachingClassId(t_teaching_class_id, pageNo,
+				CommonConstant.PAGE_SIZE);
 
-		
+		mav.addObject(PagedObjectConst.Paged_StudentViewData, pagedStudentViewData);
 
-		mav.addObject(PagedObjectConst.Paged_StudentViewData,
-				pagedStudentViewData);
-
-		Page<CourseTeachingClassViewData> pagedTeachingClassViewData = teachingclassService
-				.getPage(teachingclassid);
-
-		mav.addObject(PagedObjectConst.Paged_TeachingClassViewData,
-				pagedTeachingClassViewData);
-
-		mav.addObject(SelectedObjectConst.Selected_TeachingClass_ID,
-				teachingclassid);
-
-		mav.setViewName(strPageURI + "/student");
+		mav.setViewName("teachingclass/student");
 
 		SetPageURI(mav);
 
@@ -306,16 +406,15 @@ public class TeachingClassController extends BaseController {
 	 * @param user
 	 * @return
 	 */
-	@RequestMapping(value = "/addstudent-{teachingclassid}", method = RequestMethod.GET)
-	public ModelAndView addstudent(@PathVariable String teachingclassid) {
+	@RequestMapping(value = "/addstudent-{t_teaching_class_id}", method = RequestMethod.GET)
+	public ModelAndView addstudent(@PathVariable String t_teaching_class_id) {
 
 		ModelAndView mav = new ModelAndView();
 
 		String t_school_id = null;
 		int pageNo = 1;
 
-		Page<School> pagedSchool = schoolService.getPage(pageNo,
-				CommonConstant.PAGE_SIZE);
+		Page<School> pagedSchool = schoolService.getPage(pageNo, CommonConstant.PAGE_SIZE);
 
 		mav.addObject(PagedObjectConst.Paged_School, pagedSchool);
 
@@ -325,29 +424,27 @@ public class TeachingClassController extends BaseController {
 		}
 
 		if (t_school_id != null) {
-			Page<Department> pagedDeparment = departmentService.getPage(
-					t_school_id, pageNo, CommonConstant.PAGE_SIZE);
+			Page<Department> pagedDeparment = departmentService.getPage(t_school_id, pageNo, CommonConstant.PAGE_SIZE);
 
 			mav.addObject(PagedObjectConst.Paged_Department, pagedDeparment);
 
 			mav.addObject(SelectedObjectConst.Selected_School_ID, t_school_id);
 		}
 
-		Page<CourseTeachingClassViewData> pagedTeachingClassViewData = teachingclassService
-				.getPage(teachingclassid);
+		Page<CourseTeachingClassViewData> pagedTeachingClassViewData = teachingclassService.getPage(t_teaching_class_id);
 
-		mav.addObject(PagedObjectConst.Paged_TeachingClassViewData,
-				pagedTeachingClassViewData);
+		mav.addObject(PagedObjectConst.Paged_TeachingClassViewData, pagedTeachingClassViewData);
 
-		mav.addObject(SelectedObjectConst.Selected_TeachingClass_ID,
-				teachingclassid);
+		mav.addObject(SelectedObjectConst.Selected_TeachingClass_ID, t_teaching_class_id);
 
-		mav.setViewName(strPageURI + "/addstudent");
+		mav.setViewName("teachingclass/addstudent");
 
 		SetPageURI(mav);
 
 		return mav;
 	}
+
+	
 
 	/**
 	 * 根据教学班列出教师
@@ -356,48 +453,39 @@ public class TeachingClassController extends BaseController {
 	 * @param user
 	 * @return
 	 */
-	@RequestMapping(value = "/teacher-{teachingclassid}", method = RequestMethod.GET)
-	public ModelAndView teacher(@PathVariable String teachingclassid,
+	@RequestMapping(value = "/teacher-{t_teaching_class_id}", method = RequestMethod.GET)
+	public ModelAndView teacher(@PathVariable String t_teaching_class_id,
 			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
 
 		ModelAndView mav = new ModelAndView();
 
 		pageNo = pageNo == null ? 1 : pageNo;
 
-		Page<CourseTeachingClassViewData> pagedTeachingClassViewData = teachingclassService
-				.getPage(teachingclassid);
+		Page<CourseTeachingClassViewData> pagedTeachingClassViewData = teachingclassService.getPage(t_teaching_class_id);
 
-		mav.addObject(PagedObjectConst.Paged_TeachingClassViewData,
-				pagedTeachingClassViewData);
+		mav.addObject(PagedObjectConst.Paged_TeachingClassViewData, pagedTeachingClassViewData);
 
-		mav.addObject(SelectedObjectConst.Selected_TeachingClass_ID,
-				teachingclassid);
-		
-		
-		mav.addObject(PagedObjectConst.Paged_TeacherCount,teacherService.getTeacherCount());
+		mav.addObject(SelectedObjectConst.Selected_TeachingClass_ID, t_teaching_class_id);
+
+		mav.addObject(PagedObjectConst.Paged_TeacherCount, teacherService.getTeacherCount());
 
 		// 学院
-		Page<School> pagedSchool = schoolService.getPage(pageNo,
-				CommonConstant.PAGE_SIZE);
+		Page<School> pagedSchool = schoolService.getPage(pageNo, CommonConstant.PAGE_SIZE);
 
 		mav.addObject(PagedObjectConst.Paged_School, pagedSchool);
-		
 
 		// 授课类型
-		Page<TeachingType> pagedTeachingType = teachingtypeService.getPage(
-				pageNo, CommonConstant.PAGE_SIZE);
+		Page<TeachingType> pagedTeachingType = teachingtypeService.getPage(pageNo, CommonConstant.PAGE_SIZE);
 
 		mav.addObject(PagedObjectConst.Paged_TeachingType, pagedTeachingType);
 
-		mav.setViewName(strPageURI + "/teacher");
+		mav.setViewName("teachingclass/teacher");
 
 		SetPageURI(mav);
 
 		return mav;
 	}
 
-	
-	
 	/**
 	 * 为教学班添加教师
 	 * 
@@ -408,23 +496,20 @@ public class TeachingClassController extends BaseController {
 	@RequestMapping(value = "/addteacher2teachingclass")
 	public ModelAndView addteacher2teachingclass(HttpServletRequest request) {
 
-		String teachingclassid = request
-				.getParameter("selectedTeachingClassID");
-		
+		String teachingclassid = request.getParameter("selectedTeachingClassID");
+
 		System.out.println(teachingclassid);
 
 		String[] teacherid = request.getParameterValues("teacherid");
 		String[] teachingtypeid = request.getParameterValues("teachingtypeid");
 
-		teachingclassService.add(teachingclassid, teacherid,teachingtypeid);
+		teachingclassService.add(teachingclassid, teacherid, teachingtypeid);
 
 		ModelAndView mav = new ModelAndView();
 
-		mav.setViewName("redirect:/" + strPageURI + "/list.html");
+		mav.setViewName("redirect:/teachingclass/list.html");
 		return mav;
 	}
-
-	
 
 	/**
 	 * 列出全部学院
@@ -434,20 +519,19 @@ public class TeachingClassController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list")
-	public ModelAndView ListAll(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public ModelAndView ListAll(@RequestParam(value = "pageNo", required = false) Integer pageNo) {
 
+		
+		
 		ModelAndView mav = new ModelAndView();
 
 		pageNo = pageNo == null ? 1 : pageNo;
 
-		Page<CourseTeachingClassViewData> pagedTeachingClassViewData = teachingclassService
-				.getPage(pageNo, CommonConstant.PAGE_SIZE);
+		Page<CourseTeachingClassViewData> pagedTeachingClassViewData = teachingclassService.getPage(pageNo, CommonConstant.PAGE_SIZE);
 
-		mav.addObject(PagedObjectConst.Paged_TeachingClassViewData,
-				pagedTeachingClassViewData);
+		mav.addObject(PagedObjectConst.Paged_TeachingClassViewData, pagedTeachingClassViewData);
 
-		mav.setViewName(strPageURI + "/list");
+		mav.setViewName("teachingclass/list");
 
 		SetPageURI(mav);
 

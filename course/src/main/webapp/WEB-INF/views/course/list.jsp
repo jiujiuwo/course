@@ -3,8 +3,7 @@
 
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 
 	//设置左侧浏览状态
@@ -37,7 +36,7 @@
 <body class="home" onLoad="ShowErrMsg()">
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
-	
+
 
 	<div class="DocumentPage">
 		<div class="DocumentPageLeftArea ">
@@ -68,8 +67,8 @@
 									<option value="${school.id}">${school.name}</option>
 								</c:forEach>
 							</select>
-							
-							
+
+
 
 
 						</div>
@@ -120,61 +119,67 @@
 
 
 
-<c:choose>
-				<c:when test="${pagedCourse.totalCount >0}">
+			<c:choose>
+				<c:when test="${pagedCourseViewData.totalCount >0}">
 
 
 
-			<div class="Course-Table">
+					<div class="Course-Table">
 
 
-				<table class="table table-hover table-bordered"
-					style="margin-bottom: -10px;">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th>课程编号</th>
-							<th>课程名称</th>
-							<th>课程英文名称</th>
-							<th>课堂授课</th>
-							<th>实验学时</th>
-							<th>课程性质</th>
-							
-							<th>操作</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:set var="index" value="1"></c:set>
-						<c:forEach var="dataitem"
-							items="${pagedCourse.result}">
-							<tr>
-								<th scope="row"><input type="checkbox" value="">
-									${(pagedCourse.currentPageNo-1) * pagedCourse.pageSize +index}</th>
-								
-								<td>${dataitem.num}</td>
-								<td>${dataitem.name}</td>
-								<td>${dataitem.englishname}</td>
-								<td>${dataitem.class_hours}</td>
-								<td>${dataitem.experiment_hours}</td>
-								<td>${dataitem.t_course_style_name}:${dataitem.t_course_type_name}</td>
-							
-								
-								<td><button type="button" class="btn btn-default btn-xs"
-										onclick="onUpdate('${dataitem.id}')">修改...</button>
-									<button type="button" class="btn btn-default btn-xs"
-										onclick="onDelete('${dataitem.id}')">删除</button></td>
-							</tr>
-							<c:set var="index" value="${index + 1}"></c:set>
-						</c:forEach>
-					</tbody>
-				</table>
+						<table class="table table-hover table-bordered"
+							style="margin-bottom: -10px;">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>课程编号</th>
+									<th>课程名称</th>
+									<th>课程英文名称</th>
+									<th>课堂授课</th>
+									<th>实验学时</th>
+									<th>课程性质</th>
+									<th>先修课程</th>
+									<th>课程专业</th>
 
-				<mathtop:PageBar pageUrl="/${pagedURI}/list.html"
-					pageAttrKey="pagedNaturalClassSchoolViewData" />
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:set var="index" value="1"></c:set>
+								<c:forEach var="dataitem" items="${pagedCourseViewData.result}">
+									<tr>
+										<th scope="row"><input type="checkbox" value="">
+											${(pagedCourseViewData.currentPageNo-1) * pagedCourseViewData.pageSize +index}</th>
 
-			</div>
-			
-			</c:when>
+										<td>${dataitem.course.num}</td>
+										<td>${dataitem.course.name}</td>
+										<td>${dataitem.course.englishname}</td>
+										<td>${dataitem.course.class_hours}</td>
+										<td>${dataitem.course.experiment_hours}</td>
+										<td>${dataitem.courseStyle.name}:${dataitem.courseType.name}</td>
+										<td><c:forEach var="dataprecourseitem"
+												items="${dataitem.listCoursePrecourse}">
+							${dataprecourseitem.coursepre.name}
+							</c:forEach></td>
+
+										<td></td>
+										<td><button type="button" class="btn btn-default btn-xs"
+												onclick="location='<c:url value="/course/update-${dataitem.course.id}.html"/>'">修改...</button>
+											<button type="button" class="btn btn-default btn-xs"
+												onclick="onDelete('${dataitem.course.id}')">删除</button></td>
+									</tr>
+									<c:set var="index" value="${index + 1}"></c:set>
+								</c:forEach>
+							</tbody>
+						</table>
+
+						<mathtop:PageBar
+							pageUrl="/course/list.html"
+							pageAttrKey="pagedCourseViewData" />
+
+					</div>
+
+				</c:when>
 
 				<c:otherwise>
 					<%
@@ -191,14 +196,11 @@
 						<div class="list-group">
 
 
-							<a
-								href="<c:url value="/course/add.html"/>" class="list-group-item">添加课程</a>
-								
-								<a href="<c:url value="/teachingclass/add.html"/>"
-								class="list-group-item">添加教学班班</a> 
-								
-
-							<a href="<c:url value="/teacher/add.html"/>"
+							<a href="<c:url value="/course/add.html"/>"
+								class="list-group-item">添加课程</a> <a
+								href="<c:url value="/teachingclass/add.html"/>"
+								class="list-group-item">添加教学班班</a> <a
+								href="<c:url value="/teacher/add.html"/>"
 								class="list-group-item">添加教师</a> <a
 								href="<c:url value="/naturalclass/list.html"/>"
 								class="list-group-item">添加自然班</a> <a
@@ -217,126 +219,6 @@
 	</div>
 
 
-	<!-- 添加对话框 -->
-	<div class="modal fade" id="addModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">添加自然班</h4>
-				</div>
-
-
-
-				<form class="form-signin"
-					action="<c:url value="/${pagedURI}/add.html"/>" method="post">
-
-
-					<div class="modal-body">
-						<h4 class="form-signin-heading">请输入新加自然班名称</h4>
-
-						<div class="container-fluid" style="overflow: hidden;">
-							<div class="row">
-								<div class="col-md-2">学院</div>
-								<div class="col-md-10">
-									<select id="SchoolSelectControlAdd" class="form-control"
-										name="t_school_id"
-										onchange="OnSchoolSelectControlAddChange(this)">
-										<c:forEach var="school" items="${pagedSchool.result}">
-											<option value="${school.id}">${school.name}</option>
-										</c:forEach>
-									</select>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-2">系部</div>
-								<div class="col-md-10">
-									<select id="DepartmentSelectControlAdd" class="form-control"
-										name="t_department_id">        
-										<c:forEach var="d" items="${pagedDepartment.result}">
-											<option value="${d.id}">${d.name}</option>
-										</c:forEach>
-									</select>
-								</div>
-							</div>
-
-
-							<div class="row">
-								<div class="col-md-2">名称</div>
-								<div class="col-md-10">
-									<input type="text" id="inputname" class="form-control"
-										name="naturalclassname" placeholder="自然班名称" required autofocus>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-2">描述</div>
-								<div class="col-md-10">
-									<input type="text" id="inputnote" class="form-control"
-										name="naturalclassnote" placeholder="自然班描述">
-								</div>
-							</div>
-
-						</div>
-
-
-					</div>
-
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-primary" onclick="onAdd()">添加</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					</div>
-
-				</form>
-			</div>
-		</div>
-	</div>
-
-
-	<!-- 修改对话框 -->
-	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">修改自然班</h4>
-				</div>
-
-				<form class="form-signin"
-					action="<c:url value='/${pagedURI}/update.html'/>" method="post">
-
-
-					<div class="modal-body">
-						<h4 class="form-signin-heading">请修改自然班属性</h4>
-						<label for="inputname" class="sr-only">自然班名称</label> <input
-							type="text" id="inputid" class="form-control" name="id" value=""
-							placeholder="id" style="display: none;"> <input
-							type="text" id="inputname" class="form-control" name="name"
-							value="" placeholder="自然班名称" required autofocus> <label
-							for="inputnote" class="sr-only">自然班描述</label> <input type="text"
-							id="inputnote" class="form-control" name="note" value=""
-							placeholder="自然班描述">
-
-					</div>
-
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-primary">修改</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					</div>
-
-				</form>
-			</div>
-		</div>
-	</div>
 
 
 	<%
@@ -349,107 +231,6 @@
 	<%@ include file="../../shared/importJs.jsp"%>
 
 
-	<script>
-		$(function() {
-
-			var ctrl = document.getElementById("SchoolSelectControl");
-			var schooledid = "${selectedt_school_id}";
-			var index = 0;
-
-			for (var i = 0; i < ctrl.options.length; i++)
-				if (ctrl.options[i].value == (schooledid))
-					index = i;
-			ctrl.selectedIndex = index;
-			var schooltext = (ctrl.options[index].text);
-
-			$('#addModal').find('.modal-body #schoolname').text(schooltext);
-			$('#updateModal').find('.modal-body #schoolname').text(schooltext);
-		});
-	</script>
-
-	<script>
-		//学院
-		function OnSelectControlChange(sel_obj) {
-			var index = sel_obj.selectedIndex;
-			var t_school_id = (sel_obj.options[index].value);
-			var schooltext = (sel_obj.options[index].text);
-
-			$('#addModal').find('.modal-body #t_school_id').val(t_school_id);
-			$('#updateModal').find('.modal-body #t_school_id').val(t_school_id);
-
-			$('#addModal').find('.modal-body #schoolname').text(schooltext);
-			$('#updateModal').find('.modal-body #schoolname').text(schooltext);
-
-			var url = "<c:url value='/course'/>" + "/list.html?t_school_id="
-					+ t_school_id;
-			window.location.href = url;
-		}
-
-		function onSearch() {
-			var st = document.getElementById("SearchText").value;
-
-			if (st != null && st.trim().length > 0) {
-				var url = "${pagedURI}/select-" + st + ".html";
-
-				window.location.href = url;
-			} else
-				ShowInfoMsg("搜索内容不能为空");
-
-		}
-
-		function onUpdate(id) {
-			var url = "location='<c:url value="/${pagedURI}/update-"/>" + id + ".html'";
-			$('#updateModal').find('.modal-body #inputid').val(id);
-
-			$('#updateModal').find('.modal-footer #updatebtn').attr("onclick",
-					url);
-
-			$('#updateModal').modal('show');
-
-		}
-
-		function onDelete(id, name) {
-			var url = "location='<c:url value="/naturalclass/"/>"
-
-			url = url + "DELETE-" + id + ".html'";
-
-			$('#deleteModal').find('.modal-body #deleteinfo').text(name);
-			$('#deleteModal').find('.modal-footer #deletebtn').attr("onclick",
-					url);
-
-			alert(url);
-
-			$('#deleteModal').modal('show');
-
-		}
-	</script>
-
-	<script type="text/javascript">
-		$(function() {
-			$("#SchoolSelectControlAdd").change(
-					function() {
-						var selt_school_id = $("#SchoolSelectControlAdd").val();
-						var url = "<c:url value="/department/"/>"
-
-						url = url + "selectbyschool-" + selt_school_id + ".json";
-
-						var departmentjson;
-						$("#DepartmentSelectControlAdd").empty();
-						$.get(url, function(data, status) {
-							if (status == "success") {
-								for (var i = 0; i < data.length; i++) {
-									$("#DepartmentSelectControlAdd").append(
-											"<option value='"+data[i].id+"'>"
-													+ data[i].name
-													+ "</option>");
-								}
-							}
-						});
-
-					});
-
-		});
-	</script>
 
 
 

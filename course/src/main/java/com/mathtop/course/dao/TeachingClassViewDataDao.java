@@ -43,7 +43,7 @@ public class TeachingClassViewDataDao extends BaseDao<CourseTeachingClassViewDat
 	CourseTeachingClassDao courseTeachingClassDao;
 
 	@Autowired
-	TeachingClassTeacherDao teachingclassteacherDao;
+	CourseTeachingClassTeacherDao teachingclassteacherDao;
 	
 	@Autowired
 	TeachingClassStudentDao teachingclassstudentDao;

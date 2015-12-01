@@ -37,7 +37,7 @@ import com.mathtop.course.service.AttendanceStateService;
 import com.mathtop.course.service.AttendanceStudentService;
 import com.mathtop.course.service.AttendanceTypeService;
 import com.mathtop.course.service.StudentService;
-import com.mathtop.course.service.TeachingClassService;
+import com.mathtop.course.service.CourseTeachingClassService;
 import com.mathtop.course.service.chartDataValue;
 import com.mathtop.course.utility.DateTimeSql;
 
@@ -65,7 +65,7 @@ public class AttendanceController extends CourseTeachingClassBaseController {
 	AttendanceStudentService attendancestudentService;
 
 	@Autowired
-	TeachingClassService teachingclassService;
+	CourseTeachingClassService teachingclassService;
 
 	@Autowired
 	private StudentService studentService;

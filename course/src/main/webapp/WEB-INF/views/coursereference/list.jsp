@@ -55,9 +55,9 @@
 
 
 			<ol class="breadcrumb">
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Library</a></li>
-				<li class="active">Data</li>
+				<li><a href="#">课程系统</a></li>
+				<li><a href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseteachingclass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
+				<li class="active">${selectedCourseReferenceTypeData.name}</li>
 			</ol>
 
 			<div class="CourseContentHeader">${selectedCourseReferenceTypeData.name}
@@ -180,10 +180,15 @@
 							<div class="gridseparator"></div>
 
 
+
 							<c:set var="index" value="0"></c:set>
 							<c:forEach var="data"
 								items="${pagedCourseTeachingClassReferenceViewData.result}">
-								<div class="row show-grid">
+								<div class="row show-grid 
+								<c:if test="${index%2==1 }">
+								bg-info
+								</c:if> 
+								">
 									<div class="col-md-1">
 										<c:if test="${sessionScope.USER_CONTEXT.teacher!=null}">
 											<input type="checkbox" value="">
@@ -213,13 +218,13 @@
 											</c:when>
 
 											<c:otherwise>
-												<ul>
+												
 													<c:forEach var="datafile" items="${data.fileList}">
-														<li><a
+													<p>	<a
 															href="<c:url value="/coursereferencefile/download-${datafile.id}.html"/>">
-																<span class="glyphicon glyphicon-download" aria-hidden="true"></span>${datafile.filename}</a>(${datafile.filelength})</li>
+																<span class="glyphicon glyphicon-download" aria-hidden="true"></span>${datafile.filename}</a>(${datafile.filelength})</p>
 													</c:forEach>
-												</ul>
+												
 											</c:otherwise>
 										</c:choose>
 
@@ -268,9 +273,12 @@
 
 
 
-						<mathtop:PageBar
-							pageUrl="/coursehomework/add-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html"
-							pageAttrKey="pagedCourseTeachingClassReferenceViewData" />
+						<c:if
+							test="${not empty selectedCourseTeachingClassID}">
+							<mathtop:PageBar
+								pageUrl="/coursereference/list-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html"
+								pageAttrKey="pagedCourseTeachingClassReferenceViewData" />        
+						</c:if>
 
 					</div>
 

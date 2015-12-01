@@ -22,7 +22,7 @@ import com.mathtop.course.domain.CourseTeachingClassForumTopicViewData;
 import com.mathtop.course.domain.UserSessionInfo;
 import com.mathtop.course.service.CourseTeachingClassForumReplyService;
 import com.mathtop.course.service.CourseTeachingClassForumTopicService;
-import com.mathtop.course.service.TeachingClassService;
+import com.mathtop.course.service.CourseTeachingClassService;
 
 @Controller
 @RequestMapping("/courseforumreply")
@@ -38,7 +38,7 @@ public class CourseTeachingClassForumReplyController extends CourseTeachingClass
 	private CourseTeachingClassForumTopicService forumtopicService;
 
 	@Autowired
-	TeachingClassService teachingclassService;
+	CourseTeachingClassService teachingclassService;
 
 	/**
 	 * 列出全部

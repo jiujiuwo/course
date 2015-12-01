@@ -12,7 +12,7 @@ public class UserSessionInfoService {
 	@Autowired
 	private UserSessionInfoDao dao;
 	
-	public UserSessionInfo GetUserSessionInfoByt_user_id(String user_id) {
-		return dao.GetUserSessionInfoByt_user_id(user_id);
+	public UserSessionInfo getUserSessionInfoByUserId(String t_user_id) {
+		return dao.getUserSessionInfoByUserId(t_user_id);
 	}
 }

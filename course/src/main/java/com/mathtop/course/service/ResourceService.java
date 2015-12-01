@@ -31,8 +31,8 @@ public class ResourceService  {
 	/*
 	 * 删除
 	 */
-	public void DELETE(String id) {
-		dao.DELETE(id);
+	public void delete(String id) {
+		dao.delete(id);
 	}
 
 	/*

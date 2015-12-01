@@ -54,9 +54,9 @@
 
 
 			<ol class="breadcrumb">
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Library</a></li>
-				<li class="active">Data</li>
+				<li><a href="#">课程系统</a></li>
+				<li><a href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseteachingclass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
+				<li class="active">${selectedCourseAttendanceTypeData.name}</li>
 			</ol>
 
 			<div class="CourseContentHeader">${selectedCourseAttendanceTypeData.name}</div>

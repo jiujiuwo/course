@@ -21,10 +21,9 @@ import com.mathtop.course.domain.CourseTeachingClassHomeworkSubmitFile;
 import com.mathtop.course.domain.zip;
 import com.mathtop.course.service.CourseTeachingClassHomeworkSubmitService;
 
-
 /**
  * 下载教学计划
- * */
+ */
 
 @Controller
 @RequestMapping("/coursehomeworksubmitfile")
@@ -36,8 +35,6 @@ public class CourseTeachingClassHomeworkSubmitDownloadController extends CourseT
 	@Autowired
 	private CourseTeachingClassHomeworkSubmitService homeworksubmitService;
 
-	
-
 	/**
 	 * 添加
 	 * 
@@ -46,50 +43,46 @@ public class CourseTeachingClassHomeworkSubmitDownloadController extends CourseT
 	 * @return
 	 */
 	@RequestMapping(value = "/download-{t_course_teaching_class_homework_submit_id}")
-	 public ResponseEntity<byte[]> download(HttpServletRequest request,@PathVariable String t_course_teaching_class_homework_submit_id) throws IOException { 
-		 
-		 CourseTeachingClassHomeworkSubmitFile plan =homeworksubmitService.getFileByID(t_course_teaching_class_homework_submit_id);
-		 if(plan==null)
-			 return null;
-		 
-		 ServletContext sc = request.getSession().getServletContext();
-			String dir = sc.getRealPath(RealPathConst.RealPath_HomeworkSubmitFile);    //设定文件保存的目录
-			String filename=plan.getFilename();
-	        String path=dir+RealPathConst.RealPath_PathSeparator+plan.getFilepath();
-	        File file=new File(path);  
-	        HttpHeaders headers = new HttpHeaders();    
-	        String fileName = new String(filename.getBytes("GB18030"), "ISO8859-1");// 为了解决中文名称乱码问题
-	        headers.setContentDispositionFormData("attachment", fileName);   
-	        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);   
-	        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),    
-	                                          headers, HttpStatus.OK);    
-	    }    
-	 /**
-		 * 将指定作业进行压缩
-		 * 
-		 * @param request
-		 * @param user
-		 * @return
-		 */
-		@RequestMapping(value = "/downloadall-{t_course_teaching_class_homework_baseinfo_id}")
-		 public ResponseEntity<byte[]> downloadall(HttpServletRequest request,@PathVariable String t_course_teaching_class_homework_baseinfo_id) throws IOException { 
-			 
-			 zip z=homeworksubmitService.zipByHomeworkBaseInfoId(request, t_course_teaching_class_homework_baseinfo_id);
-			 
-			 
-			 if(z==null)
-				 return null;	 
-			 
-			 
-			 
-		        HttpHeaders headers = new HttpHeaders();    
-		        String fileName=new String(z.getZipFileName().getBytes("UTF-8"),"iso-8859-1");//为了解决中文名称乱码问题  
-		        headers.setContentDispositionFormData("attachment", fileName);   
-		        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);   
-		        return new ResponseEntity<byte[]>(z.getBos().toByteArray(),    
-		                                          headers, HttpStatus.OK);    
-		    }    
+	public ResponseEntity<byte[]> download(HttpServletRequest request, @PathVariable String t_course_teaching_class_homework_submit_id)
+			throws IOException {
 
-	
+		CourseTeachingClassHomeworkSubmitFile plan = homeworksubmitService.getFileByID(t_course_teaching_class_homework_submit_id);
+		if (plan == null)
+			return null;
+
+		ServletContext sc = request.getSession().getServletContext();
+		String dir = sc.getRealPath(RealPathConst.RealPath_HomeworkSubmitFile); // 设定文件保存的目录
+		String filename = plan.getFilename();
+		String path = dir + RealPathConst.RealPath_PathSeparator + plan.getFilepath();
+		File file = new File(path);
+		HttpHeaders headers = new HttpHeaders();
+		String fileName = new String(filename.getBytes("GB18030"), "ISO8859-1");// 为了解决中文名称乱码问题
+		headers.setContentDispositionFormData("attachment", fileName);
+		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.OK);
+	}
+
+	/**
+	 * 将指定作业进行压缩
+	 * 
+	 * @param request
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "/downloadall-{t_course_teaching_class_homework_baseinfo_id}")
+	public ResponseEntity<byte[]> downloadall(HttpServletRequest request, @PathVariable String t_course_teaching_class_homework_baseinfo_id)
+			throws IOException {
+
+		zip z = homeworksubmitService.zipByHomeworkBaseInfoId(request, t_course_teaching_class_homework_baseinfo_id);
+
+		if (z == null)
+			return null;
+
+		HttpHeaders headers = new HttpHeaders();
+		String fileName = new String(z.getZipFileName().getBytes("UTF-8"), "iso-8859-1");// 为了解决中文名称乱码问题
+		headers.setContentDispositionFormData("attachment", fileName);
+		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+		return new ResponseEntity<byte[]>(z.getBos().toByteArray(), headers, HttpStatus.OK);
+	}
 
 }

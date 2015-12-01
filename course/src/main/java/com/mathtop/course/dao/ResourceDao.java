@@ -58,7 +58,7 @@ public class ResourceDao extends BaseDao<Resource> {
 	/*
 	 * 删除
 	 */
-	public void DELETE(String id) {
+	public void delete(String id) {
 		Object params[] = new Object[] { id };
 		int types[] = new int[] { Types.VARCHAR };
 		getJdbcTemplate().update(DELETE_BY_ID, params, types);

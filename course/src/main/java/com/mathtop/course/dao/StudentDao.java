@@ -19,7 +19,16 @@ public class StudentDao extends BaseDao<Student> {
 	private final String INSERT_STUDNENT = "INSERT INTO t_student(id,t_user_id,student_num) VALUES(?,?,?)";
 	private final String INSERT_NATURALCLASSSTUDENT = "INSERT INTO t_natural_class_student(id,t_natural_class_id,t_student_id) VALUES(?,?,?)";
 	private final String DELETE_BY_ID = "DELETE FROM t_student WHERE id=?";
+	private final String UPDATE_STUDENTNUM_BY_ID = "update t_student set student_num=? WHERE id=?";
 	
+	public void UpdateStudentNumById(String t_student_id, String student_num) {
+		if (t_student_id == null || student_num == null )
+			return;	
+
+		Object params[] = new Object[] {student_num, t_student_id };
+		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR };
+		getJdbcTemplate().update(UPDATE_STUDENTNUM_BY_ID, params, types);
+	}
 	
 	/*删除
 	 * */

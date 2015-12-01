@@ -69,7 +69,7 @@ public class AttendanceStateController extends BaseController {
 			
 
 		} else {
-			attendancestateService.Add(ct.getName(), ct.getNote());
+			attendancestateService.add(ct.getName(), ct.getNote());
 
 			String toUrl = ("list.html");
 			mav.setViewName("redirect:" + toUrl);
@@ -88,7 +88,7 @@ public class AttendanceStateController extends BaseController {
 	@RequestMapping(value = "/DELETE-{ctId}", method = RequestMethod.GET)
 	public ModelAndView DELETE(@PathVariable String ctId) {
 		if (ctId != null)
-			attendancestateService.DELETE(ctId);
+			attendancestateService.deleteById(ctId);
 
 		ModelAndView mav = new ModelAndView();
 		String toUrl = ("list.html");

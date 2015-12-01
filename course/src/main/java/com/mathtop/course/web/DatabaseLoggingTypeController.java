@@ -75,7 +75,7 @@ public class DatabaseLoggingTypeController extends BaseController {
 			
 
 		} else {
-			databaseloggingtypeService.Add(ct.getName(), ct.getNote());
+			databaseloggingtypeService.add(ct.getName(), ct.getNote());
 
 			String toUrl = ("list.html");
 			mav.setViewName("redirect:" + toUrl);
@@ -94,7 +94,7 @@ public class DatabaseLoggingTypeController extends BaseController {
 	@RequestMapping(value = "/DELETE-{ctId}", method = RequestMethod.GET)
 	public ModelAndView DELETE(@PathVariable String ctId) {
 		if (ctId != null)
-			databaseloggingtypeService.DELETE(ctId);
+			databaseloggingtypeService.deleteById(ctId);
 
 		ModelAndView mav = new ModelAndView();
 		String toUrl = ("list.html");

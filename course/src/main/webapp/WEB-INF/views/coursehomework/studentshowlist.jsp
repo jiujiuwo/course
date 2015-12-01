@@ -54,9 +54,10 @@
 
 
 			<ol class="breadcrumb">
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Library</a></li>
-				<li class="active">Data</li>
+				<li><a href="#">课程系统</a></li>
+				<li><a
+					href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseteachingclass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
+				<li class="active">${selectedCourseHomeworkTypeData.name}</li>
 			</ol>
 
 			<div class="CourseContentHeader">${selectedCourseHomeworkTypeData.name}</div>
@@ -258,29 +259,207 @@
 
 										</div>
 
-										<div style="margin: 10px;">
 
-											<button type="button" class="btn btn-default btn-xs"
-												onclick="location='<c:url value="/coursehomeworksubmit/list-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html'"/>">
+										<%
+											//迟交作业
+										%>
+										<c:if
+											test="${fn:length(data.homeworkDelayedList)>0 and not data.studentSubmitted}">
+
+											<div class="row show-grid">
+
+												<div class="col-md-1 text-right">
+													<strong>迟交作业</strong>
+												</div>
+												<div class="col-md-10">
+
+													<div class="panel-group" id="accordion" role="tablist"
+														style="margin-right: 5px; margin-top: 10px;"
+														aria-multiselectable="true">
+
+
+
+														<c:set var="delayindex" value="1"></c:set>
+
+														<c:forEach var="dataDelay"
+															items="${data.homeworkDelayedList}">
+															<div
+																class="panel 
+					<c:if test="${dataDelay.canStudentSubmit==true }"> 
+						panel-primary
+						</c:if>
+						
+						<c:if test="${dataDelay.canStudentSubmit==false }"> 
+						panel-default
+						</c:if>
+					
+					">
+
+																<div class="panel-heading" role="tab"
+																	id="heading${dataDelay.id}">
+																	<h4 class="panel-title">
+																		<a role="button" data-toggle="collapse"
+																			data-parent="#accordion"
+																			href="#collapse${dataDelay.id}" aria-expanded="true"
+																			aria-controls="collapse${dataDelay.id}">
+																			迟交${delayindex}：${selectedCourseHomeworkTypeData.name}-${data.homeworkbaseinfo.title}
+																		</a>
+																	</h4>
+																</div>
+																<div id="collapse${dataDelay.id}"
+																	class="panel-collapse collapse
+						<c:if test="${data.homeworkbaseinfo.canStudentSubmit==true }"> 
+						in
+						</c:if>
+						"
+																	style="overflow: hidden;" role="tabpanel"
+																	aria-labelledby="heading${dataDelay.id}">
+																	<div class="panel-body">
+
+																		<div class="container-fluid" style="overflow: hidden;">
+																			<div class="row show-grid">
+																				<div class="col-md-1 text-right">
+																					<strong>发布日期</strong>
+																				</div>
+																				<div class="col-md-10">
+																					<fmt:formatDate value="${dataDelay.pubdate}"
+																						pattern="yyyy-MM-dd HH:mm" />
+																				</div>
+																			</div>
+
+																			<div class="row show-grid">
+																				<div class="col-md-1 text-right">
+																					<strong>截止日期</strong>
+																				</div>
+																				<div class="col-md-10">
+																					<fmt:formatDate value="${dataDelay.enddate}"
+																						pattern="yyyy-MM-dd HH:mm" />
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+
+
+														</c:forEach>
+
+													</div>
+												</div>
+											</div>
+										</c:if>
+
+
+
+										<div class="row show-grid">
+											<div class="col-md-1 text-right">
+												<strong>作业提交</strong>
+											</div>
+											<div class="col-md-10">
+
 
 												<c:choose>
-													<c:when test="${data.homeworkbaseinfo.canReply}">
-														查看已提交作业
-													</c:when>
-													<c:otherwise>
-														<c:choose>
-															<c:when test="${data.studentSubmitted}">
+													<c:when test="${data.canStudentSubmit }">
+
+
+														<button type="button" class="btn btn-default btn-xs"
+															onclick="location='<c:url value="/coursehomeworksubmit/list-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html'"/>">
+
+															<c:choose>
+																<c:when test="${data.homeworkbaseinfo.canReply}">
+																	<c:choose>
+																		<c:when test="${data.studentSubmitted}">
+																查看已提交作业
+															</c:when>
+															<c:when
+																			test="${data.homeworkbaseinfo.canStudentSubmit}">
+																提交作业
+															</c:when>
+																		<c:when
+																			test="${data.canStudentSubmit}">
+																提交迟交作业
+															</c:when>
+																		<c:otherwise>
+															未提交作业，但作业已经过期，不能提交
+															</c:otherwise>
+
+																	</c:choose>
+
+
+																</c:when>
+																<c:otherwise>
+																	<c:choose>
+																		<c:when test="${data.studentSubmitted}">
 																查看或修改已提交作业
 															</c:when>
-															<c:when test="${data.homeworkbaseinfo.canStudentSubmit}">
+															<c:when
+																			test="${data.homeworkbaseinfo.canStudentSubmit}">
+																提交作业
+															</c:when>
+																		<c:when
+																			test="${data.canStudentSubmit}">
+																提交迟交作业
+															</c:when>
+
+																	</c:choose>
+																</c:otherwise>
+															</c:choose>
+														</button>
+
+
+
+													</c:when>
+													<c:otherwise>
+
+														<button type="button" class="btn btn-default btn-xs"
+															onclick="location='<c:url value="/coursehomeworksubmit/list-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html'"/>">
+
+															<c:choose>
+																<c:when test="${data.homeworkbaseinfo.canReply}">
+																	<c:choose>
+																		<c:when test="${data.studentSubmitted}">
+																查看已提交作业
+															</c:when>
+																		<c:when
+																			test="${data.canStudentSubmit}">
+																提交作业
+															</c:when>
+																		<c:otherwise>
+															未提交作业，但作业已经过期，不能提交
+															</c:otherwise>
+
+																	</c:choose>
+
+
+																</c:when>
+																<c:otherwise>
+																	<c:choose>
+																		<c:when test="${data.studentSubmitted}">
+																查看或修改已提交作业
+															</c:when>
+																		<c:when
+																			test="${data.canStudentSubmit}">
 																提交作业
 															</c:when>
 
-														</c:choose>
+																	</c:choose>
+																</c:otherwise>
+															</c:choose>
+														</button>
+
 													</c:otherwise>
 												</c:choose>
-											</button>
+
+											</div>
 										</div>
+
+
+
+
+
+
+
 									</div>
 								</div>
 							</div>
@@ -291,7 +470,7 @@
 
 					</div>
 					<mathtop:PageBar
-						pageUrl="/coursehomework/add-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html"
+						pageUrl="/coursehomework/list-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html"
 						pageAttrKey="pagedCourseTeachingClassHomeworkBaseinfoViewData" />
 
 				</c:otherwise>

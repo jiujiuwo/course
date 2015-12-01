@@ -71,7 +71,7 @@ public class GroupController extends BaseController {
 			
 
 		} else {
-			groupService.Add(ct.getName(), ct.getNote());
+			groupService.add(ct.getName(), ct.getNote());
 
 			String toUrl = ("list.html");
 			mav.setViewName("redirect:" + toUrl);
@@ -90,7 +90,7 @@ public class GroupController extends BaseController {
 	@RequestMapping(value = "/DELETE-{ctId}", method = RequestMethod.GET)
 	public ModelAndView DELETE(@PathVariable String ctId) {
 		if (ctId != null)
-			groupService.DELETE(ctId);
+			groupService.deleteById(ctId);
 
 		ModelAndView mav = new ModelAndView();
 		String toUrl = ("list.html");

@@ -34,13 +34,16 @@ public class PagedObjectConst {
 	// 课程类型
 	public static final String Paged_CourseStyle = "pagedCourseStyle";
 
-	public static final String Paged_PreCourse = "pagedPreCourse";
+	public static final String Paged_PreCourseViewData = "pagedPreCourseViewData";
 
 	// 数据库日志类型
 	public static final String Paged_DatabaseLoggingType = "pagedDatabaseLoggingType";
 
 	// 课程
 	public static final String Paged_Course = "pagedCourse";
+	
+	// 课程视图
+	public static final String Paged_CourseViewData = "pagedCourseViewData";
 
 	// 教师
 	public static final String Paged_TeacherViewData = "pagedTeacherViewData";
@@ -95,6 +98,9 @@ public class PagedObjectConst {
 
 	// 组
 	public static final String Paged_Group = "pagedGroup";
+	
+	// 特定用户-组 信息
+	public static final String Paged_GroupSpecificUserId = "pagedGroupSpecificUserId";
 
 	// 用户-组信息
 	public static final String Paged_GroupPersonInfo = "pagedGroupPersonInfo";

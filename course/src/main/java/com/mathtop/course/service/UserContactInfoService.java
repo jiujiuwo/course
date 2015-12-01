@@ -25,6 +25,10 @@ public class UserContactInfoService {
 			return usercontactinfoDao.add(usercontactinfo);		
 	}
 	
+	public void deleteByUserId(String t_user_id){
+		usercontactinfoDao.deleteByUserId(t_user_id);
+	}
+	
 	/**
      * 
      * @param t_user_id 用户id

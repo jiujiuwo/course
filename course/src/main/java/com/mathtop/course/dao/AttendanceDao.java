@@ -46,6 +46,8 @@ public class AttendanceDao extends BaseDao<Attendance> {
 	private final String GET_COUNT_BY_COURSE_TEACHING_CLASS_ID = "SELECT count(*) FROM t_attendance WHERE t_course_teaching_class_id=?";
 	private final String GET_COUNT_BY_COURSE_TEACHING_CLASS_ID_AND_ATTENDANCE_TYPE_ID = "SELECT count(*) FROM t_attendance WHERE t_course_teaching_class_id=? and t_attendance_type_id=?";
 	private final String GET_BY_COURSE_TEACHING_CLASS_ID = "SELECT id,t_attendance_type_id,t_teacher_id ,begin_datetime,end_datetime FROM t_attendance WHERE t_course_teaching_class_id=?";
+	private final String GET_BY_TEACHER_ID = "SELECT id,t_attendance_type_id,t_course_teaching_class_id ,begin_datetime,end_datetime FROM t_attendance WHERE t_teacher_id=?";
+	private final String GET_BY_ATTENDANCE_ID = "SELECT id,t_teacher_id,t_course_teaching_class_id ,begin_datetime,end_datetime FROM t_attendance WHERE t_attendance_type_id=?";
 	private final String GET_BY_ID = "SELECT t_course_teaching_class_id,t_attendance_type_id,t_teacher_id ,begin_datetime,end_datetime FROM t_attendance WHERE id=?";
 
 	// DELETE
@@ -119,6 +121,62 @@ public class AttendanceDao extends BaseDao<Attendance> {
 
 		return list;
 	}
+	
+	
+	/**
+	 * 根据教师得到考勤信息
+	 * */
+	public List<Attendance> getByTeacherID(String t_teacher_id) {
+
+		List<Attendance> list = new ArrayList<Attendance>();
+
+		getJdbcTemplate().query(GET_BY_TEACHER_ID, new Object[] { t_teacher_id }, new RowCallbackHandler() {
+
+			@Override
+			public void processRow(ResultSet rs) throws SQLException {
+				Attendance atte = new Attendance();
+				atte.setId(rs.getString("id"));
+				atte.setT_course_teacing_class_id(rs.getString("t_course_teaching_class_id"));
+				atte.setT_attendance_type_id(rs.getString("t_attendance_type_id"));
+				atte.setT_teacher_id(t_teacher_id);
+				atte.setBegin_datetime(rs.getTimestamp("begin_datetime"));
+				atte.setEnd_datetime(rs.getTimestamp("end_datetime"));
+				list.add(atte);
+
+			}
+
+		});
+
+		return list;
+	}
+	
+	/**
+	 * 根据考勤类型得到考勤信息
+	 * */
+	public List<Attendance> getByAttendanceTypeId(String t_attendance_type_id) {
+
+		List<Attendance> list = new ArrayList<Attendance>();
+
+		getJdbcTemplate().query(GET_BY_ATTENDANCE_ID, new Object[] { t_attendance_type_id }, new RowCallbackHandler() {
+
+			@Override
+			public void processRow(ResultSet rs) throws SQLException {
+				Attendance atte = new Attendance();
+				atte.setId(rs.getString("id"));
+				atte.setT_course_teacing_class_id(rs.getString("t_course_teaching_class_id"));
+				atte.setT_attendance_type_id(t_attendance_type_id);
+				atte.setT_teacher_id(rs.getString("t_teacher_id"));
+				atte.setBegin_datetime(rs.getTimestamp("begin_datetime"));
+				atte.setEnd_datetime(rs.getTimestamp("end_datetime"));
+				list.add(atte);
+
+			}
+
+		});
+
+		return list;
+	}
+
 
 	/* 增加用户 */
 	public String add(Attendance atte) {
@@ -209,10 +267,7 @@ public class AttendanceDao extends BaseDao<Attendance> {
 
 	private List<AttendanceViewData> PageQuery(String t_course_teaching_class_id,String t_attendance_id, int PageBegin, int PageSize) {
 
-		PageBegin -= 1;
-		if (PageBegin < 0)
-			PageBegin = 0;
-
+	
 		List<AttendanceViewData> list = new ArrayList<AttendanceViewData>();
 
 		getJdbcTemplate().query(GET_VIEWDATA_BY_COURSE_TEACHING_CLASS_ID_AND_ATTENDANCE_TYPE_ID,

@@ -4,8 +4,7 @@
 
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 
 	//设置左侧浏览状态
@@ -125,9 +124,9 @@
 					<td style="width: 10px;"></td>
 					<td><div class="btn-group" role="group" aria-label="...">
 							<button type="button" class="btn btn-default btn-sm"
-								onclick="window.location.href='student/add.html'">增加一个学生</button>
+								onclick="onAdd()">增加一个学生</button>
 							<button type="button" class="btn btn-default btn-sm"
-								onclick="window.location.href='student/addfromexcel.html'">从Excel导入学生</button>
+								onclick="onAddFromExcel()">从Excel导入学生</button>
 
 							<button type="button" class="btn btn-default btn-sm"
 								data-toggle="modal" data-target="#myModal">删除</button>
@@ -154,7 +153,7 @@
 
 
 						<table class="table table-hover table-bordered"
-							style="margin-bottom: -10px; width=100%;">
+							style="margin-bottom: -10px;">
 							<thead>
 								<tr>
 									<th style="width: 50px;">#</th>
@@ -165,7 +164,7 @@
 									<th style="width: 50px;">性别</th>
 									<th style="width: 100px;">生日</th>
 									<th style="width: 200px;">联系方式</th>
-									<th >操作</th>
+									<th>操作</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -199,16 +198,16 @@
 													</div>
 												</c:forEach>
 											</div>
-										</td>				
-										
-										
+										</td>
+
+
 
 										<td><button type="button" class="btn btn-default btn-xs"
 												onclick="location='<c:url value="/student/update-${selectedt_school_id}-${selectedt_department_id}-${selectedt_natural_class_id}-${dataitem.student.id}.html"/>'">修改...</button>
-										<button type="button" class="btn btn-default btn-xs"
+											<button type="button" class="btn btn-default btn-xs"
 												onclick="location='<c:url value="/student/setstudentpwd-${selectedt_school_id}-${selectedt_department_id}-${selectedt_natural_class_id}-${dataitem.student.id}-${pagedStudentViewData.currentPageNo }.html"/>'">修改密码...</button>
 											<button type="button" class="btn btn-default btn-xs"
-												onclick="onDelete('${dataitem.student.id}','${dataitem.student.student_num}','${dataitem.userbasicinfo.user_basic_info_name}','${dataitem.naturalclass.name}')">删除</button></td>
+												onclick="location='<c:url value="/student/delete-${selectedt_school_id}-${selectedt_department_id}-${selectedt_natural_class_id}-${dataitem.student.id}-${pagedStudentViewData.currentPageNo }.html"/>'">删除</button>
 									</tr>
 									<c:set var="index" value="${index + 1}"></c:set>
 								</c:forEach>
@@ -371,62 +370,77 @@
 
 
 	<script>
-	
-	//系部
-	function OnDepartmentChange() {
+		//系部
+		function OnDepartmentChange() {
 
-		var t_department_id = $("#departmentSelectControl").val();
-		var url = "<c:url value="/naturalclass/"/>"
+			var t_department_id = $("#departmentSelectControl").val();
+			var url = "<c:url value="/naturalclass/"/>"
 
-		url = url + "selectbyt_department_id-" + t_department_id + ".json";
+			url = url + "selectbyt_department_id-" + t_department_id + ".json";
 
-		var naturalclassjson;
-		$("#naturalclassSelectControl").empty();
-		$.get(url, function(data, status) {
-			if (status == "success") {
+			var naturalclassjson;
+			$("#naturalclassSelectControl").empty();
+			$
+					.get(
+							url,
+							function(data, status) {
+								if (status == "success") {
 
-				for (var i = 0; i < data.length; i++) {
-					$("#naturalclassSelectControl").append(
-							"<option value='"+data[i].id+"'>"
-									+ data[i].name
-									+ "</option>");
-				}
-				
-				if(data.length>0){
-					$("#naturalclassSelectControl").get(0).selectedIndex = 0;
-					
-					OnNaturalClassSelectControlChange($("#naturalclassSelectControl"));
-				}
-				
-			}
-		});
-	}
-	
-	
-	//学院
-	function OnNaturalClassSelectControlChange(sel_obj) {
-		var t_school_id = $("#SchoolSelectControl").val();
-		var t_department_id = $("#departmentSelectControl").val();
-		var t_natural_class_id = $("#naturalclassSelectControl").val();	
-		
-		var url = "<c:url value='/student'/>"+"/list.html?t_school_id=" + t_school_id+"&t_department_id="+t_department_id+"&t_natural_class_id="+t_natural_class_id;
-		
-		
-	//	var pagebarctrl = document.getElementsByTagName("mathtop:PageBar");
-	//	alert(pagebarctrl);
-		
-	//	pagebarctrl.setAttribute("pageUrl", url);
-		
-		window.location.href=url;
-	}
-	
+									for (var i = 0; i < data.length; i++) {
+										$("#naturalclassSelectControl").append(
+												"<option value='"+data[i].id+"'>"
+														+ data[i].name
+														+ "</option>");
+									}
+
+									if (data.length > 0) {
+										$("#naturalclassSelectControl").get(0).selectedIndex = 0;
+
+										OnNaturalClassSelectControlChange($("#naturalclassSelectControl"));
+									}
+
+								}
+							});
+		}
+
+		//学院
+		function OnNaturalClassSelectControlChange(sel_obj) {
+			var t_school_id = $("#SchoolSelectControl").val();
+			var t_department_id = $("#departmentSelectControl").val();
+			var t_natural_class_id = $("#naturalclassSelectControl").val();
+
+			var url = "<c:url value='/student'/>" + "/list.html?t_school_id="
+					+ t_school_id + "&t_department_id=" + t_department_id
+					+ "&t_natural_class_id=" + t_natural_class_id;
+
+			//	var pagebarctrl = document.getElementsByTagName("mathtop:PageBar");
+			//	alert(pagebarctrl);
+
+			//	pagebarctrl.setAttribute("pageUrl", url);
+
+			window.location.href = url;
+		}
+
 		function gett_school_id() {
 			var selctrl = document.getElementById("SchoolSelectControl");
 			var index = selctrl.selectedIndex;
 			var t_school_id = (selctrl.options[index].value);
 			return t_school_id;
 		}
-		
+
+		function get_department_id() {
+			var selctrl = document.getElementById("departmentSelectControl");
+			var index = selctrl.selectedIndex;
+			var t_department_id = (selctrl.options[index].value);
+			return t_department_id;
+		}
+
+		function get_nuturalclass_id() {
+			var selctrl = document.getElementById("naturalclassSelectControl");
+			var index = selctrl.selectedIndex;
+			var t_nuturalclass_id = (selctrl.options[index].value);
+			return t_nuturalclass_id;
+		}
 
 		function onSearch() {
 			var st = document.getElementById("SearchText").value;
@@ -440,21 +454,18 @@
 
 		}
 
-		
+		function onAdd() {
+			var url = "<c:url value='/student/add-'/>" + gett_school_id() + "-"
+					+ get_department_id() + "-" + get_nuturalclass_id()
+					+ ".html";
+			window.location.href = url;
+		}
 
-		function onDelete(studentid, student_num,student_name,student_natural_class_name) {
-			var t_school_id = gett_school_id();
-			var url ="location='student/DELETE-${selectedt_school_id}-${selectedt_department_id}-${selectedt_natural_class_id}-" + studentid  + ".html'";
-
-			$('#deleteModal').find('.modal-body #deleteinfo').text(
-					student_natural_class_name+"班学号为"+student_name+"的"+student_num);
-			$('#deleteModal').find('.modal-footer #deletebtn').attr("onclick",
-					url);
-
-			
-
-			$('#deleteModal').modal('show');
-
+		function onAddFromExcel() {
+			var url = "<c:url value='/student/addfromexcel-'/>"
+					+ gett_school_id() + "-" + get_department_id() + "-"
+					+ get_nuturalclass_id() + ".html";
+			window.location.href = url;
 		}
 	</script>
 
@@ -465,94 +476,91 @@
 		$(function() {
 
 			var ctrlschool = document.getElementById("SchoolSelectControl");
-			var ctrldepartment = document.getElementById("departmentSelectControl");
-			var ctrlnaturalclass = document.getElementById("naturalclassSelectControl");
-			
+			var ctrldepartment = document
+					.getElementById("departmentSelectControl");
+			var ctrlnaturalclass = document
+					.getElementById("naturalclassSelectControl");
+
 			var t_school_id = "${selectedt_school_id}";
 			var t_department_id = "${selectedt_department_id}";
 			var t_natural_class_id = "${selectedt_natural_class_id}";
-			
-			
-			
+
 			var index = 0;
 
 			for (var i = 0; i < ctrlschool.options.length; i++)
 				if (ctrlschool.options[i].value == (t_school_id))
 					index = i;
 			ctrlschool.selectedIndex = index;
-			
-			
-			
+
 			index = 0;
-			
+
 			for (var i = 0; i < ctrldepartment.options.length; i++)
 				if (ctrldepartment.options[i].value == (t_department_id))
 					index = i;
 			ctrldepartment.selectedIndex = index;
-			
-			
-			
+
 			index = 0;
-			
+
 			for (var i = 0; i < ctrlnaturalclass.options.length; i++)
 				if (ctrlnaturalclass.options[i].value == (t_natural_class_id))
 					index = i;
 			ctrlnaturalclass.selectedIndex = index;
-			
-			
-			
-		//	var url = "<c:url value='/student'/>"+"/list.html?t_school_id=" + t_school_id+"&t_department_id="+t_department_id+"&t_natural_class_id="+t_natural_class_id;
-		//	alert(url);
-		//	window.location.href=url;
-			
-			});
+
+			//	var url = "<c:url value='/student'/>"+"/list.html?t_school_id=" + t_school_id+"&t_department_id="+t_department_id+"&t_natural_class_id="+t_natural_class_id;
+			//	alert(url);
+			//	window.location.href=url;
+
+		});
 	</script>
 
 
 	<script type="text/javascript">
 		$(function() {
-			
-			<%
-			//学院发生变化
-			%>
-			$("#SchoolSelectControl").change(
-					function() {
-						var selt_school_id = $("#SchoolSelectControl").val();
-						var url = "<c:url value="/department/"/>"
+	<%//学院发生变化%>
+		$("#SchoolSelectControl")
+					.change(
+							function() {
+								var selt_school_id = $("#SchoolSelectControl")
+										.val();
+								var url = "<c:url value="/department/"/>"
 
-						url = url + "selectbyschool-" + selt_school_id + ".json";
+								url = url + "selectbyschool-" + selt_school_id
+										+ ".json";
 
-						var departmentjson;
-						$("#departmentSelectControl").empty();
-						$.get(url, function(data, status) {
-							if (status == "success") {
+								var departmentjson;
+								$("#departmentSelectControl").empty();
+								$
+										.get(
+												url,
+												function(data, status) {
+													if (status == "success") {
 
-								for (var i = 0; i < data.length; i++) {
-									$("#departmentSelectControl").append(
-											"<option value='"+data[i].id+"'>"
-													+ data[i].name
-													+ "</option>");
-								}
-								
-								if(data.length>0){
-									$("#departmentSelectControl").get(0).selectedIndex = 0;
-									
-									OnDepartmentChange();
-								}
-								
-							}
-						});
+														for (var i = 0; i < data.length; i++) {
+															$(
+																	"#departmentSelectControl")
+																	.append(
+																			"<option value='"+data[i].id+"'>"
+																					+ data[i].name
+																					+ "</option>");
+														}
 
-					});
-			
-			<%
-			//系部发生变化
-			%>
-			$("#departmentSelectControl").change(
-					function() {
-						OnDepartmentChange();
+														if (data.length > 0) {
+															$(
+																	"#departmentSelectControl")
+																	.get(0).selectedIndex = 0;
 
-					});
+															OnDepartmentChange();
+														}
+
+													}
+												});
+
+							});
+	<%//系部发生变化%>
+		$("#departmentSelectControl").change(function() {
+				OnDepartmentChange();
+
+			});
 
 		});
 	</script>
@@ -565,7 +573,6 @@
 
 			}
 			ShowErrMsg();
-		
 		</script>
 
 	</c:if>

@@ -49,7 +49,7 @@ public class UserSessionInfoDao extends BaseDao<UserSessionInfo> {
 	@Autowired
 	TeachingClassViewDataDao teachingclassviewdataDao;
 
-	public List<PermissionViewData> getPermissionViewDataByt_user_id(String t_user_id) {		
+	public List<PermissionViewData> getPermissionViewDataByUserId(String t_user_id) {		
 
 		List<PermissionViewData> data = new ArrayList<PermissionViewData>();
 
@@ -74,7 +74,7 @@ public class UserSessionInfoDao extends BaseDao<UserSessionInfo> {
 
 	
 
-	public UserSessionInfo GetUserSessionInfoByt_user_id(String user_id) {
+	public UserSessionInfo getUserSessionInfoByUserId(String user_id) {
 
 		UserSessionInfo usi = new UserSessionInfo();
 
@@ -91,7 +91,7 @@ public class UserSessionInfoDao extends BaseDao<UserSessionInfo> {
 		usi.setTeacher(teacher);
 		usi.setStudent(student);
 
-		List<PermissionViewData> list = getPermissionViewDataByt_user_id(user_id);
+		List<PermissionViewData> list = getPermissionViewDataByUserId(user_id);
 		usi.setPermissionviewdata(list);
 
 		usi.setTeachingclassviewdata(teachingclassviewdataDao.getCourseTeachingClassViewDataByUserId(user_id));

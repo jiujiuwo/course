@@ -34,6 +34,7 @@ public class CourseTeachingClassHomeworkReplyDao extends BaseDao<CourseTeachingC
 	private final String GET_COUNT_BY_COURSE_TEACHING_CALSS_HOMEWORK_BASEINFO_ID_AND_STUDENT_ID = "SELECT count(*) FROM t_course_teaching_class_homework_reply right join t_course_teaching_class_homework_submit_baseinfo on t_course_teaching_class_homework_reply.t_course_teaching_class_homework_submit_baseinfo_id=t_course_teaching_class_homework_submit_baseinfo.id  WHERE t_course_teaching_class_homework_submit_baseinfo_id=? and t_student_id=?";
 	private final String GET_BY_BY_COURSE_TEACHING_CALSS_HOMEWORK_SUBMIT_BASEINFO_ID = "SELECT id, t_teacher_id,  title, content, submitdate, modifieddate FROM t_course_teaching_class_homework_reply WHERE t_course_teaching_class_homework_submit_baseinfo_id=?";
 	private final String GET_BY_ID = "SELECT t_course_teaching_class_homework_submit_baseinfo_id, t_teacher_id,  title, content, submitdate, modifieddate FROM t_course_teaching_class_homework_reply WHERE id=?";
+	private final String GET_BY_TEACHER_ID = "SELECT id,t_course_teaching_class_homework_submit_baseinfo_id,  title, content, submitdate, modifieddate FROM t_course_teaching_class_homework_reply WHERE t_teacher_id=?";
 
 	// DELETE
 	private String DELETE_BY_ID = "DELETE FROM t_course_teaching_class_homework_reply WHERE id=?";
@@ -95,7 +96,7 @@ public class CourseTeachingClassHomeworkReplyDao extends BaseDao<CourseTeachingC
 	}
 
 	/**
-	 * 根据教学班得到通知
+	 * 根据
 	 * */
 	public List<CourseTeachingClassHomeworkReply> getByCourseTeachingClassHomeworkSubmitBaseInfoID(
 			String t_course_teaching_class_homework_submit_baseinfo_id) {
@@ -111,6 +112,36 @@ public class CourseTeachingClassHomeworkReplyDao extends BaseDao<CourseTeachingC
 						reply.setId(rs.getString("id"));
 						reply.setT_course_teaching_class_homework_submit_baseinfo_id(t_course_teaching_class_homework_submit_baseinfo_id);
 						reply.setT_teacher_id(rs.getString("t_teacher_id"));
+						reply.setSubmitdate(rs.getTimestamp("submitdate"));
+						reply.setModifieddate(rs.getTimestamp("modifieddate"));
+						reply.setTitle(rs.getString("title"));
+						reply.setContent(rs.getString("content"));
+						list.add(reply);
+
+					}
+
+				});
+
+		return list;
+	}
+	
+	/**
+	 * 根据t_teacher_id得到回复
+	 * */
+	public List<CourseTeachingClassHomeworkReply> getByTeacherID(
+			String t_teacher_id) {
+
+		List<CourseTeachingClassHomeworkReply> list = new ArrayList<CourseTeachingClassHomeworkReply>();
+
+		getJdbcTemplate().query(GET_BY_TEACHER_ID,
+				new Object[] { t_teacher_id }, new RowCallbackHandler() {
+
+					@Override
+					public void processRow(ResultSet rs) throws SQLException {
+						CourseTeachingClassHomeworkReply reply = new CourseTeachingClassHomeworkReply();
+						reply.setId(rs.getString("id"));
+						reply.setT_course_teaching_class_homework_submit_baseinfo_id(rs.getString("t_course_teaching_class_homework_submit_baseinfo_id"));
+						reply.setT_teacher_id(t_teacher_id);
 						reply.setSubmitdate(rs.getTimestamp("submitdate"));
 						reply.setModifieddate(rs.getTimestamp("modifieddate"));
 						reply.setTitle(rs.getString("title"));

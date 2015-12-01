@@ -145,7 +145,7 @@ public class LoginController extends BaseController {
 			// 写入到登录日志中
 			loginService.Add(dbUser.getId(), request.getRemoteAddr());
 
-			setSessionUser(request, usersessioninfoService.GetUserSessionInfoByt_user_id(dbUser.getId()));
+			setSessionUser(request, usersessioninfoService.getUserSessionInfoByUserId(dbUser.getId()));
 			String toUrl = (String) request.getSession().getAttribute(
 					CommonConstant.LOGIN_TO_URL);
 			request.getSession().removeAttribute(CommonConstant.LOGIN_TO_URL);
@@ -225,7 +225,7 @@ public class LoginController extends BaseController {
 		
 		
 		
-		userService.UpdateUserPassword(userinfo.getUser().getId(), user.getUser_password());
+		userService.updateUserPassword(userinfo.getUser().getId(), user.getUser_password());
 		userinfo.getUser().setUser_password(user.getUser_password());
 
 

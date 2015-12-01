@@ -91,42 +91,45 @@ public class MailBoxSendDao extends BaseDao<MailBoxSend> {
 	/*
 	 * 根据用户ID得到用户
 	 */
-	public MailBoxSend getByUserIdFrom(String t_user_id_from) {
+	public List<MailBoxSend> getByUserIdFrom(String t_user_id_from) {
 
-		MailBoxSend send = new MailBoxSend();
+		List<MailBoxSend> list=new ArrayList<MailBoxSend>();
+		
+		
 
 		getJdbcTemplate().query(GET_BY_USER_FROM_ID, new Object[] { t_user_id_from }, new RowCallbackHandler() {
 
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
+				MailBoxSend send = new MailBoxSend();
 				send.setId(rs.getString("id"));
 				send.setT_user_id_from(t_user_id_from);
 				send.setT_user_id_to(rs.getString("t_user_id_to"));
 				send.setState(rs.getString("state"));
 				send.setSenddate(rs.getTimestamp("senddate"));
 				send.setSubject(rs.getString("subject"));
-				send.setContent(rs.getString("content"));		
+				send.setContent(rs.getString("content"));
+				list.add(send);
 
 			}
 
 		});
 
-		if (send.getId() == null)
-			return null;
-		return send;
+		return list;
 	}
 	
 	/*
 	 * 根据用户ID得到用户
 	 */
-	public MailBoxSend getByUserIdTo(String t_user_id_to) {
+	public List<MailBoxSend> getByUserIdTo(String t_user_id_to) {
 
-		MailBoxSend send = new MailBoxSend();
+		List<MailBoxSend> list=new ArrayList<MailBoxSend>();
 
 		getJdbcTemplate().query(GET_BY_USER_TO_ID, new Object[] { t_user_id_to }, new RowCallbackHandler() {
 
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
+				MailBoxSend send = new MailBoxSend();
 				send.setId(rs.getString("id"));
 				send.setT_user_id_from(rs.getString("t_user_id_from"));
 				send.setT_user_id_to(t_user_id_to);
@@ -134,14 +137,13 @@ public class MailBoxSendDao extends BaseDao<MailBoxSend> {
 				send.setSenddate(rs.getTimestamp("sendate"));
 				send.setSubject(rs.getString("subject"));
 				send.setContent(rs.getString("content"));		
+				list.add(send);
 
 			}
 
 		});
 
-		if (send.getId() == null)
-			return null;
-		return send;
+		return list;
 	}
 
 	
@@ -225,9 +227,7 @@ public class MailBoxSendDao extends BaseDao<MailBoxSend> {
 	private List<MailBoxSendViewData> PageQuery(String t_user_from, 
 			int PageBegin, int PageSize) {
 
-		PageBegin -= 1;
-		if (PageBegin < 0)
-			PageBegin = 0;
+		
 		
 		
 

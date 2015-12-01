@@ -24,6 +24,17 @@ public class TeacherDao extends BaseDao<Teacher> {
 
 	private final String DELETE_BY_ID = "DELETE FROM t_teacher WHERE id=?";
 
+	private final String UPDATE_TEACHERNUM_BY_ID = "update t_teacher set teacher_num=? WHERE id=?";
+
+	public void UpdateTeacherNumById(String t_teacher_id, String teacher_num) {
+		if (t_teacher_id == null || teacher_num == null)
+			return;
+
+		Object params[] = new Object[] { teacher_num, t_teacher_id };
+		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR };
+		getJdbcTemplate().update(UPDATE_TEACHERNUM_BY_ID, params, types);
+	}
+
 	/*
 	 * 删除
 	 */
@@ -39,7 +50,7 @@ public class TeacherDao extends BaseDao<Teacher> {
 
 	/**
 	 * 根据教师id得到教师所在部门id
-	 * */
+	 */
 	public String gett_department_idByTeacherId(String t_teacher_id) {
 		return getJdbcTemplate().queryForObject(GET_t_department_id_BY_TEACHERID, new Object[] { t_teacher_id, },
 				new int[] { Types.VARCHAR }, String.class);

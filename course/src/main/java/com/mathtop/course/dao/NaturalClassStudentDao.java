@@ -26,6 +26,7 @@ public class NaturalClassStudentDao extends BaseDao<NaturalClassStudent> {
 	private final String INSERT = "INSERT INTO t_natural_class_student(id,t_natural_class_id,t_student_id) VALUES(?,?,?)";
 	private final String DELETE_BY_ID = "DELETE FROM t_natural_class_student WHERE id=?";
 	private final String DELETE_BY_NATURALID = "DELETE FROM t_natural_class_student WHERE t_natural_class_id=?";
+	private final String DELETE_BY_STUDENT_ID = "DELETE FROM t_natural_class_student WHERE t_student_id=?";
 
 	@Autowired
 	private SchoolDao schoolDao;
@@ -70,11 +71,22 @@ public class NaturalClassStudentDao extends BaseDao<NaturalClassStudent> {
 	/**
 	 * 删除指定自然班学生
 	 * */
-	public void deleteByt_natural_class_id(String t_natural_class_id) {
+	public void deleteByNaturalClassId(String t_natural_class_id) {
 
 		Object params[] = new Object[] { t_natural_class_id };
 		int types[] = new int[] { Types.VARCHAR };
 		getJdbcTemplate().update(DELETE_BY_NATURALID, params, types);
+
+	}
+	
+	/**
+	 * 删除指定自然班学生
+	 * */
+	public void deleteByStudentId(String t_student_id) {
+
+		Object params[] = new Object[] { t_student_id };
+		int types[] = new int[] { Types.VARCHAR };
+		getJdbcTemplate().update(DELETE_BY_STUDENT_ID, params, types);
 
 	}
 
@@ -135,7 +147,7 @@ public class NaturalClassStudentDao extends BaseDao<NaturalClassStudent> {
 	/**
 	 * 根据自然班id得到该班的学生id
 	 * */
-	public List<String> getStudentIdByt_natural_class_id(String t_natural_class_id) {
+	public List<String> getStudentIdByNaturalClassId(String t_natural_class_id) {
 
 		List<String> list = new ArrayList<String>();
 

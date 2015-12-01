@@ -83,8 +83,8 @@
 					<div class="col-md-3">
 						<select id="courseSelectControl" class="form-control input-sm"
 							name="courseId" onchange="OnSelectControlChange(this)">
-							<c:forEach var="course" items="${pagedCourse.result}">
-								<option value="${course.id}">${course.name}</option>
+							<c:forEach var="course" items="${pagedCourseViewData.result}">
+								<option value="${course.course.id}">${course.course.name}</option>
 							</c:forEach>
 						</select>
 					</div>
@@ -107,6 +107,15 @@
 							<option value="2018">2018</option>
 							<option value="2019">2019</option>
 							<option value="2020">2020</option>
+							<option value="2020">2021</option>
+							<option value="2020">2022</option>
+							<option value="2020">2023</option>
+							<option value="2020">2024</option>
+							<option value="2020">2025</option>
+							<option value="2020">2026</option>
+							<option value="2020">2027</option>
+							<option value="2020">2028</option>
+							<option value="2020">2029</option>
 
 						</select>
 

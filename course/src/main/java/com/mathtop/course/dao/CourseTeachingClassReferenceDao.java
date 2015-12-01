@@ -41,6 +41,10 @@ public class CourseTeachingClassReferenceDao extends BaseDao<CourseTeachingClass
 	private final String GET_VIEWDATA_BY_COURSE_TEACHING_CLASS_ID_AND_REFERENCE_TYPE_ID = "SELECT id FROM t_course_teaching_class_reference WHERE t_course_teaching_class_id=? and t_course_teaching_class_reference_type_id=? order by pubdate desc limit ?,?";
 	private final String GET_COUNT_BY_COURSE_TEACHING_CLASS_ID_AND_REFERENCE_TYPE_ID = "SELECT count(*) FROM t_course_teaching_class_reference WHERE t_course_teaching_class_id=? and t_course_teaching_class_reference_type_id=?";
 	private final String GET_BY_COURSE_TEACHING_CLASS_ID = "SELECT id, t_teacher_id, t_course_teaching_class_reference_type_id,title, content, pubdate, modifieddate FROM t_course_teaching_class_reference WHERE t_course_teaching_class_id=?";
+	private final String GET_BY_COURSE_TEACHING_CLASS_ID_AND_TEACHER_ID = "SELECT id,  t_course_teaching_class_reference_type_id,title, content, pubdate, modifieddate FROM t_course_teaching_class_reference WHERE t_course_teaching_class_id=? and t_teacher_id=?";
+	private final String GET_BY_COURSE_TEACHING_CLASS_ID_AND_TEACHER_ID_AND_REFERENCE_ID = "SELECT id,  title, content, pubdate, modifieddate FROM t_course_teaching_class_reference WHERE t_course_teaching_class_id=? and t_teacher_id=? and t_course_teaching_class_reference_type_id=?";
+	private final String GET_BY_REFERENCE_ID = "SELECT id,t_course_teaching_class_id, t_teacher_id,title, content, pubdate, modifieddate FROM t_course_teaching_class_reference WHERE t_course_teaching_class_reference_type_id=?";
+	private final String GET_BY_TEACHER_ID = "SELECT id, t_course_teaching_class_id, t_course_teaching_class_reference_type_id,title, content, pubdate, modifieddate FROM t_course_teaching_class_reference WHERE t_teacher_id=?";
 	private final String GET_BY_ID = "SELECT t_course_teaching_class_id, t_teacher_id, t_course_teaching_class_reference_type_id, title, content, pubdate, modifieddate FROM t_course_teaching_class_reference WHERE id=?";
 
 	// DELETE
@@ -105,7 +109,7 @@ public class CourseTeachingClassReferenceDao extends BaseDao<CourseTeachingClass
 
 	/**
 	 * 根据教学班得到通知
-	 * */
+	 */
 	public List<CourseTeachingClassReference> getByCourseTeachingClassID(String t_course_teaching_class_id) {
 
 		List<CourseTeachingClassReference> list = new ArrayList<CourseTeachingClassReference>();
@@ -133,6 +137,126 @@ public class CourseTeachingClassReferenceDao extends BaseDao<CourseTeachingClass
 		return list;
 	}
 
+	/**
+	 * 根据t_teacher_id得到通知
+	 */
+	public List<CourseTeachingClassReference> getByTeacherID(String t_teacher_id) {
+
+		List<CourseTeachingClassReference> list = new ArrayList<CourseTeachingClassReference>();
+
+		getJdbcTemplate().query(GET_BY_TEACHER_ID, new Object[] { t_teacher_id }, new RowCallbackHandler() {
+
+			@Override
+			public void processRow(ResultSet rs) throws SQLException {
+				CourseTeachingClassReference reference = new CourseTeachingClassReference();
+				reference.setId(rs.getString("id"));
+				reference.setT_course_teaching_class_id(rs.getString("t_course_teaching_class_id"));
+				reference.setT_teacher_id(t_teacher_id);
+				reference.setT_course_teaching_class_reference_type_id(rs.getString("t_course_teaching_class_reference_type_id"));
+				reference.setModifieddate(rs.getTimestamp("modifieddate"));
+				reference.setPubdate(rs.getTimestamp("pubdate"));
+				reference.setTitle(rs.getString("title"));
+				reference.setContent(rs.getString("content"));
+
+				list.add(reference);
+
+			}
+
+		});
+
+		return list;
+	}
+
+	/**
+	 * 根据t_course_teaching_class_reference_type_id得到通知
+	 */
+	public List<CourseTeachingClassReference> getByReferenceTypeId(String t_course_teaching_class_reference_type_id) {
+
+		List<CourseTeachingClassReference> list = new ArrayList<CourseTeachingClassReference>();
+
+		getJdbcTemplate().query(GET_BY_REFERENCE_ID, new Object[] { t_course_teaching_class_reference_type_id }, new RowCallbackHandler() {
+
+			@Override
+			public void processRow(ResultSet rs) throws SQLException {
+				CourseTeachingClassReference reference = new CourseTeachingClassReference();
+				reference.setId(rs.getString("id"));
+				reference.setT_course_teaching_class_id(rs.getString("t_course_teaching_class_id"));
+				reference.setT_teacher_id(rs.getString("t_teacher_id"));
+				reference.setT_course_teaching_class_reference_type_id(t_course_teaching_class_reference_type_id);
+				reference.setModifieddate(rs.getTimestamp("modifieddate"));
+				reference.setPubdate(rs.getTimestamp("pubdate"));
+				reference.setTitle(rs.getString("title"));
+				reference.setContent(rs.getString("content"));
+
+				list.add(reference);
+
+			}
+
+		});
+
+		return list;
+	}
+
+	/**
+	 * 根据t_course_teaching_class_id、t_teacher_id得到通知
+	 */
+	public List<CourseTeachingClassReference> getByCourseTeachingClassIDAndTeacherId(String t_course_teaching_class_id,
+			String t_teacher_id) {
+
+		List<CourseTeachingClassReference> list = new ArrayList<CourseTeachingClassReference>();
+
+		getJdbcTemplate().query(GET_BY_COURSE_TEACHING_CLASS_ID_AND_TEACHER_ID, new Object[] { t_course_teaching_class_id }, new RowCallbackHandler() {
+
+			@Override
+			public void processRow(ResultSet rs) throws SQLException {
+				CourseTeachingClassReference reference = new CourseTeachingClassReference();
+				reference.setId(rs.getString("id"));
+				reference.setT_course_teaching_class_id(t_course_teaching_class_id);
+				reference.setT_teacher_id(t_teacher_id);
+				reference.setT_course_teaching_class_reference_type_id(rs.getString("t_course_teaching_class_reference_type_id"));
+				reference.setModifieddate(rs.getTimestamp("modifieddate"));
+				reference.setPubdate(rs.getTimestamp("pubdate"));
+				reference.setTitle(rs.getString("title"));
+				reference.setContent(rs.getString("content"));
+				list.add(reference);
+			}
+
+		});
+
+		return list;
+	}
+
+	/**
+	 * 根据t_course_teaching_class_id、t_teacher_id、t_course_teaching_class_reference_type_id得到通知
+	 */
+	public List<CourseTeachingClassReference> getByCourseTeachingClassIDAndTeacherIdAndReferenceTypeId(String t_course_teaching_class_id,
+			String t_teacher_id, String t_course_teaching_class_reference_type_id) {
+
+		List<CourseTeachingClassReference> list = new ArrayList<CourseTeachingClassReference>();
+
+		getJdbcTemplate().query(GET_BY_COURSE_TEACHING_CLASS_ID_AND_TEACHER_ID_AND_REFERENCE_ID, new Object[] { t_course_teaching_class_id }, new RowCallbackHandler() {
+
+			@Override
+			public void processRow(ResultSet rs) throws SQLException {
+				CourseTeachingClassReference reference = new CourseTeachingClassReference();
+				reference.setId(rs.getString("id"));
+				reference.setT_course_teaching_class_id(t_course_teaching_class_id);
+				reference.setT_teacher_id(t_teacher_id);
+				reference.setT_course_teaching_class_reference_type_id(t_course_teaching_class_reference_type_id);
+				reference.setModifieddate(rs.getTimestamp("modifieddate"));
+				reference.setPubdate(rs.getTimestamp("pubdate"));
+				reference.setTitle(rs.getString("title"));
+				reference.setContent(rs.getString("content"));
+
+				list.add(reference);
+
+			}
+
+		});
+
+		return list;
+	}
+
 	/* 增加用户 */
 	public String add(CourseTeachingClassReference reference) {
 		String id = GUID.getGUID();
@@ -140,21 +264,21 @@ public class CourseTeachingClassReferenceDao extends BaseDao<CourseTeachingClass
 		Object params[] = new Object[] { reference.getId(), reference.getT_course_teaching_class_id(), reference.getT_teacher_id(),
 				reference.getT_course_teaching_class_reference_type_id(), reference.getTitle(), reference.getContent(),
 				reference.getPubdate(), reference.getModifieddate() };
-		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
-				Types.TIMESTAMP, Types.TIMESTAMP };
+		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.TIMESTAMP,
+				Types.TIMESTAMP };
 		getJdbcTemplate().update(INSERT_HOMEWORKBASEINFO, params, types);
 		return id;
 	}
 
-	public String add(String t_course_teaching_class_id, String t_teacher_id, String t_course_teaching_class_homework_type_id,
-			String title, String content, Date pubdate, Date enddate) {
+	public String add(String t_course_teaching_class_id, String t_teacher_id, String t_course_teaching_class_homework_type_id, String title,
+			String content, Date pubdate, Date enddate) {
 
 		String id = GUID.getGUID();
 
 		Object params[] = new Object[] { id, t_course_teaching_class_id, t_teacher_id, t_course_teaching_class_homework_type_id, title,
 				content, pubdate, enddate };
-		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
-				Types.TIMESTAMP, Types.TIMESTAMP };
+		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.TIMESTAMP,
+				Types.TIMESTAMP };
 		getJdbcTemplate().update(INSERT_HOMEWORKBASEINFO, params, types);
 		return id;
 	}
@@ -190,32 +314,26 @@ public class CourseTeachingClassReferenceDao extends BaseDao<CourseTeachingClass
 		CourseTeachingClassReference reference = getByID(id);
 		data.setReference(reference);
 
-		CourseTeachingClass courseteachingclass = courseteachingclassDao.getCourseTeachingClassById(reference
-				.getT_course_teaching_class_id());
+		CourseTeachingClass courseteachingclass = courseteachingclassDao
+				.getCourseTeachingClassById(reference.getT_course_teaching_class_id());
 		data.setCourseteachingclass(courseteachingclass);
 
 		TeacherViewData teacherviewdata = teacherviewdataDao.getTeacherViewDataByTeacherId(reference.getT_teacher_id());
 		data.setTeacher(teacherviewdata);
 
-		CourseTeachingClassReferenceType type = courseTeachingClassReferenceTypeDao.getByID(reference
-				.getT_course_teaching_class_reference_type_id());
+		CourseTeachingClassReferenceType type = courseTeachingClassReferenceTypeDao
+				.getByID(reference.getT_course_teaching_class_reference_type_id());
 		data.setType(type);
 
 		List<CourseTeachingClassReferenceFile> fileList = referencefileDao.getByCourseTeachingClassHomeworkBaseInfoID(reference.getId());
-		
+
 		data.setFileList(fileList);
 
 		return data;
 	}
-	
-	
 
 	private List<CourseTeachingClassReferenceViewData> PageQuery(String t_course_teaching_class_id,
 			String t_course_teaching_class_homeworktype_id, int PageBegin, int PageSize) {
-
-		PageBegin -= 1;
-		if (PageBegin < 0)
-			PageBegin = 0;
 
 		List<CourseTeachingClassReferenceViewData> list = new ArrayList<CourseTeachingClassReferenceViewData>();
 
@@ -238,6 +356,7 @@ public class CourseTeachingClassReferenceDao extends BaseDao<CourseTeachingClass
 	public Page<CourseTeachingClassReferenceViewData> getPage(String t_course_teaching_class_id,
 			String t_course_teaching_class_reference_type_id, int pageNo, int pageSize) {
 		long totalCount = getCount(t_course_teaching_class_id, t_course_teaching_class_reference_type_id);
+
 		if (totalCount < 1)
 			return new Page<CourseTeachingClassReferenceViewData>();
 

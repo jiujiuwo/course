@@ -3,8 +3,7 @@
 
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 
 	//设置左侧浏览状态
@@ -37,7 +36,7 @@
 <body class="home">
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
-	
+
 
 	<div class="DocumentPage">
 		<div class="DocumentPageLeftArea ">
@@ -64,15 +63,15 @@
 					</c:forEach>
 				</select>
 			</div>
-			
+
 			<div style="display: none;" id="groupContainer">
 				<select id="groupSelectControl" name="groupId"
-							class="form-control input-sm">
-							<c:forEach var="d" items="${pagedGroup.result}">
-								<option value="${d.id}">${d.name}</option>
-							</c:forEach>
+					class="form-control input-sm">
+					<c:forEach var="d" items="${pagedGroup.result}">
+						<option value="${d.id}">${d.name}</option>
+					</c:forEach>
 
-						</select>
+				</select>
 			</div>
 
 
@@ -103,7 +102,8 @@
 						</select>
 					</div>
 
-					<label for="naturalclassSelectControl" class="col-sm-1 control-label">班级</label>
+					<label for="naturalclassSelectControl"
+						class="col-sm-1 control-label">班级</label>
 					<div class="col-md-3">
 						<select id="naturalclassSelectControl" name="t_natural_class_id"
 							class="form-control input-sm">
@@ -118,7 +118,7 @@
 					<label for="student_num" class="col-sm-1 control-label">学号</label>
 					<div class="col-md-3">
 						<input name="student_num" class="form-control placeholder-no-fix"
-							autocomplete="off" placeholder="学号" />
+							autocomplete="off" placeholder="学号" onblur="setPwd()" />
 					</div>
 
 					<label for="user_basic_info_name" class="col-sm-1 control-label">姓名</label>
@@ -134,7 +134,7 @@
 					<label for="user_password" class="col-sm-1 control-label">初始密码</label>
 					<div class="col-md-3">
 						<input name="user_password"
-							class="form-control placeholder-no-fix" value="12345"
+							class="form-control placeholder-no-fix" value=""
 							autocomplete="off" placeholder="初始密码" />
 					</div>
 				</div>
@@ -142,7 +142,8 @@
 
 
 				<div class="form-group">
-					<label for="user_basic_info_birthday" class="col-sm-1 control-label">生日</label>
+					<label for="user_basic_info_birthday"
+						class="col-sm-1 control-label">生日</label>
 					<div class="col-md-3">
 						<div class="input-group date form_date" data-date=""
 							data-date-format="yyyy-mm-dd" data-link-field="dtp_input2"
@@ -173,25 +174,19 @@
 
 
 				<div class="form-group">
-					<label for="groupSelectControl" class="col-sm-1 control-label">基本组</label>
-					<div class="col-md-3">
-						<select id="groupSelectControl" name="groupId"
-							class="form-control input-sm">
-							<c:forEach var="d" items="${pagedGroup.result}">
-								<option value="${d.id}">${d.name}</option>
-							</c:forEach>
 
-						</select>
-					</div>
 
-					<label for="teacher_group" class="col-sm-1 control-label">其他组</label>
+					<label for="teacher_group" class="col-sm-1 control-label">组</label>
 					<div class="col-md-6">
 						<div class="btn-group" role="group" aria-label="...">
-							<button type="button" class="btn btn-default btn-sm"
-								onclick="window.location.href='<c:url value="/group/list.html"/>'">增加组类型</button>
 
 							<button type="button" class="btn btn-default btn-sm"
 								onclick="AddGroupRow()">增加组</button>
+
+							<button type="button" class="btn btn-default btn-sm"
+								onclick="window.location.href='<c:url value="/permission/group/list.html"/>'">增加组类型</button>
+
+
 
 
 						</div>
@@ -212,21 +207,23 @@
 								</thead>
 								<tbody>
 
+
 								</tbody>
 							</table>
 						</div>
 					</div>
 				</div>
 
+
 				<div class="form-group">
 					<label for="contacttable" class="col-sm-1 control-label">联系方式</label>
 					<div class="col-md-6">
 						<div class="btn-group" role="group" aria-label="...">
 							<button type="button" class="btn btn-default btn-sm"
-								onclick="window.location.href='<c:url value="/contacttype/list.html"/>'">增加联系类型</button>
+								onclick="AddContactRow()">增加联系方式</button>
 
 							<button type="button" class="btn btn-default btn-sm"
-								onclick="AddContactRow()">增加联系方式</button>
+								onclick="window.location.href='<c:url value="/contacttype/list.html"/>'">增加联系类型</button>
 
 
 						</div>
@@ -343,6 +340,11 @@
 
 
 	<script>
+		function setPwd() {
+			var spwd = $("input[name='student_num']").val();
+
+			$("input[name='user_password']").val(spwd);
+		}
 		function onSearch() {
 			var st = document.getElementById("SearchText").value;
 
@@ -356,7 +358,8 @@
 		}
 
 		function onUpdate(id, name, note) {
-			var url = "location='<c:url value="/student/update-"/>" + id + ".html'";
+			var url = "location='<c:url value="/student/update-"/>" + id
+					+ ".html'";
 			$('#updateModal').find('.modal-body #inputid').val(id);
 			$('#updateModal').find('.modal-body #inputname').val(name);
 			$('#updateModal').find('.modal-body #inputnote').val(note);
@@ -369,8 +372,8 @@
 
 		function onDelete(t_department_id, departmentname) {
 			var t_school_id = gett_school_id();
-			var url = "location='<c:url value="/student/DELETE-"/>" + t_school_id + "-" + t_department_id
-					+ ".html'";
+			var url = "location='<c:url value="/student/DELETE-"/>"
+					+ t_school_id + "-" + t_department_id + ".html'";
 
 			$('#deleteModal').find('.modal-body #deleteinfo').text(
 					departmentname);
@@ -382,9 +385,8 @@
 			$('#deleteModal').modal('show');
 
 		}
-		
-		
-		function AddGroupRow(){
+
+		function AddGroupRow() {
 			var table = document.getElementById("studentgrouptable");
 			var trCnt = table.tBodies[0].rows.length;
 			var row = table.tBodies[0].insertRow(trCnt);
@@ -392,12 +394,11 @@
 			var td0 = row.insertCell(0);
 			var td1 = row.insertCell(1);
 			var td2 = row.insertCell(2);
-			
 
 			var cc = $("#groupContainer").html();
 
 			td1.innerHTML = cc;
-			
+
 			td2.innerHTML = "<button type='button' class='btn btn-default btn-sm'	onclick='DeleteGroupRow("
 					+ trCnt + ")'>删除</button>";
 
@@ -419,7 +420,7 @@
 			}
 
 		}
-		
+
 		function AddContactRow() {
 			var table = document.getElementById("contacttable");
 			var trCnt = table.tBodies[0].rows.length;
@@ -455,6 +456,8 @@
 			}
 
 		}
+
+		AddGroupRow();
 	</script>
 
 	<script>
@@ -490,23 +493,21 @@
 				if (ctrlnaturalclass.options[i].value == (t_natural_class_id))
 					index = i;
 			ctrlnaturalclass.selectedIndex = index;
-			
-			
+
 			var groupctrl = document.getElementById("groupSelectControl");
-			
-			index=0;
-			for (var i = 0; i < groupctrl.options.length; i++){
-				
-				if (groupctrl.options[i].text.indexOf("学生")>=0)
+
+			index = 0;
+			for (var i = 0; i < groupctrl.options.length; i++) {
+
+				if (groupctrl.options[i].text.indexOf("学生") >= 0)
 					index = i;
 			}
-			
-			var groupctrlbyname=document.getElementsByName("groupId");
-			for(var i=0;i<groupctrlbyname.length;i++){
-				
+
+			var groupctrlbyname = document.getElementsByName("groupId");
+			for (var i = 0; i < groupctrlbyname.length; i++) {
+
 				groupctrlbyname[i].selectedIndex = index;
 			}
-			
 
 		});
 	</script>
@@ -518,7 +519,8 @@
 						var selt_school_id = $("#SchoolSelectControl").val();
 						var url = "<c:url value="/department/"/>"
 
-						url = url + "selectbyschool-" + selt_school_id + ".json";
+						url = url + "selectbyschool-" + selt_school_id
+								+ ".json";
 
 						var departmentjson;
 						$("#departmentSelectControl").empty();
@@ -538,11 +540,12 @@
 
 			$("#departmentSelectControl").change(
 					function() {
-						var t_department_id = $("#departmentSelectControl").val();
+						var t_department_id = $("#departmentSelectControl")
+								.val();
 						var url = "<c:url value="/naturalclass/"/>"
 
-						url = url + "selectbyt_department_id-" + t_department_id
-								+ ".json";
+						url = url + "selectbyt_department_id-"
+								+ t_department_id + ".json";
 
 						var naturalclassjson;
 						$("#naturalclassSelectControl").empty();

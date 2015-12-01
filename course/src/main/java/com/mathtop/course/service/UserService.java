@@ -34,8 +34,8 @@ public class UserService {
 	/**
 	 * 更新密码，注意穿过的值是加密后的值
 	 * */
-	public void UpdateUserPassword(String id,String strEncodedPwd){
-		userDao.UpdateUserPassword(id, strEncodedPwd);
+	public void updateUserPassword(String id,String strEncodedPwd){
+		userDao.updateUserPassword(id, strEncodedPwd);
 	}
 
 	/**
@@ -58,6 +58,10 @@ public class UserService {
     		return null;
     	
         return userDao.getUserByName(userName);
+    }
+    
+    public void deleteByUserId(String t_user_id){
+    	userDao.deleteById(t_user_id);	
     }
 
 }

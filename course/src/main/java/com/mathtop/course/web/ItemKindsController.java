@@ -68,7 +68,7 @@ public class ItemKindsController extends BaseController {
 			
 
 		} else {
-			itemkindsService.Add(ct.getName(), ct.getNote());
+			itemkindsService.add(ct.getName(), ct.getNote());
 
 			String toUrl = ("list.html");
 			mav.setViewName("redirect:" + toUrl);
@@ -87,7 +87,7 @@ public class ItemKindsController extends BaseController {
 	@RequestMapping(value = "/DELETE-{ctId}", method = RequestMethod.GET)
 	public ModelAndView DELETE(@PathVariable String ctId) {
 		if (ctId != null)
-			itemkindsService.DELETE(ctId);
+			itemkindsService.deleteById(ctId);
 
 		ModelAndView mav = new ModelAndView();
 		String toUrl = ("list.html");

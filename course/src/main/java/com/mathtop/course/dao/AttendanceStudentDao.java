@@ -51,11 +51,13 @@ public class AttendanceStudentDao extends BaseDao<AttendanceStudent> {
 			+ " (select id from t_attendance where t_course_teaching_class_id=? and t_attendance_type_id=? ) and t_student_id=?";
 	
 	private final String GET_BY_COURSE_TEACHING_CLASS_ID_STUDENT_ID = "SELECT id from t_attendance_student " + " where t_attendance_id in "
-			+ " (select id from t_attendance where t_course_teaching_class_id=? and t_attendance_type_id=? order by begin_datetime ) and t_student_id=? limit ?,?";
+			+ " (select id from t_attendance where t_course_teaching_class_id=? and t_attendance_type_id=? order by begin_datetime ) and t_student_id=?  order by checking_in_datetime DESC limit ?,?";
 
 	private String DELETE_BY_ID = "DELETE FROM t_attendance_student WHERE id=?";
 	private String DELETE_BY_ATTENDANCE_ID = "DELETE FROM t_attendance_student WHERE t_attendance_id=?";
 	private String DELETE_BY_STUDENT_ID = "DELETE FROM t_attendance_student WHERE t_student_id=?";
+	private String DELETE_BY_ATTENDANCE_STATE_ID = "DELETE FROM t_attendance_student WHERE a_ttendance_state_id=?";
+	private String DELETE_BY_ATTENDANCE_MODE_ID = "DELETE FROM t_attendance_student WHERE t_attendance_mode_id=?";
 	private String DELETE_BY_ATTENDANCE_ID_STUDENT_ID = "DELETE FROM t_attendance_student WHERE t_attendance_id=? and t_student_id=?";
 	private String UPDATE_BY_ID = "update t_attendance_student set t_student_id=?,a_ttendance_state_id=?,t_attendance_mode_id=?,checking_in_datetime=? WHERE id=?";
 
@@ -81,8 +83,7 @@ public class AttendanceStudentDao extends BaseDao<AttendanceStudent> {
 			public void processRow(ResultSet rs) throws SQLException {
 				as.setId(id);
 				as.setT_attendance_id(rs.getString("t_attendance_id"));
-				as.setT_attendance_state_id(rs.getString("t_attendance_state_id"));
-				
+				as.setT_attendance_state_id(rs.getString("t_attendance_state_id"));				
 				as.setT_attendance_mode_id(rs.getString("t_attendance_mode_id"));
 				as.setT_student_id(rs.getString("t_student_id"));
 				as.setChecking_in_datetime(rs.getTimestamp("checking_in_datetime"));
@@ -111,8 +112,7 @@ public class AttendanceStudentDao extends BaseDao<AttendanceStudent> {
 
 				as.setId(rs.getString("id"));
 				as.setT_attendance_id(t_attendance_id);
-				as.setT_attendance_state_id(rs.getString("t_attendance_state_id"));
-				
+				as.setT_attendance_state_id(rs.getString("t_attendance_state_id"));				
 				as.setT_attendance_mode_id(rs.getString("t_attendance_mode_id"));
 				as.setT_student_id(rs.getString("t_student_id"));
 				as.setChecking_in_datetime(rs.getTimestamp("checking_in_datetime"));
@@ -170,6 +170,24 @@ public class AttendanceStudentDao extends BaseDao<AttendanceStudent> {
 		Object params[] = new Object[] { t_attendance_id, t_student_id };
 		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR };
 		getJdbcTemplate().update(DELETE_BY_ATTENDANCE_ID_STUDENT_ID, params, types);
+	}
+	
+	/**
+	 * 根据考勤状况删除
+	 * */
+	public void deleteByAttendanceStateId(String a_ttendance_state_id) {
+		Object params[] = new Object[] { a_ttendance_state_id };
+		int types[] = new int[] { Types.VARCHAR };
+		getJdbcTemplate().update(DELETE_BY_ATTENDANCE_STATE_ID, params, types);
+	}
+	
+	/**
+	 * 根据考勤方式删除
+	 * */
+	public void deleteByAttendanceModeId(String t_attendance_mode_id) {
+		Object params[] = new Object[] { t_attendance_mode_id };
+		int types[] = new int[] { Types.VARCHAR };
+		getJdbcTemplate().update(DELETE_BY_ATTENDANCE_MODE_ID, params, types);
 	}
 
 	public long getCount(String t_attendance_id) {

@@ -230,8 +230,17 @@
 										items="${selectedTeacherViewData.usercontactinfoviewdata}">
 										<tr id="contactrow${dataitem.usercontacttype.id}">
 											<th scope="row">${index}</th>
-											<td><input type="hidden" name="contacttypeId"
-												value="${dataitem.usercontacttype.id }">${dataitem.usercontacttype.name}</td>
+											<td><select id="contactinfoSelectControl" name="contacttypeId"
+												class="form-control input-sm">
+													<c:forEach var="d" items="${pagedContactType.result}">
+														<option value="${d.id}"
+														<c:if test="${d.id==dataitem.usercontacttype.id }">
+														selected
+														</c:if>
+														>${d.name}</option>
+													</c:forEach>
+
+											</select></td>
 											<td><input type="text" name="user_contact_value"
 												value="${dataitem.usercontactinfo.user_contact_value}"></td>
 											<td><button type='button' class='btn btn-default btn-sm'

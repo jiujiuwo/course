@@ -60,19 +60,19 @@ public class UserInfoViewDataDao extends BaseDao<UserInfoViewData> {
 	}
 	
 	
-	public UserBasicInfoViewData getUserBasicInfoViewDataByt_user_id(String user_id) {
+	public UserBasicInfoViewData getUserBasicInfoViewDataByt_user_id(String t_user_id) {
 		UserBasicInfoViewData usi = new UserBasicInfoViewData();
 
-		User u = userDao.getUserByID(user_id);
+		User u = userDao.getUserByID(t_user_id);
 		usi.setUser(u);
 
 		// 基本信息
-		UserBasicInfo ubi = userbasicinfoDao.getUserBasicInfoByt_user_id(user_id);
+		UserBasicInfo ubi = userbasicinfoDao.getUserBasicInfoByt_user_id(t_user_id);
 
 		usi.setUserbasicinfo(ubi);
 
-		Teacher teacher = teacherDao.getTeacherByt_user_id(user_id);
-		Student student = studentDao.getStudentByt_user_id(user_id);
+		Teacher teacher = teacherDao.getTeacherByt_user_id(t_user_id);
+		Student student = studentDao.getStudentByt_user_id(t_user_id);
 		usi.setTeacher(teacher);
 		usi.setStudent(student);
 

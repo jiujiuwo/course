@@ -20,6 +20,7 @@ import com.mathtop.course.dao.Page;
 import com.mathtop.course.domain.CourseTeachingClassForumReply;
 import com.mathtop.course.domain.CourseTeachingClassForumReplyFile;
 import com.mathtop.course.domain.CourseTeachingClassForumReplyViewData;
+import com.mathtop.course.domain.CourseTeachingClassForumTopic;
 import com.mathtop.course.utility.GUID;
 
 @Service
@@ -36,7 +37,7 @@ public class CourseTeachingClassForumReplyService {
 	
 	
 
-	private void AddFiles(HttpServletRequest request, String t_forum_reply_id, MultipartFile[] files) {
+	private void addFiles(HttpServletRequest request, String t_forum_reply_id, MultipartFile[] files) {
 
 		for (int i = 0; i < files.length; i++) {
 			MultipartFile file = files[i];
@@ -76,7 +77,7 @@ public class CourseTeachingClassForumReplyService {
 	}
 
 	// 删除文件
-	private void DeleteFilesByForumReplyId(HttpServletRequest request, String t_forum_reply_id) {
+	private void deleteFilesByForumReplyId(HttpServletRequest request, String t_forum_reply_id) {
 		ServletContext sc = request.getSession().getServletContext();
 		String dir = sc.getRealPath(RealPathConst.RealPath_ForumReplyFile); // 设定文件保存的目录
 
@@ -105,23 +106,52 @@ public class CourseTeachingClassForumReplyService {
 
 	public void deleteById(HttpServletRequest request, String t_forum_reply_id) {
 		// 1.删除文件
-		DeleteFilesByForumReplyId(request, t_forum_reply_id);
+		deleteFilesByForumReplyId(request, t_forum_reply_id);
 
 		forumreplyDao.deleteById(t_forum_reply_id);
+	}
+	
+	/**
+	 * 根据t_user_id删除
+	 * */
+	public void deleteByUserId(HttpServletRequest request, String t_user_id) {
+		List<CourseTeachingClassForumReply> list=forumreplyDao.getByUserID(t_user_id);
+		if(list==null)
+			return;
+		for(CourseTeachingClassForumReply r:list){
+			deleteById(request,r.getId());
+		}
+	}
+	
+	/**
+	 * 根据t_user_id和t_course_teaching_class_id删除
+	 * */
+	public void deleteByCourseTeachingClassIDAndUserID(HttpServletRequest request, String t_course_teaching_class_id,String t_user_id) {
+		List<CourseTeachingClassForumTopic> list=forumtopicDao.getByCourseTeachingClassIDAndUserID(t_course_teaching_class_id,t_user_id);
+		if(list==null)
+			return;
+		for(CourseTeachingClassForumTopic t:list){
+			List<CourseTeachingClassForumReply> listreply=forumreplyDao.getByCourseTeachingClassIdAndUserID(t.getId(),t_user_id);
+			if(list==null)
+				return;
+			for(CourseTeachingClassForumReply r:listreply){
+				deleteById(request,r.getId());
+			}
+		}
 	}
 
 	public String add(HttpServletRequest request, String t_forum_topic_id, String t_user_id, String title, String content,
 			String created_date, MultipartFile[] files) {
 		String t_forum_reply_id = forumreplyDao.add(t_forum_topic_id, t_user_id, title, content, created_date, created_date);
 
-		AddFiles(request, t_forum_reply_id, files);
+		addFiles(request, t_forum_reply_id, files);
 		return t_forum_reply_id;
 	}
 
 	public String add(HttpServletRequest request, String t_forum_topic_id, String t_user_id, String title, String content,
 			Date created_date, MultipartFile[] files) {
 		String t_forum_reply_id = forumreplyDao.add(t_forum_topic_id, t_user_id, title, content, created_date, created_date);
-		AddFiles(request, t_forum_reply_id, files);
+		addFiles(request, t_forum_reply_id, files);
 		return t_forum_reply_id;
 	}
 	
@@ -138,13 +168,13 @@ public class CourseTeachingClassForumReplyService {
 			Date last_modified_date, MultipartFile[] files) {
 
 		// 1.删除文件
-		DeleteFilesByForumReplyId(request, t_forum_reply_id);
+		deleteFilesByForumReplyId(request, t_forum_reply_id);
 
 		// 2.更改基本信息
 		forumreplyDao.update(t_forum_reply_id, t_user_id, title, content, last_modified_date);
 
 		// 3.增加文件
-		AddFiles(request, t_forum_reply_id, files);
+		addFiles(request, t_forum_reply_id, files);
 
 	}
 

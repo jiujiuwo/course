@@ -71,7 +71,7 @@ public class TeachingTypeController extends BaseController {
 			view.setViewName("redirect:" + toUrl);
 
 		} else {
-			teachingtypeService.Add(ct.getName(), ct.getNote());
+			teachingtypeService.add(ct.getName(), ct.getNote());
 
 			String toUrl=("list.html");
 			view.setViewName("redirect:" + toUrl);
@@ -90,7 +90,7 @@ public class TeachingTypeController extends BaseController {
 	@RequestMapping(value = "/DELETE-{ctId}", method = RequestMethod.GET)
 	public ModelAndView DELETE(@PathVariable String ctId) {
 		if (ctId != null)
-			teachingtypeService.DELETE(ctId);
+			teachingtypeService.deleteById(ctId);
 
 		ModelAndView mav = new ModelAndView();
 		String toUrl=("list.html");

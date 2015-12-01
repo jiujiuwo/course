@@ -15,23 +15,23 @@ public abstract class SimpleService<TDao extends SimpleDao<TDomain>, TDomain ext
 	
 	public abstract TDao getBaseDao();
 
-	public String Add(Simple t) {
+	public String add(Simple t) {
 		if (t != null) {
 			return getBaseDao().add(t);
 		}
 		return null;
 	}
 
-	public String Add(String name, String note) {
+	public String add(String name, String note) {
 		if (name != null && note != null) {
 			return getBaseDao().add(name, note);
 		}
 		return null;
 	}
 
-	public void DELETE(String id) {
+	public void deleteById(String id) {
 		if (id != null) {
-			getBaseDao().DELETE(id);
+			getBaseDao().deleteById(id);
 		}
 	}
 

@@ -64,30 +64,15 @@
 
 
 			<ol class="breadcrumb">
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Library</a></li>
-				<li class="active">Data</li>
+				<li><a href="#">课程系统</a></li>
+				<li><a href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseteachingclass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
+				<li class="active">${selectedCourseHomeworkTypeData.name}</li>
 			</ol>
 
 			<div class="CourseContentHeader">修改${selectedCourseTeachingClassViewData.teachingclass.name}-${selectedCourseHomeworkTypeData.name}</div>
 
 			<div class="CourseContentHeaderSeparatorLine"></div>
 
-
-<%!Date getDateAfter(Date d, int day) {
-		Calendar now = Calendar.getInstance();
-		now.setTime(d);
-		now.set(Calendar.DATE, now.get(Calendar.DATE) + day);
-		return now.getTime();
-	}
-
-	String getNewDate() {
-		Date d = new Date();
-		d = getDateAfter(d, 15);
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String dateString = format.format(d);
-		return dateString;
-	}%>
 
 			<form class="form-horizontal" id="myUpdateForm" name="myUpdateForm"
 			action="<c:url value="/coursehomework/updatesimple-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}.html"/>"
@@ -117,7 +102,9 @@
 								data-date-format="yyyy-mm-dd hh:ii "
 								data-link-field="dtp_input2" data-link-format="yyyy-mm-dd hh:ii">
 								<input class="form-control" size="16" type="text" id="enddate"
-									value="<%=getNewDate()%>" name="enddate" readonly required>
+									value='<fmt:formatDate value="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.enddate}"
+														pattern="yyyy-MM-dd HH:mm" />'
+														 name="enddate" readonly required>
 								<span class="input-group-addon"><span
 									class="glyphicon glyphicon-remove"></span></span> <span
 									class="input-group-addon"><span

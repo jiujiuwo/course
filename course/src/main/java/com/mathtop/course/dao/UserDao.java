@@ -40,7 +40,7 @@ public class UserDao extends BaseDao<User> {
 		return count > 0?true:false;
 	}
 	
-	public void UpdateUserPassword(String id,String strEncodedPwd){
+	public void updateUserPassword(String id,String strEncodedPwd){
 		if(id==null || strEncodedPwd==null)
 			return;		
 		

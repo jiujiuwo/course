@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.mathtop.course.domain.CourseTeachingClass;
 import com.mathtop.course.domain.CourseTeachingClassHomeworkBaseinfo;
 import com.mathtop.course.domain.CourseTeachingClassHomeworkBaseinfoViewData;
+import com.mathtop.course.domain.CourseTeachingClassHomeworkDelayed;
 import com.mathtop.course.domain.CourseTeachingClassHomeworkFile;
 import com.mathtop.course.domain.CourseTeachingClassHomeworkType;
 import com.mathtop.course.domain.TeacherViewData;
@@ -36,6 +37,9 @@ public class CourseTeachingClassHomeworkBaseinfoDao extends BaseDao<CourseTeachi
 
 	@Autowired
 	CourseTeachingClassHomeworkTypeDao courseTeachingClassHomeworkTypeDao;
+	
+	@Autowired
+	CourseTeachingClassHomeworkDelayedDao courseTeachingClassHomeworkDelayedDao;
 
 	// insert
 	private final String INSERT_HOMEWORKBASEINFO = "INSERT INTO t_course_teaching_class_homework_baseinfo( id,t_course_teaching_class_id, t_teacher_id, t_course_teaching_class_homework_type_id, filetype,filenameformat,filecount,title, content, pubdate, enddate) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
@@ -45,6 +49,8 @@ public class CourseTeachingClassHomeworkBaseinfoDao extends BaseDao<CourseTeachi
 	private final String GET_COUNT_BY_COURSE_TEACHING_CLASS_ID_AND_HOMEWORK_TYPE_ID = "SELECT count(*) FROM t_course_teaching_class_homework_baseinfo WHERE t_course_teaching_class_id=? and t_course_teaching_class_homework_type_id=?";
 	private final String GET_BY_COURSE_TEACHING_CLASS_ID = "SELECT id, t_teacher_id, t_course_teaching_class_homework_type_id, filetype,filenameformat,filecount,title, content, pubdate, enddate FROM t_course_teaching_class_homework_baseinfo WHERE t_course_teaching_class_id=?";
 	private final String GET_BY_ID = "SELECT t_course_teaching_class_id, t_teacher_id, t_course_teaching_class_homework_type_id,filetype,filenameformat,filecount, title, content, pubdate, enddate FROM t_course_teaching_class_homework_baseinfo WHERE id=?";
+	private final String GET_BY_TEACHER_ID = "SELECT id,t_course_teaching_class_id,  t_course_teaching_class_homework_type_id,filetype,filenameformat,filecount, title, content, pubdate, enddate FROM t_course_teaching_class_homework_baseinfo WHERE t_teacher_id=?";
+	private final String GET_BY_HOMEWORK_TYPE_ID = "SELECT id,t_course_teaching_class_id,  t_teacher_id,filetype,filenameformat,filecount, title, content, pubdate, enddate FROM t_course_teaching_class_homework_baseinfo WHERE t_course_teaching_class_homework_type_id=?";
 
 	// DELETE
 	private String DELETE_BY_ID = "DELETE FROM t_course_teaching_class_homework_baseinfo WHERE id=?";
@@ -88,71 +94,7 @@ public class CourseTeachingClassHomeworkBaseinfoDao extends BaseDao<CourseTeachi
 		getJdbcTemplate().update(UPDATE_SIMPLE0_BY_ID, params, types);
 	}
 
-	/*
-	 * 根据用户ID得到用户
-	 */
-	public CourseTeachingClassHomeworkBaseinfo getByID(String id) {
-
-		CourseTeachingClassHomeworkBaseinfo homeworkbaseinfo = new CourseTeachingClassHomeworkBaseinfo();
-
-		getJdbcTemplate().query(GET_BY_ID, new Object[] { id }, new RowCallbackHandler() {
-
-			@Override
-			public void processRow(ResultSet rs) throws SQLException {
-				homeworkbaseinfo.setId(id);
-				homeworkbaseinfo.setT_course_teaching_class_id(rs.getString("t_course_teaching_class_id"));
-				homeworkbaseinfo.setT_teacher_id(rs.getString("t_teacher_id"));
-				homeworkbaseinfo.setT_course_teaching_class_homework_type_id(rs.getString("t_course_teaching_class_homework_type_id"));
-				homeworkbaseinfo.setEnddate(rs.getTimestamp("enddate"));
-				homeworkbaseinfo.setPubdate(rs.getTimestamp("pubdate"));
-				homeworkbaseinfo.setFiletype(rs.getString("filetype"));
-				homeworkbaseinfo.setFilenameformat(rs.getString("filenameformat"));
-				homeworkbaseinfo.setFilecount(rs.getInt("filecount"));
-				homeworkbaseinfo.setTitle(rs.getString("title"));
-				homeworkbaseinfo.setContent(rs.getString("content"));
-
-			}
-
-		});
-
-		if (homeworkbaseinfo.getId() == null)
-			return null;
-		return homeworkbaseinfo;
-	}
-
-	/**
-	 * 根据教学班得到通知
-	 * */
-	public List<CourseTeachingClassHomeworkBaseinfo> getByCourseTeachingClassID(String t_course_teaching_class_id) {
-
-		List<CourseTeachingClassHomeworkBaseinfo> list = new ArrayList<CourseTeachingClassHomeworkBaseinfo>();
-
-		getJdbcTemplate().query(GET_BY_COURSE_TEACHING_CLASS_ID, new Object[] { t_course_teaching_class_id }, new RowCallbackHandler() {
-
-			@Override
-			public void processRow(ResultSet rs) throws SQLException {
-				CourseTeachingClassHomeworkBaseinfo homeworkbaseinfo = new CourseTeachingClassHomeworkBaseinfo();
-				homeworkbaseinfo.setId(rs.getString("id"));
-				homeworkbaseinfo.setT_course_teaching_class_id(t_course_teaching_class_id);
-				homeworkbaseinfo.setT_teacher_id(rs.getString("t_teacher_id"));
-				homeworkbaseinfo.setT_course_teaching_class_homework_type_id(rs.getString("t_course_teaching_class_homework_type_id"));
-				homeworkbaseinfo.setEnddate(rs.getTimestamp("enddate"));
-				homeworkbaseinfo.setPubdate(rs.getTimestamp("pubdate"));
-				homeworkbaseinfo.setFiletype(rs.getString("filetype"));
-				homeworkbaseinfo.setFilenameformat(rs.getString("filenameformat"));
-				homeworkbaseinfo.setFilecount(rs.getInt("filecount"));
-				homeworkbaseinfo.setTitle(rs.getString("title"));
-				homeworkbaseinfo.setContent(rs.getString("content"));
-
-				list.add(homeworkbaseinfo);
-
-			}
-
-		});
-
-		return list;
-	}
-
+	
 	/* 增加用户 */
 	public String add(CourseTeachingClassHomeworkBaseinfo homeworkbaseinfo) {
 		String id = GUID.getGUID();
@@ -204,6 +146,140 @@ public class CourseTeachingClassHomeworkBaseinfoDao extends BaseDao<CourseTeachi
 				new Object[] { t_course_teaching_class_id, t_course_teaching_class_homeworktype_id },
 				new int[] { Types.VARCHAR, Types.VARCHAR }, Long.class);
 	}
+	
+	/*
+	 * 根据用户ID得到用户
+	 */
+	public CourseTeachingClassHomeworkBaseinfo getByID(String id) {
+
+		CourseTeachingClassHomeworkBaseinfo homeworkbaseinfo = new CourseTeachingClassHomeworkBaseinfo();
+
+		getJdbcTemplate().query(GET_BY_ID, new Object[] { id }, new RowCallbackHandler() {
+
+			@Override
+			public void processRow(ResultSet rs) throws SQLException {
+				homeworkbaseinfo.setId(id);
+				homeworkbaseinfo.setT_course_teaching_class_id(rs.getString("t_course_teaching_class_id"));
+				homeworkbaseinfo.setT_teacher_id(rs.getString("t_teacher_id"));
+				homeworkbaseinfo.setT_course_teaching_class_homework_type_id(rs.getString("t_course_teaching_class_homework_type_id"));
+				homeworkbaseinfo.setEnddate(rs.getTimestamp("enddate"));
+				homeworkbaseinfo.setPubdate(rs.getTimestamp("pubdate"));
+				homeworkbaseinfo.setFiletype(rs.getString("filetype"));
+				homeworkbaseinfo.setFilenameformat(rs.getString("filenameformat"));
+				homeworkbaseinfo.setFilecount(rs.getInt("filecount"));
+				homeworkbaseinfo.setTitle(rs.getString("title"));
+				homeworkbaseinfo.setContent(rs.getString("content"));
+
+			}
+
+		});
+
+		if (homeworkbaseinfo.getId() == null)
+			return null;
+		return homeworkbaseinfo;
+	}
+
+	
+	
+	/**
+	 * 根据教学班得到通知
+	 * */
+	public List<CourseTeachingClassHomeworkBaseinfo> getByHomeWorkTypeID(String t_course_teaching_class_homework_type_id) {
+
+		List<CourseTeachingClassHomeworkBaseinfo> list = new ArrayList<CourseTeachingClassHomeworkBaseinfo>();
+
+		getJdbcTemplate().query(GET_BY_HOMEWORK_TYPE_ID, new Object[] { t_course_teaching_class_homework_type_id }, new RowCallbackHandler() {
+
+			@Override
+			public void processRow(ResultSet rs) throws SQLException {
+				CourseTeachingClassHomeworkBaseinfo homeworkbaseinfo = new CourseTeachingClassHomeworkBaseinfo();
+				homeworkbaseinfo.setId(rs.getString("id"));
+				homeworkbaseinfo.setT_course_teaching_class_id(rs.getString("t_course_teaching_class_id"));
+				homeworkbaseinfo.setT_teacher_id(rs.getString("t_teacher_id"));
+				homeworkbaseinfo.setT_course_teaching_class_homework_type_id(t_course_teaching_class_homework_type_id);
+				homeworkbaseinfo.setEnddate(rs.getTimestamp("enddate"));
+				homeworkbaseinfo.setPubdate(rs.getTimestamp("pubdate"));
+				homeworkbaseinfo.setFiletype(rs.getString("filetype"));
+				homeworkbaseinfo.setFilenameformat(rs.getString("filenameformat"));
+				homeworkbaseinfo.setFilecount(rs.getInt("filecount"));
+				homeworkbaseinfo.setTitle(rs.getString("title"));
+				homeworkbaseinfo.setContent(rs.getString("content"));
+
+				list.add(homeworkbaseinfo);
+
+			}
+
+		});
+
+		return list;
+	}
+	
+	/**
+	 * 根据教学班得到通知
+	 * */
+	public List<CourseTeachingClassHomeworkBaseinfo> getByCourseTeachingClassID(String t_course_teaching_class_id) {
+
+		List<CourseTeachingClassHomeworkBaseinfo> list = new ArrayList<CourseTeachingClassHomeworkBaseinfo>();
+
+		getJdbcTemplate().query(GET_BY_COURSE_TEACHING_CLASS_ID, new Object[] { t_course_teaching_class_id }, new RowCallbackHandler() {
+
+			@Override
+			public void processRow(ResultSet rs) throws SQLException {
+				CourseTeachingClassHomeworkBaseinfo homeworkbaseinfo = new CourseTeachingClassHomeworkBaseinfo();
+				homeworkbaseinfo.setId(rs.getString("id"));
+				homeworkbaseinfo.setT_course_teaching_class_id(t_course_teaching_class_id);
+				homeworkbaseinfo.setT_teacher_id(rs.getString("t_teacher_id"));
+				homeworkbaseinfo.setT_course_teaching_class_homework_type_id(rs.getString("t_course_teaching_class_homework_type_id"));
+				homeworkbaseinfo.setEnddate(rs.getTimestamp("enddate"));
+				homeworkbaseinfo.setPubdate(rs.getTimestamp("pubdate"));
+				homeworkbaseinfo.setFiletype(rs.getString("filetype"));
+				homeworkbaseinfo.setFilenameformat(rs.getString("filenameformat"));
+				homeworkbaseinfo.setFilecount(rs.getInt("filecount"));
+				homeworkbaseinfo.setTitle(rs.getString("title"));
+				homeworkbaseinfo.setContent(rs.getString("content"));
+
+				list.add(homeworkbaseinfo);
+
+			}
+
+		});
+
+		return list;
+	}
+	
+	/**
+	 * 根据
+	 * */
+	public List<CourseTeachingClassHomeworkBaseinfo> getByTeacherID(String t_teacher_id) {
+
+		List<CourseTeachingClassHomeworkBaseinfo> list = new ArrayList<CourseTeachingClassHomeworkBaseinfo>();
+
+		getJdbcTemplate().query(GET_BY_TEACHER_ID, new Object[] { t_teacher_id }, new RowCallbackHandler() {
+
+			@Override
+			public void processRow(ResultSet rs) throws SQLException {
+				CourseTeachingClassHomeworkBaseinfo homeworkbaseinfo = new CourseTeachingClassHomeworkBaseinfo();
+				homeworkbaseinfo.setId(rs.getString("id"));
+				homeworkbaseinfo.setT_course_teaching_class_id(rs.getString("t_course_teaching_class_id"));
+				homeworkbaseinfo.setT_teacher_id(t_teacher_id);
+				homeworkbaseinfo.setT_course_teaching_class_homework_type_id(rs.getString("t_course_teaching_class_homework_type_id"));
+				homeworkbaseinfo.setEnddate(rs.getTimestamp("enddate"));
+				homeworkbaseinfo.setPubdate(rs.getTimestamp("pubdate"));
+				homeworkbaseinfo.setFiletype(rs.getString("filetype"));
+				homeworkbaseinfo.setFilenameformat(rs.getString("filenameformat"));
+				homeworkbaseinfo.setFilecount(rs.getInt("filecount"));
+				homeworkbaseinfo.setTitle(rs.getString("title"));
+				homeworkbaseinfo.setContent(rs.getString("content"));
+
+				list.add(homeworkbaseinfo);
+
+			}
+
+		});
+
+		return list;
+	}
+
 
 	public CourseTeachingClassHomeworkBaseinfoViewData getCourseTeachingClassHomeworkBaseinfoViewDataByID(String id) {
 		CourseTeachingClassHomeworkBaseinfoViewData data = new CourseTeachingClassHomeworkBaseinfoViewData();
@@ -225,6 +301,10 @@ public class CourseTeachingClassHomeworkBaseinfoDao extends BaseDao<CourseTeachi
 		List<CourseTeachingClassHomeworkFile> homeworkFileList = homeworkfileDao
 				.getByCourseTeachingClassHomeworkBaseInfoID(homeworkbaseinfo.getId());
 		data.setHomeworkFileList(homeworkFileList);
+		
+		List<CourseTeachingClassHomeworkDelayed> homeworkDelayedList = courseTeachingClassHomeworkDelayedDao
+				.getByCourseTeachingClassHomeworkBaseInfoID(id);
+		data.setHomeworkDelayedList(homeworkDelayedList);
 
 		return data;
 	}
@@ -232,9 +312,7 @@ public class CourseTeachingClassHomeworkBaseinfoDao extends BaseDao<CourseTeachi
 	private List<CourseTeachingClassHomeworkBaseinfoViewData> PageQuery(String t_course_teaching_class_id,
 			String t_course_teaching_class_homeworktype_id, int PageBegin, int PageSize) {
 
-		PageBegin -= 1;
-		if (PageBegin < 0)
-			PageBegin = 0;
+		
 
 		List<CourseTeachingClassHomeworkBaseinfoViewData> list = new ArrayList<CourseTeachingClassHomeworkBaseinfoViewData>();
 

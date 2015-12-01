@@ -26,13 +26,13 @@ public class DepartmentService extends SimpleService<DepartmentDao,Department> {
 	@Autowired
 	private SchoolDepartmentDao schooldepartmentdao;
 	
-	public void Add(String t_school_id,String departmentName,String departmentNote){
-		String t_department_id=Add(departmentName, departmentNote);
+	public void add(String t_school_id,String departmentName,String departmentNote){
+		String t_department_id=add(departmentName, departmentNote);
 		
 		schooldepartmentdao.add(t_school_id, t_department_id);
 	}
 	
-	public void  DELETE(String t_school_id,String t_department_id){
+	public void  delete(String t_school_id,String t_department_id){
 		schooldepartmentdao.DELETE(t_school_id, t_department_id);
 	}
 	
@@ -45,7 +45,9 @@ public class DepartmentService extends SimpleService<DepartmentDao,Department> {
 	/**
 	 * 
 	 * 
-	 * @param boardId
+	 * @param t_school_id:学校id
+	 * @param pageNo:页码
+	 * @param pageSize:页大小
 	 * @return
 	 */
 	public Page<Department> getPage(String t_school_id,int pageNo, int pageSize) {

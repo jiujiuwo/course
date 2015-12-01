@@ -114,7 +114,7 @@ public class UserGroupController extends BaseController {
 	@RequestMapping(value = "/DELETE-{ctId}", method = RequestMethod.GET)
 	public ModelAndView DELETE(@PathVariable String ctId) {
 		if (ctId != null)
-			permissionoperatorService.DELETE(ctId);
+			permissionoperatorService.deleteById(ctId);
 
 		ModelAndView mav = new ModelAndView();
 		String toUrl = ("list.html");
@@ -377,7 +377,7 @@ public class UserGroupController extends BaseController {
 			
 
 		} else {
-			groupService.Add(ct.getName(), ct.getNote());
+			groupService.add(ct.getName(), ct.getNote());
 
 			String toUrl = ("group.html");
 			mav.setViewName("redirect:" + toUrl);
@@ -396,7 +396,7 @@ public class UserGroupController extends BaseController {
 	@RequestMapping(value = "/groupdelete-{ctId}", method = RequestMethod.GET)
 	public ModelAndView groupdelete(@PathVariable String ctId) {
 		if (ctId != null)
-			groupService.DELETE(ctId);
+			groupService.deleteById(ctId);
 
 		ModelAndView mav = new ModelAndView();
 		String toUrl = ("group.html");
@@ -538,7 +538,7 @@ public class UserGroupController extends BaseController {
 			
 
 		} else {
-			roleService.Add(ct.getName(), ct.getNote());
+			roleService.add(ct.getName(), ct.getNote());
 
 			String toUrl = ("list.html");
 			mav.setViewName("redirect:" + toUrl);
@@ -557,7 +557,7 @@ public class UserGroupController extends BaseController {
 	@RequestMapping(value = "/roledelete-{ctId}", method = RequestMethod.GET)
 	public ModelAndView roledelete(@PathVariable String ctId) {
 		if (ctId != null)
-			roleService.DELETE(ctId);
+			roleService.deleteById(ctId);
 
 		ModelAndView mav = new ModelAndView();
 		String toUrl = ("list.html");
@@ -697,7 +697,7 @@ public class UserGroupController extends BaseController {
 			
 
 		} else {
-			permissionoperatorService.Add(ct.getName(), ct.getNote());
+			permissionoperatorService.add(ct.getName(), ct.getNote());
 
 			String toUrl = ("list.html");
 			mav.setViewName("redirect:" + toUrl);
@@ -716,7 +716,7 @@ public class UserGroupController extends BaseController {
 	@RequestMapping(value = "/permissionoperatordelete-{ctId}", method = RequestMethod.GET)
 	public ModelAndView PermissionOperatorDelete(@PathVariable String ctId) {
 		if (ctId != null)
-			permissionoperatorService.DELETE(ctId);
+			permissionoperatorService.deleteById(ctId);
 
 		ModelAndView mav = new ModelAndView();
 		String toUrl = ("list.html");
@@ -857,7 +857,7 @@ public class UserGroupController extends BaseController {
 	@RequestMapping(value = "/permissionresourcedelete-{resourceId}", method = RequestMethod.GET)
 	public ModelAndView permissionresourcedelete(@PathVariable String resourceId) {
 		if (resourceId != null)
-			resourceService.DELETE(resourceId);
+			resourceService.delete(resourceId);
 
 		ModelAndView mav = new ModelAndView();
 		String toUrl = ("list.html");

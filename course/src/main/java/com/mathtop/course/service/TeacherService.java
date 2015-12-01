@@ -60,7 +60,7 @@ public class TeacherService {
 	/**
 	 * 更新教师个人信息，更新内容较为简单，仅包括基本信息
 	 * */
-	public void UpdateTeacherInfo(String t_user_id, String user_basic_info_birthday, String user_basic_info_sex, String[] contacttypeId,
+	public void updateTeacherInfo(String t_user_id, String user_basic_info_birthday, String user_basic_info_sex, String[] contacttypeId,
 			String[] user_contact_value) {
 
 		userbasicinfoDao.UpdateByt_user_id(t_user_id, user_basic_info_birthday, user_basic_info_sex);
@@ -72,7 +72,7 @@ public class TeacherService {
 	/**
 	 * 更新教师个人信息，更新内容全面
 	 * */
-	public void UpdateTeacherInfo(String t_user_id, String user_contact_info_name, String user_basic_info_birthday,
+	public void updateTeacherInfo(String t_user_id, String user_contact_info_name, String user_basic_info_birthday,
 			String user_basic_info_sex, String[] contacttypeId, String[] user_contact_value) {
 
 		userbasicinfoDao.UpdateByt_user_id(t_user_id, user_contact_info_name, user_basic_info_birthday, user_basic_info_sex);
@@ -80,7 +80,10 @@ public class TeacherService {
 		usercontactinfoDao.UpdateContactInfo(t_user_id, contacttypeId, user_contact_value);
 	}
 
-	public void AddTeacher(User user, Department department, Teacher teacher, UserBasicInfo userbasicinfo,
+	/**
+	 * 增加教师信息
+	 * */
+	public void addTeacher(User user, Department department, Teacher teacher, UserBasicInfo userbasicinfo,
 			UserContactInfo[] usercontactinfos, String[] groupId) {
 		try {
 
@@ -112,6 +115,46 @@ public class TeacherService {
 			}
 
 		} catch (UserExistException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * 更新教师信息
+	 * */
+	public void updateTeacher(User user, Teacher teacher, UserBasicInfo userbasicinfo,
+			UserContactInfo[] usercontactinfos, String[] groupId) {
+		
+		if(user==null)
+			return;
+		String t_user_id=user.getId();
+		if(t_user_id==null)
+			return ;
+		String teacher_num=teacher.getTeacher_num();
+		
+		teacher=teacherDao.getTeacherByt_user_id(t_user_id);
+		try {			
+
+			// 修改教师
+			teacherDao.UpdateTeacherNumById(teacher.getId(), teacher_num);
+			
+			
+			//  修改用户基本信息
+			userbasicinfo.setT_user_id(t_user_id);
+			userbasicinfoDao.UpdateByt_user_id(t_user_id, userbasicinfo);
+
+			//  修改联系方式
+			
+			usercontactinfoDao.UpdateContactInfo(t_user_id,usercontactinfos);
+			
+
+			// groupid			
+			usergroupDao.update(t_user_id,groupId);
+			
+
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

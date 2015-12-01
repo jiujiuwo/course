@@ -62,7 +62,7 @@ public class CourseStyleController extends BaseController {
 			mav.setViewName("redirect:" + toUrl);
 
 		} else {
-			coursestyleService.Add(ct.getName(), ct.getNote());
+			coursestyleService.add(ct.getName(), ct.getNote());
 
 			String toUrl=("list.html");
 			mav.setViewName("redirect:" + toUrl);
@@ -81,7 +81,7 @@ public class CourseStyleController extends BaseController {
 	@RequestMapping(value = "/DELETE-{ctId}", method = RequestMethod.GET)
 	public ModelAndView DELETE(@PathVariable String ctId) {
 		if (ctId != null)
-			coursestyleService.DELETE(ctId);
+			coursestyleService.deleteById(ctId);
 
 		ModelAndView mav = new ModelAndView();
 		String toUrl=("list.html");

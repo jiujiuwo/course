@@ -3,8 +3,7 @@
 
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 
 	//设置左侧浏览状态
@@ -37,7 +36,7 @@
 <body class="home">
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
-	
+
 
 	<div class="DocumentPage">
 		<div class="DocumentPageLeftArea ">
@@ -53,24 +52,24 @@
 
 
 			<div class="CourseContentHeader">
-				<span class="text-info"><strong>${pagedTeachingClassViewData.result[0].teachingclass.name}</strong></span>教学班学生管理
+				<span class="text-info"><strong>${selectedCourseTeachingClassViewData.teachingclass.name}</strong></span>教学班学生管理
 			</div>
 			<p class="text-muted">
-				<strong>课程名称：</strong>${pagedTeachingClassViewData.result[0].course.name}</p>
+				<strong>课程名称：</strong>${selectedCourseTeachingClassViewData.course.name}</p>
 
 			<p class="text-muted">
 				<strong>授课教师：</strong>
 
 				<c:forEach var="t"
-					items="${pagedTeachingClassViewData.result[0].teacher}"
+					items="${selectedCourseTeachingClassViewData.teacher}"
 					varStatus="status">
-							${t.userbasicinfo.user_basic_info_name}(${pagedTeachingClassViewData.result[0].teachingtype[status.index].name})
+							${t.userbasicinfo.user_basic_info_name}(${selectedCourseTeachingClassViewData.teachingtype[status.index].name})
 							</c:forEach>
 
 			</p>
 
 			<p class="text-muted">
-				<strong>授课时间：</strong>${pagedTeachingClassViewData.result[0].courseteachingclass.teaching_year_begin}-${pagedTeachingClassViewData.result[0].courseteachingclass.teaching_year_end}学年第${pagedTeachingClassViewData.result[0].courseteachingclass.teaching_term}学期</p>
+				<strong>授课时间：</strong>${selectedCourseTeachingClassViewData.courseteachingclass.teaching_year_begin}-${pagedTeachingClassViewData.result[0].courseteachingclass.teaching_year_end}学年第${pagedTeachingClassViewData.result[0].courseteachingclass.teaching_term}学期</p>
 			<div class="CourseContentHeaderSeparatorLine"></div>
 
 			<table>
@@ -144,6 +143,7 @@
 
 
 			<c:choose>
+
 				<c:when test="${pagedStudentViewData.totalCount >0}">
 
 					<div class="form-group">
@@ -182,7 +182,8 @@
 
 												<td>
 													<button type="button" class="btn btn-default btn-xs"
-														onclick="onDelete('${dataitem.student.id}','${dataitem.userbasicinfo.user_basic_info_name}')">删除</button>
+														onclick="location='<c:url value="/teachingclass/deletestudent-${selectedCourseTeachingClassViewData.courseteachingclass.id}-${dataitem.student.id}-${pagedStudentViewData.currentPageNo}.html"/>'">删除...</button>
+
 												</td>
 											</tr>
 											<c:set var="index" value="${index + 1}"></c:set>
@@ -190,9 +191,9 @@
 									</tbody>
 								</table>
 
-								<c:if test="${not empty selectedTeachingClassID}">
+								<c:if test="${not empty selectedCourseTeachingClassID}">
 									<mathtop:PageBar
-										pageUrl="/teachingclass/student-${selectedTeachingClassID}.html"
+										pageUrl="/teachingclass/student-${selectedCourseTeachingClassID}.html"
 										pageAttrKey="pagedStudentViewData" />
 								</c:if>
 
@@ -256,19 +257,18 @@
 	<%@ include file="../../shared/importJs.jsp"%>
 	<%@ include file="../../shared/importdatetimepickerjs.jsp"%>
 
-<script>
-		
-
-		function onDelete(id, name) {
+	<script>
+		function onDelete(t_student_id, t_student_name) {
 			var url = "location='<c:url value="/teachingclass/"/>"
 
-			url = url + "deletestudent-${selectedTeachingClassID}-" + id + ".html'";
+			url = url
+					+ "deletestudent-${selectedCourseTeachingClassViewData.courseteachingclass.id}-"
+					+ t_student_id + ".html'";
 
-			$('#deleteModal').find('.modal-body #deleteinfo').text(name);
+			$('#deleteModal').find('.modal-body #deleteinfo').text(
+					t_student_name);
 			$('#deleteModal').find('.modal-footer #deletebtn').attr("onclick",
 					url);
-
-			
 
 			$('#deleteModal').modal('show');
 

@@ -181,10 +181,10 @@
 										</td>
 
 										<td><button type="button" class="btn btn-default btn-xs"
-												onclick="window.location.href='teachingclass/student-${dataitem.teachingclass.id}.html'">详细...</button></td>
+												onclick="window.location.href='teachingclass/student-${dataitem.courseteachingclass.id}.html'">详细...</button></td>
 
 										<td><button type="button" class="btn btn-default btn-xs"
-												onclick="onUpdate('${dataitem.courseteachingclass.id}')">修改...</button>
+												onclick="location='<c:url value="/teachingclass/update-${dataitem.courseteachingclass.id}.html"/>'">修改...</button>
 											<button type="button" class="btn btn-default btn-xs"
 												onclick="onDelete('${dataitem.courseteachingclass.id}')">删除</button></td>
 									</tr>
@@ -193,8 +193,9 @@
 							</tbody>
 						</table>
 
-						<mathtop:PageBar pageUrl="/${pagedURI}/list.html"
-							pageAttrKey="pagedNaturalClassSchoolViewData" />
+						<mathtop:PageBar
+							pageUrl="/teachingclass/list.html"
+							pageAttrKey="pagedTeachingClassViewData" />
 
 					</div>
 
@@ -238,128 +239,7 @@
 	</div>
 
 
-	<!-- 添加对话框 -->
-	<div class="modal fade" id="addModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">添加自然班</h4>
-				</div>
-
-
-
-				<form class="form-signin"
-					action="<c:url value="/${pagedURI}/add.html"/>" method="post">
-
-
-					<div class="modal-body">
-						<h4 class="form-signin-heading">请输入新加自然班名称</h4>
-
-						<div class="container-fluid" style="overflow: hidden;">
-							<div class="row">
-								<div class="col-md-2">学院</div>
-								<div class="col-md-10">
-									<select id="SchoolSelectControlAdd" class="form-control"
-										name="t_school_id"
-										onchange="OnSchoolSelectControlAddChange(this)">
-										<c:forEach var="school" items="${pagedSchool.result}">
-											<option value="${school.id}">${school.name}</option>
-										</c:forEach>
-									</select>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-2">系部</div>
-								<div class="col-md-10">
-									<select id="DepartmentSelectControlAdd" class="form-control"
-										name="t_department_id">
-										<c:forEach var="d" items="${pagedDepartment.result}">
-											<option value="${d.id}">${d.name}</option>
-										</c:forEach>
-									</select>
-								</div>
-							</div>
-
-
-							<div class="row">
-								<div class="col-md-2">名称</div>
-								<div class="col-md-10">
-									<input type="text" id="inputname" class="form-control"
-										name="naturalclassname" placeholder="自然班名称" required autofocus>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-2">描述</div>
-								<div class="col-md-10">
-									<input type="text" id="inputnote" class="form-control"
-										name="naturalclassnote" placeholder="自然班描述">
-								</div>
-							</div>
-
-						</div>
-
-
-					</div>
-
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-primary" onclick="onAdd()">添加</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					</div>
-
-				</form>
-			</div>
-		</div>
-	</div>
-
-
-	<!-- 修改对话框 -->
-	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">修改自然班</h4>
-				</div>
-
-				<form class="form-signin"
-					action="<c:url value='/${pagedURI}/update.html'/>" method="post">
-
-
-					<div class="modal-body">
-						<h4 class="form-signin-heading">请修改自然班属性</h4>
-						<label for="inputname" class="sr-only">自然班名称</label> <input
-							type="text" id="inputid" class="form-control" name="id" value=""
-							placeholder="id" style="display: none;"> <input
-							type="text" id="inputname" class="form-control" name="name"
-							value="" placeholder="自然班名称" required autofocus> <label
-							for="inputnote" class="sr-only">自然班描述</label> <input type="text"
-							id="inputnote" class="form-control" name="note" value=""
-							placeholder="自然班描述">
-
-					</div>
-
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-primary">修改</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					</div>
-
-				</form>
-			</div>
-		</div>
-	</div>
-
-
+	
 	<%
 		//删除对话框、错误信息对话框
 	%>

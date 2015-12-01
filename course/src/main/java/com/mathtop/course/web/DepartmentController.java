@@ -57,7 +57,7 @@ public class DepartmentController extends BaseController {
 
 		} else {
 
-			departmentService.Add(t_school_id, d.getName(), d.getNote());
+			departmentService.add(t_school_id, d.getName(), d.getNote());
 
 			Integer pageNo = 1;
 			return ListAll(t_school_id, pageNo);
@@ -77,7 +77,7 @@ public class DepartmentController extends BaseController {
 			@PathVariable String t_department_id) {
 
 		if (t_school_id != null && t_department_id != null)
-			departmentService.DELETE(t_school_id, t_department_id);
+			departmentService.delete(t_school_id, t_department_id);
 
 		Integer pageNo = 1;
 		return ListAll(t_school_id, pageNo);
@@ -168,6 +168,8 @@ public class DepartmentController extends BaseController {
 			@RequestParam(value = "t_school_id", required = false) String t_school_id,
 			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
 		ModelAndView view = new ModelAndView();
+		
+		
 
 		pageNo = pageNo == null ? 1 : pageNo;
 

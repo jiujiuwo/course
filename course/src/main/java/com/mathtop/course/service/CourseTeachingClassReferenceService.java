@@ -34,7 +34,7 @@ public class CourseTeachingClassReferenceService {
 		return fileDao.getByID(id);
 	}
 
-	private void AddFiles(HttpServletRequest request, String t_course_teaching_class_homework_baseinfo_id, MultipartFile[] files) {
+	private void addFiles(HttpServletRequest request, String t_course_teaching_class_homework_baseinfo_id, MultipartFile[] files) {
 
 		for (int i = 0; i < files.length; i++) {
 			MultipartFile file = files[i];
@@ -74,44 +74,104 @@ public class CourseTeachingClassReferenceService {
 	}
 
 	// 增加
-	public void Add(HttpServletRequest request, String t_course_teaching_class_id, String t_course_teaching_class_homeworktype_id,
-			String t_teacher_id,  String title, String content, 
-			MultipartFile[] files) {
+	public void add(HttpServletRequest request, String t_course_teaching_class_id, String t_course_teaching_class_homeworktype_id,
+			String t_teacher_id, String title, String content, MultipartFile[] files) {
 
 		String t_course_teaching_class_homework_baseinfo_id = referencedao.add(t_course_teaching_class_id, t_teacher_id,
-				t_course_teaching_class_homeworktype_id,  title, content, new Date(),
-				new Date());
+				t_course_teaching_class_homeworktype_id, title, content, new Date(), new Date());
 
-		AddFiles(request, t_course_teaching_class_homework_baseinfo_id, files);
+		addFiles(request, t_course_teaching_class_homework_baseinfo_id, files);
 
 	}
 
 	// 删除
-	public void DeleteByID(HttpServletRequest request, String t_course_teaching_class_reference_id) {
+	public void deleteByID(HttpServletRequest request, String t_course_teaching_class_reference_id) {
 
 		// 删除基本信息及其附件文件
-		DeleteBaseInfoByID(request, t_course_teaching_class_reference_id);
+		deleteBaseInfoByID(request, t_course_teaching_class_reference_id);
 
 		// TODO：删除其他数据
 	}
 
 	// 删除基本信息及其附件文件
-	private void DeleteBaseInfoByID(HttpServletRequest request, String t_course_teaching_class_reference_id) {
+	private void deleteBaseInfoByID(HttpServletRequest request, String t_course_teaching_class_reference_id) {
 		CourseTeachingClassReference plan = getByID(t_course_teaching_class_reference_id);
 		if (plan == null)
 			return;
 
 		// 1.删除文件
-		DeleteFilesByReferenceId(request, t_course_teaching_class_reference_id);
-		
-		
+		deleteFilesByReferenceId(request, t_course_teaching_class_reference_id);
 
 		// 2.删除基本信息
 		referencedao.deleteById(t_course_teaching_class_reference_id);
 	}
 
+	/**
+	 * 根据t_course_teaching_class_id删除
+	 */
+	public void deleteByCourseTeachingClassId(HttpServletRequest request, String t_course_teaching_class_id) {
+		List<CourseTeachingClassReference> list = referencedao.getByCourseTeachingClassID(t_course_teaching_class_id);
+		if (list == null)
+			return;
+		for (CourseTeachingClassReference r : list) {
+			deleteByID(request, r.getId());
+		}
+	}
+
+	/**
+	 * 根据t_teacher_id删除
+	 */
+	public void deleteByTeacherId(HttpServletRequest request, String t_teacher_id) {
+		List<CourseTeachingClassReference> list = referencedao.getByTeacherID(t_teacher_id);
+		if (list == null)
+			return;
+		for (CourseTeachingClassReference r : list) {
+			deleteByID(request, r.getId());
+		}
+	}
+
+	/**
+	 * 根据t_course_teaching_class_id、t_teacher_id删除
+	 */
+	public void deleteByCourseTeachingClassIdAndTeacherId(HttpServletRequest request, String t_course_teaching_class_id,
+			String t_teacher_id) {
+		List<CourseTeachingClassReference> list = referencedao.getByCourseTeachingClassIDAndTeacherId(t_course_teaching_class_id,
+				t_teacher_id);
+		if (list == null)
+			return;
+		for (CourseTeachingClassReference r : list) {
+			deleteByID(request, r.getId());
+		}
+	}
+
+	/**
+	 * 根据t_course_teaching_class_reference_type_id删除
+	 */
+	public void deleteByReferenceTypeId(HttpServletRequest request, String t_course_teaching_class_reference_type_id) {
+		List<CourseTeachingClassReference> list = referencedao.getByReferenceTypeId(t_course_teaching_class_reference_type_id);
+		if (list == null)
+			return;
+		for (CourseTeachingClassReference r : list) {
+			deleteByID(request, r.getId());
+		}
+	}
+
+	/**
+	 * 根据t_course_teaching_class_id、t_teacher_id、t_course_teaching_class_reference_type_id删除
+	 */
+	public void deleteByCourseTeachingClassIdAndTeacherIdAndReferenceTypeId(HttpServletRequest request, String t_course_teaching_class_id,
+			String t_teacher_id, String t_course_teaching_class_reference_type_id) {
+		List<CourseTeachingClassReference> list = referencedao.getByCourseTeachingClassIDAndTeacherIdAndReferenceTypeId(
+				t_course_teaching_class_id, t_teacher_id, t_course_teaching_class_reference_type_id);
+		if (list == null)
+			return;
+		for (CourseTeachingClassReference r : list) {
+			deleteByID(request, r.getId());
+		}
+	}
+
 	// 删除文件
-	private void DeleteFilesByReferenceId(HttpServletRequest request, String t_course_teaching_class_reference_id) {
+	private void deleteFilesByReferenceId(HttpServletRequest request, String t_course_teaching_class_reference_id) {
 		ServletContext sc = request.getSession().getServletContext();
 		String dir = sc.getRealPath(RealPathConst.RealPath_ReferenceFile); // 设定文件保存的目录
 
@@ -133,26 +193,24 @@ public class CourseTeachingClassReferenceService {
 		}
 	}
 
-	public void Update(HttpServletRequest request, String t_course_teaching_class_homework_baseinfo_id, String t_teacher_id,
-			 String title, String content,  MultipartFile[] files) {
+	public void update(HttpServletRequest request, String t_course_teaching_class_homework_baseinfo_id, String t_teacher_id, String title,
+			String content, MultipartFile[] files) {
 
 		// 1.删除文件
-		DeleteFilesByReferenceId(request, t_course_teaching_class_homework_baseinfo_id);
+		deleteFilesByReferenceId(request, t_course_teaching_class_homework_baseinfo_id);
 
 		// 2.更改基本信息
-		referencedao.update(t_course_teaching_class_homework_baseinfo_id, t_teacher_id, title,
-				content, new Date());
+		referencedao.update(t_course_teaching_class_homework_baseinfo_id, t_teacher_id, title, content, new Date());
 
 		// 3.增加文件
-		AddFiles(request, t_course_teaching_class_homework_baseinfo_id, files);
+		addFiles(request, t_course_teaching_class_homework_baseinfo_id, files);
 	}
 
 	public void Update(HttpServletRequest request, String t_course_teaching_class_homework_baseinfo_id, String t_teacher_id, String title,
 			String content) {
 
 		// 2.更改基本信息
-		referencedao.update(t_course_teaching_class_homework_baseinfo_id, t_teacher_id, title, content,
-				new Date());
+		referencedao.update(t_course_teaching_class_homework_baseinfo_id, t_teacher_id, title, content, new Date());
 
 	}
 
@@ -164,73 +222,64 @@ public class CourseTeachingClassReferenceService {
 		return referencedao.getCourseTeachingClassHomeworkBaseinfoViewDataByID(id);
 	}
 
-	private String getFileLength(HttpServletRequest request,  String filepath) {
+	private String getFileLength(HttpServletRequest request, String filepath) {
 
-		
+		ServletContext sc = request.getSession().getServletContext();
+		String dir = sc.getRealPath(RealPathConst.RealPath_ReferenceFile); // 设定文件保存的目录
 
-			
+		String localfilename = dir + RealPathConst.RealPath_PathSeparator + filepath;
+		File file = new File(localfilename);
 
-			ServletContext sc = request.getSession().getServletContext();
-			String dir = sc.getRealPath(RealPathConst.RealPath_ReferenceFile); // 设定文件保存的目录
-
-			
-			String localfilename = dir + RealPathConst.RealPath_PathSeparator + filepath;
-			File file = new File(localfilename);
-			
-			String strLen="";
-			java.text.DecimalFormat   df=new   java.text.DecimalFormat("#.##"); 
-			if(file.exists() && file.isFile()){
-				long n=file.length();
-				if(n<1024)
-					strLen=n+"字节";
-				else if(n<1024*1024){
-					 double   d=n;   
-					strLen=df.format(d/1024)+"K";
-				}
-				else if(n<1024*1024*1024){
-					double   d=n;   
-					strLen=df.format(d/(1024*1024))+"M";
-				}
-				else if(n<1024*1024*1024*1024){
-					double   d=n;   
-					strLen=df.format(d/(1024*1024*1024))+"G";
-				}
+		String strLen = "";
+		java.text.DecimalFormat df = new java.text.DecimalFormat("#.##");
+		if (file.exists() && file.isFile()) {
+			long n = file.length();
+			if (n < 1024)
+				strLen = n + "字节";
+			else if (n < 1024 * 1024) {
+				double d = n;
+				strLen = df.format(d / 1024) + "K";
+			} else if (n < 1024 * 1024 * 1024) {
+				double d = n;
+				strLen = df.format(d / (1024 * 1024)) + "M";
+			} else if (n < 1024 * 1024 * 1024 * 1024) {
+				double d = n;
+				strLen = df.format(d / (1024 * 1024 * 1024)) + "G";
 			}
+		}
 
-			return strLen;
-			
+		return strLen;
+
 	}
-
 
 	/**
 	 * 获得每个文件长度
-	 * */
-	private void getFileLength(HttpServletRequest request,Page<CourseTeachingClassReferenceViewData> page){
-		if(page==null)
+	 */
+	private void getFileLength(HttpServletRequest request, Page<CourseTeachingClassReferenceViewData> page) {
+		if (page == null)
 			return;
-		
-		List<CourseTeachingClassReferenceViewData> list=page.getResult();
-		if(list==null)
+
+		List<CourseTeachingClassReferenceViewData> list = page.getResult();
+		if (list == null)
 			return;
-		
-		for(CourseTeachingClassReferenceViewData data:list){
-			List<CourseTeachingClassReferenceFile> fileList=data.getFileList();
-			if(fileList==null)
+
+		for (CourseTeachingClassReferenceViewData data : list) {
+			List<CourseTeachingClassReferenceFile> fileList = data.getFileList();
+			if (fileList == null)
 				continue;
-			for(CourseTeachingClassReferenceFile f:fileList){
-				f.setFilelength(getFileLength(request,f.getFilepath()));
+			for (CourseTeachingClassReferenceFile f : fileList) {
+				f.setFilelength(getFileLength(request, f.getFilepath()));
 			}
 		}
-			
-		
-	}
-	
-	public Page<CourseTeachingClassReferenceViewData> getPage(HttpServletRequest request,String t_course_teaching_class_id,
-			String t_course_teaching_class_homeworktype_id, int pageNo, int pageSize) {
-		Page<CourseTeachingClassReferenceViewData> page= referencedao.getPage(t_course_teaching_class_id, t_course_teaching_class_homeworktype_id, pageNo, pageSize);
-		getFileLength(request,page);
-		return page;
+
 	}
 
+	public Page<CourseTeachingClassReferenceViewData> getPage(HttpServletRequest request, String t_course_teaching_class_id,
+			String t_course_teaching_class_homeworktype_id, int pageNo, int pageSize) {
+		Page<CourseTeachingClassReferenceViewData> page = referencedao.getPage(t_course_teaching_class_id,
+				t_course_teaching_class_homeworktype_id, pageNo, pageSize);
+		getFileLength(request, page);
+		return page;
+	}
 
 }

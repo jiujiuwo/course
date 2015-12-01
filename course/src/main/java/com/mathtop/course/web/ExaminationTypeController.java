@@ -68,7 +68,7 @@ public class ExaminationTypeController extends BaseController {
 			
 
 		} else {
-			examinationtypeService.Add(ct.getName(), ct.getNote());
+			examinationtypeService.add(ct.getName(), ct.getNote());
 
 			String toUrl = ("list.html");
 			mav.setViewName("redirect:" + toUrl);
@@ -87,7 +87,7 @@ public class ExaminationTypeController extends BaseController {
 	@RequestMapping(value = "/DELETE-{ctId}", method = RequestMethod.GET)
 	public ModelAndView DELETE(@PathVariable String ctId) {
 		if (ctId != null)
-			examinationtypeService.DELETE(ctId);
+			examinationtypeService.deleteById(ctId);
 
 		ModelAndView mav = new ModelAndView();
 		String toUrl = ("list.html");

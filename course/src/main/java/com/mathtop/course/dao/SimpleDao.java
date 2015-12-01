@@ -96,7 +96,7 @@ public class SimpleDao<TDomain extends Simple>  extends BaseDao<TDomain>{
 	
 	/*删除
 	 * */
-	public void DELETE(String id){		
+	public void deleteById(String id){		
 		Object params[]=new Object[]{id};
 		int types[]=new int[]{Types.VARCHAR};
 		getJdbcTemplate().update(DELETE_BY_ID, params, types);

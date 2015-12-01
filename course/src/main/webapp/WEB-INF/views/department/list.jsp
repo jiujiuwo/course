@@ -148,8 +148,7 @@
 					</tbody>
 				</table>
 
-				<mathtop:PageBar pageUrl="/school/list.html"
-					pageAttrKey="pagedSchool" />
+			
 
 			</div>
 

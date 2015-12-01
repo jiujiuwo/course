@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mathtop.course.service.TeachingClassService;
+import com.mathtop.course.service.CourseTeachingClassService;
 
 @Controller
 @RequestMapping("/coursecontent")
@@ -19,7 +19,7 @@ public class CourseTeachingClassContentController extends CourseTeachingClassBas
 	 * 自动注入
 	 */
 	@Autowired
-	TeachingClassService teachingclassService;
+	CourseTeachingClassService teachingclassService;
 
 	/**
 	 * 

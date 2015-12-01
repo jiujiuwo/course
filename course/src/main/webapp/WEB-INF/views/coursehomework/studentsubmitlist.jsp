@@ -54,9 +54,10 @@
 
 
 			<ol class="breadcrumb">
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Library</a></li>
-				<li class="active">Data</li>
+				<li><a href="#">课程系统</a></li>
+				<li><a
+					href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseteachingclass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
+				<li class="active">${selectedCourseHomeworkTypeData.name}</li>
 			</ol>
 
 
@@ -244,9 +245,28 @@
 
 							<c:if
 								test="${pagedCourseTeachingClassHomeworkSubmitBaseinfoViewData.totalCount==0}">
-								<button type="button" class="btn btn-default btn-sm"
-									style="margin: 10px;" data-toggle="modal"
-									data-target="#addModal">提交作业</button>
+
+								<c:choose>
+									<c:when
+										test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.canStudentSubmit }">
+										<button type="button" class="btn btn-default btn-sm"
+											style="margin: 10px;" data-toggle="modal"
+											data-target="#addModal">提交作业</button>
+									</c:when>
+									
+									<c:when
+										test="${selectedCourseHomeworkBasicInfoViewData.canStudentSubmit }">
+										<button type="button" class="btn btn-default btn-sm"
+											style="margin: 10px;" data-toggle="modal"
+											data-target="#addModal">提交迟交作业</button>
+									</c:when>
+									
+									<c:otherwise>
+										<p class="text-danger">作业已经过期，不能提交。</p>
+									</c:otherwise>
+								</c:choose>
+
+
 							</c:if>
 							<c:if
 								test="${pagedCourseTeachingClassHomeworkSubmitBaseinfoViewData.totalCount>0}">
@@ -300,7 +320,7 @@
 														<c:when
 															test="${fn:length(data.homeworksubmitFileList)==1}">
 															<a
-																href="<c:url value="/coursehomeworkfile/download-${data.homeworksubmitFileList[0].id}.html"/>">
+																href="<c:url value="/coursehomeworksubmitfile/download-${data.homeworksubmitFileList[0].id}.html"/>">
 																${data.homeworksubmitFileList[0].filename}</a>
 														</c:when>
 
@@ -338,7 +358,7 @@
 												<div class="col-md-2">
 
 													<c:if
-														test="${data.homeworkbaseinfo.canStudentSubmit==true }">
+														test="${data.homeworkbaseinfoViewData.homeworkbaseinfo.canStudentSubmit==true }">
 														<button type="button" class="btn btn-default btn-xs"
 															onclick="onUpdate('${data.homeworksubmitbaseinfo.id}','${data.homeworksubmitbaseinfo.title}','${data.homeworksubmitbaseinfo.content}')">修改...</button>
 														<button type="button" class="btn btn-default btn-xs"
@@ -541,8 +561,10 @@
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
-  提交${selectedCourseHomeworkTypeData.name}</h4>
+					<h4 class="modal-title" id="myModalLabel">
+						<span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
+						提交${selectedCourseHomeworkTypeData.name}
+					</h4>
 				</div>
 
 
@@ -753,8 +775,10 @@
 		}
 
 		function onUpdate(id, title, content) {
-			var url = "/coursehomeworksubmit/update-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-"
-					+ id + ".html";
+			var url = "<c:url value="/coursehomeworksubmit/update-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-"/>"
+			+ id + ".html";
+			
+		
 			$('#updateModal').find('.modal-body #inputid').val(id);
 			$('#updateModal').find('.modal-body #inputtitle').val(title);
 			$('#updateModal').find('.modal-body #inputcontent').val(content);
@@ -773,7 +797,7 @@
 	<c:if test="${!empty errorMsg}">
 		<script>
 			function ShowErrMsg() {
-				ShowInfoMsg("错误","${errorMsg}");
+				ShowInfoMsg("错误", "${errorMsg}");
 
 			}
 		</script>

@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ include file="../../shared/taglib.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <%
 	String path = request.getContextPath();
@@ -52,7 +53,7 @@
 
 
 
-			<div class="CourseContentHeader">增加学生</div>
+			<div class="CourseContentHeader">修改学生</div>
 
 			<div class="CourseContentHeaderSeparatorLine"></div>
 
@@ -77,7 +78,7 @@
 
 
 			<form class="form-horizontal" style="overflow: hidden;"
-				action="<c:url value="/student/addstudent.html"/>" method="post">
+				action="<c:url value="/student/updatestudent-${selectedStudentViewData.student.id }.html"/>" method="post">
 
 
 
@@ -118,26 +119,18 @@
 					<label for="student_num" class="col-sm-1 control-label">学号</label>
 					<div class="col-md-3">
 						<input name="student_num" class="form-control placeholder-no-fix"
-							autocomplete="off" placeholder="学号" />
+							autocomplete="off" placeholder="学号" value="${selectedStudentViewData.student.student_num }"/>
 					</div>
 
 					<label for="user_basic_info_name" class="col-sm-1 control-label">姓名</label>
 					<div class="col-md-3">
 						<input name="user_basic_info_name"
-							class="form-control placeholder-no-fix" autocomplete="off"
+							class="form-control placeholder-no-fix" autocomplete="off" value="${selectedStudentViewData.userbasicinfo.user_basic_info_name }"
 							placeholder="姓名" />
 					</div>
 				</div>
 
-				<div class="form-group">
-
-					<label for="user_password" class="col-sm-1 control-label">初始密码</label>
-					<div class="col-md-3">
-						<input name="user_password"
-							class="form-control placeholder-no-fix" value="12345"
-							autocomplete="off" placeholder="初始密码" />
-					</div>
-				</div>
+				
 
 
 
@@ -148,6 +141,7 @@
 							data-date-format="yyyy-mm-dd" data-link-field="dtp_input2"
 							data-link-format="yyyy-mm-dd">
 							<input class="form-control" size="16" type="text"
+							value='<fmt:formatDate value="${selectedStudentViewData.userbasicinfo.user_basic_info_birthday}" pattern="yyyy-MM-dd"/>'
 								value="1980-01-01" name="user_basic_info_birthday" readonly>
 							<span class="input-group-addon"><span
 								class="glyphicon glyphicon-remove"></span></span> <span
@@ -162,9 +156,15 @@
 					<label for="user_basic_info_sex" class="col-sm-1 control-label">性别</label>
 					<div class="col-md-3">
 						<label class="radio-inline"> <input type="radio" value="0"
-							checked="checked" name="user_basic_info_sex" id="inlineRadio1"
-							value="option1"> 男
+							<c:if test="${selectedStudentViewData.userbasicinfo.user_basic_info_sex<1}">
+							checked="checked"
+							</c:if>
+							name="user_basic_info_sex" id="inlineRadio1" value="option1">
+							男
 						</label> <label class="radio-inline"> <input type="radio"
+							<c:if test="${selectedStudentViewData.userbasicinfo.user_basic_info_sex>0}">
+							checked="checked"
+							</c:if>
 							value="1" name="user_basic_info_sex" id="inlineRadio2"
 							value="option2"> 女
 						</label>
@@ -172,26 +172,18 @@
 				</div>
 
 
+
 				<div class="form-group">
-					<label for="groupSelectControl" class="col-sm-1 control-label">基本组</label>
-					<div class="col-md-3">
-						<select id="groupSelectControl" name="groupId"
-							class="form-control input-sm">
-							<c:forEach var="d" items="${pagedGroup.result}">
-								<option value="${d.id}">${d.name}</option>
-							</c:forEach>
 
-						</select>
-					</div>
 
-					<label for="teacher_group" class="col-sm-1 control-label">其他组</label>
+					<label for="teacher_group" class="col-sm-1 control-label">组</label>
 					<div class="col-md-6">
 						<div class="btn-group" role="group" aria-label="...">
 							<button type="button" class="btn btn-default btn-sm"
-								onclick="window.location.href='<c:url value="/group/list.html"/>'">增加组类型</button>
+								onclick="AddGroupRow()">增加组</button>
 
 							<button type="button" class="btn btn-default btn-sm"
-								onclick="AddGroupRow()">增加组</button>
+								onclick="window.location.href='<c:url value="/permission/group/list.html"/>'">增加组类型</button>
 
 
 						</div>
@@ -200,7 +192,7 @@
 						<div class="Course-Table">
 
 
-							<table id="studentgrouptable"
+							<table id="teachergrouptable"
 								class="table table-hover table-bordered">
 								<thead>
 									<tr>
@@ -211,6 +203,26 @@
 									</tr>
 								</thead>
 								<tbody>
+									<c:set var="index" value="1"></c:set>
+									<c:forEach var="dataitem" items="${pagedGroupSpecificUserId.result}">
+										<tr id="grouprow${dataitem.id}">
+											<th scope="row">${index}</th>
+											<td><select id="groupSelectControl" name="groupId"
+												class="form-control input-sm">
+													<c:forEach var="d" items="${pagedGroup.result}">
+														<option value="${d.id}"
+														<c:if test="${d.id==dataitem.id }">
+														selected
+														</c:if>
+														>${d.name}</option>
+													</c:forEach>
+
+											</select></td>
+											<td><button type='button' class='btn btn-default btn-sm'
+													onclick='DeleteGroupRow("grouprow${dataitem.id}")'>删除</button></td>
+										</tr>
+										<c:set var="index" value="${index + 1}"></c:set>
+									</c:forEach>
 
 								</tbody>
 							</table>
@@ -219,14 +231,16 @@
 				</div>
 
 				<div class="form-group">
-					<label for="contacttable" class="col-sm-1 control-label">联系方式</label>
+					<label for="course_num" class="col-sm-1 control-label">联系方式</label>
 					<div class="col-md-6">
 						<div class="btn-group" role="group" aria-label="...">
-							<button type="button" class="btn btn-default btn-sm"
-								onclick="window.location.href='<c:url value="/contacttype/list.html"/>'">增加联系类型</button>
+
 
 							<button type="button" class="btn btn-default btn-sm"
 								onclick="AddContactRow()">增加联系方式</button>
+
+							<button type="button" class="btn btn-default btn-sm"
+								onclick="window.location.href='<c:url value="/contacttype/list.html"/>'">增加联系类型</button>
 
 
 						</div>
@@ -245,14 +259,37 @@
 									</tr>
 								</thead>
 								<tbody>
+									<c:set var="index" value="1"></c:set>
+									<c:forEach var="dataitem"
+										items="${selectedStudentViewData.usercontactinfoviewdata}">
+										<tr id="contactrow${dataitem.usercontacttype.id}">
+											<th scope="row">${index}</th>
+											
+											<td><select id="contactinfoSelectControl" name="contacttypeId"
+												class="form-control input-sm">
+													<c:forEach var="d" items="${pagedContactType.result}">
+														<option value="${d.id}"
+														<c:if test="${d.id==dataitem.usercontacttype.id }">
+														selected
+														</c:if>
+														>${d.name}</option>
+													</c:forEach>
 
+											</select></td>
+											
+											
+											<td><input type="text" name="user_contact_value"
+												value="${dataitem.usercontactinfo.user_contact_value}"></td>
+											<td><button type='button' class='btn btn-default btn-sm'
+													onclick='DeleteContactRow("contactrow${dataitem.usercontacttype.id}")'>删除</button></td>
+										</tr>
+										<c:set var="index" value="${index + 1}"></c:set>
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>
 					</div>
 				</div>
-
-
 
 
 

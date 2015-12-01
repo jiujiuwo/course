@@ -22,7 +22,7 @@ import com.mathtop.course.domain.Teacher;
 import com.mathtop.course.domain.UserSessionInfo;
 import com.mathtop.course.service.CourseTeachingClassReferenceService;
 import com.mathtop.course.service.CourseTeachingClassReferenceTypeService;
-import com.mathtop.course.service.TeachingClassService;
+import com.mathtop.course.service.CourseTeachingClassService;
 
 @Controller
 @RequestMapping("/coursereference")
@@ -38,7 +38,7 @@ public class CourseTeachingClassReferenceController extends CourseTeachingClassB
 	private CourseTeachingClassReferenceTypeService referencektypeService;
 
 	@Autowired
-	TeachingClassService teachingclassService;
+	CourseTeachingClassService teachingclassService;
 
 	/**
 	 * 添加
@@ -89,7 +89,7 @@ public class CourseTeachingClassReferenceController extends CourseTeachingClassB
 			Teacher teacher = userinfo.getTeacher();
 			if (teacher != null) {
 
-				referenceService.Add(request, t_course_teaching_class_id, t_course_teaching_class_reference_type_id, teacher.getId(), title,
+				referenceService.add(request, t_course_teaching_class_id, t_course_teaching_class_reference_type_id, teacher.getId(), title,
 						content, files);
 
 			}
@@ -113,7 +113,7 @@ public class CourseTeachingClassReferenceController extends CourseTeachingClassB
 			@PathVariable String t_course_teaching_class_reference_type_id,
 			@PathVariable String t_course_teaching_class_reference_id) {
 
-		referenceService.DeleteByID(request, t_course_teaching_class_reference_id);
+		referenceService.deleteByID(request, t_course_teaching_class_reference_id);
 
 		ModelAndView mav = new ModelAndView();
 
@@ -177,7 +177,7 @@ public class CourseTeachingClassReferenceController extends CourseTeachingClassB
 			Teacher teacher = userinfo.getTeacher();
 			if (teacher != null) {
 
-				referenceService.Update(request, t_course_teaching_class_reference_id, teacher.getId(), updatetitle, updatecontent, files);
+				referenceService.update(request, t_course_teaching_class_reference_id, teacher.getId(), updatetitle, updatecontent, files);
 
 			}
 		}

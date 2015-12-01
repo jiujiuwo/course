@@ -63,9 +63,9 @@
 
 
 			<ol class="breadcrumb">
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Library</a></li>
-				<li class="active">Data</li>
+				<li><a href="#">课程系统</a></li>
+				<li><a href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseteachingclass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
+				<li class="active">课程论坛</li>
 			</ol>
 
 			<div class="CourseContentHeader">${selectedCourseTeachingClassViewData.teachingclass.name}论坛</div>
@@ -193,17 +193,20 @@
 					<c:if test="${pagedForumTopicViewData.totalCount>0}">
 						<div class="gridseparator"></div>
 					</c:if>
-
+					
+					
 				</div>
 
 
 
 
-				<c:if test="${not empty selectedCourseTeachingClassID  }">
-					<mathtop:PageBar
-						pageUrl="/courseforum/list-{selectedCourseTeachingClassID}.html"
-						pageAttrKey="pagedForumTopicViewData" />
-				</c:if>
+				<c:if
+							test="${not empty selectedCourseTeachingClassID}">
+							<mathtop:PageBar
+								pageUrl="/courseforum/list-${selectedCourseTeachingClassID}.html"
+								pageAttrKey="pagedForumTopicViewData" />        
+						</c:if>
+
 
 			</div>
 

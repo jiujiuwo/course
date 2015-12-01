@@ -47,4 +47,16 @@ public class CourseTeachingClassHomeworkDelayed extends BaseDomain {
 		this.enddate = enddate;
 	}  
 	
+	/**
+	 * 学生是否允许提交作业
+	 * */
+	public boolean isCanStudentSubmit() {
+		Date now = new Date();
+
+		if (now.getTime() > pubdate.getTime() && now.getTime() < enddate.getTime())
+			return true;
+
+		return false;
+	}
+	
 }

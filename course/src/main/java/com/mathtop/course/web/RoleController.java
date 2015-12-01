@@ -79,7 +79,7 @@ public class RoleController extends BaseController {
 			
 
 		} else {
-			roleService.Add(ct.getName(), ct.getNote());
+			roleService.add(ct.getName(), ct.getNote());
 
 			String toUrl = ("list.html");
 			mav.setViewName("redirect:" + toUrl);
@@ -98,7 +98,7 @@ public class RoleController extends BaseController {
 	@RequestMapping(value = "/DELETE-{ctId}", method = RequestMethod.GET)
 	public ModelAndView DELETE(@PathVariable String ctId) {
 		if (ctId != null)
-			roleService.DELETE(ctId);
+			roleService.deleteById(ctId);
 
 		ModelAndView mav = new ModelAndView();
 		String toUrl = ("list.html");

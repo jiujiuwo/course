@@ -42,9 +42,9 @@
 
 
 	<c:if test="${selectedCourseTeachingClassID!=null}">
-		
-			<%@ include file="../../shared/CourseTeachingClassInfo.jsp"%>
-		
+
+		<%@ include file="../../shared/CourseTeachingClassInfo.jsp"%>
+
 		<div id="DocumentPageTopSeparatorLine"></div>
 	</c:if>
 
@@ -178,11 +178,13 @@
 										<c:choose>
 											<c:when test="${data.received.hasRead}">
 												<a
-													href="<c:url value="/mailbox/receivedcontentwithcourse-${selectedCourseTeachingClassID}-${data.received.id}.html"/>"><span class="text-success">${data.received.subject}</span></a>
+													href="<c:url value="/mailbox/receivedcontentwithcourse-${selectedCourseTeachingClassID}-${data.received.id}.html"/>"><span
+													class="text-success">${data.received.subject}</span></a>
 											</c:when>
 											<c:otherwise>
 												<strong><a
-													href="<c:url value="/mailbox/receivedcontentwithcourse-${selectedCourseTeachingClassID}-${data.received.id}.html"/>"><span class="text-info">${data.received.subject}</span></a></strong>
+													href="<c:url value="/mailbox/receivedcontentwithcourse-${selectedCourseTeachingClassID}-${data.received.id}.html"/>"><span
+														class="text-info">${data.received.subject}</span></a></strong>
 											</c:otherwise>
 										</c:choose>
 									</c:when>
@@ -190,11 +192,13 @@
 										<c:choose>
 											<c:when test="${data.received.hasRead}">
 												<a
-													href="<c:url value="/mailbox/receivedcontent-${data.received.id}.html"/>"><span class="text-success">${data.received.subject}</span></a>
+													href="<c:url value="/mailbox/receivedcontent-${data.received.id}.html"/>"><span
+													class="text-success">${data.received.subject}</span></a>
 											</c:when>
 											<c:otherwise>
 												<strong><a
-													href="<c:url value="/mailbox/receivedcontent-${data.received.id}.html"/>"><span class="text-info">${data.received.subject}</span></a></strong>
+													href="<c:url value="/mailbox/receivedcontent-${data.received.id}.html"/>"><span
+														class="text-info">${data.received.subject}</span></a></strong>
 											</c:otherwise>
 										</c:choose>
 									</c:otherwise>
@@ -229,11 +233,19 @@
 
 
 
-				<c:if test="${not empty selectedCourseTeachingClassID  }">
-					<mathtop:PageBar
-						pageUrl="/courseforum/list-{selectedCourseTeachingClassID}.html"
-						pageAttrKey="pagedMailBoxReceivedViewData" />
-				</c:if>
+				<c:choose>
+					<c:when test="${not empty selectedCourseTeachingClassID}">
+						<mathtop:PageBar
+							pageUrl="/mailbox/receivedlistwithcourse-${selectedCourseTeachingClassID}.html"
+							pageAttrKey="pagedMailBoxReceivedViewData" />
+					</c:when>
+					<c:otherwise>
+						<mathtop:PageBar
+							pageUrl="/mailbox/receivedlist.html"
+							pageAttrKey="pagedMailBoxReceivedViewData" />
+					</c:otherwise>
+				</c:choose>
+
 
 			</div>
 

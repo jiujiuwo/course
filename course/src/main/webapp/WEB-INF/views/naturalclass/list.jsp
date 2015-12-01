@@ -109,7 +109,7 @@
 					<td style="width: 10px;"></td>
 					<td><div class="btn-group" role="group" aria-label="...">
 							<button type="button" class="btn btn-default btn-sm"
-								data-toggle="modal" data-target="#addModal">增加</button>
+								 onclick="onAdd()">增加</button>
 
 							<button type="button" class="btn btn-default btn-sm"
 								data-toggle="modal" data-target="#myModal">删除</button>
@@ -405,6 +405,21 @@
 				ShowInfoMsg("搜索内容不能为空");
 
 		}
+		
+		//增加
+		function onAdd(){	
+			
+			
+			var schoolid = $('#SchoolSelectControl').val();
+			var departmentid = $('#departmentSelectControl').val();
+
+			
+			$('#addModal').find('.modal-body #SchoolSelectControlAdd').val(schoolid);
+
+			$('#addModal').find('.modal-body #DepartmentSelectControlAdd').val(departmentid);
+
+			$('#addModal').modal('show');
+		}
 
 		function onUpdate(id) {
 			var url = "location='<c:url value="/${pagedURI}/update-"/>" + id + ".html'";
@@ -464,6 +479,34 @@
 						});
 
 					});
+		
+		
+		$("#SchoolSelectControlAdd").change(
+				function() {
+					var selt_school_id = $("#SchoolSelectControlAdd").val();
+
+					var url = "<c:url value='/department/'/>"
+
+					url = url + "selectbyschool-" + selt_school_id
+							+ ".json";
+
+					var departmentjson;
+					$("#DepartmentSelectControlAdd").empty();
+					$.get(url, function(data, status) {
+						if (status == "success") {
+
+							for (var i = 0; i < data.length; i++) {
+								$("#DepartmentSelectControlAdd").append(
+										"<option value='"+data[i].id+"'>"
+												+ data[i].name
+												+ "</option>");
+							}						
+							
+						}
+					});
+
+				});
+		
 	<%//系部发生变化%>
 		$("#departmentSelectControl").change(function() {
 				var t_department_id = $("#departmentSelectControl").val();

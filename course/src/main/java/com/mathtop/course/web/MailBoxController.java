@@ -28,7 +28,7 @@ import com.mathtop.course.domain.UserSessionInfo;
 import com.mathtop.course.service.MailBoxFileName;
 import com.mathtop.course.service.MailBoxReceivedService;
 import com.mathtop.course.service.MailBoxSendService;
-import com.mathtop.course.service.TeachingClassService;
+import com.mathtop.course.service.CourseTeachingClassService;
 
 @Controller
 @RequestMapping("/mailbox")
@@ -44,7 +44,7 @@ public class MailBoxController extends CourseTeachingClassBaseController {
 	private MailBoxReceivedService mailboxReceivedService;
 
 	@Autowired
-	TeachingClassService teachingclassService;
+	CourseTeachingClassService teachingclassService;
 
 	@Autowired
 	UserInfoViewDataDao userinfoDao;
@@ -219,8 +219,8 @@ public class MailBoxController extends CourseTeachingClassBaseController {
 					/**
 					 * 注意，文件files仅在Send中处理，其在ReceivedFile中添加纪录
 					 */
-					List<MailBoxFileName> list = mailboxSendService.Add(request, t_user_id_from, t_user_id_to, subject, content, files);
-					mailboxReceivedService.Add(request, t_user_id_from, t_user_id_to, subject, content, list);
+					List<MailBoxFileName> list = mailboxSendService.add(request, t_user_id_from, t_user_id_to, subject, content, files);
+					mailboxReceivedService.add(request, t_user_id_from, t_user_id_to, subject, content, list);
 				}
 
 			}
@@ -241,7 +241,7 @@ public class MailBoxController extends CourseTeachingClassBaseController {
 			@PathVariable String t_mail_box_received_id) {
 
 		ModelAndView mav = new ModelAndView();
-		mailboxReceivedService.DeleteByID(request, t_mail_box_received_id);
+		mailboxReceivedService.deleteByID(request, t_mail_box_received_id);
 		mav.setViewName("redirect:/mailbox/receivedlistwithcourse-" + t_course_teaching_class_id + ".html");
 
 		return mav;
@@ -258,7 +258,7 @@ public class MailBoxController extends CourseTeachingClassBaseController {
 	public ModelAndView deletereceivedWithoutCourse(HttpServletRequest request, @PathVariable String t_mail_box_received_id) {
 
 		ModelAndView mav = new ModelAndView();
-		mailboxReceivedService.DeleteByID(request, t_mail_box_received_id);
+		mailboxReceivedService.deleteByID(request, t_mail_box_received_id);
 
 		mav.setViewName("redirect:/mailbox/receivedlist" + ".html");
 
@@ -277,7 +277,7 @@ public class MailBoxController extends CourseTeachingClassBaseController {
 			@PathVariable String t_mail_box_send_id) {
 
 		ModelAndView mav = new ModelAndView();
-		mailboxSendService.DeleteByID(request, t_mail_box_send_id);
+		mailboxSendService.deleteByID(request, t_mail_box_send_id);
 		mav.setViewName("redirect:/mailbox/sendlistwithcourse-" + t_course_teaching_class_id + ".html");
 
 		return mav;
@@ -294,7 +294,7 @@ public class MailBoxController extends CourseTeachingClassBaseController {
 	public ModelAndView deletesendWithoutCourse(HttpServletRequest request, @PathVariable String t_mail_box_send_id) {
 
 		ModelAndView mav = new ModelAndView();
-		mailboxSendService.DeleteByID(request, t_mail_box_send_id);
+		mailboxSendService.deleteByID(request, t_mail_box_send_id);
 
 		mav.setViewName("redirect:/mailbox/sendlist" + ".html");
 
@@ -317,7 +317,7 @@ public class MailBoxController extends CourseTeachingClassBaseController {
 		// 设置课程基本信息，包括授课、作业类型等
 		SetCourseTeachingClassBaseInfo(view, t_course_teaching_class_id);
 
-		ReceivedContent(view, t_mail_box_received_id);
+		receivedContent(view, t_mail_box_received_id);
 
 		view.setViewName("mailbox/receivedcontent");
 		return view;
@@ -336,18 +336,18 @@ public class MailBoxController extends CourseTeachingClassBaseController {
 
 		ModelAndView view = new ModelAndView();
 
-		ReceivedContent(view, t_mail_box_received_id);
+		receivedContent(view, t_mail_box_received_id);
 
 		view.setViewName("mailbox/receivedcontent");
 		return view;
 
 	}
 
-	private void ReceivedContent(ModelAndView view, String t_mail_box_received_id) {
+	private void receivedContent(ModelAndView view, String t_mail_box_received_id) {
 		MailBoxReceivedViewData selectedMailBoxReceivedViewData = mailboxReceivedService.getMailBoxSendViewDataByID(t_mail_box_received_id);
 		view.addObject(SelectedObjectConst.Selected_MailBoxReceivedViewData, selectedMailBoxReceivedViewData);
 		
-		mailboxReceivedService.SetRead(t_mail_box_received_id);
+		mailboxReceivedService.setRead(t_mail_box_received_id);
 	}
 
 	/**

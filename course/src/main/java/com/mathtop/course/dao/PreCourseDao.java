@@ -15,22 +15,45 @@ import com.mathtop.course.utility.GUID;
 @Repository
 public class PreCourseDao extends BaseDao<PreCourse> {
 
-	private final String GET_PRECOURSE_BY_COURSE_ID_THIS = "select id,name"
-			+ " from t_course " + " where t_course.id in" + " ("
-			+ " select t_course_id_pre" + " from t_precourse"
-			+ " where t_precourse.t_course_id_this=?)" ;
+	private final String GET_PRECOURSE_BY_COURSE_ID_THIS = "select id,name" + " from t_course " + " where t_course.id in" + " ("
+			+ " select t_course_id_pre" + " from t_precourse" + " where t_precourse.t_course_id_this=?)";
 	private final String GET_PRECOURSE_COUNT_BY_COURSE_ID_THIS = "SELECT t_user_id,student_num FROM t_student WHERE id=?";
 
 	private final String INSERT_PRECOURSE = "INSERT INTO t_precourse(id,t_course_id_this,t_course_id_pre) VALUES(?,?,?)";
+
+	// DELETE
+	private String DELETE_BY_ID = "DELETE FROM t_precourse WHERE id=?";
+	private String DELETE_BY_COURSE_ID = "DELETE FROM t_precourse WHERE t_course_id_this=?";
+
+	/* 增加 */
+	public String add(String t_course_id_this, String t_course_id_pre) {
+		String id = GUID.getGUID();
+
+		Object params[] = new Object[] { id, t_course_id_this, t_course_id_pre };
+		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR };
+		getJdbcTemplate().update(INSERT_PRECOURSE, params, types);
+
+		return id;
+	}
+
+	public void deleteById(String id) {
+		Object params[] = new Object[] { id };
+		int types[] = new int[] { Types.VARCHAR };
+		getJdbcTemplate().update(DELETE_BY_ID, params, types);
+	}
+	
+	public void deleteByCourseId(String t_course_id) {
+		Object params[] = new Object[] { t_course_id };
+		int types[] = new int[] { Types.VARCHAR };
+		getJdbcTemplate().update(DELETE_BY_COURSE_ID, params, types);
+	}
 
 	/**
 	 * */
 	long getCount(String t_course_id_this) {
 
-		return getJdbcTemplate().queryForObject(
-				GET_PRECOURSE_COUNT_BY_COURSE_ID_THIS,
-				new Object[] { t_course_id_this }, new int[] { Types.VARCHAR },
-				Long.class);
+		return getJdbcTemplate().queryForObject(GET_PRECOURSE_COUNT_BY_COURSE_ID_THIS, new Object[] { t_course_id_this },
+				new int[] { Types.VARCHAR }, Long.class);
 	}
 
 	private List<PreCourse> getData(String t_course_id_this) {
@@ -39,38 +62,29 @@ public class PreCourseDao extends BaseDao<PreCourse> {
 
 		PreCourse pc = new PreCourse();
 		pc.setT_course_id_this(t_course_id_this);
-		
+
 		List<String> preid = new ArrayList<String>();
 		List<String> prename = new ArrayList<String>();
-		
-		
 
-		getJdbcTemplate().query(GET_PRECOURSE_BY_COURSE_ID_THIS,
-				new Object[] { t_course_id_this }, new RowCallbackHandler() {
+		getJdbcTemplate().query(GET_PRECOURSE_BY_COURSE_ID_THIS, new Object[] { t_course_id_this }, new RowCallbackHandler() {
 
-					@Override
-					public void processRow(ResultSet rs) throws SQLException {
+			@Override
+			public void processRow(ResultSet rs) throws SQLException {
 
-						String id=rs.getString("id");
-						preid.add(id);
-						String name=rs.getString("name");
-						prename.add(name);
-					}
+				String id = rs.getString("id");
+				preid.add(id);
+				String name = rs.getString("name");
+				prename.add(name);
+			}
 
-				});
-		
-		
+		});
+
 		int nPreIdSize = preid.size();
-		if(nPreIdSize>0){
-		
-			
-			pc.setT_course_id_pre(preid
-						.toArray(new String[nPreIdSize]));
-			pc.setT_course_pre_name(prename
-						.toArray(new String[nPreIdSize]));
-				
-			
-			
+		if (nPreIdSize > 0) {
+
+			pc.setT_course_id_pre(preid.toArray(new String[nPreIdSize]));
+			pc.setT_course_pre_name(prename.toArray(new String[nPreIdSize]));
+
 			list.add(pc);
 		}
 
@@ -96,17 +110,6 @@ public class PreCourseDao extends BaseDao<PreCourse> {
 
 		return new Page<PreCourse>(0, totalCount, (int) totalCount, data);
 
-	}
-
-	/* 增加 */
-	public String add(String t_course_id_this, String t_course_id_pre) {
-		String id = GUID.getGUID();
-
-		Object params[] = new Object[] { id, t_course_id_this, t_course_id_pre };
-		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR };
-		getJdbcTemplate().update(INSERT_PRECOURSE, params, types);
-
-		return id;
 	}
 
 }

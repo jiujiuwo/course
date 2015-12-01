@@ -175,7 +175,7 @@
 									<c:when test="${selectedCourseTeachingClassID!=null}">
 										<a
 											href="<c:url value="/mailbox/sendcontentwithcourse-${selectedCourseTeachingClassID}-${data.send.id}.html"/>"><span class="text-success">${data.send.subject}</span></a>
-										</strong>
+										
 
 									</c:when>
 									<c:otherwise>
@@ -213,11 +213,18 @@
 
 
 
-				<c:if test="${not empty selectedCourseTeachingClassID  }">
-					<mathtop:PageBar
-						pageUrl="/courseforum/list-{selectedCourseTeachingClassID}.html"
-						pageAttrKey="pagedMailBoxSendViewData" />
-				</c:if>
+				<c:choose>
+					<c:when test="${not empty selectedCourseTeachingClassID}">
+						<mathtop:PageBar
+							pageUrl="/mailbox/sendlistwithcourse-${selectedCourseTeachingClassID}.html"
+							pageAttrKey="pagedMailBoxSendViewData" />
+					</c:when>
+					<c:otherwise>
+						<mathtop:PageBar
+							pageUrl="/mailbox/sendlist.html"
+							pageAttrKey="pagedMailBoxSendViewData" />
+					</c:otherwise>
+				</c:choose>
 
 			</div>
 

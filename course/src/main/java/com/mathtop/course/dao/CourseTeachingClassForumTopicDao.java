@@ -44,6 +44,9 @@ public class CourseTeachingClassForumTopicDao extends BaseDao<CourseTeachingClas
 	private final String GET_FLAG_BY_ID = "SELECT flag FROM t_course_teaching_class_forum_topic WHERE id=?";
 	private final String GET_BY_COURSE_TEACHING_CLASS_ID = "SELECT id,t_user_id ,title,content,created_date,last_modified_date,view_count,flag FROM t_course_teaching_class_forum_topic WHERE t_course_teaching_class_id=?";
 	private final String GET_BY_ID = "SELECT t_course_teaching_class_id,t_user_id ,title,content,created_date,last_modified_date,view_count,flag FROM t_course_teaching_class_forum_topic WHERE id=?";
+	private final String GET_BY_USER_ID = "SELECT t_course_teaching_class_id,title,content,created_date,last_modified_date,view_count,flag FROM t_course_teaching_class_forum_topic WHERE t_user_id=?";
+	private final String GET_BY_COURSE_TEACHING_CLASS_ID_AND_USER_ID = "SELECT title,content,created_date,last_modified_date,view_count,flag FROM t_course_teaching_class_forum_topic WHERE t_course_teaching_class_id=? and t_user_id=?";
+	
 	private String DELETE_BY_ID = "DELETE FROM t_course_teaching_class_forum_topic WHERE id=?";
 	private String DELETE_BY_COURSE_TEACHING_CLASS_ID = "DELETE FROM t_course_teaching_class_forum_topic WHERE t_course_teaching_class_id=?";
 	private String DELETE_BY_USER_ID = "DELETE FROM t_course_teaching_class_forum_topic WHERE t_user_id=?";
@@ -107,6 +110,49 @@ public class CourseTeachingClassForumTopicDao extends BaseDao<CourseTeachingClas
 		incViewCount(id);
 	}
 
+	
+	
+	public String add(String t_course_teaching_class_id, String t_user_id, String title, String content, String created_date,
+			String last_modified_date) {
+		return add(t_course_teaching_class_id, t_user_id, title, content, DateTimeSql.GetDateTime(created_date),
+				DateTimeSql.GetDateTime(last_modified_date));
+	}
+
+	public String add(String t_course_teaching_class_id, String t_user_id, String title, String content, Date created_date,
+			Date last_modified_date) {
+		String id = GUID.getGUID();
+
+		Object params[] = new Object[] { id, t_course_teaching_class_id, t_user_id, title, content, created_date, last_modified_date, 0, 0 };
+		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.TIMESTAMP,
+				Types.TIMESTAMP, Types.INTEGER, Types.INTEGER };
+		getJdbcTemplate().update(INSERT_FORUM_TOPIC, params, types);
+		return id;
+	}
+
+	public void deleteById(String id) {
+		Object params[] = new Object[] { id };
+		int types[] = new int[] { Types.VARCHAR };
+		getJdbcTemplate().update(DELETE_BY_ID, params, types);
+	}
+
+	public void deleteByCourseTeachingClassId(String t_course_teaching_class_id) {
+		Object params[] = new Object[] { t_course_teaching_class_id };
+		int types[] = new int[] { Types.VARCHAR };
+		getJdbcTemplate().update(DELETE_BY_COURSE_TEACHING_CLASS_ID, params, types);
+	}
+
+	public void deleteByt_user_id(String t_user_id) {
+		Object params[] = new Object[] { t_user_id };
+		int types[] = new int[] { Types.VARCHAR };
+		getJdbcTemplate().update(DELETE_BY_USER_ID, params, types);
+	}
+
+	long getCount(String t_group_id) {
+
+		return getJdbcTemplate().queryForObject(GET_COUNT_BY_COURSE_TEACHING_CLASS_ID, new Object[] { t_group_id },
+				new int[] { Types.VARCHAR }, Long.class);
+	}
+	
 	/*
 	 * 根据用户ID得到用户
 	 */
@@ -193,52 +239,71 @@ public class CourseTeachingClassForumTopicDao extends BaseDao<CourseTeachingClas
 		return list;
 	}
 
-	public String add(String t_course_teaching_class_id, String t_user_id, String title, String content, String created_date,
-			String last_modified_date) {
-		return add(t_course_teaching_class_id, t_user_id, title, content, DateTimeSql.GetDateTime(created_date),
-				DateTimeSql.GetDateTime(last_modified_date));
+	/**
+	 * 根据t_user_id得到论坛id
+	 * */
+	public List<CourseTeachingClassForumTopic> getByUserID(String t_user_id) {
+
+		List<CourseTeachingClassForumTopic> list = new ArrayList<CourseTeachingClassForumTopic>();
+
+		getJdbcTemplate().query(GET_BY_USER_ID, new Object[] { t_user_id }, new RowCallbackHandler() {
+
+			@Override
+			public void processRow(ResultSet rs) throws SQLException {
+				CourseTeachingClassForumTopic topic = new CourseTeachingClassForumTopic();
+				topic.setId(rs.getString("id"));
+				topic.setT_course_teaching_class_id(rs.getString("t_course_teaching_class_id"));
+				topic.setT_user_id(t_user_id);
+				topic.setCreated_date(DateTimeSql.GetDateTime(rs.getString("created_date")));
+				topic.setLast_modified_date(DateTimeSql.GetDateTime(rs.getString("last_modified_date")));
+				topic.setTitle(rs.getString("title"));
+				topic.setContent(rs.getString("content"));
+				topic.setView_count(Integer.parseInt(rs.getString("view_count")));
+				topic.setFlag(Integer.parseInt(rs.getString("flag")));
+
+				list.add(topic);
+
+			}
+
+		});
+
+		return list;
+	}
+	
+	/**
+	 * 根据t_course_teaching_class_id和t_user_id得到论坛id
+	 * */
+	public List<CourseTeachingClassForumTopic> getByCourseTeachingClassIDAndUserID(String t_course_teaching_class_id,String t_user_id) {
+
+		List<CourseTeachingClassForumTopic> list = new ArrayList<CourseTeachingClassForumTopic>();
+
+		getJdbcTemplate().query(GET_BY_COURSE_TEACHING_CLASS_ID_AND_USER_ID, new Object[] {t_course_teaching_class_id, t_user_id }, new RowCallbackHandler() {
+
+			@Override
+			public void processRow(ResultSet rs) throws SQLException {
+				CourseTeachingClassForumTopic topic = new CourseTeachingClassForumTopic();
+				topic.setId(rs.getString("id"));
+				topic.setT_course_teaching_class_id(t_course_teaching_class_id);
+				topic.setT_user_id(t_user_id);
+				topic.setCreated_date(DateTimeSql.GetDateTime(rs.getString("created_date")));
+				topic.setLast_modified_date(DateTimeSql.GetDateTime(rs.getString("last_modified_date")));
+				topic.setTitle(rs.getString("title"));
+				topic.setContent(rs.getString("content"));
+				topic.setView_count(Integer.parseInt(rs.getString("view_count")));
+				topic.setFlag(Integer.parseInt(rs.getString("flag")));
+
+				list.add(topic);
+
+			}
+
+		});
+
+		return list;
 	}
 
-	public String add(String t_course_teaching_class_id, String t_user_id, String title, String content, Date created_date,
-			Date last_modified_date) {
-		String id = GUID.getGUID();
-
-		Object params[] = new Object[] { id, t_course_teaching_class_id, t_user_id, title, content, created_date, last_modified_date, 0, 0 };
-		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.TIMESTAMP,
-				Types.TIMESTAMP, Types.INTEGER, Types.INTEGER };
-		getJdbcTemplate().update(INSERT_FORUM_TOPIC, params, types);
-		return id;
-	}
-
-	public void deleteById(String id) {
-		Object params[] = new Object[] { id };
-		int types[] = new int[] { Types.VARCHAR };
-		getJdbcTemplate().update(DELETE_BY_ID, params, types);
-	}
-
-	public void deleteByCourseTeachingClassId(String t_course_teaching_class_id) {
-		Object params[] = new Object[] { t_course_teaching_class_id };
-		int types[] = new int[] { Types.VARCHAR };
-		getJdbcTemplate().update(DELETE_BY_COURSE_TEACHING_CLASS_ID, params, types);
-	}
-
-	public void deleteByt_user_id(String t_user_id) {
-		Object params[] = new Object[] { t_user_id };
-		int types[] = new int[] { Types.VARCHAR };
-		getJdbcTemplate().update(DELETE_BY_USER_ID, params, types);
-	}
-
-	long getCount(String t_group_id) {
-
-		return getJdbcTemplate().queryForObject(GET_COUNT_BY_COURSE_TEACHING_CLASS_ID, new Object[] { t_group_id },
-				new int[] { Types.VARCHAR }, Long.class);
-	}
 
 	private List<CourseTeachingClassForumTopicViewData> PageQuery(String t_course_teaching_class_id, int PageBegin, int PageSize) {
 
-		PageBegin -= 1;
-		if (PageBegin < 0)
-			PageBegin = 0;
 
 		List<CourseTeachingClassForumTopicViewData> list = new ArrayList<CourseTeachingClassForumTopicViewData>();
 

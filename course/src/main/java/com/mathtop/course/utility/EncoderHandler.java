@@ -151,4 +151,8 @@ public class EncoderHandler {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public static String encode(String str){
+		return encodeByMD5(str);
+	}
 }

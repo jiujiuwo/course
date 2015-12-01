@@ -84,7 +84,7 @@ public class CourseTeachingClassHomeworkSubmitController extends CourseTeachingC
 			return mav;
 
 		}
-		
+
 		if (!filenameformatparser.IsSubmitFileContentIsNotNull(request, files)) {
 
 			redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg, "文件内容为空，请修改.");
@@ -93,8 +93,7 @@ public class CourseTeachingClassHomeworkSubmitController extends CourseTeachingC
 					+ t_course_teaching_class_homeworktype_id + "-" + t_course_teaching_class_homework_baseinfo_id + ".html");
 			return mav;
 		}
-		
-		
+
 		if (!filenameformatparser.IsSubmitFileCountRight(request, files, t_course_teaching_class_homework_baseinfo_id)) {
 
 			redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg, "文件个数不符合要求，请修改.");
@@ -103,7 +102,6 @@ public class CourseTeachingClassHomeworkSubmitController extends CourseTeachingC
 					+ t_course_teaching_class_homeworktype_id + "-" + t_course_teaching_class_homework_baseinfo_id + ".html");
 			return mav;
 		}
-		
 
 		if (!filenameformatparser.IsSubmitFileNameFormatRight(request, files, t_course_teaching_class_homework_baseinfo_id, t_student_id)) {
 
@@ -114,8 +112,6 @@ public class CourseTeachingClassHomeworkSubmitController extends CourseTeachingC
 			return mav;
 		}
 
-		
-
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
 
@@ -123,7 +119,7 @@ public class CourseTeachingClassHomeworkSubmitController extends CourseTeachingC
 			Student student = userinfo.getStudent();
 			if (student != null) {
 
-				homeworkSubmitService.Add(request, t_course_teaching_class_homework_baseinfo_id, t_student_id, title, content, files);
+				homeworkSubmitService.add(request, t_course_teaching_class_homework_baseinfo_id, t_student_id, title, content, files);
 
 			}
 		}
@@ -136,6 +132,8 @@ public class CourseTeachingClassHomeworkSubmitController extends CourseTeachingC
 		return mav;
 
 	}
+	
+	
 
 	/**
 	 * 删除
@@ -152,7 +150,7 @@ public class CourseTeachingClassHomeworkSubmitController extends CourseTeachingC
 		CourseTeachingClassHomeworkSubmitBaseinfo submitbaseinfo = homeworkSubmitService
 				.getByID(t_course_teaching_class_homework_submit_baseinfo_id);
 
-		homeworkSubmitService.DeleteByID(request, t_course_teaching_class_homework_submit_baseinfo_id);
+		homeworkSubmitService.deleteByID(request, t_course_teaching_class_homework_submit_baseinfo_id);
 
 		ModelAndView mav = new ModelAndView();
 
@@ -170,7 +168,7 @@ public class CourseTeachingClassHomeworkSubmitController extends CourseTeachingC
 	 * @return
 	 */
 	@RequestMapping(value = "/update-{t_course_teaching_class_id}-{t_course_teaching_class_homeworktype_id}-{t_course_teaching_class_homework_submit_baseinfo_id}")
-	public ModelAndView update(HttpServletRequest request, @PathVariable String t_course_teaching_class_id,
+	public ModelAndView update(HttpServletRequest request, RedirectAttributes redirectAttributes, @PathVariable String t_course_teaching_class_id,
 			@PathVariable String t_course_teaching_class_homeworktype_id,
 			@PathVariable String t_course_teaching_class_homework_submit_baseinfo_id, @RequestParam("file") MultipartFile[] files) {
 
@@ -182,15 +180,60 @@ public class CourseTeachingClassHomeworkSubmitController extends CourseTeachingC
 
 		UserSessionInfo userinfo = getSessionUser(request);
 
+		
+		
+		String t_student_id = null;
+		String t_course_teaching_class_homework_baseinfo_id=submitbaseinfo.getT_course_teaching_class_homework_baseinfo_id();
+
 		if (userinfo != null) {
 			Student student = userinfo.getStudent();
 			if (student != null) {
-				homeworkSubmitService.Update(request, t_course_teaching_class_homework_submit_baseinfo_id, student.getId(), updatetitle,
-						updatecontent, files);
-
+				t_student_id = student.getId();
 			}
 		}
+		
 		ModelAndView mav = new ModelAndView();
+		
+		if (t_student_id == null) {
+			redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg, "学生不能为空，请修改.");
+
+			mav.setViewName("redirect:/coursehomeworksubmit/list-" + t_course_teaching_class_id + "-"
+					+ t_course_teaching_class_homeworktype_id + "-" + t_course_teaching_class_homework_baseinfo_id + ".html");
+			return mav;
+
+		}
+
+		if (!filenameformatparser.IsSubmitFileContentIsNotNull(request, files)) {
+
+			redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg, "文件内容为空，请修改.");
+
+			mav.setViewName("redirect:/coursehomeworksubmit/list-" + t_course_teaching_class_id + "-"
+					+ t_course_teaching_class_homeworktype_id + "-" + t_course_teaching_class_homework_baseinfo_id + ".html");
+			return mav;
+		}
+
+		if (!filenameformatparser.IsSubmitFileCountRight(request, files, t_course_teaching_class_homework_baseinfo_id)) {
+
+			redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg, "文件个数不符合要求，请修改.");
+
+			mav.setViewName("redirect:/coursehomeworksubmit/list-" + t_course_teaching_class_id + "-"
+					+ t_course_teaching_class_homeworktype_id + "-" + t_course_teaching_class_homework_baseinfo_id + ".html");
+			return mav;
+		}
+
+		if (!filenameformatparser.IsSubmitFileNameFormatRight(request, files, t_course_teaching_class_homework_baseinfo_id, t_student_id)) {
+
+			redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg, "文件名称不符合要求，请修改.");
+
+			mav.setViewName("redirect:/coursehomeworksubmit/list-" + t_course_teaching_class_id + "-"
+					+ t_course_teaching_class_homeworktype_id + "-" + t_course_teaching_class_homework_baseinfo_id + ".html");
+			return mav;
+		}
+		
+		homeworkSubmitService.update(request, t_course_teaching_class_homework_submit_baseinfo_id, t_student_id, updatetitle,
+				updatecontent, files);
+		
+		
 		mav.setViewName("redirect:/coursehomeworksubmit/list-" + t_course_teaching_class_id + "-" + t_course_teaching_class_homeworktype_id
 				+ "-" + submitbaseinfo.getT_course_teaching_class_homework_baseinfo_id() + ".html");
 

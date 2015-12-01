@@ -23,4 +23,8 @@ public class LoginService {
 		}
 	}
 	
+	 public void deleteByUserId(String t_user_id){
+		 loginDao.deleteByUserId(t_user_id);
+	 }
+	
 }

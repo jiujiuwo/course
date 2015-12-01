@@ -65,7 +65,7 @@ public class CourseTeachingClassHomeworkStatisticsViewDataDao extends BaseDao<Co
 
 			// 作业提交情况
 			List<CourseTeachingClassHomeworkSubmitBaseinfoViewData> homeworksubmit = submitDao
-					.getByCourseTeachingClassHomeworkBaseinfoIDAndStudentID(baseinfo.getId(), stu.getT_student_id());
+					.getViewDataByCourseTeachingClassHomeworkBaseinfoIDAndStudentID(baseinfo.getId(), stu.getT_student_id());
 			data.setHomeworksubmit(homeworksubmit);
 
 			// 作业批复情况

@@ -11,17 +11,25 @@ import com.mathtop.course.utility.GUID;
 
 @Repository
 public class LoginDao extends BaseDao<Login> {
-	private final String INSERT_LOGIN = "INSERT INTO t_login(id,t_user_id,login_datetime,login_ip) VALUES(?,?,?,?)";	
+	private final String INSERT_LOGIN = "INSERT INTO t_login(id,t_user_id,login_datetime,login_ip) VALUES(?,?,?,?)";
+	
 	private final String DELETE_BY_ID = "DELETE FROM t_login WHERE id=?";
+	private final String DELETE_BY_USER_ID = "DELETE FROM t_login WHERE t_user_id=?";
 
 	
 	/**
 	 * 删除指定用户的登录信息
 	 * */
-	public void deleteById(String t_user_id) {
-		Object params[] = new Object[] { t_user_id };
+	public void deleteById(String id) {
+		Object params[] = new Object[] { id };
 		int types[] = new int[] { Types.VARCHAR };
 		getJdbcTemplate().update(DELETE_BY_ID, params, types);
+	}
+	
+	public void deleteByUserId(String t_user_id) {
+		Object params[] = new Object[] { t_user_id };
+		int types[] = new int[] { Types.VARCHAR };
+		getJdbcTemplate().update(DELETE_BY_USER_ID, params, types);
 	}
 
 	/**

@@ -78,7 +78,7 @@ public class ResourceController extends BaseController {
 	@RequestMapping(value = "/DELETE-{resourceId}", method = RequestMethod.GET)
 	public ModelAndView DELETE(@PathVariable String resourceId) {
 		if (resourceId != null)
-			resourceService.DELETE(resourceId);
+			resourceService.delete(resourceId);
 
 		ModelAndView mav = new ModelAndView();
 		String toUrl = ("list.html");

@@ -14,7 +14,7 @@ import com.mathtop.course.cons.PagedObjectConst;
 import com.mathtop.course.dao.Page;
 import com.mathtop.course.domain.CourseTeachingClassHomeworkType;
 import com.mathtop.course.service.CourseTeachingClassHomeworkTypeService;
-import com.mathtop.course.service.TeachingClassService;
+import com.mathtop.course.service.CourseTeachingClassService;
 
 @Controller
 @RequestMapping("/coursehomeworktype")
@@ -27,7 +27,7 @@ public class CourseTeachingClassHomeworkTypeController extends CourseTeachingCla
 	private CourseTeachingClassHomeworkTypeService homeworktypeService;
 
 	@Autowired
-	TeachingClassService teachingclassService;
+	CourseTeachingClassService teachingclassService;
 
 	/**
 	 * 添加学院
@@ -64,7 +64,7 @@ public class CourseTeachingClassHomeworkTypeController extends CourseTeachingCla
 	public ModelAndView DELETE(HttpServletRequest request, @PathVariable String t_course_teaching_class_id,
 			@PathVariable String t_course_teaching_class_homeworktype_id) {
 
-		homeworktypeService.deleteById(t_course_teaching_class_homeworktype_id);
+		homeworktypeService.deleteById(request,t_course_teaching_class_homeworktype_id);
 
 		ModelAndView mav = new ModelAndView();
 

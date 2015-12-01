@@ -66,7 +66,7 @@ public class AttendanceModeController extends BaseController {
 			
 
 		} else {
-			attendancemodeService.Add(ct.getName(), ct.getNote());
+			attendancemodeService.add(ct.getName(), ct.getNote());
 
 			String toUrl = ("list.html");
 			mav.setViewName("redirect:" + toUrl);
@@ -85,7 +85,7 @@ public class AttendanceModeController extends BaseController {
 	@RequestMapping(value = "/DELETE-{ctId}", method = RequestMethod.GET)
 	public ModelAndView DELETE(@PathVariable String ctId) {
 		if (ctId != null)
-			attendancemodeService.DELETE(ctId);
+			attendancemodeService.deleteById(ctId);
 
 		ModelAndView mav = new ModelAndView();
 		String toUrl = ("list.html");

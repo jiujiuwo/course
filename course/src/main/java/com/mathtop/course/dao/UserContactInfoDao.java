@@ -58,6 +58,19 @@ public class UserContactInfoDao extends BaseDao<UserContactInfo> {
 			}
 		}
 	}
+	
+	public void UpdateContactInfo(String t_user_id, UserContactInfo[] usercontactinfos) {
+
+		deleteByUserId(t_user_id);
+
+		if (usercontactinfos != null) {
+			for (UserContactInfo u : usercontactinfos)
+				u.setT_user_id(t_user_id);
+
+			for (UserContactInfo u : usercontactinfos)
+				add(u);
+		}
+	}
 
 	
 	/*

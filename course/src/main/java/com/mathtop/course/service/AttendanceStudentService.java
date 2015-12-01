@@ -7,9 +7,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mathtop.course.dao.AttendanceDao;
 import com.mathtop.course.dao.AttendanceStateDao;
 import com.mathtop.course.dao.AttendanceStudentDao;
 import com.mathtop.course.dao.Page;
+import com.mathtop.course.domain.Attendance;
 import com.mathtop.course.domain.AttendanceSpecificStatistics;
 import com.mathtop.course.domain.AttendanceState;
 import com.mathtop.course.domain.AttendanceStateModeViewData;
@@ -25,6 +27,9 @@ public class AttendanceStudentService {
 	@Autowired
 	AttendanceStateDao attendanceStateDao;
 	
+	@Autowired
+	AttendanceDao attendanceDao;
+	
 	public void deleteById(String id) {
 		attendancestudentdao.deleteById(id);
 	}
@@ -33,6 +38,22 @@ public class AttendanceStudentService {
 	}
 	public void deleteByAttendanceId(String t_attendance_id){
 		attendancestudentdao.deleteByAttendanceId(t_attendance_id);
+	}
+	public void deleteByStudentId(String t_student_id){
+		attendancestudentdao.deleteByStudentId(t_student_id);
+	}
+	
+	/**
+	 * 删除指定学生、指定课程的考勤
+	 * */
+	public void deleteByCourseTeachingClassIdAndStudentId(String t_course_teaching_class_id,String t_student_id){
+		List<Attendance> listAttendance=attendanceDao.getByCourseTeachingClassID(t_course_teaching_class_id);
+		if(listAttendance==null)
+			return;
+		for(Attendance a:listAttendance){
+			attendancestudentdao.deleteByAttendanceIdStudentId(a.getId(), t_student_id);
+		}
+		
 	}
 	public String add(String t_attendance_id, String t_student_id, String a_ttendance_state_id, String a_ttendance_mode_id,Date checking_in_datetime) {
 		return attendancestudentdao.add(t_attendance_id, t_student_id, a_ttendance_state_id, a_ttendance_mode_id,checking_in_datetime);

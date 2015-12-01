@@ -116,7 +116,7 @@
 					<label for="naturalclassSelectControl"
 						class="col-sm-1 control-label">课程类别</label>
 					<div class="col-md-3">
-						<select id="naturalclassSelectControl" name="coursestyleID"
+						<select id="courseStyleSelectControl" name="coursestyleID"
 							class="form-control input-sm">
 							<c:forEach var="d" items="${pagedCourseStyle.result}">
 								<option value="${d.id}">${d.name}</option>
@@ -126,7 +126,7 @@
 
 					<label for="course_type" class="col-sm-1 control-label">课程性质</label>
 					<div class="col-md-3">
-						<select id="naturalclassSelectControl" name="coursetypeID"
+						<select id="courseTypeSelectControl" name="coursetypeID"
 							class="form-control input-sm">
 							<c:forEach var="d" items="${pagedCourseType.result}">
 								<option value="${d.id}">${d.name}</option>
@@ -189,7 +189,7 @@
 					</div>
 				</div>
 
-				<c:if test="${pagedPreCourse.result.size()>0}">
+				
 
 
 				<div class="form-group">
@@ -231,7 +231,7 @@
 
 				</div>
 				
-				</c:if>
+		
 
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-primary">添加</button>

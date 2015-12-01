@@ -14,7 +14,7 @@ import com.mathtop.course.cons.PagedObjectConst;
 import com.mathtop.course.dao.Page;
 import com.mathtop.course.domain.AttendanceType;
 import com.mathtop.course.service.AttendanceTypeService;
-import com.mathtop.course.service.TeachingClassService;
+import com.mathtop.course.service.CourseTeachingClassService;
 
 @Controller
 @RequestMapping("/courseattendancetype")
@@ -27,7 +27,7 @@ public class CourseTeachingClassAttendanceTypeController extends CourseTeachingC
 	private AttendanceTypeService attendancetypeService;
 
 	@Autowired
-	TeachingClassService teachingclassService;
+	CourseTeachingClassService teachingclassService;
 
 	/**
 	 * 添加学院

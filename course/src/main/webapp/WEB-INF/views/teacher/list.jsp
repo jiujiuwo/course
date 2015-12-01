@@ -3,8 +3,7 @@
 
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 
 	//设置左侧浏览状态
@@ -37,7 +36,7 @@
 <body class="home" onLoad="ShowErrMsg()">
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
-	
+
 
 	<div class="DocumentPage">
 		<div class="DocumentPageLeftArea ">
@@ -98,7 +97,7 @@
 					<td style="width: 10px;"></td>
 					<td><div class="btn-group" role="group" aria-label="...">
 							<button type="button" class="btn btn-default btn-sm"
-								onclick="window.location.href='teacher/add.html'">增加</button>
+								onclick="onAdd()">增加</button>
 
 							<button type="button" class="btn btn-default btn-sm"
 								data-toggle="modal" data-target="#myModal">删除</button>
@@ -172,7 +171,12 @@
 										</td>
 
 										<td><button type="button" class="btn btn-default btn-xs"
-												onclick="onUpdate('${dataitem.user.id}'')">修改...</button>
+												onclick="location='<c:url value="/teacher/update-${dataitem.user.id}.html"/>'">修改...</button>
+
+											<button type="button" class="btn btn-default btn-xs"
+												onclick="location='<c:url value="/teacher/setteacherpwd-${selectedt_school_id}-${dataitem.user.id}-${pagedTeacherViewData.currentPageNo }.html"/>'">修改密码...</button>
+
+
 											<button type="button" class="btn btn-default btn-xs"
 												onclick="onDelete('${dataitem.user.id}')">删除</button></td>
 									</tr>
@@ -181,8 +185,18 @@
 							</tbody>
 						</table>
 
-						<mathtop:PageBar pageUrl="/school/list.html"
-							pageAttrKey="pagedSchool" />
+						<c:choose>
+							<c:when test="${not empty selectedt_school_id }">
+								<mathtop:PageBar
+									pageUrl="/teacher/list.html?t_school_id=${selectedt_school_id }"
+									pageAttrKey="pagedTeacherViewData" />
+							</c:when>
+							<c:otherwise>
+								<mathtop:PageBar pageUrl="/teacher/list.html"
+									pageAttrKey="pagedTeacherViewData" />
+							</c:otherwise>
+						</c:choose>
+
 
 					</div>
 
@@ -280,6 +294,12 @@
 			window.location.href = url;
 		}
 
+		function onAdd() {
+			var url = "<c:url value='/teacher/add-'/>" + gett_school_id()
+					+ ".html";
+			window.location.href = url;
+		}
+
 		function onSearch() {
 			var st = document.getElementById("SearchText").value;
 
@@ -306,8 +326,8 @@
 
 		function onDelete(t_department_id) {
 			var t_school_id = gett_school_id();
-			var url = "location='<c:url value="/DELETE-"/>" + t_school_id + "-" + t_department_id
-					+ ".html'";
+			var url = "location='<c:url value="/DELETE-"/>" + t_school_id + "-"
+					+ t_department_id + ".html'";
 
 			$('#deleteModal').find('.modal-body #deleteinfo').text(
 					departmentname);

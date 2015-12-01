@@ -9,12 +9,14 @@ public class CourseTeachingClassHomeworkBaseinfoStudentViewData extends CourseTe
 	
 	private boolean studentSubmitted;//是否提交作业
 	
+	
 	public CourseTeachingClassHomeworkBaseinfoStudentViewData(CourseTeachingClassHomeworkBaseinfoViewData data){
 		this.setCourseteachingclass(data.getCourseteachingclass());
 		this.setHomeworkbaseinfo(data.getHomeworkbaseinfo());
 		this.setHomeworkFileList(data.getHomeworkFileList());
 		this.setHomeworkType(data.getHomeworkType());
 		this.setTeacher(data.getTeacher());
+		this.setHomeworkDelayedList(data.getHomeworkDelayedList());
 	}
 
 	public boolean isStudentSubmitted() {
@@ -24,6 +26,8 @@ public class CourseTeachingClassHomeworkBaseinfoStudentViewData extends CourseTe
 	public void setStudentSubmitted(boolean studentSubmitted) {
 		this.studentSubmitted = studentSubmitted;
 	}
+	
+
 
 	
 	

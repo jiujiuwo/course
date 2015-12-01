@@ -13,7 +13,7 @@ import com.mathtop.course.domain.CourseTeachingClassViewData;
 import com.mathtop.course.service.AttendanceTypeService;
 import com.mathtop.course.service.CourseTeachingClassHomeworkTypeService;
 import com.mathtop.course.service.CourseTeachingClassReferenceTypeService;
-import com.mathtop.course.service.TeachingClassService;
+import com.mathtop.course.service.CourseTeachingClassService;
 
 public class CourseTeachingClassBaseController extends BaseController {
 
@@ -21,7 +21,7 @@ public class CourseTeachingClassBaseController extends BaseController {
 	 * 自动注入
 	 */
 	@Autowired
-	TeachingClassService teachingclassService;
+	CourseTeachingClassService teachingclassService;
 
 	@Autowired
 	CourseTeachingClassHomeworkTypeService homeworkTypeService;

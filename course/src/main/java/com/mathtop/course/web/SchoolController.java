@@ -59,7 +59,7 @@ public class SchoolController extends BaseController {
 			mav.setViewName("redirect:" + toUrl);
 
 		} else {
-			schoolService.Add(school.getName(), school.getNote());
+			schoolService.add(school.getName(), school.getNote());
 
 			String toUrl=("list.html");
 			mav.setViewName("redirect:" + toUrl);
@@ -78,7 +78,7 @@ public class SchoolController extends BaseController {
 	@RequestMapping(value = "/DELETE-{t_school_id}", method = RequestMethod.GET)
 	public ModelAndView DELETE(@PathVariable String t_school_id) {
 		if (t_school_id != null)
-			schoolService.DELETE(t_school_id);
+			schoolService.deleteById(t_school_id);
 
 		ModelAndView mav = new ModelAndView();
 		String toUrl=("list.html");

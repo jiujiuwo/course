@@ -20,7 +20,7 @@ import com.mathtop.course.dao.Page;
 import com.mathtop.course.domain.CourseTeachingClassForumTopicViewData;
 import com.mathtop.course.domain.UserSessionInfo;
 import com.mathtop.course.service.CourseTeachingClassForumTopicService;
-import com.mathtop.course.service.TeachingClassService;
+import com.mathtop.course.service.CourseTeachingClassService;
 
 @Controller
 @RequestMapping("/courseforum")
@@ -33,7 +33,7 @@ public class CourseTeachingClassForumController extends CourseTeachingClassBaseC
 	private CourseTeachingClassForumTopicService forumtopicService;
 
 	@Autowired
-	TeachingClassService teachingclassService;
+	CourseTeachingClassService teachingclassService;
 
 	/**
 	 * 添加学院

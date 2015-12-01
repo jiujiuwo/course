@@ -64,9 +64,9 @@
 
 
 			<ol class="breadcrumb">
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Library</a></li>
-				<li class="active">Data</li>
+				<li><a href="#">课程系统</a></li>
+				<li><a href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseteachingclass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
+				<li class="active">${selectedCourseHomeworkTypeData.name}</li>
 			</ol>
 
 			<div class="CourseContentHeader">增加${selectedCourseTeachingClassViewData.teachingclass.name}-${selectedCourseHomeworkTypeData.name}</div>
@@ -142,6 +142,7 @@
 								<input type=checkbox name="filetype"
 									value="*.cpp;*.c;*.h;*.cc;*.hh;*.hpp;*.hh">c++文件 <input
 									type=checkbox name="filetype" value="*.java">java文件
+									<input type=checkbox name="filetype" value="*.zip">zip文件
 								<p />
 								<label for="filetypecustom" class=" control-label">自定义类型(类型之间用分号隔开，例如“*.txt;*.dat”)</label>
 								<input type="text" id="filetypecustom" class="form-control"

@@ -68,7 +68,7 @@ public class KnowledgepointTypeController extends BaseController {
 			
 
 		} else {
-			knowledgepointtypetypeService.Add(ct.getName(), ct.getNote());
+			knowledgepointtypetypeService.add(ct.getName(), ct.getNote());
 
 			String toUrl = ("list.html");
 			mav.setViewName("redirect:" + toUrl);
@@ -87,7 +87,7 @@ public class KnowledgepointTypeController extends BaseController {
 	@RequestMapping(value = "/DELETE-{ctId}", method = RequestMethod.GET)
 	public ModelAndView DELETE(@PathVariable String ctId) {
 		if (ctId != null)
-			knowledgepointtypetypeService.DELETE(ctId);
+			knowledgepointtypetypeService.deleteById(ctId);
 
 		ModelAndView mav = new ModelAndView();
 		String toUrl = ("list.html");

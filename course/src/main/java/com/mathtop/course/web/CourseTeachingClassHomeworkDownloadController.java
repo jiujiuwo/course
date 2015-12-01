@@ -31,7 +31,7 @@ public class CourseTeachingClassHomeworkDownloadController extends CourseTeachin
 	 * 自动注入
 	 */
 	@Autowired
-	private CourseTeachingClassHomeworkService exprimentService;
+	private CourseTeachingClassHomeworkService courseTeachingClassHomeworkService;
 
 	/**
 	 * 添加学院
@@ -46,7 +46,7 @@ public class CourseTeachingClassHomeworkDownloadController extends CourseTeachin
 		
 		
 
-		CourseTeachingClassHomeworkFile plan  =exprimentService.getFileByID(t_course_teaching_class_homework_file_id);
+		CourseTeachingClassHomeworkFile plan  =courseTeachingClassHomeworkService.getFileByID(t_course_teaching_class_homework_file_id);
 		if (plan == null)
 			return null;
 		
@@ -67,6 +67,9 @@ public class CourseTeachingClassHomeworkDownloadController extends CourseTeachin
 		headers.setContentDispositionFormData("attachment", fileName);
 		
 		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+		
+		
+		
 		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.OK);
 	}
 

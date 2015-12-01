@@ -18,6 +18,29 @@ public class CourseTeachingClassHomeworkBaseinfoViewData extends BaseDomain {
 	private TeacherViewData teacher;
 	private CourseTeachingClassHomeworkType homeworkType;
 	private List<CourseTeachingClassHomeworkFile> homeworkFileList;
+	private List<CourseTeachingClassHomeworkDelayed> homeworkDelayedList;
+	
+	
+	
+	/**
+	 * 学生是否允许提交作业,分两种情况，一种是正常作业，另一种是布置的迟交作业
+	 * */
+	public boolean isCanStudentSubmit() {
+		if(homeworkbaseinfo==null)
+			return false;
+		
+		if(homeworkbaseinfo.isCanStudentSubmit())
+			return true;
+		
+		if(homeworkDelayedList==null)
+			return false;
+		
+		for(CourseTeachingClassHomeworkDelayed c:homeworkDelayedList){
+			if(c.isCanStudentSubmit())
+				return true;
+		}
+		return false;
+	}
 	
 	public CourseTeachingClassHomeworkBaseinfo getHomeworkbaseinfo() {
 		return homeworkbaseinfo;
@@ -51,6 +74,14 @@ public class CourseTeachingClassHomeworkBaseinfoViewData extends BaseDomain {
 	public void setHomeworkFileList(List<CourseTeachingClassHomeworkFile> homeworkFileList) {
 		this.homeworkFileList = homeworkFileList;
 	}
+	public List<CourseTeachingClassHomeworkDelayed> getHomeworkDelayedList() {
+		return homeworkDelayedList;
+	}
+	public void setHomeworkDelayedList(List<CourseTeachingClassHomeworkDelayed> homeworkDelayedList) {
+		this.homeworkDelayedList = homeworkDelayedList;
+	}
+
+	
 	
 	
 }

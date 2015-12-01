@@ -67,7 +67,7 @@ public class ItemDifficultyController extends BaseController {
 			
 
 		} else {
-			itemdifficultyService.Add(ct.getName(), ct.getNote());
+			itemdifficultyService.add(ct.getName(), ct.getNote());
 
 			String toUrl = ("list.html");
 			mav.setViewName("redirect:" + toUrl);
@@ -86,7 +86,7 @@ public class ItemDifficultyController extends BaseController {
 	@RequestMapping(value = "/DELETE-{ctId}", method = RequestMethod.GET)
 	public ModelAndView DELETE(@PathVariable String ctId) {
 		if (ctId != null)
-			itemdifficultyService.DELETE(ctId);
+			itemdifficultyService.deleteById(ctId);
 
 		ModelAndView mav = new ModelAndView();
 		String toUrl = ("list.html");

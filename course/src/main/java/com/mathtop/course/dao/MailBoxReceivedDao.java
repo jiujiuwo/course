@@ -102,14 +102,16 @@ public class MailBoxReceivedDao extends BaseDao<MailBoxReceived> {
 	/*
 	 * 根据用户ID得到用户
 	 */
-	public MailBoxReceived getByUserIdFrom(String t_user_id_from) {
+	public List<MailBoxReceived> getByUserIdFrom(String t_user_id_from) {
 
-		MailBoxReceived received = new MailBoxReceived();
+		List<MailBoxReceived> list=new ArrayList<MailBoxReceived>();
+		
 
 		getJdbcTemplate().query(GET_BY_USER_FROM_ID, new Object[] { t_user_id_from }, new RowCallbackHandler() {
 
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
+				MailBoxReceived received = new MailBoxReceived();
 				received.setId(rs.getString("id"));
 				received.setT_user_id_from(t_user_id_from);
 				received.setT_user_id_to(rs.getString("t_user_id_to"));
@@ -118,27 +120,29 @@ public class MailBoxReceivedDao extends BaseDao<MailBoxReceived> {
 				received.setReaddate(rs.getTimestamp("readdate"));
 				received.setSubject(rs.getString("subject"));
 				received.setContent(rs.getString("content"));
+				list.add(received);
 
 			}
 
 		});
 
-		if (received.getId() == null)
-			return null;
-		return received;
+		
+		return list;
 	}
 
 	/*
 	 * 根据用户ID得到用户
 	 */
-	public MailBoxReceived getByUserIdTo(String t_user_id_to) {
+	public List<MailBoxReceived> getByUserIdTo(String t_user_id_to) {
+		List<MailBoxReceived> list=new ArrayList<MailBoxReceived>();
 
-		MailBoxReceived received = new MailBoxReceived();
+		
 
 		getJdbcTemplate().query(GET_BY_USER_TO_ID, new Object[] { t_user_id_to }, new RowCallbackHandler() {
 
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
+				MailBoxReceived received = new MailBoxReceived();
 				received.setId(rs.getString("id"));
 				received.setT_user_id_from(rs.getString("t_user_id_from"));
 				received.setT_user_id_to(t_user_id_to);
@@ -147,14 +151,13 @@ public class MailBoxReceivedDao extends BaseDao<MailBoxReceived> {
 				received.setReaddate(rs.getTimestamp("readdate"));
 				received.setSubject(rs.getString("subject"));
 				received.setContent(rs.getString("content"));
+				list.add(received);
 
 			}
 
 		});
 
-		if (received.getId() == null)
-			return null;
-		return received;
+		return list;
 	}
 
 	/* 增加用户 */
@@ -249,9 +252,7 @@ public class MailBoxReceivedDao extends BaseDao<MailBoxReceived> {
 
 	private List<MailBoxReceivedViewData> PageQuery(String t_user_to, int PageBegin, int PageSize) {
 
-		PageBegin -= 1;
-		if (PageBegin < 0)
-			PageBegin = 0;
+
 
 		List<MailBoxReceivedViewData> list = new ArrayList<MailBoxReceivedViewData>();
 
@@ -272,9 +273,7 @@ public class MailBoxReceivedDao extends BaseDao<MailBoxReceived> {
 	
 	private List<MailBoxReceivedViewData> PageQueryNotRead(String t_user_to, int PageBegin, int PageSize) {
 
-		PageBegin -= 1;
-		if (PageBegin < 0)
-			PageBegin = 0;
+		
 
 		List<MailBoxReceivedViewData> list = new ArrayList<MailBoxReceivedViewData>();
 

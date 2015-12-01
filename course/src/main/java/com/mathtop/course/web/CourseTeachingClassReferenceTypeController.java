@@ -14,7 +14,7 @@ import com.mathtop.course.cons.PagedObjectConst;
 import com.mathtop.course.dao.Page;
 import com.mathtop.course.domain.CourseTeachingClassReferenceType;
 import com.mathtop.course.service.CourseTeachingClassReferenceTypeService;
-import com.mathtop.course.service.TeachingClassService;
+import com.mathtop.course.service.CourseTeachingClassService;
 
 @Controller
 @RequestMapping("/coursereferencetype")
@@ -27,7 +27,7 @@ public class CourseTeachingClassReferenceTypeController extends CourseTeachingCl
 	private CourseTeachingClassReferenceTypeService referencetypeService;
 
 	@Autowired
-	TeachingClassService teachingclassService;
+	CourseTeachingClassService teachingclassService;
 
 	/**
 	 * 添加学院
@@ -64,7 +64,7 @@ public class CourseTeachingClassReferenceTypeController extends CourseTeachingCl
 	public ModelAndView DELETE(HttpServletRequest request, @PathVariable String t_course_teaching_class_id,
 			@PathVariable String t_course_teaching_class_homeworktype_id) {
 
-		referencetypeService.deleteById(t_course_teaching_class_homeworktype_id);
+		referencetypeService.deleteById(request,t_course_teaching_class_homeworktype_id);
 
 		ModelAndView mav = new ModelAndView();
 
