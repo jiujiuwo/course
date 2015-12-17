@@ -25,13 +25,13 @@
 	<!-- 拦截器,
 	如果不配置或/**,将拦截所有的Controller,/*表示拦截第一层 
 	-->
-	<!-- <mvc:interceptors>
+	 <mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />  
 			<bean class="com.mathtop.course.web.LoginInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
--->
+
 
 
 	

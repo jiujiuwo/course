@@ -297,7 +297,7 @@
 
 											<c:when test="${fn:length(data.homeworksubmitFileList)==1}">
 												<a
-													href="<c:url value="/coursehomeworkfile/download-${data.homeworksubmitFileList[0].id}.html"/>">
+													href="<c:url value="/coursehomeworksubmitfile/download-${data.homeworksubmitFileList[0].id}.html"/>">
 													${data.homeworksubmitFileList[0].filename}</a>
 											</c:when>
 
@@ -305,7 +305,7 @@
 												<ul>
 													<c:forEach var="datafile" items="${data.homeworksubmitFileList}">
 														<li><a
-															href="<c:url value="/coursehomeworkfile/download-${datafile.id}.html"/>">
+															href="<c:url value="/coursehomeworksubmitfile/download-${datafile.id}.html"/>">
 																${datafile.filename}</a></li>
 													</c:forEach>
 												</ul>

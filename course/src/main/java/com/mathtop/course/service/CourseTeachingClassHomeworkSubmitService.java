@@ -282,9 +282,9 @@ public class CourseTeachingClassHomeworkSubmitService {
 						String[] userfilenames = filename.split("\\.");
 						if (userfilenames.length == 2)
 							filename = userfilenames[0] + "_迟交" + "." + userfilenames[1];
-					} else {
-						filename += "_迟交";
-					}
+						else
+							filename+="_迟交";
+					} 
 
 					zipfilename.setZipFileName(filename);
 

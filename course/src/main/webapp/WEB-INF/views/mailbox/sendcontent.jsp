@@ -39,9 +39,9 @@
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 	<c:if test="${selectedCourseTeachingClassID!=null}">
-		
-			<%@ include file="../../shared/CourseTeachingClassInfo.jsp"%>
-		
+
+		<%@ include file="../../shared/CourseTeachingClassInfo.jsp"%>
+
 		<div id="DocumentPageTopSeparatorLine"></div>
 	</c:if>
 
@@ -79,7 +79,7 @@
 
 			<div class="CourseContentHeaderSeparatorLine"></div>
 
-<table>
+			<table>
 				<tr>
 					<td><div class="btn-group" role="group" aria-label="...">
 							<c:choose>
@@ -156,7 +156,8 @@
 						<div class="col-md-10">
 							<c:choose>
 
-								<c:when test="${fn:length(selectedMailBoxSendViewData.sendfile)==1}">
+								<c:when
+									test="${fn:length(selectedMailBoxSendViewData.sendfile)==1}">
 									<a
 										href="<c:url value="/mailboxfile/downloadreceived-${selectedMailBoxSendViewData.sendfile[0].id}.html"/>">
 										${selectedMailBoxSendViewData.sendfile[0].filename}</a>
@@ -164,7 +165,8 @@
 
 								<c:otherwise>
 									<ul>
-										<c:forEach var="datafile" items="${selectedMailBoxSendViewData.sendfile}">
+										<c:forEach var="datafile"
+											items="${selectedMailBoxSendViewData.sendfile}">
 											<li><a
 												href="<c:url value="/mailboxfile/downloadreceived-${datafile.id}.html"/>">
 													${datafile.filename}</a></li>
@@ -208,7 +210,7 @@
 
 	<%@ include file="../../shared/pageFooter.jsp"%>
 
-<script>
+	<script>
 		function onSearch() {
 			var st = document.getElementById("SearchText").value;
 

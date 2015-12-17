@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.mathtop.course.cons.CommonConstant;
-import com.mathtop.course.domain.User;
+import com.mathtop.course.domain.UserSessionInfo;
 
 
 /*
@@ -32,7 +32,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		
 		 boolean flag = false;
 	        String url = request.getRequestURL().toString();
-	   //     System.out.println(">>>: " + url);
+	     //   System.out.println(">>>: " + url);
 	        for (String s : IGNORE_URI) {
 	            if (url.contains(s)) {
 	                flag = true;
@@ -40,11 +40,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	            }
 	        }
 	        if (!flag) {
-	        	User user= (User)request.getSession().getAttribute(CommonConstant.USER_CONTEXT);
+	        	UserSessionInfo user= (UserSessionInfo)request.getSession().getAttribute(CommonConstant.USER_CONTEXT);
 	            if (user != null) 
 	            	flag = true;
 	            else
-	            	response.sendRedirect(request.getContextPath()+"/doLogin.html");
+	            	response.sendRedirect(request.getContextPath()+"/account/doLogin.html");
 	        }
 	        return flag;
 		

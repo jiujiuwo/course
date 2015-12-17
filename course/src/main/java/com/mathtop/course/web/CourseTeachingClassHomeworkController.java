@@ -605,6 +605,8 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 			@PathVariable String t_course_teaching_class_homeworktype_id,
 			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
 		ModelAndView view = new ModelAndView();
+		
+	//	System.out.println("12");
 
 		pageNo = pageNo == null ? 1 : pageNo;
 

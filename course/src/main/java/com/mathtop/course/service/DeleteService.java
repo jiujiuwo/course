@@ -407,7 +407,7 @@ public class DeleteService {
 		courseTeachingClassHomeworkSubmitService.deleteByCourseTeachingClassIdAndStudentID(request, t_course_teaching_class_id, t_student_id);
 		
 		//4.从教学班级中删除该学生
-		CourseTeachingClassService.deleteByTeachingClassId(request, t_teaching_class_id);
+		CourseTeachingClassService.deleteByCourseTeachingClassIdAndStudentId(request, t_course_teaching_class_id,t_student_id);
 		
 
 	}

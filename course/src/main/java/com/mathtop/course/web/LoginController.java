@@ -37,21 +37,21 @@ public class LoginController extends BaseController {
 
 	@Autowired
 	private LoginService loginService;
-	
+
 	@Autowired
 	UserSessionInfoService usersessioninfoService;
-	
-	//邮箱服务
+
+	// 邮箱服务
 	@Autowired
 	private MailBoxReceivedService mailboxReceivedService;
 
 	@RequestMapping(value = "androidLogin", method = RequestMethod.POST)
 	@ResponseBody
-	public User androidLogin(HttpServletRequest request, @RequestBody User user) {		
-		
+	public User androidLogin(HttpServletRequest request, @RequestBody User user) {
+
 		// 如果用户已经登录，则直接进入到主页面
 		if (getSessionUser(request) != null) {
-			
+
 			return user;
 		}
 
@@ -61,48 +61,41 @@ public class LoginController extends BaseController {
 		User dbUser = userService.getUserByUserName(user.getUser_name());
 
 		if (dbUser == null) {
-			
+
 			return null;
-		} else if (dbUser.getUser_name() == null
-				|| !dbUser.getUser_name().equals(user.getUser_name())) {
-			//用户名不存在
-			
+		} else if (dbUser.getUser_name() == null || !dbUser.getUser_name().equals(user.getUser_name())) {
+			// 用户名不存在
+
 			dbUser.setUser_name(null);
-		} else if (dbUser.getUser_password() == null
-				|| !dbUser.getUser_password().equals(user.getUser_password())) {
-			//用户密码不正确
-			
+		} else if (dbUser.getUser_password() == null || !dbUser.getUser_password().equals(user.getUser_password())) {
+			// 用户密码不正确
+
 			dbUser.setUser_password(null);
 		} else {
-			
+
 			// 写入到登录日志中
-			loginService.Add(dbUser.getId(), request.getRemoteAddr());			
+			loginService.Add(dbUser.getId(), request.getRemoteAddr());
 		}
 		return dbUser;
 	}
 
 	/**
 	 * 取得当前用户的未读取邮件列表
-	 * */
-	private void SetMailBosReceived(String t_user_id, Integer pageNo, ModelAndView view) {		
-		
-			
-			if (t_user_id != null) {
+	 */
+	private void SetMailBosReceived(String t_user_id, Integer pageNo, ModelAndView view) {
 
-				pageNo = pageNo == null ? 1 : pageNo;
-				Page<MailBoxReceivedViewData> pagedMailBoxReceivedViewData = mailboxReceivedService.getPageNotRead(t_user_id, pageNo,
-						CommonConstant.PAGE_SIZE);
-				
+		if (t_user_id != null) {
 
-				view.addObject(PagedObjectConst.Paged_MailBoxReceivedViewData, pagedMailBoxReceivedViewData);
-				
-				
+			pageNo = pageNo == null ? 1 : pageNo;
+			Page<MailBoxReceivedViewData> pagedMailBoxReceivedViewData = mailboxReceivedService.getPageNotRead(t_user_id, pageNo,
+					CommonConstant.PAGE_SIZE);
 
-		
+			view.addObject(PagedObjectConst.Paged_MailBoxReceivedViewData, pagedMailBoxReceivedViewData);
+
 		}
 
 	}
-	
+
 	/**
 	 * 用户登陆
 	 * 
@@ -115,15 +108,15 @@ public class LoginController extends BaseController {
 
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("account/login");
-		
+
 		UserSessionInfo userinfo = getSessionUser(request);
 
 		// 如果用户已经登录，则直接进入到主页面
 		if (userinfo != null) {
 			String t_user_id = userinfo.getUser().getId();
-			SetMailBosReceived(t_user_id,1,mav);			
+			SetMailBosReceived(t_user_id, 1, mav);
 			mav.setViewName("index");
-			
+
 			return mav;
 		}
 
@@ -134,11 +127,9 @@ public class LoginController extends BaseController {
 
 		if (dbUser == null) {
 			return mav;
-		} else if (dbUser.getUser_name() == null
-				|| !dbUser.getUser_name().equals(user.getUser_name())) {
+		} else if (dbUser.getUser_name() == null || !dbUser.getUser_name().equals(user.getUser_name())) {
 			mav.addObject(CourseMessage.Message_errorMsg, "用户名不存在");
-		} else if (dbUser.getUser_password() == null
-				|| !dbUser.getUser_password().equals(user.getUser_password())) {
+		} else if (dbUser.getUser_password() == null || !dbUser.getUser_password().equals(user.getUser_password())) {
 			mav.addObject(CourseMessage.Message_errorMsg, "用户密码不正确");
 		} else {
 
@@ -146,21 +137,17 @@ public class LoginController extends BaseController {
 			loginService.Add(dbUser.getId(), request.getRemoteAddr());
 
 			setSessionUser(request, usersessioninfoService.getUserSessionInfoByUserId(dbUser.getId()));
-			String toUrl = (String) request.getSession().getAttribute(
-					CommonConstant.LOGIN_TO_URL);
+			String toUrl = (String) request.getSession().getAttribute(CommonConstant.LOGIN_TO_URL);
 			request.getSession().removeAttribute(CommonConstant.LOGIN_TO_URL);
-			
-			
 
 			// 如果当前会话中没有保存登录之前的请求URL，则直接跳转到主页
 			if (StringUtils.isEmpty(toUrl)) {
-				
-				SetMailBosReceived(dbUser.getId(),1,mav);
+
+				SetMailBosReceived(dbUser.getId(), 1, mav);
 				mav.addObject(dbUser);
 				mav.setViewName("index");
-			}
-			else
-				mav.setViewName("redirect:" + toUrl);			
+			} else
+				mav.setViewName("redirect:" + toUrl);
 		}
 		return mav;
 	}
@@ -176,61 +163,55 @@ public class LoginController extends BaseController {
 		session.removeAttribute(CommonConstant.USER_CONTEXT);
 		return "forward:/account/doLogin.html";
 	}
-	
-	
+
 	@RequestMapping(value = "/pwd")
-	public ModelAndView pwd(HttpServletRequest request,RedirectAttributes redirectAttributes ) {
+	public ModelAndView pwd(HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("account/pwd");
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "/confirmpwd")
-	public ModelAndView confirmpwd(HttpServletRequest request,RedirectAttributes redirectAttributes ){
-		
+	public ModelAndView confirmpwd(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("account/pwd");
-		
+
 		String old_user_password = request.getParameter("old_user_password");
 		String new_user_password = request.getParameter("new_user_password");
 		String confirm_user_password = request.getParameter("confirm_user_password");
 
-		UserSessionInfo userinfo=getSessionUser(request);
-		if(userinfo==null){		
+		UserSessionInfo userinfo = getSessionUser(request);
+		if (userinfo == null) {
 			mav.setViewName("redirect:/account/login");
 			return mav;
 		}
-		
-		User user=new User();
+
+		User user = new User();
 		user.setUser_password(old_user_password);
 		user.EncoderPassword();
 
-		if(!userinfo.getUser().getUser_password().equals(user.getUser_password())){
-			redirectAttributes.addFlashAttribute(
-					CourseMessage.Message_errorMsg, "旧密码错误，请重新输入");
+		if (!userinfo.getUser().getUser_password().equals(user.getUser_password())) {
+			redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg, "旧密码错误，请重新输入");
 			mav.setViewName("redirect:/account/pwd.html");
 			return mav;
 		}
-		
-		if(!new_user_password.equals(confirm_user_password)){
-			redirectAttributes.addFlashAttribute(
-					CourseMessage.Message_errorMsg, "新密码和确认密码不同，请重新输入");
+
+		if (!new_user_password.equals(confirm_user_password)) {
+			redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg, "新密码和确认密码不同，请重新输入");
 			mav.setViewName("redirect:/account/pwd.html");
 			return mav;
 		}
-		
+
 		user.setUser_password(new_user_password);
 		user.EncoderPassword();
-		
-		
-		
+
 		userService.updateUserPassword(userinfo.getUser().getId(), user.getUser_password());
 		userinfo.getUser().setUser_password(user.getUser_password());
 
-
 		mav.setViewName("redirect:/index.html");
 		return mav;
-		
+
 	}
 }
