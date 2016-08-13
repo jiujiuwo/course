@@ -61,7 +61,7 @@ public class MailBoxSendFileDao extends BaseDao<MailBoxSendFile> {
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				file.setId(id);
-				file.setT_mail_box_send_id(rs.getString("t_mail_box_send_id"));
+				file.setMailBoxSendId(rs.getString("t_mail_box_send_id"));
 				
 				file.setFilename(rs.getString("filename"));
 				file.setFilepath(rs.getString("filepath"));
@@ -89,7 +89,7 @@ public class MailBoxSendFileDao extends BaseDao<MailBoxSendFile> {
 			public void processRow(ResultSet rs) throws SQLException {
 				MailBoxSendFile file = new MailBoxSendFile();
 				file.setId(rs.getString("id"));				
-				file.setT_mail_box_send_id(t_mail_box_send_id);				
+				file.setMailBoxSendId(t_mail_box_send_id);				
 				file.setFilename(rs.getString("filename"));
 				file.setFilepath(rs.getString("filepath"));
 				list.add(file);
@@ -105,7 +105,7 @@ public class MailBoxSendFileDao extends BaseDao<MailBoxSendFile> {
 	public String add(MailBoxSendFile file) {
 		String id = GUID.getGUID();
 		file.setId(id);
-		Object params[] = new Object[] { file.getId(), file.getT_mail_box_send_id(),file.getFilename(), file.getFilepath() };
+		Object params[] = new Object[] { file.getId(), file.getMailBoxSendId(),file.getFilename(), file.getFilepath() };
 		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
 		getJdbcTemplate().update(INSERT_MAILBOX_FILE, params, types);
 		return id;
@@ -158,7 +158,7 @@ public class MailBoxSendFileDao extends BaseDao<MailBoxSendFile> {
 						MailBoxSendFile file = getByID(rs.getString("id"));
 						data.setFile(file);
 
-						MailBoxSend send = mailBoxSendDao.getByID(file.getT_mail_box_send_id());
+						MailBoxSend send = mailBoxSendDao.getByID(file.getMailBoxSendId());
 						data.setSend(send);
 
 						

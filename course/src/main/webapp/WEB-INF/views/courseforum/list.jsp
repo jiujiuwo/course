@@ -40,7 +40,7 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home" onLoad="ShowErrMsg()">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 	
@@ -48,7 +48,7 @@
 
 
 	
-	<div id="DocumentPageTopSeparatorLine"></div>
+	
 
 	<div class="DocumentPage">
 		<div class="DocumentPageLeftArea ">
@@ -64,11 +64,11 @@
 
 			<ol class="breadcrumb">
 				<li><a href="#">课程系统</a></li>
-				<li><a href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseteachingclass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
+				<li><a href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseTeachingClass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
 				<li class="active">课程论坛</li>
 			</ol>
 
-			<div class="CourseContentHeader">${selectedCourseTeachingClassViewData.teachingclass.name}论坛</div>
+			<div class="CourseContentHeader">${selectedCourseTeachingClassViewData.courseTeachingClass.name}论坛</div>
 
 			<div class="CourseContentHeaderSeparatorLine"></div>
 
@@ -162,20 +162,20 @@
 									href="<c:url value="/courseforumreply/list-${selectedCourseTeachingClassID}-${data.forumtopic.id}.html"/>">${data.forumtopic.title}</a>
 							</div>
 							<div class="col-md-2">
-								<fmt:formatDate value="${data.forumtopic.created_date}"
+								<fmt:formatDate value="${data.forumtopic.createdDate}"
 									pattern="yyyy-MM-dd HH:mm:ss" />
 
 							</div>
 							<div class="col-md-2">
-								<fmt:formatDate value="${data.forumtopic.last_modified_date}"
+								<fmt:formatDate value="${data.forumtopic.lastModifiedDate}"
 									pattern="yyyy-MM-dd HH:mm:ss" />
 
 							</div>
-							<div class="col-md-1">${data.forumtopic.view_count}</div>
+							<div class="col-md-1">${data.forumtopic.viewCount}</div>
 							<div class="col-md-1">
 
 								<c:if
-									test="${data.forumtopic.t_user_id==sessionScope.USER_CONTEXT.user.id or sessionScope.USER_CONTEXT.teacher!=null}">
+									test="${data.forumtopic.userId==sessionScope.USER_CONTEXT.user.id or sessionScope.USER_CONTEXT.teacher!=null}">
 
 									<button type="button" class="btn btn-default btn-xs"
 										onclick="location='<c:url value="/courseforum/updatetopic-${selectedCourseTeachingClassID}-${data.forumtopic.id}.html"/>'">修改...</button>
@@ -217,9 +217,7 @@
 	
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
-
-	<%@ include file="../../shared/pageFooter.jsp"%>
+	<%@ include file="../../shared/sysLastInclude.jsp"%>
 
 
 
@@ -254,21 +252,6 @@
 
 		}
 	</script>
-
-
-
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

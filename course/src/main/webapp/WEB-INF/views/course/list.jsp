@@ -23,8 +23,7 @@
 <%@ include file="../../shared/importCss.jsp"%>
 
 
-<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet"
-	type="text/css" />
+<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet" type="text/css" />
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -33,7 +32,7 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home" onLoad="ShowErrMsg()">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 
@@ -61,8 +60,7 @@
 				<tr>
 					<td>
 						<div class="input-group input-group-sm">
-							<select id="SchoolSelectControl" class="form-control"
-								onchange="OnSelectControlChange(this)">
+							<select id="SchoolSelectControl" class="form-control" onchange="OnSelectControlChange(this)">
 								<c:forEach var="school" items="${pagedSchool.result}">
 									<option value="${school.id}">${school.name}</option>
 								</c:forEach>
@@ -80,11 +78,9 @@
 							<!-- Split button -->
 							<div class="btn-group">
 								<button type="button" class="btn btn-default btn-sm">选择</button>
-								<button type="button"
-									class="btn btn-default dropdown-toggle btn-sm"
-									data-toggle="dropdown" aria-expanded="false">
-									<span class="caret"></span> <span class="sr-only">Toggle
-										Dropdown</span>
+								<button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown"
+									aria-expanded="false">
+									<span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
 								</button>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="#">全部选择</a></li>
@@ -99,18 +95,16 @@
 							<button type="button" class="btn btn-default btn-sm"
 								onclick="window.location.href='course/add.html'">增加</button>
 
-							<button type="button" class="btn btn-default btn-sm"
-								data-toggle="modal" data-target="#myModal">删除</button>
+							<button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+								data-target="#myModal">删除</button>
 
 
 						</div></td>
 					<td style="width: 10px;"></td>
 					<td><div class="input-group input-group-sm">
-							<input type="text" class="form-control" id="SearchText"
-								placeholder="Search for..." required> <span
-								class="input-group-btn">
-								<button class="btn btn-default" type="button"
-									onclick="onSearch()">搜索</button>
+							<input type="text" class="form-control" id="SearchText" placeholder="Search for..." required>
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button" onclick="onSearch()">搜索</button>
 							</span>
 						</div></td>
 				</tr>
@@ -127,8 +121,7 @@
 					<div class="Course-Table">
 
 
-						<table class="table table-hover table-bordered"
-							style="margin-bottom: -10px;">
+						<table class="table table-hover table-bordered" style="margin-bottom: -10px;">
 							<thead>
 								<tr>
 									<th>#</th>
@@ -157,8 +150,7 @@
 										<td>${dataitem.course.class_hours}</td>
 										<td>${dataitem.course.experiment_hours}</td>
 										<td>${dataitem.courseStyle.name}:${dataitem.courseType.name}</td>
-										<td><c:forEach var="dataprecourseitem"
-												items="${dataitem.listCoursePrecourse}">
+										<td><c:forEach var="dataprecourseitem" items="${dataitem.listCoursePrecourse}">
 							${dataprecourseitem.coursepre.name}
 							</c:forEach></td>
 
@@ -173,9 +165,7 @@
 							</tbody>
 						</table>
 
-						<mathtop:PageBar
-							pageUrl="/course/list.html"
-							pageAttrKey="pagedCourseViewData" />
+						<mathtop:PageBar pageUrl="/course/list.html" pageAttrKey="pagedCourseViewData" />
 
 					</div>
 
@@ -185,10 +175,8 @@
 					<%
 						//没有找到记录
 					%>
-					<div class="alert alert-warning alert-dismissible fade in"
-						role="alert" style="margin: 10px;">
-						<button type="button" class="close" data-dismiss="alert"
-							aria-label="Close">
+					<div class="alert alert-warning alert-dismissible fade in" role="alert" style="margin: 10px;">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 						<h3>没有找到记录,请选择下列操作之一：</h3>
@@ -196,18 +184,12 @@
 						<div class="list-group">
 
 
-							<a href="<c:url value="/course/add.html"/>"
-								class="list-group-item">添加课程</a> <a
-								href="<c:url value="/teachingclass/add.html"/>"
-								class="list-group-item">添加教学班班</a> <a
-								href="<c:url value="/teacher/add.html"/>"
-								class="list-group-item">添加教师</a> <a
-								href="<c:url value="/naturalclass/list.html"/>"
-								class="list-group-item">添加自然班</a> <a
-								href="<c:url value="/school/list.html"/>"
-								class="list-group-item">添加学院</a> <a
-								href="<c:url value="/department/list.html"/>"
-								class="list-group-item">添加系部</a>
+							<a href="<c:url value="/course/add.html"/>" class="list-group-item">添加课程</a>
+							<a href="<c:url value="/teachingclass/add.html"/>" class="list-group-item">添加教学班班</a>
+							<a href="<c:url value="/teacher/add.html"/>" class="list-group-item">添加教师</a>
+							<a href="<c:url value="/naturalclass/list.html"/>" class="list-group-item">添加自然班</a>
+							<a href="<c:url value="/school/list.html"/>" class="list-group-item">添加学院</a>
+							<a href="<c:url value="/department/list.html"/>" class="list-group-item">添加系部</a>
 
 						</div>
 
@@ -224,28 +206,11 @@
 	<%
 		//删除对话框、错误信息对话框
 	%>
-	<%@ include file="../../shared/dialog.jsp"%>
-
-	<%@ include file="../../shared/pageFooter.jsp"%>
 
 	<%@ include file="../../shared/importJs.jsp"%>
+	<%@ include file="../../shared/sysLastInclude.jsp"%>
 
 
-
-
-
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

@@ -9,4 +9,6 @@ public class NaturalClassDao extends SimpleDao<NaturalClass> {
 	NaturalClassDao(){		
 		super(NaturalClass.class,"t_natural_class");
 	}
+	
+	
 }

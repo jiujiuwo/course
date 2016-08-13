@@ -38,7 +38,7 @@ public class ResourceDao extends BaseDao<Resource> {
 
 		String newid = GUID.getGUID();
 		t.setId(newid);
-		Object params[] = new Object[] { t.getId(), t.getUri(), t.getUri_element() };
+		Object params[] = new Object[] { t.getId(), t.getUri(), t.getUriElement() };
 		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR };
 		getJdbcTemplate().update(INSERT, params, types);
 		return newid;
@@ -98,7 +98,7 @@ public class ResourceDao extends BaseDao<Resource> {
 						Resource d = new Resource();
 						d.setId(rs.getString("id"));
 						d.setUri(rs.getString("uri"));
-						d.setUri_element(rs.getString("uri_element"));
+						d.setUriElement(rs.getString("uri_element"));
 						list.add(d);
 
 					}
@@ -122,7 +122,7 @@ public class ResourceDao extends BaseDao<Resource> {
 					public void processRow(ResultSet rs) throws SQLException {
 						d.setId(rs.getString("id"));
 						d.setUri(uri);
-						d.setUri_element(rs.getString("uri_element"));
+						d.setUriElement(rs.getString("uri_element"));
 
 					}
 
@@ -146,7 +146,7 @@ public class ResourceDao extends BaseDao<Resource> {
 					public void processRow(ResultSet rs) throws SQLException {
 						s.setId(id);
 						s.setUri(rs.getString("uri"));
-						s.setUri_element(rs.getString("uri_element"));
+						s.setUriElement(rs.getString("uri_element"));
 
 					}
 
@@ -168,7 +168,7 @@ public class ResourceDao extends BaseDao<Resource> {
 				Resource s = new Resource();
 				s.setId(rs.getString("id"));
 				s.setUri(rs.getString("uri"));
-				s.setUri_element(rs.getString("uri_element"));
+				s.setUriElement(rs.getString("uri_element"));
 				list.add(s);
 			}
 		});
@@ -200,7 +200,7 @@ public class ResourceDao extends BaseDao<Resource> {
 						Resource s = new Resource();
 						s.setId(rs.getString("id"));
 						s.setUri(rs.getString("uri"));
-						s.setUri_element(rs.getString("uri_element"));
+						s.setUriElement(rs.getString("uri_element"));
 						list.add(s);
 
 					}

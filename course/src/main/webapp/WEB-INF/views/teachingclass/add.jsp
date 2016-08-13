@@ -3,8 +3,7 @@
 
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 
 	//设置左侧浏览状态
@@ -24,8 +23,7 @@
 <%@ include file="../../shared/importCss.jsp"%>
 <%@ include file="../../shared/importdatetimepickercss.jsp"%>
 
-<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet"
-	type="text/css" />
+<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet" type="text/css" />
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -34,10 +32,10 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
-	
+
 
 	<div class="DocumentPage">
 		<div class="DocumentPageLeftArea ">
@@ -61,8 +59,7 @@
 
 
 			<div style="display: none;" id="teachingtypeContainer">
-				<select id="teachingtypeSelectControl" class="form-control input-sm"
-					name="teachingtypetypeId">
+				<select id="teachingtypeSelectControl" class="form-control input-sm" name="teachingtypetypeId">
 					<c:forEach var="t" items="${pagedTeachingType.result}">
 						<option value="${t.id}">${t.name}</option>
 					</c:forEach>
@@ -70,23 +67,35 @@
 			</div>
 
 
-			<form class="form-horizontal" style="overflow: hidden;"
-				action="<c:url value="/teachingclass/addteachingclass.html"/>"
-				method="post">
+			<form class="form-horizontal" style="overflow: hidden;" onsubmit="return check()"
+				action="<c:url value="/teachingclass/addteachingclass.html"/>" method="post">
+				<input name="course_teaching_class_term_id" id="course_teaching_class_term_id" type="hidden" />
+				
+				<input id="teaching_year_begin" type="hidden" />
+				<input id="teaching_year_end" type="hidden" />
+				<input id="teaching_term" type="hidden" />
+				<input id="weeks" type="hidden" />
+				
+				<input name="t_course_id" id="t_course_id" type="hidden" />				
+				<input id="course_name" type="hidden" />
+				<input id="course_num" type="hidden" />
 
 				<div class="form-group">
 
 
 
-					<label for="course_num" class="col-sm-1 control-label">课程名称</label>
+					<label for="courseName" class="col-sm-1 control-label">课程名称</label>
 
-					<div class="col-md-3">
-						<select id="courseSelectControl" class="form-control input-sm"
-							name="courseId" onchange="OnSelectControlChange(this)">
-							<c:forEach var="course" items="${pagedCourseViewData.result}">
-								<option value="${course.course.id}">${course.course.name}</option>
-							</c:forEach>
-						</select>
+					<div class="col-xs-4 col-sm-4 col-md-2">
+
+						<input id="courseName" class="form-control placeholder-no-fix" autocomplete="off"
+							placeholder="课程名称" readonly required />
+
+
+
+					</div>
+					<div class="col-xs-2 col-sm-2 col-md-2">
+						<button type="button" class="btn btn-default btn-sm" onclick="onShowCourseBtnClick()">选择课程名称</button>
 					</div>
 
 				</div>
@@ -95,57 +104,20 @@
 
 
 
-					<label for="course_num" class="col-sm-1 control-label">学年</label>
+					<label for="course_num" class="col-sm-1 control-label">学年-学期</label>
 
-					<div class="col-md-1">
-						<select id="teaching_year_begin" name="teaching_year_begin"
-							class="form-control input-sm"
-							onchange="OnTeachingYearBeginChange()">
-							<option value="2015">2015</option>
-							<option value="2016">2016</option>
-							<option value="2017">2017</option>
-							<option value="2018">2018</option>
-							<option value="2019">2019</option>
-							<option value="2020">2020</option>
-							<option value="2020">2021</option>
-							<option value="2020">2022</option>
-							<option value="2020">2023</option>
-							<option value="2020">2024</option>
-							<option value="2020">2025</option>
-							<option value="2020">2026</option>
-							<option value="2020">2027</option>
-							<option value="2020">2028</option>
-							<option value="2020">2029</option>
+					<div class="col-xs-4 col-sm-4 col-md-2">
 
-						</select>
+						<input id="courseTeachingTerm" class="form-control placeholder-no-fix" autocomplete="off"
+							placeholder="学年-学期" readonly required />
 
 
 
 					</div>
-
-
-					<div class="col-sm-1"
-						style="margin-left: 0px; margin-right: 0px; width: 5px;">
-						<span>-</span>
+					<div class="col-xs-2 col-sm-2 col-md-2">
+						<button type="button" class="btn btn-default btn-sm" onclick="onShowTermBtnClick()">选择学年-学期</button>
 					</div>
 
-
-					<div class="col-md-1">
-						<input name="teaching_year_end" class="form-control input-sm"
-							id="teaching_year_end" autocomplete="off" value="2016"
-							readonly />
-					</div>
-
-
-					<label for="teaching_term" class="col-sm-1 control-label">学期</label>
-
-					<div class="col-md-1">
-						<select id="teachingtermSelectControl" name="teaching_term"
-							class="form-control input-sm" onchange="setTeachingClassName()">
-							<option value="1">1</option>
-							<option value="2">2</option>
-						</select>
-					</div>
 
 
 				</div>
@@ -156,8 +128,7 @@
 					<label for="teachingclassname" class="col-sm-1 control-label">教学班名称</label>
 					<div class="col-md-5">
 						<input id="teachingclassname" name="teachingclass_name"
-							class="form-control placeholder-no-fix" autocomplete="off"
-							placeholder="教学班名称" />
+							class="form-control placeholder-no-fix" autocomplete="off" placeholder="教学班名称" />
 					</div>
 				</div>
 
@@ -171,8 +142,8 @@
 							<button type="button" class="btn btn-default btn-sm"
 								onclick="window.location.href='<c:url value="/teacher/add.html"/>'">新建教师</button>
 
-							<button type="button" class="btn btn-default btn-sm"
-								data-toggle="modal" data-target="#addModal">为课程增加授课教师</button>
+							<button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+								data-target="#addModal">为课程增加授课教师</button>
 
 
 						</div>
@@ -206,8 +177,7 @@
 
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-primary">添加</button>
-					<button type="button" class="btn btn-default"
-						onclick="window.history.back()">取消</button>
+					<button type="button" class="btn btn-default" onclick="window.history.back()">取消</button>
 				</div>
 
 			</form>
@@ -217,13 +187,12 @@
 
 
 	<!-- 添加对话框 -->
-	<div class="modal fade" id="addModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="myModalLabel">为教学班添加教师</h4>
@@ -241,8 +210,8 @@
 						<div class="row">
 							<div class="col-md-2">学院</div>
 							<div class="col-md-10">
-								<select id="SchoolSelectControlAdd" class="form-control"
-									name="t_school_id" onchange="OnSchoolSelectControlAddChange(this)">
+								<select id="SchoolSelectControlAdd" class="form-control" name="t_school_id"
+									onchange="OnSchoolSelectControlAddChange(this)">
 									<c:forEach var="school" items="${pagedSchool.result}">
 										<option value="${school.id}">${school.name}</option>
 									</c:forEach>
@@ -253,20 +222,16 @@
 						<div class="row">
 							<div class="col-md-2">教师</div>
 							<div class="col-md-10">
-								<select id="teacherSelectControlAdd" class="form-control"
-									name="teacherId">
+								<select id="teacherSelectControlAdd" class="form-control" name="teacherId">
 									<c:forEach var="t" items="${pagedTeacherViewData.result}">
-										<option value="${t.teacher.id}">${t.userbasicinfo.user_basic_info_name}(${t.teacher.teacher_num},${t.department.name})</option>
+										<option value="${t.teacher.id}">${t.userbasicinfo.userBasicInfoName}(${t.teacher.teacherNum},${t.department.name})</option>
 									</c:forEach>
 								</select>
 							</div>
 						</div>
 
 
-						<div class="row">
-							<div class="col-md-2">工号</div>
-							<div class="col-md-10"></div>
-						</div>
+					
 
 
 
@@ -276,8 +241,80 @@
 				</div>
 
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary"
-						onclick="AddTeacherRow()">添加</button>
+					<button type="submit" class="btn btn-primary" onclick="AddTeacherRow()">添加</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- 课程对话框 -->
+	<div class="modal fade" id="courseModal" tabindex="-1" role="dialog"
+		aria-labelledby="mycourseModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="mycourseModalLabel">选择课程</h4>
+				</div>
+
+
+				<div class="modal-body">
+					<h4 class="form-signin-heading">请选择课程</h4>
+
+
+					<p class="bg-danger" id="courseError"></p>
+
+
+
+					<div class="list-group" id="courseContainer"></div>
+
+
+				</div>
+
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary" onclick="addCourseClick()">确定</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<!-- 学年对话框 -->
+	<div class="modal fade" id="termModal" tabindex="-1" role="dialog"
+		aria-labelledby="myTermModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myTermModalLabel">选择学年学期</h4>
+				</div>
+
+
+				<div class="modal-body">
+					<h4 class="form-signin-heading">请选择学年学期</h4>
+
+
+					<p class="bg-danger" id="termError"></p>
+
+
+
+					<div class="list-group" id="termsContainer"></div>
+
+
+				</div>
+
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary" onclick="addTermClick()">确定</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 				</div>
 
@@ -289,12 +326,10 @@
 
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
+<%@ include file="../../shared/importJs.jsp"%>
+<%@ include file="../../shared/sysLastInclude.jsp"%>
 
-
-	<%@ include file="../../shared/pageFooter.jsp"%>
-
-	<%@ include file="../../shared/importJs.jsp"%>
+	
 	<%@ include file="../../shared/importdatetimepickerjs.jsp"%>
 
 
@@ -329,8 +364,8 @@
 
 		function onDelete(t_department_id, departmentname) {
 			var t_school_id = gett_school_id();
-			var url = "location='<c:url value="/DELETE-"/>" + t_school_id + "-" + t_department_id
-					+ ".html'";
+			var url = "location='<c:url value="/DELETE-"/>" + t_school_id + "-"
+					+ t_department_id + ".html'";
 
 			$('#deleteModal').find('.modal-body #deleteinfo').text(
 					departmentname);
@@ -358,14 +393,10 @@
 
 			var schoolctl = document.getElementById("SchoolSelectControlAdd");
 			var teacher = document.getElementById("teacherSelectControlAdd");
-			
-			
 
 			td1.innerHTML = "<input  type='text' class='form-control' value='"+schoolctl.options[schoolctl.selectedIndex].text+"' readonly/>";
 			td2.innerHTML = "<input name='teacherid' value='"+teacher.value+"' type='hidden' /> <input  type='text' class='form-control' value='"+teacher.options[teacher.selectedIndex].text+"' readonly/>";
 
-			
-			
 			td3.innerHTML = teachingtype;
 
 			td4.innerHTML = "<button type='button' class='btn btn-default btn-sm'	onclick='DeleteTeacherRow("
@@ -377,7 +408,7 @@
 
 				table.tBodies[0].rows[i].id = "teacherrow" + i;
 			}
-			
+
 			$('#addModal').modal('hide');
 
 		}
@@ -397,7 +428,7 @@
 			var ctr = document.getElementById("teaching_year_begin").value;
 			var endctr = document.getElementById("teaching_year_end");
 
-			endctr.value =  (parseInt(ctr) + 1);
+			endctr.value = (parseInt(ctr) + 1);
 
 			//	alert(endctr.value);
 
@@ -407,84 +438,268 @@
 
 		}
 
-		function setTeachingClassName() {
-			var coursename = document.getElementById("courseSelectControl");
-			var beginctr = document.getElementById("teaching_year_begin");
-			var endctr = document.getElementById("teaching_year_end");
-			var term = document.getElementById("teachingtermSelectControl");
-			var teachingclassname = document
-					.getElementById("teachingclassname");
+		function check() {
+			var course_teaching_class_term_id = $(
+					"#course_teaching_class_term_id").val();
+			var t_course_id = $("#t_course_id").val();
 
-			teachingclassname.value = beginctr.value + "-"+endctr.value + "学年第"
-					+ term.value + "学期"
-					+ coursename.options[coursename.selectedIndex].text + "课程";
+			if (t_course_id == null || t_course_id.length == 0) {
+
+				ShowErrMsg("请选择课程");
+				return false;
+			}
+
+			if (course_teaching_class_term_id == null
+					|| course_teaching_class_term_id.length == 0) {
+
+				ShowErrMsg("请选择学年学期");
+				return false;
+			}
+
+			return true;
 
 		}
 	</script>
 
+
 	<script>
-		$(function() {
+		/**
+		选择课程名称
+		 */
+		function clearCourseId() {
+			$("#courseError").empty();//清除错误提示
+			$(".list-group-item").removeClass('active');
+			$("#courseName").empty();
+			$("#t_course_id").val("");
 
-			setTeachingClassName();
+		}
 
-		});
-	</script>
+		function addCourseClick() {
+			var t_course_id = $("#t_course_id").val();
 
-	<script type="text/javascript">
-		$(function() {
-			$("#courseSelectControl").change(function() {
-				setTeachingClassName();
+			if (t_course_id == null || t_course_id.length == 0) {
 
-			});
-
-		});
-	</script>
-
-
-	<script type="text/javascript">
-		$(function() {
-			$("#SchoolSelectControlAdd").change(
-					function() {
-						var selt_school_id = $("#SchoolSelectControlAdd").val();
-						var url = "<c:url value="/teacher/"/>"
-
-						url = url + "selectbyschool-" + selt_school_id + ".json";
-
-						var departmentjson;
-						$("#teacherSelectControlAdd").empty();
-						$.get(url, function(data, status) {
-							if (status == "success") {
-								
-								
-								for (var i = 0; i < data.length; i++) {
-								
-									$("#teacherSelectControlAdd").append(
-											"<option value='"+data[i].teacher.id+"'>"
-													+ data[i].userbasicinfo.user_basic_info_name
-													 +"(" + data[i].teacher.teacher_num
-													+ "," + data[i].department.name
-													 +")</option>");
-								}
-							}
-						});
-
-					});
-
-		});
-	</script>
-
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
+				$("#courseError").text("请选择课程");
+				return false;
 			}
-		</script>
+			$('#courseModal').modal('hide');
+			return true;
 
-	</c:if>
+		}
 
-	<c:set var="errorMsg" value="null" />
+		function changeCourse(e, id, course_name, course_num, courseTypeId,
+				courseStyleId) {
+			clearCourseId();
+
+			var s = course_name + "(" + course_num + ")";
+
+			$("#courseName").val(s);
+
+			$("#course_num").val(course_num);
+			$("#course_name").val(course_name);
+
+			$(e).addClass('active');
+			$("#t_course_id").val(id);
+
+			setCourseTeachingClassName();
+
+		}
+
+		function showCourse() {
+			$("#courseContainer").empty();
+			var url = "<c:url value='/course/getAllPage.json'/>";
+
+			$.get(url, function(data, status) {
+				if (status == "success") {
+
+					$("#courseContainer").empty();
+
+					for (var i = 0; i < data.result.length; i++) {
+						var s = "<a onclick='changeCourse(this,\""
+								+ data.result[i].course.id + "\",\""
+								+ data.result[i].course.name + "\",\""
+								+ data.result[i].course.num + "\",\""
+								+ data.result[i].course.courseTypeId + "\",\""
+								+ data.result[i].course.courseStyleId
+								+ "\")' class='list-group-item'>"
+								+ data.result[i].course.name + "("
+								+ data.result[i].course.num + ")" + "</a>";
+
+						$("#courseContainer").append(s);
+
+					}
+
+				}
+			});
+		}
+		function onShowCourseBtnClick() {
+
+			$('#courseModal').find('.modal-footer #btnAddUser').attr("onclick",
+					"addCourseClick()");
+
+			showCourse();
+
+			$('#courseModal').modal('show');
+		}
+	</script>
+
+
+	<script>
+		/*
+		选择学年-学期
+		 */
+		function clearTermId() {
+			$("#termError").empty();//清除错误提示
+			$(".list-group-item").removeClass('active');
+			$("#courseTeachingTerm").empty();
+			$("#course_teaching_class_term_id").val("");
+
+		}
+
+		function addTermClick() {
+			var course_teaching_class_term_id = $(
+					"#course_teaching_class_term_id").val();
+
+			if (course_teaching_class_term_id == null
+					|| course_teaching_class_term_id.length == 0) {
+
+				$("#termError").text("请选择学年-学期");
+				return false;
+			}
+			$('#termModal').modal('hide');
+			return true;
+
+		}
+
+		function changeTerm(e, id, teaching_year_begin, teaching_year_end,
+				teaching_term, weeks) {
+			clearTermId();
+
+			var s = teaching_year_begin + "-" + teaching_year_end + "学年第"
+					+ teaching_term + "学期";
+
+			$("#courseTeachingTerm").val(s);
+			$(e).addClass('active');
+			$("#course_teaching_class_term_id").val(id);
+
+			$("#teaching_year_begin").val(teaching_year_begin);
+			$("#teaching_year_end").val(teaching_year_end);
+			$("#teaching_term").val(teaching_term);
+			$("#weeks").val(weeks);
+
+			setCourseTeachingClassName();
+		}
+
+		function setCourseTeachingClassName() {
+			var course_name = $("#course_name").val();
+			var course_num = $("#course_num").val();
+			var teaching_year_begin = $("#teaching_year_begin").val();
+			var teaching_year_end = $("#teaching_year_end").val();
+			var teaching_term = $("#teaching_term").val();
+			var weeks = $("#weeks").val();
+
+			if (course_name == null || course_name.length == 0)
+				return;
+			if (course_num == null || course_num.length == 0)
+				return;
+			if (teaching_year_begin == null || teaching_year_begin.length == 0)
+				return;
+			if (teaching_year_end == null || teaching_year_end.length == 0)
+				return;
+			if (teaching_term == null || teaching_term.length == 0)
+				return;
+
+			$("#teachingclassname").val(
+					"(" + teaching_year_begin + "-" + teaching_year_end
+							+ teaching_term + "-" + ")-" + course_name + "("
+							+ course_num + ")");
+
+		}
+
+		function showTerm() {
+			$("#termsContainer").empty();
+			var url = "<c:url value='/courseteachingterm/getall.json'/>";
+
+			$.get(url, function(data, status) {
+				if (status == "success") {
+
+					$("#termsContainer").empty();
+
+					for (var i = 0; i < data.length; i++) {
+						var s = "<a onclick='changeTerm(this,\"" + data[i].id
+								+ "\"," + data[i].teachingYearBegin + ","
+								+ data[i].teachingYearEnd + ","
+								+ data[i].teachingTerm + "," + data[i].weeks
+								+ ")' class='list-group-item'>"
+								+ data[i].teachingYearBegin + "-"
+								+ data[i].teachingYearEnd + "学年第"
+								+ data[i].teachingTerm + "学期" + "</a>";
+
+						$("#termsContainer").append(s);
+
+					}
+
+				}
+			});
+		}
+		function onShowTermBtnClick() {
+
+			$('#termModal').find('.modal-footer #btnAddUser').attr("onclick",
+					"addTermClick()");
+
+			showTerm();
+
+			$('#termModal').modal('show');
+		}
+	</script>
+
+
+
+
+
+	<script type="text/javascript">
+		$(function() {
+			$("#SchoolSelectControlAdd")
+					.change(
+							function() {
+								var selt_school_id = $(
+										"#SchoolSelectControlAdd").val();
+								var url = "<c:url value="/teacher/"/>"
+
+								url = url + "selectbyschool-" + selt_school_id
+										+ ".json";
+
+								var departmentjson;
+								$("#teacherSelectControlAdd").empty();
+								$
+										.get(
+												url,
+												function(data, status) {
+													if (status == "success") {
+
+														for (var i = 0; i < data.length; i++) {
+
+															$(
+																	"#teacherSelectControlAdd")
+																	.append(
+																			"<option value='"+data[i].teacher.id+"'>"
+																					+ data[i].userbasicinfo.userBasicInfoName
+																					+ "("
+																					+ data[i].teacher.teacherNum
+																					+ ","
+																					+ data[i].department.name
+																					+ ")</option>");
+														}
+													}
+												});
+
+							});
+
+		});
+	</script>
+
+
+
 
 </body>
 </html>

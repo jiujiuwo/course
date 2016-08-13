@@ -24,8 +24,7 @@
 <%@ include file="../../shared/importCss.jsp"%>
 
 
-<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet"
-	type="text/css" />
+<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet" type="text/css" />
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -34,7 +33,7 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 
@@ -64,8 +63,7 @@
 				<tr>
 					<td>
 						<div class="input-group input-group-sm">
-							<select id="SchoolSelectControl" class="form-control"
-								onchange="OnSelectControlChange(this)">
+							<select id="SchoolSelectControl" class="form-control" onchange="OnSelectControlChange(this)">
 								<c:forEach var="school" items="${pagedSchool.result}">
 									<option value="${school.id}">${school.name}</option>
 								</c:forEach>
@@ -77,8 +75,7 @@
 					<td style="width: 10px;"></td>
 					<td>
 						<div class="input-group input-group-sm">
-							<select id="departmentSelectControl" name="t_department_id"
-								class="form-control input-sm">
+							<select id="departmentSelectControl" name="t_department_id" class="form-control input-sm">
 								<c:forEach var="d" items="${pagedDepartment.result}">
 									<option value="${d.id}">${d.name}</option>
 								</c:forEach>
@@ -91,8 +88,7 @@
 					<td>
 						<div class="input-group input-group-sm">
 							<select id="naturalclassSelectControl" name="t_natural_class_id"
-								class="form-control input-sm"
-								onchange="OnNaturalClassSelectControlChange(this)">
+								class="form-control input-sm" onchange="OnNaturalClassSelectControlChange(this)">
 								<c:forEach var="d" items="${pagedNaturalclass.result}">
 									<option value="${d.id}">${d.name}</option>
 								</c:forEach>
@@ -107,11 +103,9 @@
 							<!-- Split button -->
 							<div class="btn-group">
 								<button type="button" class="btn btn-default btn-sm">选择</button>
-								<button type="button"
-									class="btn btn-default dropdown-toggle btn-sm"
-									data-toggle="dropdown" aria-expanded="false">
-									<span class="caret"></span> <span class="sr-only">Toggle
-										Dropdown</span>
+								<button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown"
+									aria-expanded="false">
+									<span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
 								</button>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="#">全部选择</a></li>
@@ -123,23 +117,19 @@
 						</div></td>
 					<td style="width: 10px;"></td>
 					<td><div class="btn-group" role="group" aria-label="...">
-							<button type="button" class="btn btn-default btn-sm"
-								onclick="onAdd()">增加一个学生</button>
-							<button type="button" class="btn btn-default btn-sm"
-								onclick="onAddFromExcel()">从Excel导入学生</button>
+							<button type="button" class="btn btn-default btn-sm" onclick="onAdd()">增加一个学生</button>
+							<button type="button" class="btn btn-default btn-sm" onclick="onAddFromExcel()">从Excel导入学生</button>
 
-							<button type="button" class="btn btn-default btn-sm"
-								data-toggle="modal" data-target="#myModal">删除</button>
+							<button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+								data-target="#myModal">删除</button>
 
 
 						</div></td>
 					<td style="width: 10px;"></td>
 					<td><div class="input-group input-group-sm">
-							<input type="text" class="form-control" id="SearchText"
-								placeholder="Search for..." required> <span
-								class="input-group-btn">
-								<button class="btn btn-default" type="button"
-									onclick="onSearch()">搜索</button>
+							<input type="text" class="form-control" id="SearchText" placeholder="Search for..." required>
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button" onclick="onSearch()">搜索</button>
 							</span>
 						</div></td>
 				</tr>
@@ -152,8 +142,7 @@
 					<div class="Course-Table">
 
 
-						<table class="table table-hover table-bordered"
-							style="margin-bottom: -10px;">
+						<table class="table table-hover table-bordered" style="margin-bottom: -10px;">
 							<thead>
 								<tr>
 									<th style="width: 50px;">#</th>
@@ -173,25 +162,21 @@
 									<tr>
 										<th scope="row"><input type="checkbox" value="">
 											${(pagedStudentViewData.currentPageNo-1) * pagedStudentViewData.pageSize +index}</th>
-										<td>${dataitem.student.student_num}</td>
-										<td>${dataitem.userbasicinfo.user_basic_info_name}</td>
+										<td>${dataitem.student.studentNum}</td>
+										<td>${dataitem.userbasicinfo.userBasicInfoName}</td>
 										<td>${dataitem.department.name}</td>
 										<td>${dataitem.naturalclass.name}</td>
-										<td><c:if
-												test="${dataitem.userbasicinfo.user_basic_info_sex==0}">
+										<td><c:if test="${dataitem.userbasicinfo.userBasicInfoSex==0}">
 											男
-											</c:if> <c:if
-												test="${dataitem.userbasicinfo.user_basic_info_sex==1}">
+											</c:if> <c:if test="${dataitem.userbasicinfo.userBasicInfoSex==1}">
 											女
 											</c:if></td>
-										<td><fmt:formatDate
-												value="${dataitem.userbasicinfo.user_basic_info_birthday}"
+										<td><fmt:formatDate value="${dataitem.userbasicinfo.userBasicInfoBirthday}"
 												pattern="yyyy-MM-dd" /></td>
 										<td>
 
 											<div class="container-fluid" style="overflow: hidden;">
-												<c:forEach var="datauserinfo"
-													items="${dataitem.usercontactinfoviewdata}">
+												<c:forEach var="datauserinfo" items="${dataitem.usercontactinfoviewdata}">
 													<div class="row">
 														<div class="col-md-6">${datauserinfo.usercontacttype.name}</div>
 														<div class="col-md-6">${datauserinfo.usercontactinfo.user_contact_value}</div>
@@ -236,26 +221,19 @@
 					<%
 						//没有找到记录
 					%>
-					<div class="alert alert-warning alert-dismissible fade in"
-						role="alert" style="margin: 10px;">
-						<button type="button" class="close" data-dismiss="alert"
-							aria-label="Close">
+					<div class="alert alert-warning alert-dismissible fade in" role="alert" style="margin: 10px;">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 						<h3>没有找到记录,请选择下列操作之一：</h3>
 
 						<div class="list-group">
 
-							<a href="<c:url value="/teacher/add.html"/>"
-								class="list-group-item">添加教师</a> <a
-								href="<c:url value="/student/add.html"/>"
-								class="list-group-item">添加单个学生</a> <a
-								href="<c:url value="/student/addfromexcel.html"/>"
-								class="list-group-item">添加多个学生</a> <a
-								href="<c:url value="/permission/group-user.html"/>"
-								class="list-group-item">为组添加用户</a> <a
-								href="<c:url value="/naturalclass/list.html"/>"
-								class="list-group-item">添加自然班</a>
+							<a href="<c:url value="/teacher/add.html"/>" class="list-group-item">添加教师</a>
+							<a href="<c:url value="/student/add.html"/>" class="list-group-item">添加单个学生</a>
+							<a href="<c:url value="/student/addfromexcel.html"/>" class="list-group-item">添加多个学生</a>
+							<a href="<c:url value="/permission/group-user.html"/>" class="list-group-item">为组添加用户</a>
+							<a href="<c:url value="/naturalclass/list.html"/>" class="list-group-item">添加自然班</a>
 
 						</div>
 
@@ -268,33 +246,30 @@
 
 
 	<!-- 添加对话框 -->
-	<div class="modal fade" id="addModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="myModalLabel">添加系部</h4>
 				</div>
 
-				<form class="form-signin"
-					action="<c:url value="/department/add.html"/>" method="post">
+				<form class="form-signin" action="<c:url value="/department/add.html"/>" method="post">
 
 
 					<div class="modal-body">
 						<h4 class="form-signin-heading">
 							请为<span class="text-danger" id="schoolname"></span>输入新加系部名称
 						</h4>
-						<INPUT type="hidden" id="t_school_id" name="t_school_id"
-							value="${selectedt_school_id}"> <label for="inputname"
-							class="sr-only">系部名称</label> <input type="text" id="inputname"
-							class="form-control" name="name" placeholder="系部名称" required
-							autofocus> <label for="inputnote" class="sr-only">系部描述</label>
-						<input type="text" id="inputnote" class="form-control" name="note"
-							placeholder="系部描述">
+						<INPUT type="hidden" id="t_school_id" name="t_school_id" value="${selectedt_school_id}">
+						<label for="inputname" class="sr-only">系部名称</label>
+						<input type="text" id="inputname" class="form-control" name="name" placeholder="系部名称" required
+							autofocus>
+						<label for="inputnote" class="sr-only">系部描述</label>
+						<input type="text" id="inputnote" class="form-control" name="note" placeholder="系部描述">
 
 					</div>
 
@@ -310,20 +285,18 @@
 
 
 	<!-- 修改对话框 -->
-	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="myModalLabel">修改系部</h4>
 				</div>
 
-				<form class="form-signin"
-					action="<c:url value="/department/update.html"/>" method="post">
+				<form class="form-signin" action="<c:url value="/department/update.html"/>" method="post">
 
 
 					<div class="modal-body">
@@ -331,15 +304,14 @@
 							请修改<span class="text-danger" id="schoolname"></span>系部属性
 						</h4>
 
-						<INPUT type="hidden" id="t_school_id" name="t_school_id"
-							value="${selectedt_school_id}"> <label for="inputname"
-							class="sr-only">系部名称</label> <input type="text" id="inputid"
-							class="form-control" name="id" value="" placeholder="id"
-							style="display: none;"> <input type="text" id="inputname"
-							class="form-control" name="name" value="" placeholder="系部名称"
-							required autofocus> <label for="inputnote"
-							class="sr-only">系部描述</label> <input type="text" id="inputnote"
-							class="form-control" name="note" value="" placeholder="系部描述">
+						<INPUT type="hidden" id="t_school_id" name="t_school_id" value="${selectedt_school_id}">
+						<label for="inputname" class="sr-only">系部名称</label>
+						<input type="text" id="inputid" class="form-control" name="id" value="" placeholder="id"
+							style="display: none;">
+						<input type="text" id="inputname" class="form-control" name="name" value="" placeholder="系部名称"
+							required autofocus>
+						<label for="inputnote" class="sr-only">系部描述</label>
+						<input type="text" id="inputnote" class="form-control" name="note" value="" placeholder="系部描述">
 
 					</div>
 
@@ -356,13 +328,10 @@
 
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
-
-
-	<%@ include file="../../shared/pageFooter.jsp"%>
+	
 
 	<%@ include file="../../shared/importJs.jsp"%>
-
+<%@ include file="../../shared/sysLastInclude.jsp"%>
 
 
 
@@ -424,22 +393,31 @@
 		function gett_school_id() {
 			var selctrl = document.getElementById("SchoolSelectControl");
 			var index = selctrl.selectedIndex;
-			var t_school_id = (selctrl.options[index].value);
-			return t_school_id;
+			if (index >= 0) {
+				var t_school_id = (selctrl.options[index].value);
+				return t_school_id;
+			}
+			return null;
 		}
 
 		function get_department_id() {
 			var selctrl = document.getElementById("departmentSelectControl");
 			var index = selctrl.selectedIndex;
-			var t_department_id = (selctrl.options[index].value);
-			return t_department_id;
+			if (index >= 0) {
+				var t_department_id = (selctrl.options[index].value);
+				return t_department_id;
+			}
+			return null;
 		}
 
 		function get_nuturalclass_id() {
 			var selctrl = document.getElementById("naturalclassSelectControl");
 			var index = selctrl.selectedIndex;
-			var t_nuturalclass_id = (selctrl.options[index].value);
-			return t_nuturalclass_id;
+			if (index >= 0) {
+				var t_nuturalclass_id = (selctrl.options[index].value);
+				return t_nuturalclass_id;
+			}
+			return null;
 		}
 
 		function onSearch() {
@@ -455,17 +433,39 @@
 		}
 
 		function onAdd() {
-			var url = "<c:url value='/student/add-'/>" + gett_school_id() + "-"
-					+ get_department_id() + "-" + get_nuturalclass_id()
-					+ ".html";
-			window.location.href = url;
+			var t_school_id = gett_school_id();
+			var t_department_id = get_department_id();
+			var t_nuturalclass_id = get_nuturalclass_id();
+			
+			if(t_school_id==null){
+				ShowErrMsg("请选择学院。如果没有相应学院，请建立");
+				return;
+			}
+			
+			if(t_department_id==null){
+				ShowErrMsg("请选择系部。如果没有相应系部，请建立");
+				return;
+			}
+			
+			if(t_nuturalclass_id==null){
+				ShowErrMsg("请选择班级。如果没有相应班级，请建立");
+				return;
+			}
+
+			var url = null;
+			if (t_school_id != null && t_department_id != null
+					&& t_nuturalclass_id != null) {
+				url = "<c:url value='/student/add-'/>" + t_school_id + "-"
+						+ t_department_id + "-" + t_nuturalclass_id + ".html";
+				window.location.href = url;
+			}
 		}
 
 		function onAddFromExcel() {
-			var url = "<c:url value='/student/addfromexcel-'/>"
-					+ gett_school_id() + "-" + get_department_id() + "-"
-					+ get_nuturalclass_id() + ".html";
-			window.location.href = url;
+			
+				var url = "<c:url value='/student/addfromexcel.html'/>";
+				window.location.href = url;
+			
 		}
 	</script>
 
@@ -564,20 +564,6 @@
 
 		});
 	</script>
-
-
-	<c:if test="${errorMsg!=null}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
-			}
-			ShowErrMsg();
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

@@ -1,0 +1,312 @@
+
+2014-12-05 16:48:48javax.jcr.RepositoryException: The repository home F:\profole\backup\repository appears to be in use since the file named .lock is already locked by the current process.
+2014-12-05 16:48:48javax.jcr.RepositoryException: The repository home F:\profole\backup\repository appears to be in use since the file named .lock is already locked by the current process.
+2014-12-07 10:55:37javax.jcr.RepositoryException: The repository home F:\profole\backup\repository appears to be in use since the file named .lock is already locked by the current process.
+2014-12-07 10:55:38javax.jcr.RepositoryException: The repository home F:\profole\backup\repository appears to be in use since the file named .lock is already locked by the current process.
+2014-12-07 11:06:35java.io.IOException: 另一个程序已锁定文件的一部分，进程无法访问。
+2014-12-07 11:06:35java.io.IOException: 另一个程序已锁定文件的一部分，进程无法访问。
+2014-12-09 09:50:37java.io.IOException: 另一个程序已锁定文件的一部分，进程无法访问。
+2014-12-09 09:50:37java.io.IOException: 另一个程序已锁定文件的一部分，进程无法访问。
+2014-12-09 11:11:46java.io.IOException: 另一个程序已锁定文件的一部分，进程无法访问。
+2014-12-09 11:11:46java.io.IOException: 另一个程序已锁定文件的一部分，进程无法访问。
+2014-12-09 11:11:58java.lang.NullPointerException
+2014-12-09 11:11:58java.lang.NullPointerException
+2014-12-09 11:11:58java.lang.NullPointerException
+2014-12-09 11:11:58java.lang.NullPointerException
+2014-12-09 11:11:58java.lang.NullPointerException
+2014-12-09 11:11:58java.lang.NullPointerException
+2014-12-09 11:11:58java.lang.NullPointerException
+2014-12-09 11:11:58java.lang.NullPointerException
+2014-12-09 11:11:58java.lang.NullPointerException
+2014-12-09 11:11:58java.lang.NullPointerException
+2014-12-09 11:11:58java.lang.NullPointerException
+2014-12-09 11:11:58java.lang.NullPointerException
+2014-12-10 09:24:15java.lang.NullPointerException
+2014-12-10 09:24:15java.lang.NullPointerException
+2014-12-10 09:24:15java.lang.NullPointerException
+2014-12-10 09:24:15java.lang.NullPointerException
+2014-12-10 09:24:15java.lang.NullPointerException
+2014-12-10 09:24:15java.lang.NullPointerException
+2014-12-10 09:24:15java.lang.NullPointerException
+2014-12-10 09:24:15java.lang.NullPointerException
+2014-12-13 11:18:59javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-13 11:18:59javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-13 11:19:31javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-13 11:19:31javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-13 11:20:00javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-13 11:20:00javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-13 11:20:31javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-13 11:20:31javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-13 11:24:20javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-13 11:24:21javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-13 11:30:33java.lang.NullPointerException
+2014-12-13 11:30:33java.lang.NullPointerException
+2014-12-13 11:30:33java.lang.NullPointerException
+2014-12-13 11:30:33java.lang.NullPointerException
+2014-12-13 11:30:33java.lang.NullPointerException
+2014-12-13 11:30:33java.lang.NullPointerException
+2014-12-13 11:30:33java.lang.NullPointerException
+2014-12-13 11:30:33java.lang.NullPointerException
+2014-12-19 09:50:21java.lang.NullPointerException
+2014-12-19 09:50:21java.lang.NullPointerException
+2014-12-19 09:50:21java.lang.NullPointerException
+2014-12-19 09:50:21java.lang.NullPointerException
+2014-12-19 09:50:21java.lang.NullPointerException
+2014-12-19 09:50:21java.lang.NullPointerException
+2014-12-19 09:50:21java.lang.NullPointerException
+2014-12-19 09:50:21java.lang.NullPointerException
+2014-12-19 14:01:16javax.jcr.RepositoryException: The repository home F:\profole\backup\repository appears to be in use since the file named .lock is already locked by the current process.
+2014-12-19 14:01:16javax.jcr.RepositoryException: The repository home F:\profole\backup\repository appears to be in use since the file named .lock is already locked by the current process.
+2014-12-19 15:14:15java.io.IOException: 另一个程序已锁定文件的一部分，进程无法访问。
+2014-12-19 15:14:15java.io.IOException: 另一个程序已锁定文件的一部分，进程无法访问。
+2014-12-22 10:11:40java.lang.NullPointerException
+2014-12-22 10:11:40java.lang.NullPointerException
+2014-12-22 10:11:40java.lang.NullPointerException
+2014-12-22 10:11:40java.lang.NullPointerException
+2014-12-22 10:11:40java.lang.NullPointerException
+2014-12-22 10:11:40java.lang.NullPointerException
+2014-12-22 10:11:40java.lang.NullPointerException
+2014-12-22 10:11:40java.lang.NullPointerException
+2014-12-22 10:12:20java.lang.NullPointerException
+2014-12-22 10:12:20java.lang.NullPointerException
+2014-12-22 10:12:20java.lang.NullPointerException
+2014-12-22 10:12:20java.lang.NullPointerException
+2014-12-22 10:12:20java.lang.NullPointerException
+2014-12-22 10:12:20java.lang.NullPointerException
+2014-12-22 10:12:20java.lang.NullPointerException
+2014-12-22 10:12:20java.lang.NullPointerException
+2014-12-22 10:16:39javax.jcr.RepositoryException: The repository home F:\profole\repository appears to be in use since the file named .lock is already locked by the current process.
+2014-12-22 10:16:39javax.jcr.RepositoryException: The repository home F:\profole\repository appears to be in use since the file named .lock is already locked by the current process.
+2014-12-22 10:24:04java.lang.NullPointerException
+2014-12-22 10:24:04java.lang.NullPointerException
+2014-12-22 10:24:04java.lang.NullPointerException
+2014-12-22 10:24:04java.lang.NullPointerException
+2014-12-22 10:24:04java.lang.NullPointerException
+2014-12-22 10:24:04java.lang.NullPointerException
+2014-12-22 10:24:04java.lang.NullPointerException
+2014-12-22 10:24:04java.lang.NullPointerException
+2014-12-22 14:42:56java.lang.NullPointerException
+2014-12-22 14:42:56java.lang.NullPointerException
+2014-12-22 14:42:56java.lang.NullPointerException
+2014-12-22 14:42:56java.lang.NullPointerException
+2014-12-22 14:42:56java.lang.NullPointerException
+2014-12-22 14:42:56java.lang.NullPointerException
+2014-12-22 14:42:56java.lang.NullPointerException
+2014-12-22 14:42:56java.lang.NullPointerException
+2014-12-22 15:05:38java.io.IOException: 另一个程序已锁定文件的一部分，进程无法访问。
+2014-12-22 15:05:38java.io.IOException: 另一个程序已锁定文件的一部分，进程无法访问。
+2014-12-22 16:03:43java.io.IOException: 另一个程序已锁定文件的一部分，进程无法访问。
+2014-12-22 16:03:43java.io.IOException: 另一个程序已锁定文件的一部分，进程无法访问。
+2014-12-22 16:45:42java.io.IOException: 另一个程序已锁定文件的一部分，进程无法访问。
+2014-12-22 16:45:42java.io.IOException: 另一个程序已锁定文件的一部分，进程无法访问。
+2014-12-22 16:46:08java.lang.NullPointerException
+2014-12-22 16:46:08java.lang.NullPointerException
+2014-12-22 16:46:08java.lang.NullPointerException
+2014-12-22 16:46:08java.lang.NullPointerException
+2014-12-22 16:46:08java.lang.NullPointerException
+2014-12-22 16:46:08java.lang.NullPointerException
+2014-12-22 16:46:08java.lang.NullPointerException
+2014-12-22 16:46:08java.lang.NullPointerException
+2014-12-22 16:49:20javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-22 16:49:20javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-22 16:49:20java.lang.NullPointerException
+2014-12-22 16:49:20java.lang.NullPointerException
+2014-12-22 16:50:07javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-22 16:50:07javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-22 16:50:27javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-22 16:50:27javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-22 16:57:58javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-22 16:57:58javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-22 17:10:00java.io.IOException: 另一个程序已锁定文件的一部分，进程无法访问。
+2014-12-22 17:10:00java.io.IOException: 另一个程序已锁定文件的一部分，进程无法访问。
+2014-12-22 17:10:00java.io.IOException: 另一个程序已锁定文件的一部分，进程无法访问。
+2014-12-22 17:10:00java.io.IOException: 另一个程序已锁定文件的一部分，进程无法访问。
+2014-12-22 17:10:13java.lang.NullPointerException
+2014-12-22 17:10:13java.lang.NullPointerException
+2014-12-22 17:10:13java.lang.NullPointerException
+2014-12-22 17:10:13java.lang.NullPointerException
+2014-12-22 17:10:13java.lang.NullPointerException
+2014-12-22 17:10:13java.lang.NullPointerException
+2014-12-22 17:10:13java.lang.NullPointerException
+2014-12-22 17:10:13java.lang.NullPointerException
+2014-12-22 17:12:08java.lang.NullPointerException
+2014-12-22 17:12:08java.lang.NullPointerException
+2014-12-22 17:12:08java.lang.NullPointerException
+2014-12-22 17:12:08java.lang.NullPointerException
+2014-12-22 17:12:08java.lang.NullPointerException
+2014-12-22 17:12:08java.lang.NullPointerException
+2014-12-22 17:12:08java.lang.NullPointerException
+2014-12-22 17:12:08java.lang.NullPointerException
+2014-12-23 09:06:52java.lang.NullPointerException
+2014-12-23 09:06:52java.lang.NullPointerException
+2014-12-23 09:08:26java.lang.NullPointerException
+2014-12-23 09:08:26java.lang.NullPointerException
+2014-12-23 09:08:26java.lang.NullPointerException
+2014-12-23 09:08:26java.lang.NullPointerException
+2014-12-23 09:08:26java.lang.NullPointerException
+2014-12-23 09:08:26java.lang.NullPointerException
+2014-12-23 09:08:26java.lang.NullPointerException
+2014-12-23 09:08:26java.lang.NullPointerException
+2014-12-23 09:11:54java.lang.NullPointerException
+2014-12-23 09:11:54java.lang.NullPointerException
+2014-12-23 09:11:54java.lang.NullPointerException
+2014-12-23 09:11:54java.lang.NullPointerException
+2014-12-23 09:11:54java.lang.NullPointerException
+2014-12-23 09:11:54java.lang.NullPointerException
+2014-12-23 09:11:54java.lang.NullPointerException
+2014-12-23 09:11:54java.lang.NullPointerException
+2014-12-23 09:24:13java.lang.NullPointerException
+2014-12-23 09:24:13java.lang.NullPointerException
+2014-12-23 09:24:13java.lang.NullPointerException
+2014-12-23 09:24:13java.lang.NullPointerException
+2014-12-23 09:24:13java.lang.NullPointerException
+2014-12-23 09:24:13java.lang.NullPointerException
+2014-12-23 09:24:13java.lang.NullPointerException
+2014-12-23 09:24:13java.lang.NullPointerException
+2014-12-23 11:28:08java.lang.NullPointerException
+2014-12-23 11:28:08java.lang.NullPointerException
+2014-12-23 11:28:08java.lang.NullPointerException
+2014-12-23 11:28:08java.lang.NullPointerException
+2014-12-23 11:28:08java.lang.NullPointerException
+2014-12-23 11:28:08java.lang.NullPointerException
+2014-12-23 11:28:08java.lang.NullPointerException
+2014-12-23 11:28:08java.lang.NullPointerException
+2014-12-23 12:54:41java.lang.NullPointerException
+2014-12-23 12:54:41java.lang.NullPointerException
+2014-12-23 12:54:41java.lang.NullPointerException
+2014-12-23 12:54:41java.lang.NullPointerException
+2014-12-23 12:54:41java.lang.NullPointerException
+2014-12-23 12:54:41java.lang.NullPointerException
+2014-12-23 12:54:41java.lang.NullPointerException
+2014-12-23 12:54:41java.lang.NullPointerException
+2014-12-23 12:58:46java.lang.NullPointerException
+2014-12-23 12:58:46java.lang.NullPointerException
+2014-12-23 12:58:46java.lang.NullPointerException
+2014-12-23 12:58:46java.lang.NullPointerException
+2014-12-23 12:58:46java.lang.NullPointerException
+2014-12-23 12:58:46java.lang.NullPointerException
+2014-12-23 12:58:46java.lang.NullPointerException
+2014-12-23 12:58:46java.lang.NullPointerException
+2014-12-23 13:10:09java.lang.NullPointerException
+2014-12-23 13:10:09java.lang.NullPointerException
+2014-12-23 13:10:09java.lang.NullPointerException
+2014-12-23 13:10:09java.lang.NullPointerException
+2014-12-23 13:10:09java.lang.NullPointerException
+2014-12-23 13:10:09java.lang.NullPointerException
+2014-12-23 13:10:09java.lang.NullPointerException
+2014-12-23 13:10:09java.lang.NullPointerException
+2014-12-23 13:10:44java.lang.NullPointerException
+2014-12-23 13:10:44java.lang.NullPointerException
+2014-12-23 13:10:44java.lang.NullPointerException
+2014-12-23 13:10:44java.lang.NullPointerException
+2014-12-23 13:10:44java.lang.NullPointerException
+2014-12-23 13:10:44java.lang.NullPointerException
+2014-12-23 13:10:44java.lang.NullPointerException
+2014-12-23 13:10:44java.lang.NullPointerException
+2014-12-23 13:50:29java.lang.NullPointerException
+2014-12-23 13:50:29java.lang.NullPointerException
+2014-12-23 13:50:29java.lang.NullPointerException
+2014-12-23 13:50:29java.lang.NullPointerException
+2014-12-23 13:50:29java.lang.NullPointerException
+2014-12-23 13:50:29java.lang.NullPointerException
+2014-12-23 13:50:29java.lang.NullPointerException
+2014-12-23 13:50:29java.lang.NullPointerException
+2014-12-23 16:05:11java.lang.NullPointerException
+2014-12-23 16:05:11java.lang.NullPointerException
+2014-12-23 16:05:11java.lang.NullPointerException
+2014-12-23 16:05:11java.lang.NullPointerException
+2014-12-23 16:05:11java.lang.NullPointerException
+2014-12-23 16:05:11java.lang.NullPointerException
+2014-12-23 16:05:11java.lang.NullPointerException
+2014-12-23 16:05:11java.lang.NullPointerException
+2014-12-24 09:01:00java.lang.NullPointerException
+2014-12-24 09:01:00java.lang.NullPointerException
+2014-12-24 09:24:57java.lang.NullPointerException
+2014-12-24 09:24:57java.lang.NullPointerException
+2014-12-24 09:27:54java.lang.NullPointerException
+2014-12-24 09:27:54java.lang.NullPointerException
+2014-12-24 09:44:27javax.jcr.RepositoryException: The repository home F:\profole\repository appears to be in use since the file named .lock is already locked by the current process.
+2014-12-24 09:44:27javax.jcr.RepositoryException: The repository home F:\profole\repository appears to be in use since the file named .lock is already locked by the current process.
+2014-12-24 09:46:02java.lang.NullPointerException
+2014-12-24 09:46:02java.lang.NullPointerException
+2014-12-24 09:52:22java.lang.NullPointerException
+2014-12-24 09:52:22java.lang.NullPointerException
+2014-12-29 11:36:53java.lang.NullPointerException
+2014-12-29 11:36:53java.lang.NullPointerException
+2014-12-29 11:37:41javax.jcr.PathNotFoundException: HJ-T 416-2007
+2014-12-29 11:37:41javax.jcr.PathNotFoundException: HJ-T 416-2007
+2014-12-29 11:37:41javax.jcr.PathNotFoundException: HJ-T 416-2007
+2014-12-29 11:40:49javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-29 11:40:49javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-29 11:41:51javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-29 11:41:51javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-29 11:42:06javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-29 11:42:06javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-29 11:44:18javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-29 11:44:18javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-29 11:45:47javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-29 11:45:47javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-29 11:46:13javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-29 11:46:13javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-29 11:46:48javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-29 11:46:48javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-29 11:47:16javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-29 11:47:16javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-29 11:48:01javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2014-12-29 11:48:01javax.jcr.RepositoryException: Cannot instantiate persistence manager org.apache.jackrabbit.core.persistence.pool.DerbyPersistenceManager
+2015-01-04 13:50:33java.lang.NullPointerException
+2015-01-04 13:50:33java.lang.NullPointerException
+2015-01-04 13:50:33java.lang.NullPointerException
+2015-01-04 13:50:33java.lang.NullPointerException
+2015-01-04 14:06:03java.lang.NullPointerException
+2015-01-04 14:06:03java.lang.NullPointerException
+2015-01-04 14:06:03java.lang.NullPointerException
+2015-01-04 14:06:03java.lang.NullPointerException
+2015-01-07 10:06:01java.lang.NullPointerException
+2015-01-07 10:06:01java.lang.NullPointerException
+2015-01-07 10:06:01java.lang.NullPointerException
+2015-01-07 10:06:01java.lang.NullPointerException
+2015-01-07 10:09:40java.lang.NullPointerException
+2015-01-07 10:09:40java.lang.NullPointerException
+2015-01-07 10:09:40java.lang.NullPointerException
+2015-01-07 10:09:40java.lang.NullPointerException
+2015-01-07 10:12:29java.lang.NullPointerException
+2015-01-07 10:12:29java.lang.NullPointerException
+2015-01-07 10:12:29java.lang.NullPointerException
+2015-01-07 10:12:29java.lang.NullPointerException
+2015-01-07 10:16:01java.lang.NullPointerException
+2015-01-07 10:16:01java.lang.NullPointerException
+2015-01-07 10:16:01java.lang.NullPointerException
+2015-01-07 10:16:01java.lang.NullPointerException
+2015-01-07 10:17:04java.lang.NullPointerException
+2015-01-07 10:17:04java.lang.NullPointerException
+2015-01-07 10:17:04java.lang.NullPointerException
+2015-01-07 10:17:04java.lang.NullPointerException
+2015-01-08 09:18:36java.lang.NullPointerException
+2015-01-08 09:18:36java.lang.NullPointerException
+2015-01-08 09:18:36java.lang.NullPointerException
+2015-01-08 09:18:36java.lang.NullPointerException
+2015-01-08 09:57:35java.lang.NullPointerException
+2015-01-08 09:57:35java.lang.NullPointerException
+2015-01-08 09:57:35java.lang.NullPointerException
+2015-01-08 09:57:35java.lang.NullPointerException
+2015-01-08 09:58:22java.lang.NullPointerException
+2015-01-08 09:58:22java.lang.NullPointerException
+2015-01-08 09:58:22java.lang.NullPointerException
+2015-01-08 09:58:22java.lang.NullPointerException
+2015-01-08 10:02:34java.lang.NullPointerException
+2015-01-08 10:02:34java.lang.NullPointerException
+2015-01-08 10:02:34java.lang.NullPointerException
+2015-01-08 10:02:34java.lang.NullPointerException
+2015-01-08 10:02:34java.lang.NullPointerException
+2015-01-08 10:02:34java.lang.NullPointerException
+2015-01-08 10:02:34java.lang.NullPointerException
+2015-01-08 10:02:34java.lang.NullPointerException
+2015-01-08 10:13:50java.lang.NullPointerException
+2015-01-08 10:13:50java.lang.NullPointerException
+2015-01-08 10:13:50java.lang.NullPointerException
+2015-01-08 10:13:50java.lang.NullPointerException
+2015-01-08 10:13:50java.lang.NullPointerException
+2015-01-08 10:13:50java.lang.NullPointerException
+2015-01-08 10:13:50java.lang.NullPointerException
+2015-01-08 10:13:50java.lang.NullPointerException

@@ -57,7 +57,7 @@ public class CourseTeachingClassHomeworkTypeDao extends BaseDao<CourseTeachingCl
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				expriment.setId(id);
-				expriment.setT_course_teaching_class_id(rs.getString("t_course_teaching_class_id"));
+				expriment.setCourseTeachingClassId(rs.getString("t_course_teaching_class_id"));
 								
 				expriment.setName(rs.getString("name"));
 				expriment.setNote(rs.getString("note"));
@@ -85,7 +85,7 @@ public class CourseTeachingClassHomeworkTypeDao extends BaseDao<CourseTeachingCl
 			public void processRow(ResultSet rs) throws SQLException {
 				CourseTeachingClassHomeworkType expriment = new CourseTeachingClassHomeworkType();
 				expriment.setId(rs.getString("id"));
-				expriment.setT_course_teaching_class_id(t_course_teaching_class_id);
+				expriment.setCourseTeachingClassId(t_course_teaching_class_id);
 							
 				expriment.setName(rs.getString("name"));
 				expriment.setNote(rs.getString("note"));
@@ -103,7 +103,7 @@ public class CourseTeachingClassHomeworkTypeDao extends BaseDao<CourseTeachingCl
 	public String add(CourseTeachingClassHomeworkType expriment) {
 		String id = GUID.getGUID();
 		expriment.setId(id);
-		Object params[] = new Object[] { expriment.getId(), expriment.getT_course_teaching_class_id(), 
+		Object params[] = new Object[] { expriment.getId(), expriment.getCourseTeachingClassId(), 
 				expriment.getName(), expriment.getNote()};
 		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
 		getJdbcTemplate().update(INSERT_PLAN, params, types);

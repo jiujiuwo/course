@@ -34,7 +34,7 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home" onLoad="ShowErrMsg()">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 
@@ -175,11 +175,11 @@
 											${(pagedGroupPersonInfo.currentPageNo-1) * pagedGroupPersonInfo.pageSize +index}</th>
 
 										<td><c:if test="${dataitem.teacher!=null}">
-											${dataitem.teacher.teacher_num}(工号)
+											${dataitem.teacher.teacherNum}(工号)
 											</c:if> <c:if test="${dataitem.student!=null}">
 											${dataitem.student.student_num}(学号)
 											</c:if></td>
-										<td>${dataitem.userbasicinfo.user_basic_info_name}</td>
+										<td>${dataitem.userbasicinfo.userBasicInfoName}</td>
 										<td>${dataitem.school.name}-${dataitem.department.name}</td>
 										<td><button type="button" class="btn btn-default btn-xs"
 												onclick="onUpdate('${dataitem.id}')">修改...</button>
@@ -241,11 +241,11 @@
 
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
-
-	<%@ include file="../../shared/pageFooter.jsp"%>
+	
 
 	<%@ include file="../../shared/importJs.jsp"%>
+<%@ include file="../../shared/sysLastInclude.jsp"%>
+
 
 	<script>
 		var ctrl = document.getElementById("groupSelectControl");
@@ -306,20 +306,6 @@
 		}
 	</script>
 
-
-
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

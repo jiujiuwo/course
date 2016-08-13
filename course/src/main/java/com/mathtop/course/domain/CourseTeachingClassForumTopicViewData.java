@@ -16,6 +16,7 @@ public class CourseTeachingClassForumTopicViewData extends BaseDomain{
 	private UserBasicInfoViewData userbasicinfoviewdata;
 	private List<CourseTeachingClassForumTopicFile> topicFileList;
 	
+	
 	public CourseTeachingClassForumTopic getForumtopic() {
 		return forumtopic;
 	}

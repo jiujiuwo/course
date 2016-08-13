@@ -53,8 +53,8 @@ public class PermissionDao extends BaseDao<Permission> {
 						p.setId(id);
 						p.setName(rs.getString("name"));
 						p.setNote(rs.getString("note"));
-						p.setT_permission_operator_id(rs.getString("t_permission_operator_id"));
-						p.setT_resource_id(rs.getString("t_resource_id"));
+						p.setPermissionOperatorId(rs.getString("t_permission_operator_id"));
+						p.setResourceId(rs.getString("t_resource_id"));
 						
 						
 						
@@ -88,8 +88,8 @@ public class PermissionDao extends BaseDao<Permission> {
 						p.setId(rs.getString("id"));
 						p.setName(rs.getString("name"));
 						p.setNote(rs.getString("note"));
-						p.setT_permission_operator_id(rs.getString("t_permission_operator_id"));
-						p.setT_resource_id(rs.getString("t_resource_id"));
+						p.setPermissionOperatorId(rs.getString("t_permission_operator_id"));
+						p.setResourceId(rs.getString("t_resource_id"));
 						
 						
 						list.add(p);
@@ -136,8 +136,8 @@ public class PermissionDao extends BaseDao<Permission> {
 		
 		
 		view.setPermission(p);
-		view.setPermissionoperator(permissionoperatorDao.getByID(p.getT_permission_operator_id()));
-		view.setResource(resourceDao.getByID(p.getT_resource_id()));
+		view.setPermissionoperator(permissionoperatorDao.getByID(p.getPermissionOperatorId()));
+		view.setResource(resourceDao.getByID(p.getResourceId()));
 		return view;
 	}
 	
@@ -151,8 +151,8 @@ public class PermissionDao extends BaseDao<Permission> {
 		for(Permission p:list){
 			PermissionViewData view=new PermissionViewData();
 			view.setPermission(p);
-			view.setPermissionoperator(permissionoperatorDao.getByID(p.getT_permission_operator_id()));
-			view.setResource(resourceDao.getByID(p.getT_resource_id()));
+			view.setPermissionoperator(permissionoperatorDao.getByID(p.getPermissionOperatorId()));
+			view.setResource(resourceDao.getByID(p.getResourceId()));
 			listviewdata.add(view);
 		}
 		

@@ -84,8 +84,8 @@ public class RolePermissionDao extends BaseDao<RolePermission> {
 					public void processRow(ResultSet rs) throws SQLException {
 						RolePermission ug = new RolePermission();
 						ug.setId(rs.getString("id"));
-						ug.setT_permission_id(rs.getString("t_permission_id"));
-						ug.setT_role_id(t_role_id);
+						ug.setPermissionId(rs.getString("t_permission_id"));
+						ug.setRoleId(t_role_id);
 						list.add(ug);
 					//	System.out.println(rs.getString("t_user_id"));
 					}
@@ -111,8 +111,8 @@ public class RolePermissionDao extends BaseDao<RolePermission> {
 					public void processRow(ResultSet rs) throws SQLException {
 						RolePermission p = new RolePermission();
 						p.setId(rs.getString("id"));
-						p.setT_permission_id(rs.getString("t_permission_id"));
-						p.setT_role_id(rs.getString("t_role_id"));
+						p.setPermissionId(rs.getString("t_permission_id"));
+						p.setRoleId(rs.getString("t_role_id"));
 						
 					
 						
@@ -175,8 +175,8 @@ public class RolePermissionDao extends BaseDao<RolePermission> {
 						//rolepermission
 						RolePermission rolepermission=new RolePermission();
 						rolepermission.setId(id);
-						rolepermission.setT_permission_id(permissionid);
-						rolepermission.setT_role_id(roleid);
+						rolepermission.setPermissionId(permissionid);
+						rolepermission.setRoleId(roleid);
 						p.setRolepermission(rolepermission);
 						
 						//permission
@@ -187,7 +187,7 @@ public class RolePermissionDao extends BaseDao<RolePermission> {
 						Role role=roledao.getByID(roleid);
 						p.setRole(role);
 						
-						PermissionOperator permissionoperator=permissionoperatordao.getByID(permission.getT_permission_operator_id());
+						PermissionOperator permissionoperator=permissionoperatordao.getByID(permission.getPermissionOperatorId());
 						p.setPermissionoperator(permissionoperator);
 						
 						

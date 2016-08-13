@@ -27,6 +27,7 @@ import com.mathtop.course.domain.AttendanceStateModeViewData;
 import com.mathtop.course.domain.AttendanceStudentViewData;
 import com.mathtop.course.domain.AttendanceType;
 import com.mathtop.course.domain.AttendanceViewData;
+import com.mathtop.course.domain.CourseTeachingClassViewData;
 import com.mathtop.course.domain.Student;
 import com.mathtop.course.domain.StudentViewData;
 import com.mathtop.course.domain.Teacher;
@@ -69,6 +70,9 @@ public class AttendanceController extends CourseTeachingClassBaseController {
 
 	@Autowired
 	private StudentService studentService;
+	
+	@Autowired
+	CourseTeachingClassService courseTeachingClassService;
 
 	/**
 	 * 添加学院
@@ -374,5 +378,42 @@ public class AttendanceController extends CourseTeachingClassBaseController {
 			view.setViewName("courseattendance/list");
 		return view;
 	}
+	
+	/**
+	 * 根据教学班列出学生
+	 * 
+	 * @param t_course_teaching_class_id:课程-教学班-id
+	 * @param pageNo
+	 *            页码
+	 * @return
+	 */
+	@RequestMapping(value = "/student-{t_course_teaching_class_id}", method = RequestMethod.GET)
+	public ModelAndView student(@PathVariable String t_course_teaching_class_id,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+
+		ModelAndView mav = new ModelAndView();
+
+		pageNo = pageNo == null ? 1 : pageNo;
+
+		CourseTeachingClassViewData selected_CourseTeachingClassViewData = courseTeachingClassService
+				.GetTeachingClassViewDataByCourseTeachingClassId(t_course_teaching_class_id);
+
+		mav.addObject(SelectedObjectConst.Selected_CourseTeachingClassID, t_course_teaching_class_id);
+
+		mav.addObject(SelectedObjectConst.Selected_CourseTeachingClassViewData, selected_CourseTeachingClassViewData);
+
+		// 学生信息
+		Page<StudentViewData> pagedStudentViewData = studentService
+				.getPageByCourseTeachingClassId(t_course_teaching_class_id, pageNo, CommonConstant.PAGE_SIZE);
+
+		mav.addObject(PagedObjectConst.Paged_StudentViewData, pagedStudentViewData);
+
+		mav.setViewName("courseattendance/student");
+
+		
+
+		return mav;
+	}
+
 
 }

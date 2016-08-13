@@ -13,6 +13,8 @@ public class CourseTeachingClassForumReplyFileViewData extends BaseDomain {
 
 	private CourseTeachingClassForumReplyFile replyFile;
 	private CourseTeachingClassForumReply reply;
+	
+	
 	public CourseTeachingClassForumReplyFile getReplyFile() {
 		return replyFile;
 	}

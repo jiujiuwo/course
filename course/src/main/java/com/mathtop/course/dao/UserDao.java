@@ -62,8 +62,8 @@ public class UserDao extends BaseDao<User> {
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				user.setId(rs.getString("id"));	
-				user.setUser_name(userName);
-				user.setUser_password(userPwd);
+				user.setUserName(userName);
+				user.setUserPassword(userPwd);
 				
 			}
 			
@@ -84,8 +84,8 @@ public class UserDao extends BaseDao<User> {
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				user.setId(rs.getString("id"));	
-				user.setUser_name(userName);
-				user.setUser_password(rs.getString("user_password"));
+				user.setUserName(userName);
+				user.setUserPassword(rs.getString("user_password"));
 				
 				
 			}
@@ -111,14 +111,14 @@ public class UserDao extends BaseDao<User> {
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				user.setId(t_user_id);	
-				user.setUser_name(rs.getString("user_name"));
-				user.setUser_password(rs.getString("user_password"));
+				user.setUserName(rs.getString("user_name"));
+				user.setUserPassword(rs.getString("user_password"));
 				
 			}
 			
 		});
 		
-		if(user.getUser_name()==null)
+		if(user.getUserName()==null)
 			return null;
 		return user;
 	}
@@ -127,7 +127,7 @@ public class UserDao extends BaseDao<User> {
 	public String add(User user){
 		String id=GUID.getGUID();
 		user.setId(id);
-		Object params[]=new Object[]{user.getId(),user.getUser_name(),user.getUser_password()};
+		Object params[]=new Object[]{user.getId(),user.getUserName(),user.getUserPassword()};
 		int types[]=new int[]{Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
 		getJdbcTemplate().update(INSERT_USER, params, types);
 		return id;

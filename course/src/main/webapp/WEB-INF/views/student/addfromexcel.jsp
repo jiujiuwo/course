@@ -3,8 +3,7 @@
 
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 
 	//设置左侧浏览状态
@@ -24,8 +23,7 @@
 <%@ include file="../../shared/importCss.jsp"%>
 <%@ include file="../../shared/importdatetimepickercss.jsp"%>
 
-<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet"
-	type="text/css" />
+<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet" type="text/css" />
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -34,10 +32,10 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
-	
+
 
 	<div class="DocumentPage">
 		<div class="DocumentPageLeftArea ">
@@ -55,156 +53,181 @@
 			<div class="CourseContentHeader">从Excel文件中批量增加学生</div>
 
 			<div class="CourseContentHeaderSeparatorLine"></div>
-			
-			<div style="display: none;" id="groupContainer">
-				<select id="groupSelectControl" name="groupId"
-							class="form-control input-sm">
-							<c:forEach var="d" items="${pagedGroup.result}">
-								<option value="${d.id}">${d.name}</option>
-							</c:forEach>
 
-						</select>
+			<div style="display: none;" id="groupContainer">
+				<select id="groupSelectControl" name="groupId" class="form-control input-sm">
+					<c:forEach var="d" items="${pagedGroup.result}">
+						<option value="${d.id}">${d.name}</option>
+					</c:forEach>
+
+				</select>
 			</div>
 
 
 
-
-			<form class="form-signin"
-				action="<c:url value="/student/uploadexcel.html"/>" method="post"
-				enctype="multipart/form-data">
-
-
-				<div class="modal-body">
-
-					<div class="container-fluid" style="overflow: hidden;">
-						<div class="row">
-							<div class="col-md-1">Excel文件格式</div>
-
-							<div class="col-md-3">
-								<img alt="Excel文件格式"
-									src="<c:url value="/image/addstufromexcel.png"/>" />
-							</div>
-
-
-						</div>
-						<div class="row">
-							<div class="col-sm-3">
-
-								<div class="alert alert-warning alert-dismissible" role="alert">
-									<button type="button" class="close" data-dismiss="alert"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-									<strong>注意</strong>列的次序可以变化;
-									<p>可以是97-03格式(xls)，也可以是2007-2010格式(xlsx)
-								</div>
-
-
-							</div>
-						</div>
+			<div class="container-fluid" style="overflow: hidden;">
+				<div class="row">
+					<div class="col-md-12">
+						<strong>支持多种Excel文件格式</strong>
 					</div>
 				</div>
-				
-				<div class="form-group">
-					<label for="groupSelectControl" class="col-sm-1 control-label">基本组</label>
-					<div class="col-md-3">
-						<select id="groupSelectControl" name="groupId"
-							class="form-control input-sm">
-							<c:forEach var="d" items="${pagedGroup.result}">
-								<option value="${d.id}">${d.name}</option>
-							</c:forEach>
+				<div class="row">
 
-						</select>
-					</div>
-
-					<label for="teacher_group" class="col-sm-1 control-label">其他组</label>
 					<div class="col-md-6">
-						<div class="btn-group" role="group" aria-label="...">
-							<button type="button" class="btn btn-default btn-sm"
-								onclick="window.location.href='<c:url value="/group/list.html"/>'">增加组类型</button>
-
-							<button type="button" class="btn btn-default btn-sm"
-								onclick="AddGroupRow()">增加组</button>
+						<img alt="Excel文件格式" src="<c:url value="/image/addstufromexcel0.png"/>" />
 
 
+					</div>
+					<div class="col-md-6">
+
+						<img alt="Excel文件格式" src="<c:url value="/image/addstufromexcel1.png"/>" />
+
+					</div>
+
+
+
+				</div>
+
+				<div class="row">
+
+					<div class="col-md-6">
+						<img alt="Excel文件格式" src="<c:url value="/image/addstufromexcel2.png"/>" />
+
+
+					</div>
+					<div class="col-md-6">
+
+						<img alt="Excel文件格式" src="<c:url value="/image/addstufromexcel3.png"/>" />
+
+					</div>
+
+
+
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+
+						<div class="alert alert-warning alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<strong>注意</strong>
+							<ul class="list-group">
+							<li>列的次序可以变化</li>
+							<li>当不存在学院/系部/班级时，将键入默认学院/系部/班级中。</li>
+							<li>“学院”列名可以为“学院”、“院”。</li>
+							<li>“系”列名可以为“系”、“系部”、“部”等。</li>
+							<li>“班级”列名可以为“班级”、“班”、“班号”等。</li>
+							<li>可以是97-03格式(xls)，也可以是2007-2010格式(xlsx)
+							</li>
+							</ul>
 						</div>
 
 
-						<div class="Course-Table">
-
-
-							<table id="studentgrouptable"
-								class="table table-hover table-bordered">
-								<thead>
-									<tr>
-										<th style="width: 10%;">#</th>
-										<th style="width: 20%;">组</th>
-
-										<th style="width: 20%;">操作</th>
-									</tr>
-								</thead>
-								<tbody>
-
-								</tbody>
-							</table>
-						</div>
 					</div>
 				</div>
+			</div>
+		
 
-				<div class="form-group">
-					<label for="exampleInputFile">请输入学生名单</label> <input type="file"
-						id="exampleInputFile" name="file" accept=".xls,.xlsx">
-					<p class="help-block">要求文件为excel文件。</p>
+
+
+		<form class="form-signin" action="<c:url value="/student/uploadexcel.html"/>" method="post"
+			enctype="multipart/form-data">
+
+
+
+
+			<div class="form-group">
+				<label for="groupSelectControl" class="col-sm-1 control-label">基本组</label>
+				<div class="col-md-3">
+					<select id="groupSelectControl" name="groupId" class="form-control input-sm">
+						<c:forEach var="d" items="${pagedGroup.result}">
+							<option value="${d.id}">${d.name}</option>
+						</c:forEach>
+
+					</select>
 				</div>
 
-				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary">添加</button>
-					<button type="button" class="btn btn-default"
-						onclick="window.history.back()">取消</button>
-				</div>
+				<label for="teacher_group" class="col-sm-1 control-label">其他组</label>
+				<div class="col-md-6">
+					<div class="btn-group" role="group" aria-label="...">
+						<button type="button" class="btn btn-default btn-sm"
+							onclick="window.location.href='<c:url value="/group/list.html"/>'">增加组类型</button>
 
-			</form>
-		</div>
+						<button type="button" class="btn btn-default btn-sm" onclick="AddGroupRow()">增加组</button>
+
+
+					</div>
+
+
+					<div class="Course-Table">
+
+
+						<table id="studentgrouptable" class="table table-hover table-bordered">
+							<thead>
+								<tr>
+									<th style="width: 10%;">#</th>
+									<th style="width: 20%;">组</th>
+
+									<th style="width: 20%;">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="exampleInputFile">请输入学生名单</label>
+				<input type="file" id="exampleInputFile" name="file" accept=".xls,.xlsx">
+				<p class="help-block">要求文件为excel文件。</p>
+			</div>
+
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary">添加</button>
+				<button type="button" class="btn btn-default" onclick="window.history.back()">取消</button>
+			</div>
+
+		</form>
+	</div>
 	</div>
 
 
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
-
-
-	<%@ include file="../../shared/pageFooter.jsp"%>
+	
 
 	<%@ include file="../../shared/importJs.jsp"%>
+	<%@ include file="../../shared/sysLastInclude.jsp"%>
 	<%@ include file="../../shared/importdatetimepickerjs.jsp"%>
-	
+
 	<script>
 		$(function() {
 
-			
-			
 			var groupctrl = document.getElementById("groupSelectControl");
-			
-			index=0;
-			for (var i = 0; i < groupctrl.options.length; i++){
-				
-				if (groupctrl.options[i].text.indexOf("学生")>=0)
+
+			index = 0;
+			for (var i = 0; i < groupctrl.options.length; i++) {
+
+				if (groupctrl.options[i].text.indexOf("学生") >= 0)
 					index = i;
 			}
-			
-			var groupctrlbyname=document.getElementsByName("groupId");
-			for(var i=0;i<groupctrlbyname.length;i++){
-				
+
+			var groupctrlbyname = document.getElementsByName("groupId");
+			for (var i = 0; i < groupctrlbyname.length; i++) {
+
 				groupctrlbyname[i].selectedIndex = index;
 			}
-			
 
 		});
 	</script>
-	
 
-<script type="text/javascript">
-function AddGroupRow(){
+
+	<script type="text/javascript">
+		function AddGroupRow() {
 			var table = document.getElementById("studentgrouptable");
 			var trCnt = table.tBodies[0].rows.length;
 			var row = table.tBodies[0].insertRow(trCnt);
@@ -212,12 +235,11 @@ function AddGroupRow(){
 			var td0 = row.insertCell(0);
 			var td1 = row.insertCell(1);
 			var td2 = row.insertCell(2);
-			
 
 			var cc = $("#groupContainer").html();
 
 			td1.innerHTML = cc;
-			
+
 			td2.innerHTML = "<button type='button' class='btn btn-default btn-sm'	onclick='DeleteGroupRow("
 					+ trCnt + ")'>删除</button>";
 
@@ -239,8 +261,7 @@ function AddGroupRow(){
 			}
 
 		}
-
-		</script>
+	</script>
 
 	<script type="text/javascript">
 		$(function() {
@@ -249,7 +270,8 @@ function AddGroupRow(){
 						var selt_school_id = $("#SchoolSelectControl").val();
 						var url = "<c:url value="/department/"/>"
 
-						url = url + "selectbyschool-" + selt_school_id + ".json";
+						url = url + "selectbyschool-" + selt_school_id
+								+ ".json";
 
 						var departmentjson;
 						$("#departmentSelectControl").empty();
@@ -270,18 +292,6 @@ function AddGroupRow(){
 		});
 	</script>
 
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

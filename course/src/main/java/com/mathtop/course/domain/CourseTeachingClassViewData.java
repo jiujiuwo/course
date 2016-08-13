@@ -7,15 +7,15 @@ public class CourseTeachingClassViewData extends BaseDomain{
 	 */
 	private static final long serialVersionUID = -185523270419711193L;
 
-	//t_teaching_class:教学班
-	TeachingClass teachingclass;
+
 	
 
-	CourseTeachingClass courseteachingclass;
+	CourseTeachingClass courseTeachingClass;
 
 
 	//课程
 	Course course;	
+	CourseTeachingTerm term;
 	
 	//授课教师
 	TeacherViewData[] teacher;
@@ -26,16 +26,6 @@ public class CourseTeachingClassViewData extends BaseDomain{
 	
 	
 	
-	
-	public TeachingClass getTeachingclass() {
-		return teachingclass;
-	}
-
-
-	public void setTeachingclass(TeachingClass teachingclass) {
-		this.teachingclass = teachingclass;
-	}
-
 
 	public Course getCourse() {
 		return course;
@@ -67,12 +57,25 @@ public class CourseTeachingClassViewData extends BaseDomain{
 	}
 
 
-	public CourseTeachingClass getCourseteachingclass() {
-		return courseteachingclass;
+	
+
+
+	public CourseTeachingTerm getTerm() {
+		return term;
 	}
 
 
-	public void setCourseteachingclass(CourseTeachingClass courseteachingclass) {
-		this.courseteachingclass = courseteachingclass;
+	public void setTerm(CourseTeachingTerm term) {
+		this.term = term;
+	}
+
+
+	public CourseTeachingClass getCourseTeachingClass() {
+		return courseTeachingClass;
+	}
+
+
+	public void setCourseTeachingClass(CourseTeachingClass courseTeachingClass) {
+		this.courseTeachingClass = courseTeachingClass;
 	}
 }

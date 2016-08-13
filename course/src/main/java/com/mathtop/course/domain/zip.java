@@ -33,6 +33,8 @@ public class zip {
 	 */
 	public void doCompress(String strZipFile, List<ZipFileName> strFilePaths) {
 		FileInputStream fileIn;
+		
+		
 
 		try {
 			zipOut = new ZipOutputStream(bos);
@@ -41,17 +43,25 @@ public class zip {
 				File realfile = new File(fileName.getRealFilePath());
 				if (realfile.exists()) {
 					fileIn = new FileInputStream(fileName.getRealFilePath());
+				//	System.out.println(fileName.getZipFileName());
+					try {
 
-					// 生成的压缩包存放在原目录下
-					zipOut.putNextEntry(new ZipEntry(strZipFile + "/" + fileName.getZipFileName()));
+						// 生成的压缩包存放在原目录下
+						zipOut.putNextEntry(new ZipEntry(strZipFile + "/" + fileName.getZipFileName()));
 
-					// 此方法存放在该项目目录下
-					// this.zipOut.putNextEntry(new
-					// ZipEntry(fileName.toString()));
-					while ((readedBytes = fileIn.read(buf)) > 0) {
-						zipOut.write(this.buf, 0, readedBytes);
+						// 此方法存放在该项目目录下
+						// this.zipOut.putNextEntry(new
+						// ZipEntry(fileName.toString()));
+						while ((readedBytes = fileIn.read(buf)) > 0) {
+							zipOut.write(this.buf, 0, readedBytes);
+						}
+						this.zipOut.closeEntry();
+					} catch (Exception e) {
+
 					}
-					this.zipOut.closeEntry();
+					finally{
+						this.zipOut.closeEntry();
+					}
 				}
 
 			}

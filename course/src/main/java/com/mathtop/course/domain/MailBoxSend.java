@@ -14,8 +14,8 @@ public class MailBoxSend extends BaseDomain {
 	 */
 	private static final long serialVersionUID = -1850680052983530478L;
 	private String id;
-	 private String t_user_id_from;
-	 private String t_user_id_to;
+	 private String userIdFrom;
+	 private String userIdTo;
 	 private String state;
 	 private String subject;
 	 private String content;
@@ -27,18 +27,7 @@ public class MailBoxSend extends BaseDomain {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getT_user_id_from() {
-		return t_user_id_from;
-	}
-	public void setT_user_id_from(String t_user_id_from) {
-		this.t_user_id_from = t_user_id_from;
-	}
-	public String getT_user_id_to() {
-		return t_user_id_to;
-	}
-	public void setT_user_id_to(String t_user_id_to) {
-		this.t_user_id_to = t_user_id_to;
-	}
+	
 	public String getState() {
 		return state;
 	}
@@ -62,6 +51,18 @@ public class MailBoxSend extends BaseDomain {
 	}
 	public void setSenddate(Date senddate) {
 		this.senddate = senddate;
+	}
+	public String getUserIdFrom() {
+		return userIdFrom;
+	}
+	public void setUserIdFrom(String userIdFrom) {
+		this.userIdFrom = userIdFrom;
+	}
+	public String getUserIdTo() {
+		return userIdTo;
+	}
+	public void setUserIdTo(String userIdTo) {
+		this.userIdTo = userIdTo;
 	}
 	
 	  

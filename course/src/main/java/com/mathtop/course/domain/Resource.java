@@ -9,7 +9,7 @@ public class Resource extends BaseDomain{
 	
 	private String id;
 	private String uri;
-	private String uri_element;
+	private String uriElement;
 	public String getId() {
 		return id;
 	}
@@ -22,11 +22,11 @@ public class Resource extends BaseDomain{
 	public void setUri(String uri) {
 		this.uri = uri;
 	}
-	public String getUri_element() {
-		return uri_element;
+	public String getUriElement() {
+		return uriElement;
 	}
-	public void setUri_element(String uri_element) {
-		this.uri_element = uri_element;
+	public void setUriElement(String uriElement) {
+		this.uriElement = uriElement;
 	}
-
+	
 }

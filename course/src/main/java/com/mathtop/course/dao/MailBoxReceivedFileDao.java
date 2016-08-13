@@ -61,7 +61,7 @@ public class MailBoxReceivedFileDao extends BaseDao<MailBoxReceivedFile> {
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				file.setId(id);
-				file.setT_mail_box_received_id(rs.getString("t_mail_box_received_id"));
+				file.setMailBoxReceivedId(rs.getString("t_mail_box_received_id"));
 				
 				file.setFilename(rs.getString("filename"));
 				file.setFilepath(rs.getString("filepath"));
@@ -88,7 +88,7 @@ public class MailBoxReceivedFileDao extends BaseDao<MailBoxReceivedFile> {
 			public void processRow(ResultSet rs) throws SQLException {
 				MailBoxReceivedFile file = new MailBoxReceivedFile();
 				file.setId(rs.getString("id"));				
-				file.setT_mail_box_received_id(t_mail_box_received_id);				
+				file.setMailBoxReceivedId(t_mail_box_received_id);				
 				file.setFilename(rs.getString("filename"));
 				file.setFilepath(rs.getString("filepath"));
 				list.add(file);
@@ -104,7 +104,7 @@ public class MailBoxReceivedFileDao extends BaseDao<MailBoxReceivedFile> {
 	public String add(MailBoxReceivedFile file) {
 		String id = GUID.getGUID();
 		file.setId(id);
-		Object params[] = new Object[] { file.getId(), file.getT_mail_box_received_id(),file.getFilename(), file.getFilepath() };
+		Object params[] = new Object[] { file.getId(), file.getMailBoxReceivedId(),file.getFilename(), file.getFilepath() };
 		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
 		getJdbcTemplate().update(INSERT_MAILBOX_FILE, params, types);
 		return id;
@@ -157,7 +157,7 @@ public class MailBoxReceivedFileDao extends BaseDao<MailBoxReceivedFile> {
 						MailBoxReceivedFile file = getByID(rs.getString("id"));
 						data.setFile(file);
 
-						MailBoxReceived received = mailBoxReceivedDao.getByID(file.getT_mail_box_received_id());
+						MailBoxReceived received = mailBoxReceivedDao.getByID(file.getMailBoxReceivedId());
 						data.setReceived(received);
 
 						

@@ -25,29 +25,23 @@
 <%@ include file="../../shared/importJs.jsp"%>
 
 <!-- file upload -->
-<link
-	href="<c:url value='/plugins/kartik-v-bootstrap-fileinput-965e950/css/fileinput.min.css'/>"
+<link href="<c:url value='/plugins/kartik-v-bootstrap-fileinput-965e950/css/fileinput.min.css'/>"
 	rel="stylesheet" type="text/css" />
 <script
 	src="<c:url value='/plugins/kartik-v-bootstrap-fileinput-965e950/js/plugins/canvas-to-blob.min.js'/>"
 	type="text/javascript"></script>
-<script
-	src="<c:url value='/plugins/kartik-v-bootstrap-fileinput-965e950/js/fileinput.min.js'/>"
+<script src="<c:url value='/plugins/kartik-v-bootstrap-fileinput-965e950/js/fileinput.min.js'/>"
 	type="text/javascript"></script>
 <script
 	src="<c:url value='/plugins/kartik-v-bootstrap-fileinput-965e950/js/fileinput_locale_zh.js'/>"
 	type="text/javascript"></script>
 
 
-<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet"
+<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet" type="text/css" />
+<link href="<c:url value='/plugins/summernote-master/dist/summernote.css'/>" rel="stylesheet"
 	type="text/css" />
-<link
-	href="<c:url value='/plugins/summernote-master/dist/summernote.css'/>"
-	rel="stylesheet" type="text/css" />
-<script
-	src="<c:url value='/plugins/summernote-master/dist/summernote.js'/>"></script>
-<script
-	src="<c:url value='/plugins/summernote-master/lang/summernote-zh-CN.js'/>"></script>
+<script src="<c:url value='/plugins/summernote-master/dist/summernote.js'/>"></script>
+<script src="<c:url value='/plugins/summernote-master/lang/summernote-zh-CN.js'/>"></script>
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -56,7 +50,7 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home" onLoad="ShowErrMsg()">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 	<div id="ClassInfo">
@@ -64,7 +58,7 @@
 
 
 	</div>
-	<div id="DocumentPageTopSeparatorLine"></div>
+
 
 	<div class="DocumentPage">
 		<div class="DocumentPageLeftArea ">
@@ -80,7 +74,8 @@
 
 			<ol class="breadcrumb">
 				<li><a href="#">课程系统</a></li>
-				<li><a href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseteachingclass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
+				<li><a
+						href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseTeachingClass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
 				<li class="active">${selectedCourseReferenceTypeData.name}</li>
 			</ol>
 
@@ -104,25 +99,24 @@
 
 
 						<div class="form-group">
-							<label for="name" class="control-label">标题</label> <input
-								type="text" id="name" class="form-control" name="title" value=""
-								placeholder="标题" required>
+							<label for="name" class="control-label">标题</label>
+							<input type="text" id="name" class="form-control" name="title" value="" placeholder="标题"
+								required>
 						</div>
 
 
 						<div class="form-group">
 							<label for="note" class="control-label">内容</label>
 							<div class="summernote" id="addcontentDiv"></div>
-							<textarea class="form-control" rows="5" name="content"
-								id="addcontentTextArea" style="display: none;"></textarea>
+							<textarea class="form-control" rows="5" name="content" id="addcontentTextArea"
+								style="display: none;"></textarea>
 						</div>
 
 						<div class="form-group">
 
 							<label for="exampleInputFile" class=" control-label">附件</label>
 							<p class="help-block">任意文件类型均可。</p>
-							<input type="file" multiple="multiple" id="exampleInputFile"
-								name="file" />
+							<input type="file" multiple="multiple" id="exampleInputFile" name="file" />
 
 						</div>
 
@@ -148,9 +142,7 @@
 
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
-
-	<%@ include file="../../shared/pageFooter.jsp"%>
+	<%@ include file="../../shared/sysLastInclude.jsp"%>
 
 
 	<script type="text/javascript">
@@ -177,7 +169,7 @@
 			language : "zh",
 			uploadUrl : "/file-upload-batch/2",
 			showUpload : false,
-			showUploadedThumbs:false,
+			showUploadedThumbs : false,
 			previewFileIcon : '<i class="fa fa-file"></i>',
 			allowedPreviewTypes : [ 'image', 'text' ], // allow only preview of image & text files
 			previewFileIconSettings : {
@@ -201,19 +193,6 @@
 	</script>
 
 
-
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

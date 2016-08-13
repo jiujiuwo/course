@@ -37,7 +37,7 @@ public class LoginDao extends BaseDao<Login> {
 	 * */
 	public void add(Login login){
 		login.setId(GUID.getGUID());
-		Object params[]=new Object[]{login.getId(),login.getT_user_id(),login.getLogin_datetime(),login.getLogin_ip()};
+		Object params[]=new Object[]{login.getId(),login.getUserId(),login.getLoginDatetime(),login.getLoginIp()};
 		int types[]=new int[]{Types.VARCHAR,Types.VARCHAR,Types.TIMESTAMP,Types.VARCHAR};
 		getJdbcTemplate().update(INSERT_LOGIN, params, types);
 	}

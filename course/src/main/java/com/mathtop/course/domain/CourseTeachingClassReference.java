@@ -11,9 +11,9 @@ public class CourseTeachingClassReference extends BaseDomain {
 	 */
 	private static final long serialVersionUID = -8309110997151684180L;
 	private String id;
-	private String t_course_teaching_class_id;
-	private String t_teacher_id;
-	private String t_course_teaching_class_reference_type_id;
+	private String courseTeachingClassId;
+	private String teacherId;
+	private String courseTeachingClassReferenceTypeId;
 	private String title;
 	private String content;
 	private Date pubdate;
@@ -26,21 +26,6 @@ public class CourseTeachingClassReference extends BaseDomain {
 		this.id = id;
 	}
 
-	public String getT_course_teaching_class_id() {
-		return t_course_teaching_class_id;
-	}
-
-	public void setT_course_teaching_class_id(String t_course_teaching_class_id) {
-		this.t_course_teaching_class_id = t_course_teaching_class_id;
-	}
-
-	public String getT_teacher_id() {
-		return t_teacher_id;
-	}
-
-	public void setT_teacher_id(String t_teacher_id) {
-		this.t_teacher_id = t_teacher_id;
-	}
 
 	public String getTitle() {
 		return title;
@@ -66,19 +51,36 @@ public class CourseTeachingClassReference extends BaseDomain {
 		this.pubdate = pubdate;
 	}	
 
-	public String getT_course_teaching_class_reference_type_id() {
-		return t_course_teaching_class_reference_type_id;
-	}
-
-	public void setT_course_teaching_class_reference_type_id(String t_course_teaching_class_reference_type_id) {
-		this.t_course_teaching_class_reference_type_id = t_course_teaching_class_reference_type_id;
-	}
-
+	
 	public Date getModifieddate() {
 		return modifieddate;
 	}
 
 	public void setModifieddate(Date modifieddate) {
 		this.modifieddate = modifieddate;
+	}
+
+	public String getCourseTeachingClassId() {
+		return courseTeachingClassId;
+	}
+
+	public void setCourseTeachingClassId(String courseTeachingClassId) {
+		this.courseTeachingClassId = courseTeachingClassId;
+	}
+
+	public String getTeacherId() {
+		return teacherId;
+	}
+
+	public void setTeacherId(String teacherId) {
+		this.teacherId = teacherId;
+	}
+
+	public String getCourseTeachingClassReferenceTypeId() {
+		return courseTeachingClassReferenceTypeId;
+	}
+
+	public void setCourseTeachingClassReferenceTypeId(String courseTeachingClassReferenceTypeId) {
+		this.courseTeachingClassReferenceTypeId = courseTeachingClassReferenceTypeId;
 	}
 }

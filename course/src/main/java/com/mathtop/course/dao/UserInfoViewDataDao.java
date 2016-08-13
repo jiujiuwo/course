@@ -47,8 +47,8 @@ public class UserInfoViewDataDao extends BaseDao<UserInfoViewData> {
 					@Override
 					public void processRow(ResultSet rs) throws SQLException {
 						UserInfoViewData uivd = new UserInfoViewData();
-						uivd.setT_user_contact_type(rs.getString("name"));
-						uivd.setUser_contact_value(rs
+						uivd.setUserContactType(rs.getString("name"));
+						uivd.setUserContactValue(rs
 								.getString("user_contact_value"));
 						list.add(uivd);
 
@@ -71,8 +71,8 @@ public class UserInfoViewDataDao extends BaseDao<UserInfoViewData> {
 
 		usi.setUserbasicinfo(ubi);
 
-		Teacher teacher = teacherDao.getTeacherByt_user_id(t_user_id);
-		Student student = studentDao.getStudentByt_user_id(t_user_id);
+		Teacher teacher = teacherDao.getTeacherByUserId(t_user_id);
+		Student student = studentDao.getStudentByUserId(t_user_id);
 		usi.setTeacher(teacher);
 		usi.setStudent(student);
 

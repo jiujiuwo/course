@@ -58,7 +58,7 @@ public class CourseTeachingClassForumTopicFileDao extends BaseDao<CourseTeaching
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				submitfile.setId(id);
-				submitfile.setT_course_teaching_class_forum_topic_id(rs.getString("t_course_teaching_class_forum_topic_id"));
+				submitfile.setCourseTeachingClassForumTopicId(rs.getString("t_course_teaching_class_forum_topic_id"));
 
 				submitfile.setFilename(rs.getString("filename"));
 				submitfile.setFilepath(rs.getString("filepath"));
@@ -86,7 +86,7 @@ public class CourseTeachingClassForumTopicFileDao extends BaseDao<CourseTeaching
 				CourseTeachingClassForumTopicFile submitfile = new CourseTeachingClassForumTopicFile();
 				submitfile.setId(rs.getString("id"));
 
-				submitfile.setT_course_teaching_class_forum_topic_id(t_course_teaching_class_forum_topic_id);
+				submitfile.setCourseTeachingClassForumTopicId(t_course_teaching_class_forum_topic_id);
 
 				submitfile.setFilename(rs.getString("filename"));
 				submitfile.setFilepath(rs.getString("filepath"));
@@ -103,7 +103,7 @@ public class CourseTeachingClassForumTopicFileDao extends BaseDao<CourseTeaching
 	public String add(CourseTeachingClassForumTopicFile submitfile) {
 		String id = GUID.getGUID();
 		submitfile.setId(id);
-		Object params[] = new Object[] { submitfile.getId(), submitfile.getT_course_teaching_class_forum_topic_id(), submitfile.getFilename(),
+		Object params[] = new Object[] { submitfile.getId(), submitfile.getCourseTeachingClassForumTopicId(), submitfile.getFilename(),
 				submitfile.getFilepath() };
 		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR };
 		getJdbcTemplate().update(INSERT_PLAN, params, types);
@@ -156,7 +156,7 @@ public class CourseTeachingClassForumTopicFileDao extends BaseDao<CourseTeaching
 						CourseTeachingClassForumTopicFile topicFile = getByID(rs.getString("id"));
 						data.setTopicFile(topicFile);
 
-						CourseTeachingClassForumTopic topic = forumTopicDao.getByID(topicFile.getT_course_teaching_class_forum_topic_id());
+						CourseTeachingClassForumTopic topic = forumTopicDao.getByID(topicFile.getCourseTeachingClassForumTopicId());
 						data.setTopic(topic);
 
 						list.add(data);

@@ -3143,8 +3143,8 @@ window.CodeMirror = (function() {
 
     deleteH: operation(null, function(dir, unit) {
       var sel = this.doc.sel;
-      if (!posEq(sel.from, sel.to)) replaceRange(this.doc, "", sel.from, sel.to, "+DELETE");
-      else replaceRange(this.doc, "", sel.from, findPosH(this.doc, sel.head, dir, unit, false), "+DELETE");
+      if (!posEq(sel.from, sel.to)) replaceRange(this.doc, "", sel.from, sel.to, "+delete");
+      else replaceRange(this.doc, "", sel.from, findPosH(this.doc, sel.head, dir, unit, false), "+delete");
       this.curOp.userSelChange = true;
     }),
 
@@ -3478,16 +3478,16 @@ window.CodeMirror = (function() {
     killLine: function(cm) {
       var from = cm.getCursor(true), to = cm.getCursor(false), sel = !posEq(from, to);
       if (!sel && cm.getLine(from.line).length == from.ch)
-        cm.replaceRange("", from, Pos(from.line + 1, 0), "+DELETE");
-      else cm.replaceRange("", from, sel ? to : Pos(from.line), "+DELETE");
+        cm.replaceRange("", from, Pos(from.line + 1, 0), "+delete");
+      else cm.replaceRange("", from, sel ? to : Pos(from.line), "+delete");
     },
     deleteLine: function(cm) {
       var l = cm.getCursor().line;
-      cm.replaceRange("", Pos(l, 0), Pos(l), "+DELETE");
+      cm.replaceRange("", Pos(l, 0), Pos(l), "+delete");
     },
     delLineLeft: function(cm) {
       var cur = cm.getCursor();
-      cm.replaceRange("", Pos(cur.line, 0), cur, "+DELETE");
+      cm.replaceRange("", Pos(cur.line, 0), cur, "+delete");
     },
     undo: function(cm) {cm.undo();},
     redo: function(cm) {cm.redo();},
@@ -4673,7 +4673,7 @@ window.CodeMirror = (function() {
         var line = this.lines[i];
         this.height -= line.height;
         cleanUpLine(line);
-        signalLater(line, "DELETE");
+        signalLater(line, "delete");
       }
       this.lines.splice(at, n);
     },
@@ -5249,7 +5249,7 @@ window.CodeMirror = (function() {
         if (newGroup) for (var prop in change) if (m = prop.match(/^spans_(\d+)$/)) {
           if (indexOf(newGroup, Number(m[1])) > -1) {
             lst(newChanges)[prop] = change[prop];
-            DELETE change[prop];
+            delete change[prop];
           }
         }
       }

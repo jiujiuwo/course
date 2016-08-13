@@ -21,6 +21,13 @@ public class GroupRoleService {
 		grouproleDao.deleteById(id);
 	}
 	
+	/**
+	 * 删除组
+	 * */
+	public void deleteByGroupId(String t_group_id){
+		grouproleDao.deleteById(t_group_id);
+	}
+	
 	public Page<GroupRoleViewData> getPageByGroupId(String t_group_id,int pageNo, int pageSize) {
 		return grouproleDao.getPageByGroupId(t_group_id, pageNo, pageSize);
 	}

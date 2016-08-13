@@ -82,11 +82,11 @@ public class AttendanceStudentDao extends BaseDao<AttendanceStudent> {
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				as.setId(id);
-				as.setT_attendance_id(rs.getString("t_attendance_id"));
-				as.setT_attendance_state_id(rs.getString("t_attendance_state_id"));				
-				as.setT_attendance_mode_id(rs.getString("t_attendance_mode_id"));
-				as.setT_student_id(rs.getString("t_student_id"));
-				as.setChecking_in_datetime(rs.getTimestamp("checking_in_datetime"));
+				as.setAttendanceId(rs.getString("t_attendance_id"));
+				as.setAttendanceStateId(rs.getString("t_attendance_state_id"));				
+				as.setAttendanceModeId(rs.getString("t_attendance_mode_id"));
+				as.setStudentId(rs.getString("t_student_id"));
+				as.setCheckingInDatetime(rs.getTimestamp("checking_in_datetime"));
 
 			}
 
@@ -111,11 +111,11 @@ public class AttendanceStudentDao extends BaseDao<AttendanceStudent> {
 				AttendanceStudent as = new AttendanceStudent();
 
 				as.setId(rs.getString("id"));
-				as.setT_attendance_id(t_attendance_id);
-				as.setT_attendance_state_id(rs.getString("t_attendance_state_id"));				
-				as.setT_attendance_mode_id(rs.getString("t_attendance_mode_id"));
-				as.setT_student_id(rs.getString("t_student_id"));
-				as.setChecking_in_datetime(rs.getTimestamp("checking_in_datetime"));
+				as.setAttendanceId(t_attendance_id);
+				as.setAttendanceStateId(rs.getString("t_attendance_state_id"));				
+				as.setAttendanceModeId(rs.getString("t_attendance_mode_id"));
+				as.setStudentId(rs.getString("t_student_id"));
+				as.setCheckingInDatetime(rs.getTimestamp("checking_in_datetime"));
 				list.add(as);
 
 			}
@@ -129,8 +129,8 @@ public class AttendanceStudentDao extends BaseDao<AttendanceStudent> {
 	public String add(AttendanceStudent as) {
 		String id = GUID.getGUID();
 		as.setId(id);
-		Object params[] = new Object[] { as.getId(), as.getT_attendance_id(), as.getT_student_id(), as.getT_attendance_state_id(),
-				 as.getT_attendance_mode_id(),as.getChecking_in_datetime() };
+		Object params[] = new Object[] { as.getId(), as.getAttendanceId(), as.getStudentId(), as.getAttendanceStateId(),
+				 as.getAttendanceModeId(),as.getCheckingInDatetime() };
 		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,Types.VARCHAR, Types.TIMESTAMP };
 		getJdbcTemplate().update(INSERT_ATTENDANCE_STUDENT, params, types);
 		return id;
@@ -212,18 +212,18 @@ public class AttendanceStudentDao extends BaseDao<AttendanceStudent> {
 				AttendanceStudent as = getByID(rs.getString("id"));
 				data.setAttendancestudent(as);
 
-				Attendance attendance = attendanceDao.getByID(as.getT_attendance_id());
+				Attendance attendance = attendanceDao.getByID(as.getAttendanceId());
 				data.setAttendance(attendance);
 
-				AttendanceState state = attendancestateDao.getByID(as.getT_attendance_state_id());
+				AttendanceState state = attendancestateDao.getByID(as.getAttendanceStateId());
 				data.setState(state);
 
 				
 				
-				AttendanceMode mode = attendancemodeDao.getByID(as.getT_attendance_mode_id());
+				AttendanceMode mode = attendancemodeDao.getByID(as.getAttendanceModeId());
 				data.setMode(mode);
 
-				StudentViewData studentviewdata = studentviewdataDao.getStudentViewDataById(as.getT_student_id());
+				StudentViewData studentviewdata = studentviewdataDao.getStudentViewDataById(as.getStudentId());
 				data.setStudentviewdata(studentviewdata);
 
 				list.add(data);
@@ -294,15 +294,15 @@ public class AttendanceStudentDao extends BaseDao<AttendanceStudent> {
 				AttendanceStudent as = getByID(rs.getString("id"));
 				data.setAttendancestudent(as);
 
-				Attendance attendance = attendanceDao.getByID(as.getT_attendance_id());
+				Attendance attendance = attendanceDao.getByID(as.getAttendanceId());
 				data.setAttendance(attendance);
 
-				AttendanceState state = attendancestateDao.getByID(as.getT_attendance_state_id());
+				AttendanceState state = attendancestateDao.getByID(as.getAttendanceStateId());
 				data.setState(state);
 
 				
 				
-				AttendanceMode mode = attendancemodeDao.getByID(as.getT_attendance_mode_id());
+				AttendanceMode mode = attendancemodeDao.getByID(as.getAttendanceModeId());
 				data.setMode(mode);
 
 				

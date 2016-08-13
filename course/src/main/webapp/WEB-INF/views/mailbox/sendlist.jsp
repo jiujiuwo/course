@@ -35,7 +35,7 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home" onLoad="ShowErrMsg()">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 
@@ -45,7 +45,7 @@
 		
 			<%@ include file="../../shared/CourseTeachingClassInfo.jsp"%>
 		
-		<div id="DocumentPageTopSeparatorLine"></div>
+		
 	</c:if>
 
 	<div class="DocumentPage">
@@ -165,9 +165,9 @@
 
 							<div class="col-md-2">
 								<c:if test="${data.userTo.student!=null}">
-							${data.userTo.student.student_num}-
+							${data.userTo.student.studentNum}-
 							</c:if>
-								${data.userTo.userbasicinfo.user_basic_info_name}
+								${data.userTo.userbasicinfo.userBasicInfoName}
 							</div>
 
 							<div class="col-md-4">
@@ -235,9 +235,7 @@
 
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
-
-	<%@ include file="../../shared/pageFooter.jsp"%>
+	<%@ include file="../../shared/sysLastInclude.jsp"%>
 
 
 
@@ -282,19 +280,6 @@
 	</script>
 
 
-
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

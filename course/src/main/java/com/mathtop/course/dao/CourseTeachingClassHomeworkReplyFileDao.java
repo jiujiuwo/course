@@ -59,7 +59,7 @@ public class CourseTeachingClassHomeworkReplyFileDao extends BaseDao<CourseTeach
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				expriment.setId(id);
-				expriment.setT_course_teaching_class_homework_reply_id(rs.getString("t_course_teaching_class_homework_reply_id"));
+				expriment.setCourseTeachingClassHomeworkReplyId(rs.getString("t_course_teaching_class_homework_reply_id"));
 				
 				expriment.setFilename(rs.getString("filename"));
 				expriment.setFilepath(rs.getString("filepath"));
@@ -87,7 +87,7 @@ public class CourseTeachingClassHomeworkReplyFileDao extends BaseDao<CourseTeach
 				CourseTeachingClassHomeworkReplyFile expriment = new CourseTeachingClassHomeworkReplyFile();
 				expriment.setId(rs.getString("id"));
 				
-				expriment.setT_course_teaching_class_homework_reply_id(t_course_teaching_class_homework_reply_id);
+				expriment.setCourseTeachingClassHomeworkReplyId(t_course_teaching_class_homework_reply_id);
 				
 				expriment.setFilename(rs.getString("filename"));
 				expriment.setFilepath(rs.getString("filepath"));
@@ -104,7 +104,7 @@ public class CourseTeachingClassHomeworkReplyFileDao extends BaseDao<CourseTeach
 	public String add(CourseTeachingClassHomeworkReplyFile expriment) {
 		String id = GUID.getGUID();
 		expriment.setId(id);
-		Object params[] = new Object[] { expriment.getId(), expriment.getT_course_teaching_class_homework_reply_id(),expriment.getFilename(), expriment.getFilepath() };
+		Object params[] = new Object[] { expriment.getId(), expriment.getCourseTeachingClassHomeworkReplyId(),expriment.getFilename(), expriment.getFilepath() };
 		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
 		getJdbcTemplate().update(INSERT_PLAN, params, types);
 		return id;
@@ -157,7 +157,7 @@ public class CourseTeachingClassHomeworkReplyFileDao extends BaseDao<CourseTeach
 						CourseTeachingClassHomeworkReplyFile replyfile = getByID(rs.getString("id"));
 						data.setReplyfile(replyfile);
 
-						CourseTeachingClassHomeworkReply reply = courseTeachingClassHomeworkReplyDao.getByID(replyfile.getT_course_teaching_class_homework_reply_id());
+						CourseTeachingClassHomeworkReply reply = courseTeachingClassHomeworkReplyDao.getByID(replyfile.getCourseTeachingClassHomeworkReplyId());
 						data.setReply(reply);
 
 						

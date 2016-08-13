@@ -17,8 +17,7 @@ public class SelectedObjectConst {
 	public static final String Selected_Department_ID = "selectedt_department_id";
 	public static final String Selected_Naturalclass_ID = "selectedt_natural_class_id";
 
-	// 教学班级
-	public static final String Selected_TeachingClass_ID = "selectedTeachingClassID";
+
 
 	// 教师学生视图
 	public static final String Selected_StudentViewData = "selectedStudentViewData";
@@ -32,6 +31,10 @@ public class SelectedObjectConst {
 
 	// 课程-教学班-内容
 	public static final String Selected_CourseTeachingClassViewData = "selectedCourseTeachingClassViewData";
+	
+	//课程-教学班-分组统计信息
+	public static final String Selected_CourseTeachingClassStudentGroupStatisticsViewData="selectedCourseTeachingClassStudentGroupStatisticsViewData";
+	public static final String Selected_CourseTeachingClassStudentGroupViewData="selectedCourseTeachingClassStudentGroupViewData";
 
 	// 课程-教学班-签到id
 	public static final String Selected_CourseAttendanceID = "selectedCourseAttendanceID";
@@ -50,6 +53,9 @@ public class SelectedObjectConst {
 
 	// 课程-作业-类型
 	public static final String Selected_CourseHomeworkTypeData = "selectedCourseHomeworkTypeData";
+	
+	//课程-作业-标记（小组或个人等）
+	public static final String Selected_CourseHomeworkFlag = "selectedCourseHomeworkFlag";
 
 	// 课程-考勤-类型
 	public static final String Selected_CourseAttendanceTypeData = "selectedCourseAttendanceTypeData";
@@ -77,5 +83,6 @@ public class SelectedObjectConst {
 
 	// 新收件人
 	public static final String Selected_MailBoxNewReceiver = "selectedMailBoxNewReceiver";
+	public static final String Selected_MailBoxNewMail="selectedMailBoxNewMail";
 
 }

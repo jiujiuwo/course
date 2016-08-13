@@ -100,7 +100,7 @@ public class StudentController extends BaseController {
 
 		ModelAndView mav = new ModelAndView();
 
-		StudentViewData studentviewdata = studentService.getStudentViewByt_user_id(t_user_id);
+		StudentViewData studentviewdata = studentService.getStudentViewByUserId(t_user_id);
 
 		mav.addObject(SelectedObjectConst.Selected_StudentViewData, studentviewdata);
 
@@ -212,50 +212,12 @@ public class StudentController extends BaseController {
 	 * @param user
 	 * @return
 	 */
-	@RequestMapping(value = "/addfromexcel-{t_school_id}-{t_department_id}-{t_natural_class_id}")
-	public ModelAndView addfromexcel(HttpServletRequest request, RedirectAttributes redirectAttributes, @PathVariable String t_school_id,
-			@PathVariable String t_department_id, @PathVariable String t_natural_class_id) {
+	@RequestMapping(value = "/addfromexcel")
+	public ModelAndView addfromexcel(HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
 		ModelAndView mav = new ModelAndView();
 
-		/*
-		 * FIX ME!!!
-		 * 
-		 * String t_school_id = null; String t_department_id = null; String
-		 * t_natural_class_id = null;
-		 * 
-		 * List<School> schools = schoolService.getAll(); if (schools.size() >
-		 * 0) { t_school_id = schools.get(0).getId(); }
-		 * 
-		 * if (t_school_id != null && t_department_id == null) {
-		 * 
-		 * List<Department> departments = departmentService.getAll(t_school_id);
-		 * if (departments.size() > 0) { t_department_id =
-		 * departments.get(0).getId(); }
-		 * 
-		 * if (t_department_id != null && t_natural_class_id == null) {
-		 * 
-		 * List<NaturalClass> naturalclasss =
-		 * departmentNaturalClassService.getNaturalClassByt_department_id(
-		 * t_department_id); if (naturalclasss.size() > 0) { t_natural_class_id
-		 * = naturalclasss.get(0).getId(); } } }
-		 * 
-		 * 
-		 * System.out.println(t_school_id); System.out.println(t_department_id);
-		 * System.out.println("t_natural_class_id"+t_natural_class_id); if
-		 * (t_school_id == null || t_department_id == null || t_natural_class_id
-		 * == null) {
-		 * 
-		 * redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg,
-		 * "不存在自然班，请先添加自然班才能够添加学生."); mav.setViewName("redirect:/" + strPageURI
-		 * + "/list.html"); return mav; }
-		 * 
-		 */
-
-		// 学院
-		Page<School> pagedSchool = schoolService.getPage(1, CommonConstant.PAGE_SIZE);
-		mav.addObject(PagedObjectConst.Paged_School, pagedSchool);
-
+		
 		// 组
 		Page<Group> pagedGroup = groupService.getPage(1, CommonConstant.PAGE_SIZE);
 		mav.addObject(PagedObjectConst.Paged_Group, pagedGroup);
@@ -276,13 +238,12 @@ public class StudentController extends BaseController {
 	public ModelAndView uploadexcel(HttpServletRequest request, @RequestParam("file") MultipartFile file) {
 
 		String[] groupId = request.getParameterValues("groupId");
-
-		Page<School> pagedSchool = schoolService.getPage(1, CommonConstant.PAGE_SIZE);
+		
 
 		ModelAndView view = new ModelAndView();
-		view.addObject(PagedObjectConst.Paged_School, pagedSchool);
+	
 
-		view.setViewName(strPageURI + "/list");
+		view.setViewName("redirect:/" + strPageURI + "/list.html");		
 
 		try {
 			studentService.UploadFromExcel(groupId, file);
@@ -290,10 +251,10 @@ public class StudentController extends BaseController {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
 			view.addObject(CourseMessage.Message_errorMsg, "发生了错误，学生已经存在");
-			view.setViewName("forward:/naturalclass/list.html");
+			view.setViewName("forward:/student/list.html");
 		} catch (Exception e) {
 			view.addObject(CourseMessage.Message_errorMsg, "发生了错误");
-			view.setViewName("forward:/naturalclass/list.html");
+			view.setViewName("forward:/student/list.html");
 		}
 
 		return view;
@@ -313,14 +274,14 @@ public class StudentController extends BaseController {
 		String t_natural_class_id = request.getParameter("t_natural_class_id");
 		String user_password = request.getParameter("user_password");
 		String student_num = request.getParameter("student_num");
-		String user_basic_info_name = request.getParameter("user_basic_info_name");
+		String userBasicInfoName = request.getParameter("userBasicInfoName");
 		String user_basic_info_birthday = request.getParameter("user_basic_info_birthday");
 		String user_basic_info_sex = request.getParameter("user_basic_info_sex");
 		String[] contacttypeId = request.getParameterValues("contacttypeId");
 		String[] user_contact_value = request.getParameterValues("user_contact_value");
 		String[] groupId = request.getParameterValues("groupId");
 
-		studentService.AddStudent(t_natural_class_id, user_password, student_num, user_basic_info_name, user_basic_info_birthday,
+		studentService.AddStudent(t_natural_class_id, user_password, student_num, userBasicInfoName, user_basic_info_birthday,
 				user_basic_info_sex, contacttypeId, user_contact_value, groupId);
 
 		ModelAndView mav = new ModelAndView();
@@ -503,7 +464,7 @@ public class StudentController extends BaseController {
 		String t_natural_class_id = request.getParameter("t_natural_class_id");
 
 		String student_num = request.getParameter("student_num");
-		String user_basic_info_name = request.getParameter("user_basic_info_name");
+		String userBasicInfoName = request.getParameter("userBasicInfoName");
 		String user_basic_info_birthday = request.getParameter("user_basic_info_birthday");
 		String user_basic_info_sex = request.getParameter("user_basic_info_sex");
 		String[] contacttypeId = request.getParameterValues("contacttypeId");
@@ -517,14 +478,14 @@ public class StudentController extends BaseController {
 		}
 
 		Student student = new Student();
-		student.setStudent_num(student_num);
-		student.setNatural_class_id(t_natural_class_id);
+		student.setStudentNum(student_num);
+		student.setNaturalClassId(t_natural_class_id);
 		student.setId(t_student_id);
 
 		UserBasicInfo userbasicinfo = new UserBasicInfo();
-		userbasicinfo.setUser_basic_info_name(user_basic_info_name);
-		userbasicinfo.setUser_basic_info_birthday(DateTimeSql.GetDate(user_basic_info_birthday));
-		userbasicinfo.setUser_basic_info_sex(Integer.parseInt(user_basic_info_sex));
+		userbasicinfo.setUserBasicInfoName(userBasicInfoName);
+		userbasicinfo.setUserBasicInfoBirthday(DateTimeSql.GetDate(user_basic_info_birthday));
+		userbasicinfo.setUserBasicInfoSex(Integer.parseInt(user_basic_info_sex));
 
 		if (contactCount > 0) {
 
@@ -534,8 +495,8 @@ public class StudentController extends BaseController {
 
 				usercontactinfos[i] = new UserContactInfo();
 
-				usercontactinfos[i].setT_user_contact_type_id(contacttypeId[i]);
-				usercontactinfos[i].setUser_contact_value(user_contact_value[i]);
+				usercontactinfos[i].setUserContactTypeId(contacttypeId[i]);
+				usercontactinfos[i].setUserContactValue(user_contact_value[i]);
 			}
 
 			studentService.updateStudent(student, userbasicinfo, usercontactinfos, groupId);
@@ -609,10 +570,10 @@ public class StudentController extends BaseController {
 
 		User user = new User();
 
-		user.setUser_password(new_user_password);
+		user.setUserPassword(new_user_password);
 		user.EncoderPassword();
 
-		userService.updateUserPassword(t_user_id, user.getUser_password());
+		userService.updateUserPassword(t_user_id, user.getUserPassword());
 
 		ModelAndView mav = new ModelAndView();
 

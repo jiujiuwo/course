@@ -9,13 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.mathtop.course.dao.CourseTeachingClassHomeworkBaseinfoDao;
 import com.mathtop.course.dao.StudentViewDataDao;
-import com.mathtop.course.dao.TeachingClassViewDataDao;
+import com.mathtop.course.dao.CourseTeachingClassViewDataDao;
 import com.mathtop.course.domain.CourseTeachingClassHomeworkBaseinfo;
 import com.mathtop.course.domain.CourseTeachingClassHomeworkBaseinfoViewData;
 import com.mathtop.course.domain.CourseTeachingClassViewData;
 import com.mathtop.course.domain.FileNameFormatOperator;
+import com.mathtop.course.domain.FileNodePropertyData;
+import com.mathtop.course.domain.FileNodePropertyManager;
+import com.mathtop.course.domain.FileRequirementManager;
+import com.mathtop.course.domain.FileRequirementNode;
+import com.mathtop.course.domain.FileSubmitData;
 import com.mathtop.course.domain.StudentViewData;
 import com.mathtop.course.domain.TeacherViewData;
 
@@ -30,18 +34,18 @@ import com.mathtop.course.domain.TeacherViewData;
 public class FileNameFormatParser {
 
 	@Autowired
-	CourseTeachingClassHomeworkBaseinfoDao homeworkbaseinfoDao;
+	CourseTeachingClassHomeworkService courseTeachingClassHomeworkService;
 
 	@Autowired
 	StudentViewDataDao studentDao;
 
 	@Autowired
-	TeachingClassViewDataDao teachingClassViewDataDao;
+	CourseTeachingClassViewDataDao teachingClassViewDataDao;
 
 	private class TokenValue {
 		private String value;
 		private String strNext;
-		private boolean bIsOperator;
+		private boolean operator;
 
 		public String getValue() {
 			return value;
@@ -59,13 +63,16 @@ public class FileNameFormatParser {
 			this.strNext = strNext;
 		}
 
-		public boolean isbIsOperator() {
-			return bIsOperator;
+		public boolean isOperator() {
+			return operator;
 		}
 
-		public void setbIsOperator(boolean bIsOperator) {
-			this.bIsOperator = bIsOperator;
+		public void setOperator(boolean operator) {
+			this.operator = operator;
 		}
+
+		
+		
 	};
 
 	// 判定操作符是否正确
@@ -94,7 +101,7 @@ public class FileNameFormatParser {
 					value += strFormat.charAt(i);
 					TokenValue result = new TokenValue();
 					result.setValue(value);
-					result.setbIsOperator(true);
+					result.setOperator(true);
 
 					result.setStrNext(strFormat.substring(i + 1));
 					return result;
@@ -141,14 +148,14 @@ public class FileNameFormatParser {
 			filename = courseteachingclassviewdata.getCourse().getName();
 			break;
 		case FileNameFormatOperator.operator_course_teaching_class_name:// 教学班
-			filename += courseteachingclassviewdata.getTeachingclass().getName();
+			filename += courseteachingclassviewdata.getCourseTeachingClass().getName();
 			break;
 		case FileNameFormatOperator.operator_course_teaching_class_year:// 学年
-			filename += (courseteachingclassviewdata.getCourseteachingclass().getTeaching_year_begin() + "-"
-					+ courseteachingclassviewdata.getCourseteachingclass().getTeaching_year_end() + "学年");
+			filename += (courseteachingclassviewdata.getTerm().getTeachingYearBegin() + "-"
+					+ courseteachingclassviewdata.getTerm().getTeachingYearEnd() + "学年");
 			break;
 		case FileNameFormatOperator.operator_course_teaching_class_term:// 学期
-			filename += ("第" + courseteachingclassviewdata.getCourseteachingclass().getTeaching_term() + "学期");
+			filename += ("第" + courseteachingclassviewdata.getTerm().getTeachingTerm() + "学期");
 			break;
 		case FileNameFormatOperator.operator_course_teaching_class_tercher_name:// 教学班教师
 		{
@@ -156,18 +163,18 @@ public class FileNameFormatParser {
 			int i = 0;
 			for (TeacherViewData v : tvds)
 				if (i++ == 0)
-					filename += v.getUserbasicinfo().getUser_basic_info_name();
+					filename += v.getUserbasicinfo().getUserBasicInfoName();
 				else
-					filename += ("-" + v.getUserbasicinfo().getUser_basic_info_name());
+					filename += ("-" + v.getUserbasicinfo().getUserBasicInfoName());
 		}
 		case FileNameFormatOperator.operator_natural_class:
 			filename += student.getNaturalclass().getName();
 			break;
 		case FileNameFormatOperator.operator_student_num:
-			filename += student.getStudent().getStudent_num();
+			filename += student.getStudent().getStudentNum();
 			break;
 		case FileNameFormatOperator.operator_student_name:
-			filename += student.getUserbasicinfo().getUser_basic_info_name();
+			filename += student.getUserbasicinfo().getUserBasicInfoName();
 			break;
 		case FileNameFormatOperator.operator_homework_type:
 			filename += homeworkviewdata.getHomeworkType().getName();
@@ -212,7 +219,7 @@ public class FileNameFormatParser {
 				if (flag) {
 					TokenValue result = new TokenValue();
 					result.setValue(value);
-					result.setbIsOperator(true);
+					result.setOperator(true);
 
 					result.setStrNext(strFormat.substring(i + 1));
 					return result;
@@ -231,20 +238,25 @@ public class FileNameFormatParser {
 	}
 
 	// 生成正确的示例性的文件名字
-	public List<String> getRightExampleFileName(String t_course_teaching_class_homework_baseinfo_id, String t_student_id) {
+	public List<String> getRightExampleFileName(String t_course_teaching_class_homework_baseinfo_id, int nodeID,
+			String t_student_id) {
+
+		if (t_course_teaching_class_homework_baseinfo_id == null || nodeID < 0 || t_student_id == null)
+			return null;
 
 		// 作业基本信息
-		CourseTeachingClassHomeworkBaseinfo homeworkbaseinfo = homeworkbaseinfoDao.getByID(t_course_teaching_class_homework_baseinfo_id);
+		CourseTeachingClassHomeworkBaseinfo homeworkbaseinfo = courseTeachingClassHomeworkService
+				.getByID(t_course_teaching_class_homework_baseinfo_id);
 		if (homeworkbaseinfo == null)
 			return null;
 
-		CourseTeachingClassHomeworkBaseinfoViewData homeworkviewdata = homeworkbaseinfoDao
+		CourseTeachingClassHomeworkBaseinfoViewData homeworkviewdata = courseTeachingClassHomeworkService
 				.getCourseTeachingClassHomeworkBaseinfoViewDataByID(t_course_teaching_class_homework_baseinfo_id);
 		if (homeworkviewdata == null)
 			return null;
 
 		CourseTeachingClassViewData courseteachingclassviewdata = teachingClassViewDataDao
-				.GetTeachingClassViewDataByCourseTeachingClassId(homeworkbaseinfo.getT_course_teaching_class_id());
+				.GetTeachingClassViewDataByCourseTeachingClassId(homeworkbaseinfo.getCourseTeachingClassId());
 
 		// 学生信息
 		StudentViewData student = studentDao.getStudentViewDataById(t_student_id);
@@ -252,16 +264,23 @@ public class FileNameFormatParser {
 			return null;
 
 		// 不需要文件
-		if (homeworkbaseinfo.getFilecount() == 0)
+		if (homeworkbaseinfo.getFileRequirement().isEmpty())
 			return null;
 
-		String filetype = homeworkbaseinfo.getFiletype();
-		String strFormat = homeworkbaseinfo.getFilenameformat();
+		FileRequirementNode data = homeworkbaseinfo.getFileRequirement().getNode(nodeID);
+
+		if (data == null)
+			return null;
+
+		List<String> list = new ArrayList<String>();
+
+		String filetype = data.getData().getFileTypeData();
+		String strFormat = data.getData().getFilenameRequirementVal();
 		String filename = "";
 
 		TokenValue tv = getNextToken(strFormat);
 		while (tv != null) {
-			if (tv.isbIsOperator()) {// 操作符
+			if (tv.isOperator()) {// 操作符
 				filename += getValue(tv.getValue(), homeworkviewdata, courseteachingclassviewdata, student);
 			} else {// 非操作符
 
@@ -275,7 +294,6 @@ public class FileNameFormatParser {
 
 		// 根据后缀生成不同文件，例如后缀是"*.doc;*.docx"，
 		// filename为"A"，则合法的文件名为"A.doc"或者"A.docx"
-		List<String> list = new ArrayList<String>();
 
 		String filetypes[] = filetype.split(";");
 		for (String t : filetypes) {
@@ -295,41 +313,6 @@ public class FileNameFormatParser {
 		}
 
 		return list;
-	}
-
-	/**
-	 * 文件后缀是否正确，例如要求doc，用户上传了xls文件则错误
-	 */
-	private boolean IsSubmitFileNamePoxfixRight(String filename, CourseTeachingClassHomeworkBaseinfoViewData homeworkviewdata) {
-
-		String prefix = filename.substring(filename.lastIndexOf(".") + 1);
-
-		prefix = prefix.toLowerCase();
-
-		String filetype = homeworkviewdata.getHomeworkbaseinfo().getFiletype().toLowerCase();
-
-		String filetypes[] = filetype.split(";");
-
-		for (String t : filetypes) {
-
-			int index = t.lastIndexOf('.');
-			if (index < 0) {
-				index = 0;
-				if (t.equals("*")) {
-					return true;
-				} else if (t.equals(prefix))
-					return true;
-			} else {
-				String s = t.substring(index + 1);
-
-				if (s.equals("*"))
-					return true;
-				else if (s.equals(prefix))
-					return true;
-			}
-		}
-
-		return false;
 	}
 
 	private class ContainValue {
@@ -484,15 +467,34 @@ public class FileNameFormatParser {
 	/**
 	 * 文件名是否正确，例如要求按照{班级}_{学号}格式上传，是否符合该格式
 	 */
-	private boolean IsSubmitFileNamePrefixRight(String filename, CourseTeachingClassHomeworkBaseinfoViewData homeworkviewdata,
+	private boolean IsSubmitFileNamePrefixRight(FileSubmitData fileSubmitData,
+			FileRequirementManager fileRequirementManager, CourseTeachingClassHomeworkBaseinfoViewData homeworkviewdata,
 			CourseTeachingClassViewData courseteachingclassviewdata, StudentViewData student) {
 
-		String strFormat = homeworkviewdata.getHomeworkbaseinfo().getFilenameformat();
+		
+		if (fileSubmitData == null)
+			return false;
+
+		if (fileRequirementManager == null)
+			return false;
+
+		FileRequirementNode fileRequirementNode = fileRequirementManager.getNode(fileSubmitData.getNodeID());
+
+		if (fileRequirementNode == null)
+			return false;
+		// 文件名称不受限制
+		if (fileRequirementNode.getData().isFileTypeNotLimited())
+			return true;
+		String strFormat = fileRequirementNode.getData().getFilenameRequirementVal();
+		String filename = fileSubmitData.getFileName();
+	
+		
+		
 		TokenValue tv = getNextToken(strFormat);
 		ContainValue v;
 		boolean bMultiplechar = false;
 		while (tv != null) {
-			if (tv.isbIsOperator()) {// 操作符
+			if (tv.isOperator()) {// 操作符
 				switch (tv.getValue()) {
 				case FileNameFormatOperator.operator_num:// 数字
 					v = trimnum(filename, bMultiplechar);
@@ -516,6 +518,7 @@ public class FileNameFormatParser {
 					break;
 				default:
 					String s = getValue(tv.getValue(), homeworkviewdata, courseteachingclassviewdata, student);
+					
 					v = trimprefix(filename, s, bMultiplechar);
 					if (v.isFlag())
 						filename = v.getNext();
@@ -527,6 +530,7 @@ public class FileNameFormatParser {
 
 			} else {// 非操作符
 				String s = tv.getValue();
+				
 				v = trimprefix(filename, s, bMultiplechar);
 				if (v.isFlag())
 					filename = v.getNext();
@@ -536,129 +540,204 @@ public class FileNameFormatParser {
 				bMultiplechar = false;
 
 			}
+			
+			
 
 			strFormat = tv.getStrNext();
 			tv = getNextToken(strFormat);
 		}
+		
+		//filename现在应该是后缀，判断是否正确
+		
 
-		return true;
+		return IsSubmitFileNamePoxfixRight(filename,fileSubmitData,fileRequirementManager);
+	}
+
+	/**
+	 * 文件后缀是否正确，例如要求doc，用户上传了xls文件则错误
+	 */
+	private boolean IsSubmitFileNamePoxfixRight(String prefix,FileSubmitData fileSubmitData,
+			FileRequirementManager fileRequirementManager) {
+
+		if (fileSubmitData == null)
+			return false;
+
+		if (fileRequirementManager == null)
+			return false;
+
+		FileRequirementNode fileRequirementNode = fileRequirementManager.getNode(fileSubmitData.getNodeID());
+
+		if (fileRequirementNode == null)
+			return false;
+
+		String strFormat = fileRequirementNode.getData().getFileTypeData();
+		
+
+		
+
+		prefix = prefix.toLowerCase();
+		if(prefix.length()>0 && prefix.charAt(0)=='.')
+			prefix=prefix.substring(1);
+
+		String filetypes[] = strFormat.split(";");
+
+		for (String t : filetypes) {
+
+			int index = t.lastIndexOf('.');
+			if (index < 0) {
+				index = 0;
+				if (t.equals("*")) {
+					return true;
+				} else if (t.equals(prefix))
+					return true;
+			} else {
+				String s = t.substring(index + 1);
+
+				if (s.equals("*"))
+					return true;
+				else if (s.equals(prefix))
+					return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
 	 * */
-	private boolean IsSubmitFileNameFormatRight(String strSubmitFileName, CourseTeachingClassHomeworkBaseinfoViewData homeworkviewdata,
+	private boolean IsSubmitFileNameFormatRight(List<FileSubmitData> lstFileNames,
+			FileNodePropertyManager fileNodePropertyManager,
+			CourseTeachingClassHomeworkBaseinfoViewData homeworkviewdata,
 			CourseTeachingClassViewData courseteachingclassviewdata, StudentViewData student) {
 
-		if (!IsSubmitFileNamePoxfixRight(strSubmitFileName, homeworkviewdata))
+		
+		if(lstFileNames==null)
 			return false;
+		
+		
+		if (fileNodePropertyManager == null)
+			return false;
+		
 
-		if (!IsSubmitFileNamePrefixRight(strSubmitFileName, homeworkviewdata, courseteachingclassviewdata, student))
-			return false;
+		FileRequirementManager fileRequirementManager = homeworkviewdata.getHomeworkbaseinfo().getFileRequirement();
+
+		for (FileSubmitData fileSubmitData : lstFileNames) {
+			
+			
+
+			if (!IsSubmitFileNamePrefixRight(fileSubmitData, fileRequirementManager, homeworkviewdata,
+					courseteachingclassviewdata, student))
+				return false;
+		}
 		return true;
 	}
 
-	
-	/**
-	 * 计算文件个数,注意文件个数不等于files.length
-	 * */
-	private int GetFilesCount(MultipartFile[] files){
-		if(files==null)
-			return 0;
-		int nCount=0;
-		for(int i=0;i<files.length;i++){
-			MultipartFile file = files[i];
-			
-			if(file.isEmpty())
-				continue;
-			nCount++;
-		}
-		return nCount;
+	private List<FileSubmitData> getFileSubmitDataList(FileNodePropertyManager fileNodePropertyManager,
+			MultipartFile[] files) {
 		
+		List<FileSubmitData> lstFiles = new ArrayList<>();
+		
+		for (int i = 0; i < files.length; i++) {			
+		
+			FileSubmitData data = new FileSubmitData();
+			data.setFile(files[i]);
+			
+			FileNodePropertyData fileNodePropertyData = fileNodePropertyManager.getNodeByFileIndex(i);
+			
+			if (fileNodePropertyData == null)
+				return null;
+			
+			data.setNodeID(fileNodePropertyData.getNodeID());
+			lstFiles.add(data);
+		}
+
+		return lstFiles;
 	}
-	
-	
-	
-	
-	
+
 	/**
 	 * 提交的文件个数是否符合要求,符合要求返回true,否则返回false
 	 */
-	public boolean IsSubmitFileCountRight(HttpServletRequest request, MultipartFile[] files,
-			String t_course_teaching_class_homework_baseinfo_id) {
+	public boolean IsSubmitFileCountRight(HttpServletRequest request, FileNodePropertyManager fileNodePropertyManager,
+			MultipartFile[] files, String t_course_teaching_class_homework_baseinfo_id) {
+
+		if (fileNodePropertyManager == null)
+			return false;
+
 		// 作业基本信息
-		CourseTeachingClassHomeworkBaseinfo homeworkbaseinfo = homeworkbaseinfoDao.getByID(t_course_teaching_class_homework_baseinfo_id);
+		CourseTeachingClassHomeworkBaseinfo homeworkbaseinfo = courseTeachingClassHomeworkService
+				.getByID(t_course_teaching_class_homework_baseinfo_id);
 		if (homeworkbaseinfo == null)
 			return false;
-		
-		int nFilesCount=GetFilesCount(files);
-		
-		
-		
-		int nNeedFilesCount=homeworkbaseinfo.getFilecount();		
 
-		if (nFilesCount!= nNeedFilesCount)
-			return false;
-
-		return true;
+		return homeworkbaseinfo.getFileRequirement().isFileCountRight(fileNodePropertyManager);
 	}
-	
+
 	/**
 	 * 提交的文件是否有为空的文件,不为空，则发挥true，否则返回false
-	 * */
-	
-	public boolean IsSubmitFileContentIsNotNull(HttpServletRequest request, MultipartFile[] files
-			) {		
-		
-		
-		for(int i=0;i<files.length;i++){
+	 */
+
+	public boolean IsSubmitFileContentIsNotNull(HttpServletRequest request, MultipartFile[] files) {
+
+		for (int i = 0; i < files.length; i++) {
 			MultipartFile file = files[i];
-			
-			
-			if(file.getOriginalFilename().length()>0 && file.getSize()==0)
+
+			if (file.getOriginalFilename().length() > 0 && file.getSize() == 0)
 				return false;
-			
+
 		}
-		
-		
+
 		return true;
 	}
-	
 
 	/**
 	 * 提交的文件名称是否符合要求,符合要求返回true,否则返回false
 	 */
-	public boolean IsSubmitFileNameFormatRight(HttpServletRequest request, MultipartFile[] files,
+	public boolean IsSubmitFileNameFormatRight(HttpServletRequest request,
+			FileNodePropertyManager fileNodePropertyManager, MultipartFile[] files,
 			String t_course_teaching_class_homework_baseinfo_id, String t_student_id) {
 
+		if (fileNodePropertyManager == null)
+			return false;
+
+		if (t_course_teaching_class_homework_baseinfo_id == null)
+			return false;
+
+		if (t_student_id == null)
+			return false;
+
 		// 作业基本信息
-		CourseTeachingClassHomeworkBaseinfo homeworkbaseinfo = homeworkbaseinfoDao.getByID(t_course_teaching_class_homework_baseinfo_id);
+		CourseTeachingClassHomeworkBaseinfo homeworkbaseinfo = courseTeachingClassHomeworkService
+				.getByID(t_course_teaching_class_homework_baseinfo_id);
 		if (homeworkbaseinfo == null)
 			return false;
 
-		CourseTeachingClassHomeworkBaseinfoViewData homeworkviewdata = homeworkbaseinfoDao
+		CourseTeachingClassHomeworkBaseinfoViewData homeworkviewdata = courseTeachingClassHomeworkService
 				.getCourseTeachingClassHomeworkBaseinfoViewDataByID(t_course_teaching_class_homework_baseinfo_id);
 		if (homeworkviewdata == null)
 			return false;
 
 		CourseTeachingClassViewData courseteachingclassviewdata = teachingClassViewDataDao
-				.GetTeachingClassViewDataByCourseTeachingClassId(homeworkbaseinfo.getT_course_teaching_class_id());
+				.GetTeachingClassViewDataByCourseTeachingClassId(homeworkbaseinfo.getCourseTeachingClassId());
 
 		// 学生信息
 		StudentViewData student = studentDao.getStudentViewDataById(t_student_id);
 		if (student == null)
 			return false;
+		
+		
 
 		// 不需要文件
-		if (homeworkbaseinfo.getFilecount() == 0)
+		if (homeworkbaseinfo.getFileRequirement().isEmpty())
 			return true;
+		
+		
 
-		for (int i = 0; i < files.length; i++) {
-			MultipartFile file = files[i];
-			String filename = file.getOriginalFilename();
+		List<FileSubmitData> lstFiles = getFileSubmitDataList(fileNodePropertyManager, files);
 
-			if (!IsSubmitFileNameFormatRight(filename, homeworkviewdata, courseteachingclassviewdata, student))
-				return false;
-		}
+		if (!IsSubmitFileNameFormatRight(lstFiles, fileNodePropertyManager, homeworkviewdata,
+				courseteachingclassviewdata, student))
+			return false;
+
 		return true;
 	}
 }

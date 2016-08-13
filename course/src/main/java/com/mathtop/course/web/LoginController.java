@@ -49,28 +49,33 @@ public class LoginController extends BaseController {
 	@ResponseBody
 	public User androidLogin(HttpServletRequest request, @RequestBody User user) {
 
+		System.out.println("androidLogin");
+		
 		// 如果用户已经登录，则直接进入到主页面
 		if (getSessionUser(request) != null) {
 
 			return user;
 		}
+		
+		System.out.println(user.getUserName());
+		System.out.println(user.getUserPassword());
 
 		// 对密码进行md5运算，比较两个密码其实是比较两个密码的md5值
 		user.EncoderPassword();
 
-		User dbUser = userService.getUserByUserName(user.getUser_name());
+		User dbUser = userService.getUserByUserName(user.getUserName());
 
 		if (dbUser == null) {
 
 			return null;
-		} else if (dbUser.getUser_name() == null || !dbUser.getUser_name().equals(user.getUser_name())) {
+		} else if (dbUser.getUserName() == null || !dbUser.getUserName().equals(user.getUserName())) {
 			// 用户名不存在
 
-			dbUser.setUser_name(null);
-		} else if (dbUser.getUser_password() == null || !dbUser.getUser_password().equals(user.getUser_password())) {
+			dbUser.setUserName(null);
+		} else if (dbUser.getUserPassword() == null || !dbUser.getUserPassword().equals(user.getUserPassword())) {
 			// 用户密码不正确
 
-			dbUser.setUser_password(null);
+			dbUser.setUserPassword(null);
 		} else {
 
 			// 写入到登录日志中
@@ -108,28 +113,35 @@ public class LoginController extends BaseController {
 
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("account/login");
+		
+		if(user.getUserName()==null || user.getUserPassword()==null)
+			return mav;
 
 		UserSessionInfo userinfo = getSessionUser(request);
 
+		
 		// 如果用户已经登录，则直接进入到主页面
 		if (userinfo != null) {
+			
 			String t_user_id = userinfo.getUser().getId();
 			SetMailBosReceived(t_user_id, 1, mav);
-			mav.setViewName("index");
+			mav.setViewName("redirect:/index.html");
 
 			return mav;
 		}
 
+		
 		// 对密码进行md5运算，比较两个密码其实是比较两个密码的md5值
 		user.EncoderPassword();
 
-		User dbUser = userService.getUserByUserName(user.getUser_name());
+		User dbUser = userService.getUserByUserName(user.getUserName());
 
 		if (dbUser == null) {
-			return mav;
-		} else if (dbUser.getUser_name() == null || !dbUser.getUser_name().equals(user.getUser_name())) {
 			mav.addObject(CourseMessage.Message_errorMsg, "用户名不存在");
-		} else if (dbUser.getUser_password() == null || !dbUser.getUser_password().equals(user.getUser_password())) {
+			return mav;
+		} else if (dbUser.getUserName() == null || !dbUser.getUserName().equals(user.getUserName())) {			
+			mav.addObject(CourseMessage.Message_errorMsg, "用户名不存在");
+		} else if (dbUser.getUserPassword() == null || !dbUser.getUserPassword().equals(user.getUserPassword())) {
 			mav.addObject(CourseMessage.Message_errorMsg, "用户密码不正确");
 		} else {
 
@@ -145,7 +157,7 @@ public class LoginController extends BaseController {
 
 				SetMailBosReceived(dbUser.getId(), 1, mav);
 				mav.addObject(dbUser);
-				mav.setViewName("index");
+				mav.setViewName("redirect:/index.html");
 			} else
 				mav.setViewName("redirect:" + toUrl);
 		}
@@ -161,7 +173,7 @@ public class LoginController extends BaseController {
 	@RequestMapping("/doLogout")
 	public String logout(HttpSession session) {
 		session.removeAttribute(CommonConstant.USER_CONTEXT);
-		return "forward:/account/doLogin.html";
+		return "redirect:/account/doLogin.html";
 	}
 
 	@RequestMapping(value = "/pwd")
@@ -189,10 +201,10 @@ public class LoginController extends BaseController {
 		}
 
 		User user = new User();
-		user.setUser_password(old_user_password);
+		user.setUserPassword(old_user_password);
 		user.EncoderPassword();
 
-		if (!userinfo.getUser().getUser_password().equals(user.getUser_password())) {
+		if (!userinfo.getUser().getUserPassword().equals(user.getUserPassword())) {
 			redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg, "旧密码错误，请重新输入");
 			mav.setViewName("redirect:/account/pwd.html");
 			return mav;
@@ -204,11 +216,11 @@ public class LoginController extends BaseController {
 			return mav;
 		}
 
-		user.setUser_password(new_user_password);
+		user.setUserPassword(new_user_password);
 		user.EncoderPassword();
 
-		userService.updateUserPassword(userinfo.getUser().getId(), user.getUser_password());
-		userinfo.getUser().setUser_password(user.getUser_password());
+		userService.updateUserPassword(userinfo.getUser().getId(), user.getUserPassword());
+		userinfo.getUser().setUserPassword(user.getUserPassword());
 
 		mav.setViewName("redirect:/index.html");
 		return mav;

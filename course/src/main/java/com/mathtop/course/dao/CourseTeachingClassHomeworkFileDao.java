@@ -61,7 +61,7 @@ public class CourseTeachingClassHomeworkFileDao extends BaseDao<CourseTeachingCl
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				expriment.setId(id);
-				expriment.setT_course_teaching_class_homework_baseinfo_id(rs.getString("t_course_teaching_class_homework_baseinfo_id"));
+				expriment.setCourseTeachingClassHomeworkBaseinfoId(rs.getString("t_course_teaching_class_homework_baseinfo_id"));
 				
 				expriment.setFilename(rs.getString("filename"));
 				expriment.setFilepath(rs.getString("filepath"));
@@ -89,7 +89,7 @@ public class CourseTeachingClassHomeworkFileDao extends BaseDao<CourseTeachingCl
 				CourseTeachingClassHomeworkFile expriment = new CourseTeachingClassHomeworkFile();
 				expriment.setId(rs.getString("id"));
 				
-				expriment.setT_course_teaching_class_homework_baseinfo_id(t_course_teaching_class_homework_baseinfo_id);
+				expriment.setCourseTeachingClassHomeworkBaseinfoId(t_course_teaching_class_homework_baseinfo_id);
 				
 				expriment.setFilename(rs.getString("filename"));
 				expriment.setFilepath(rs.getString("filepath"));
@@ -106,7 +106,7 @@ public class CourseTeachingClassHomeworkFileDao extends BaseDao<CourseTeachingCl
 	public String add(CourseTeachingClassHomeworkFile expriment) {
 		String id = GUID.getGUID();
 		expriment.setId(id);
-		Object params[] = new Object[] { expriment.getId(), expriment.getT_course_teaching_class_homework_baseinfo_id(),expriment.getFilename(), expriment.getFilepath() };
+		Object params[] = new Object[] { expriment.getId(), expriment.getCourseTeachingClassHomeworkBaseinfoId(),expriment.getFilename(), expriment.getFilepath() };
 		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
 		getJdbcTemplate().update(INSERT_PLAN, params, types);
 		return id;
@@ -159,7 +159,7 @@ public class CourseTeachingClassHomeworkFileDao extends BaseDao<CourseTeachingCl
 						CourseTeachingClassHomeworkFile homeworkfile = getByID(rs.getString("id"));
 						data.setHomeworkfile(homeworkfile);
 
-						CourseTeachingClassHomeworkBaseinfo homeworkbaseinfo = courseTeachingClassHomeworkBaseinfoDao.getByID(homeworkfile.getT_course_teaching_class_homework_baseinfo_id());
+						CourseTeachingClassHomeworkBaseinfo homeworkbaseinfo = courseTeachingClassHomeworkBaseinfoDao.getByID(homeworkfile.getCourseTeachingClassHomeworkBaseinfoId());
 						data.setHomeworkbaseinfo(homeworkbaseinfo);
 
 						

@@ -26,7 +26,7 @@
 				<c:forEach var="t"
 					items="${selectedCourseTeachingClassViewData.teacher}"
 					varStatus="status">
-							${t.userbasicinfo.user_basic_info_name}(${selectedCourseTeachingClassViewData.teachingtype[status.index].name})
+							${t.userbasicinfo.userBasicInfoName}(${selectedCourseTeachingClassViewData.teachingtype[status.index].name})
 							</c:forEach>
 			</p>
 
@@ -35,7 +35,7 @@
 
 		<div class="col-md-2">
 			<p class="text-muted">
-				<strong>授课学期：</strong>${selectedCourseTeachingClassViewData.courseteachingclass.teaching_year_begin}-${selectedCourseTeachingClassViewData.courseteachingclass.teaching_year_end}学年第${selectedCourseTeachingClassViewData.courseteachingclass.teaching_term}学期
+				<strong>授课学期：</strong>${selectedCourseTeachingClassViewData.term.term}
 			</p>
 
 		</div>

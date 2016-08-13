@@ -25,8 +25,7 @@
 
 
 
-<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet"
-	type="text/css" />
+<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet" type="text/css" />
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -35,11 +34,11 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home" onLoad="ShowErrMsg()">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 	<%@ include file="../../shared/CourseTeachingClassInfo.jsp"%>
-	<div id="DocumentPageTopSeparatorLine"></div>
+
 
 	<div class="DocumentPage">
 		<div class="DocumentPageLeftArea ">
@@ -56,7 +55,7 @@
 			<ol class="breadcrumb">
 				<li><a href="#">课程系统</a></li>
 				<li><a
-					href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseteachingclass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
+						href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseTeachingClass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
 				<li class="active">${selectedCourseHomeworkTypeData.name}</li>
 			</ol>
 
@@ -66,22 +65,20 @@
 
 			<div class="CourseContentHeaderSeparatorLine"></div>
 
-			<div class="panel-group" id="accordion" role="tablist"
-				style="margin-right: 5px;" aria-multiselectable="true">
+			<div class="panel-group" id="accordion" role="tablist" style="margin-right: 5px;"
+				aria-multiselectable="true">
 
 				<div class="panel panel-primary">
 					<div class="panel-heading" role="tab" id="headingOne">
 						<h4 class="panel-title">
-							<a role="button" data-toggle="collapse" data-parent="#accordion"
-								href="#collapseOne" aria-expanded="true"
-								aria-controls="collapseOne">
+							<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+								aria-expanded="true" aria-controls="collapseOne">
 								${selectedCourseHomeworkTypeData.name}-<strong>${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.title}</strong>具体内容
 							</a>
 						</h4>
 					</div>
-					<div id="collapseOne" class="panel-collapse collapse in"
-						style="overflow: hidden;" role="tabpanel"
-						aria-labelledby="headingOne">
+					<div id="collapseOne" class="panel-collapse collapse in" style="overflow: hidden;"
+						role="tabpanel" aria-labelledby="headingOne">
 						<div class="panel-body">
 							<div class="Course-Table">
 
@@ -102,13 +99,11 @@
 										<div class="col-md-10">
 											<c:choose>
 
-												<c:when
-													test="${fn:length(selectedCourseHomeworkBasicInfoViewData.homeworkFileList)==0}">
+												<c:when test="${fn:length(selectedCourseHomeworkBasicInfoViewData.homeworkFileList)==0}">
 													无
 												</c:when>
 
-												<c:when
-													test="${fn:length(selectedCourseHomeworkBasicInfoViewData.homeworkFileList)==1}">
+												<c:when test="${fn:length(selectedCourseHomeworkBasicInfoViewData.homeworkFileList)==1}">
 													<a
 														href="<c:url value="/coursehomeworkfile/download-${selectedCourseHomeworkBasicInfoViewData.homeworkFileList[0].id}.html"/>">
 														${selectedCourseHomeworkBasicInfoViewData.homeworkFileList[0].filename}</a>
@@ -118,8 +113,7 @@
 													<ul>
 														<c:forEach var="datafile"
 															items="${selectedCourseHomeworkBasicInfoViewData.homeworkFileList}">
-															<li><a
-																href="<c:url value="/coursehomeworkfile/download-${datafile.id}.html"/>">
+															<li><a href="<c:url value="/coursehomeworkfile/download-${datafile.id}.html"/>">
 																	${datafile.filename}</a></li>
 														</c:forEach>
 													</ul>
@@ -158,12 +152,10 @@
 										<div class="col-md-10">
 											<c:choose>
 
-												<c:when
-													test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filecount==0}">
+												<c:when test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filecount==0}">
 													不需要提交文件
 												</c:when>
-												<c:when
-													test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filecount==-1}">
+												<c:when test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filecount==-1}">
 													提交多个文件（数目不限制）<br>文件类型:${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filetype}<br>文件名称格式:${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filenameformat}
 												</c:when>
 
@@ -179,8 +171,7 @@
 											<strong>操作</strong>
 										</div>
 										<div class="col-md-10">
-											<c:if
-												test="${selectedCourseHomeworkStatisticsData.submitCount>0}">
+											<c:if test="${selectedCourseHomeworkStatisticsData.submitCount>0}">
 
 
 
@@ -212,14 +203,12 @@
 				<div class="panel panel-primary">
 					<div class="panel-heading" role="tab" id="headingTwo">
 						<h4 class="panel-title">
-							<a role="button" data-toggle="collapse" data-parent="#accordion"
-								href="#collapseTwo" aria-expanded="true"
-								aria-controls="collapseTwo"> 图表 </a>
+							<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"
+								aria-expanded="true" aria-controls="collapseTwo"> 图表 </a>
 						</h4>
 					</div>
-					<div id="collapseTwo" class="panel-collapse collapse in"
-						style="overflow: hidden;" role="tabpanel"
-						aria-labelledby="headingTwo">
+					<div id="collapseTwo" class="panel-collapse collapse in" style="overflow: hidden;"
+						role="tabpanel" aria-labelledby="headingTwo">
 						<div class="panel-body">
 
 							<canvas id="myChart" width="400" height="400"></canvas>
@@ -233,14 +222,12 @@
 				<div class="panel panel-primary">
 					<div class="panel-heading" role="tab" id="headingThree">
 						<h4 class="panel-title">
-							<a role="button" data-toggle="collapse" data-parent="#accordion"
-								href="#collapseThree" aria-expanded="true"
-								aria-controls="collapseThree"> 人数统计 </a>
+							<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree"
+								aria-expanded="true" aria-controls="collapseThree"> 人数统计 </a>
 						</h4>
 					</div>
-					<div id="collapseThree" class="panel-collapse collapse in"
-						style="overflow: hidden;" role="tabpanel"
-						aria-labelledby="headingThree">
+					<div id="collapseThree" class="panel-collapse collapse in" style="overflow: hidden;"
+						role="tabpanel" aria-labelledby="headingThree">
 						<div class="panel-body">
 							<div class="container-fluid" style="overflow: hidden;">
 								<div class="gridseparator"></div>
@@ -260,15 +247,11 @@
 								</div>
 
 								<div class="row show-grid">
-									<div class="col-md-3">
-										${selectedCourseHomeworkStatisticsData.totalCount }</div>
-									<div class="col-md-3">
-										${selectedCourseHomeworkStatisticsData.submitCount }</div>
-									<div class="col-md-3">
-										${selectedCourseHomeworkStatisticsData.totalCount -selectedCourseHomeworkStatisticsData.submitCount}
+									<div class="col-md-3">${selectedCourseHomeworkStatisticsData.totalCount }</div>
+									<div class="col-md-3">${selectedCourseHomeworkStatisticsData.submitCount }</div>
+									<div class="col-md-3">${selectedCourseHomeworkStatisticsData.totalCount -selectedCourseHomeworkStatisticsData.submitCount}
 									</div>
-									<div class="col-md-3">
-										${selectedCourseHomeworkStatisticsData.replyCount }</div>
+									<div class="col-md-3">${selectedCourseHomeworkStatisticsData.replyCount }</div>
 								</div>
 
 
@@ -282,14 +265,12 @@
 				<div class="panel panel-primary">
 					<div class="panel-heading" role="tab" id="headingFour">
 						<h4 class="panel-title">
-							<a role="button" data-toggle="collapse" data-parent="#accordion"
-								href="#collapseFour" aria-expanded="true"
-								aria-controls="collapseFour"> 名单 </a>
+							<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour"
+								aria-expanded="true" aria-controls="collapseFour"> 名单 </a>
 						</h4>
 					</div>
-					<div id="collapseFour" class="panel-collapse collapse"
-						style="overflow: hidden;" role="tabpanel"
-						aria-labelledby="headingFour">
+					<div id="collapseFour" class="panel-collapse collapse" style="overflow: hidden;"
+						role="tabpanel" aria-labelledby="headingFour">
 						<div class="panel-body">
 							<div class="container-fluid" style="overflow: hidden;">
 								<div class="gridseparator"></div>
@@ -319,22 +300,18 @@
 
 
 								<c:set var="index" value="1"></c:set>
-								<c:forEach var="data"
-									items="${pagedCourseTeachingClassHomeworkStatisticsViewData.result}">
+								<c:forEach var="data" items="${pagedCourseTeachingClassHomeworkStatisticsViewData.result}">
 									<div class="row show-grid">
 										<div class="col-md-1">
 
 											${(pagedCourseTeachingClassHomeworkStatisticsViewData.currentPageNo-1) * pagedCourseTeachingClassHomeworkStatisticsViewData.pageSize +index}
 										</div>
 
-										<div class="col-md-2">${data.student.naturalclass.name}
-										</div>
+										<div class="col-md-2">${data.student.naturalclass.name}</div>
 
-										<div class="col-md-2">
-											${data.student.student.student_num}</div>
+										<div class="col-md-2">${data.student.student.student_num}</div>
 
-										<div class="col-md-2">
-											${data.student.userbasicinfo.user_basic_info_name}</div>
+										<div class="col-md-2">${data.student.userbasicinfo.userBasicInfoName}</div>
 
 										<div class="col-md-2">
 											<c:choose>
@@ -347,12 +324,9 @@
 													<p class="text-success">
 														是
 
-														<button class="btn btn-default btn-xs" type="button"
-															data-toggle="collapse"
-															data-target="#collapse${data.student.student.id}"
-															aria-expanded="false"
-															aria-controls="collapse${data.student.student.id}">
-															查看</button>
+														<button class="btn btn-default btn-xs" type="button" data-toggle="collapse"
+															data-target="#collapse${data.student.student.id}" aria-expanded="false"
+															aria-controls="collapse${data.student.student.id}">查看</button>
 													</p>
 
 
@@ -429,8 +403,7 @@
 													<c:forEach var="datasubmit" items="${data.homeworksubmit}">
 														<c:choose>
 
-															<c:when
-																test="${fn:length(datasubmit.homeworksubmitFileList)==1}">
+															<c:when test="${fn:length(datasubmit.homeworksubmitFileList)==1}">
 
 
 																<a
@@ -441,10 +414,9 @@
 
 															<c:otherwise>
 																<ul>
-																	<c:forEach var="datafile"
-																		items="${datasubmit.homeworksubmitFileList}">
+																	<c:forEach var="datafile" items="${datasubmit.homeworksubmitFileList}">
 																		<li><a
-																			href="<c:url value="/coursehomeworksubmitfile/download-${datafile.id}.html"/>">
+																				href="<c:url value="/coursehomeworksubmitfile/download-${datafile.id}.html"/>">
 																				${datafile.filename}</a></li>
 																	</c:forEach>
 																</ul>
@@ -456,7 +428,7 @@
 											</div>
 										</div>
 									</div>
-									
+
 									<c:set var="index" value="${index + 1}"></c:set>
 								</c:forEach>
 
@@ -480,14 +452,12 @@
 
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
 
-	<%@ include file="../../shared/pageFooter.jsp"%>
 
 	<%@ include file="../../shared/importJs.jsp"%>
+	<%@ include file="../../shared/sysLastInclude.jsp"%>
 
-	<script src="<c:url value='/plugins/Chart.js-master/Chart.min.js'/>"
-		type="text/javascript"></script>
+	<script src="<c:url value='/plugins/Chart.js-master/Chart.min.js'/>" type="text/javascript"></script>
 
 
 
@@ -530,21 +500,6 @@
 		}
 	</script>
 
-
-
-
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

@@ -40,11 +40,11 @@ public class StudentDao extends BaseDao<Student> {
 	
 	/**根据 id得到所在自然班id
 	 * */
-	public String gett_natural_class_idByStudentId(String studentid){
-	//	System.out.println( studentid);
+	public String getNaturalClassIdByStudentId(String t_student_id){
+	//	System.out.println( t_student_id);
 		return getJdbcTemplate().queryForObject(
 				GET_t_natural_class_id_BY_STUDENTID,
-				new Object[] { studentid },
+				new Object[] { t_student_id },
 				new int[] { Types.VARCHAR}, String.class);
 	}
 	
@@ -63,9 +63,9 @@ public class StudentDao extends BaseDao<Student> {
 			public void processRow(ResultSet rs) throws SQLException {
 			
 				stu.setId(id);	
-				stu.setStudent_num(rs.getString("student_num"));
-				stu.setT_user_id(rs.getString("t_user_id"));
-			
+				stu.setStudentNum(rs.getString("student_num"));
+				stu.setUserId(rs.getString("t_user_id"));
+				stu.setNaturalClassId(getNaturalClassIdByStudentId(stu.getId()));
 			}
 			
 		});
@@ -86,9 +86,9 @@ public class StudentDao extends BaseDao<Student> {
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				stu.setId(rs.getString("id"));	
-				stu.setStudent_num(student_num);				
-				stu.setT_user_id(rs.getString("t_user_id"));
-				
+				stu.setStudentNum(student_num);				
+				stu.setUserId(rs.getString("t_user_id"));
+				stu.setNaturalClassId(getNaturalClassIdByStudentId(stu.getId()));
 				
 				
 				
@@ -103,7 +103,7 @@ public class StudentDao extends BaseDao<Student> {
 	
 	/*根据t_user_id得到用户
 	 * */
-	public Student getStudentByt_user_id(String t_user_id){
+	public Student getStudentByUserId(String t_user_id){
 		
 		Student stu=new Student();
 		
@@ -113,9 +113,9 @@ public class StudentDao extends BaseDao<Student> {
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				stu.setId(rs.getString("id"));	
-				stu.setT_user_id(t_user_id);
-				stu.setStudent_num(rs.getString("student_num"));
-				stu.setNatural_class_id(gett_natural_class_idByStudentId(stu.getId()));
+				stu.setUserId(t_user_id);
+				stu.setStudentNum(rs.getString("student_num"));
+				stu.setNaturalClassId(getNaturalClassIdByStudentId(stu.getId()));
 				
 			}
 			
@@ -128,15 +128,16 @@ public class StudentDao extends BaseDao<Student> {
 	
 	/*增加*/
 	public String add(Student stu){
+	
 		String id=GUID.getGUID();
 		stu.setId(id);
-		Object params[]=new Object[]{id,stu.getT_user_id(),stu.getStudent_num()};
+		Object params[]=new Object[]{id,stu.getUserId(),stu.getStudentNum()};
 		int types[]=new int[]{Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
 		getJdbcTemplate().update(INSERT_STUDNENT, params, types);
 		
 		
 		
-		Object params1[]=new Object[]{GUID.getGUID(),stu.getNatural_class_id(),id};
+		Object params1[]=new Object[]{GUID.getGUID(),stu.getNaturalClassId(),id};
 		int types1[]=new int[]{Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
 		getJdbcTemplate().update(INSERT_NATURALCLASSSTUDENT, params1, types1);
 		

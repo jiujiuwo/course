@@ -26,15 +26,12 @@
 <%@ include file="../../shared/importJs.jsp"%>
 
 
-<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet"
+<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet" type="text/css" />
+<link href="<c:url value='/plugins/summernote-master/dist/summernote.css'/>" rel="stylesheet"
 	type="text/css" />
-<link
-	href="<c:url value='/plugins/summernote-master/dist/summernote.css'/>"
-	rel="stylesheet" type="text/css" />
-<script
-	src="<c:url value='/plugins/summernote-master/dist/summernote.js'/>"></script>
-<script
-	src="<c:url value='/plugins/summernote-master/lang/summernote-zh-CN.js'/>"></script>
+<script src="<c:url value='/plugins/summernote-master/dist/summernote.js'/>"></script>
+<script src="<c:url value='/plugins/summernote-master/lang/summernote-zh-CN.js'/>"></script>
+
 
 
 
@@ -45,11 +42,11 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home" onLoad="ShowErrMsg()">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 	<%@ include file="../../shared/CourseTeachingClassInfo.jsp"%>
-	<div id="DocumentPageTopSeparatorLine"></div>
+
 
 	<div class="DocumentPage">
 		<div class="DocumentPageLeftArea ">
@@ -65,28 +62,32 @@
 
 			<ol class="breadcrumb">
 				<li><a href="#">课程系统</a></li>
-				<li><a href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseteachingclass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
+				<li><a
+						href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseTeachingClass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
 				<li class="active">${selectedCourseHomeworkTypeData.name}</li>
 			</ol>
 
-			<div class="CourseContentHeader">增加${selectedCourseTeachingClassViewData.teachingclass.name}-${selectedCourseHomeworkTypeData.name}</div>
+			<div class="CourseContentHeader">增加${selectedCourseTeachingClassViewData.courseTeachingClass.name}-${selectedCourseHomeworkTypeData.name}</div>
 
 			<div class="CourseContentHeaderSeparatorLine"></div>
 
 
 
 
-			<form class="form-horizontal "
+			<form class="form-horizontal " onsubmit="return check();"
 				action="<c:url value="/coursehomework/add-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html"/>"
 				enctype="multipart/form-data" method="post">
 
-				<div class="modal-body"
-					style="margin-left: 10px; margin-right: 10px; overflow: hidden;">
+				<!-- 作业要求json -->
+				<input type="hidden" name="FileRequirementData" id="FileRequirementData" value="" />
+
+			
+				<div class="modal-body" style="margin-left: 10px; margin-right: 10px; overflow: hidden;">
 
 					<div class="form-group">
-						<label for="name" class=" control-label">标题</label> <input
-							type="text" id="name" class="form-control" name="title" value=""
-							placeholder="标题" required>
+						<label for="name" class=" control-label">标题</label>
+						<input type="text" id="name" class="form-control" name="title" value="" placeholder="标题"
+							required>
 					</div>
 
 
@@ -95,151 +96,51 @@
 					<div class="form-group">
 						<label for="note" class="control-label">内容</label>
 						<div class="summernote" id="addcontentDiv"></div>
-						<textarea class="form-control" rows="5" name="content"
-							id="addcontentTextArea" style="display: none;"></textarea>
+						<textarea class="form-control" rows="5" name="content" id="addcontentTextArea"
+							style="display: none;"></textarea>
+					</div>
+					
+						<div class="form-group">
+						<label for="homeworkflag" class="control-label">作业类型</label>
+						<input type="radio" name="flag"
+							<c:if test="${selectedCourseHomeworkFlag==1}"> checked="checked"</c:if>
+							value="1" />
+						小组作业
+						<input type="radio" value="0" name="flag"
+							<c:if test="${selectedCourseHomeworkFlag==0}"> checked="checked"</c:if> />
+						个人作业
+
 					</div>
 
 					<div class="form-group">
-						<label for="name" class=" control-label">文件数目</label> <input
-							type="radio" name="filecount" value="0"
-							onclick="onfilecountradio(0)" />0个 <input type="radio"
-							name="filecount" value="1" checked="checked"
-							onclick="onfilecountradio(1)" />1个 <input type="radio"
-							name="filecount" value="2" onclick="onfilecountradio(2)" />2个 <input
-							type="radio" name="filecount" value="3"
-							onclick="onfilecountradio(3)" />3个 <input type="radio"
-							name="filecount" value="4" onclick="onfilecountradio(4)" />4个 <input
-							type="radio" name="filecount" value="5"
-							onclick="onfilecountradio(5)" />5个 <input type="radio"
-							name="filecount" value="6" onclick="onfilecountradio(6)" />6个 <input
-							type="radio" name="filecount" value="7"
-							onclick="onfilecountradio(7)" />7个 <input type="radio"
-							name="filecount" value="8" onclick="onfilecountradio(8)" />8个 <input
-							type="radio" name="filecount" value="9"
-							onclick="onfilecountradio(9)" />9个 <input type="radio"
-							name="filecount" value="-1" onclick="onfilecountradio(-1)" />不限制个数
+						<label for="filerequirement" class=" control-label">文件要求</label>
+						<div>
+							<input type="radio" name="filerequirement_count" value="0" checked="checked"
+								onclick="onfilecountradio(0)" />
+							上传文件
+							<input type="radio" name="filerequirement_count" value="1" onclick="onfilecountradio(1)" />
+							不上传文件
+						</div>
+						<div id="filerequirement_container">
+
+							<div class="panel panel-default" id="filetypepanel0">
+								<div class="panel-heading">${selectedCourseHomeworkTypeData.name}文件要求
+									<button type="button" class="btn btn-default btn-xs" onclick="onAddRootNode()">增加作业要求</button>
+
+								</div>
+								<div class="panel-body" style="margin: 10px;">
+
+
+									<div class="list-group" id="tree"></div>
+								</div>
+							</div>
+						</div>
 					</div>
 
 
-					<div class="form-group" id="filetypegroup">
-						<label for="name" class=" control-label">文件类型</label> <input
-							type="radio" name="filetyperadio" checked="checked" value="0"
-							onclick="onfiletyperadio(0)" />具体文件类型 <input type="radio"
-							value="1" name="filetyperadio" onclick="onfiletyperadio(1)" />不限制文件类型
 
 
 
-						<div class="panel panel-default" id="filetypepanel0">
-							<div class="panel-heading">${selectedCourseHomeworkTypeData.name}文件类型</div>
-							<div class="panel-body" style="margin: 10px;">
-								<input type=checkbox name="filetype" value="*.doc;*.docx"
-									checked="checked">word文件 <input type=checkbox
-									name="filetype" value="*.xls;*.xlsx">excel文件 <input
-									type=checkbox name="filetype" value="*.ppt;*.pptx">ppt文件
-								<input type=checkbox name="filetype" value="*.txt">文本文件(txt)
-								<input type=checkbox name="filetype" value="*.pdf">pdf文件(pdf)
-								<input type=checkbox name="filetype" value="*.c;*.h">c文件
-								<input type=checkbox name="filetype"
-									value="*.cpp;*.c;*.h;*.cc;*.hh;*.hpp;*.hh">c++文件 <input
-									type=checkbox name="filetype" value="*.java">java文件
-									<input type=checkbox name="filetype" value="*.zip">zip文件
-								<p />
-								<label for="filetypecustom" class=" control-label">自定义类型(类型之间用分号隔开，例如“*.txt;*.dat”)</label>
-								<input type="text" id="filetypecustom" class="form-control"
-									name="filetypecustom" value="" placeholder="自定义类型">
-							</div>
-						</div>
-
-
-						<div class="panel panel-default" id="filetypepanel1"
-							style="display: none;">
-							<div class="panel-heading">不限制${selectedCourseHomeworkTypeData.name}附件类型</div>
-							<div class="panel-body">${selectedCourseHomeworkTypeData.name}附件可以为任意类型。</div>
-						</div>
-
-
-
-
-					</div>
-
-					<div class="form-group" id="filenameformatgroup">
-						<label for="filenameformatradio" class=" control-label">文件名称格式</label>
-
-						<input type="radio" name="filenameformatradio" checked="checked"
-							value="0" onclick="onfilenameformatradio(0)" />预定义格式 <input
-							type="radio" value="1" name="filenameformatradio"
-							onclick="onfilenameformatradio(1)" />自定义格式
-
-
-
-						<div class="panel panel-default" id="filenameformatpanel0">
-							<div class="panel-heading">预定义格式</div>
-							<div class="panel-body">
-								<input type="radio" name="filenameformat"
-									value="{作业类型}_{作业名称}_{自然班}_{学号}_{姓名}" checked="checked" />${selectedCourseHomeworkTypeData.name}_实验名称_班级_学号_姓名
-								<br> <input type="radio" name="filenameformat"
-									value="{作业类型}_{作业名称}_{学号}_{姓名}" />${selectedCourseHomeworkTypeData.name}_实验名称_学号_姓名
-								<br> <input type="radio" name="filenameformat"
-									value="{作业类型}_{自然班}_{学号}_{姓名}" />${selectedCourseHomeworkTypeData.name}_班级_学号_姓名
-								<br> <input type="radio" name="filenameformat"
-									value="{作业名称}_{自然班}_{学号}_{姓名}" />实验名称_班级_学号_姓名
-							</div>
-						</div>
-
-
-
-						<div class="panel panel-default" id="filenameformatpanel1"
-							style="display: none;">
-							<div class="panel-heading">自定义格式</div>
-							<div class="panel-body">
-								<p>"{}"为格式控制符。含义如下：</p>
-
-								<dl>
-									<dt>{学院}</dt>
-									<dd>学生所在的学院</dd>
-									<dt>{系别}</dt>
-									<dd>学生所在的系别</dd>
-									<dt>{课程名}</dt>
-									<dd>课程名称</dd>
-									<dt>{教学学年}</dt>
-									<dd>教学学年，例如：2015-2016学年</dd>
-									<dt>{教学学期}</dt>
-									<dd>教学学期，例如：第1学期</dd>
-									<dt>{教学班授课教师}</dt>
-									<dd></dd>
-									<dt>{教学班}</dt>
-									<dd>学生所在的教学班</dd>
-
-									<dt>{自然班}</dt>
-									<dd>学生所在的自然班（行政班）</dd>
-									<dt>{学号}</dt>
-									<dd>学生的学号</dd>
-									<dt>{姓名}</dt>
-									<dd>学生的姓名</dd>
-									<dt>{作业类型}</dt>
-									<dd>本次作业的类型（${selectedCourseHomeworkTypeData.name}）</dd>
-
-									<dt>{作业名称}</dt>
-									<dd>本次作业的名称</dd>
-
-									<dt>{数字}</dt>
-									<dd>数字，从0开始的整数，不能是负数或小数。</dd>
-
-									<dt>{?}</dt>
-									<dd>一个字符</dd>
-
-									<dt>{*}</dt>
-									<dd>任意长度的字符</dd>
-								</dl>
-
-								<input type="text" id="filenameformatcustom"
-									class="form-control" name="filenameformatcustom" value=""
-									placeholder="标题">
-							</div>
-						</div>
-
-
-					</div>
 
 
 					<%!Date getDateAfter(Date d, int day) {
@@ -263,12 +164,10 @@
 						<div class="input-group date form_date col-sm-5" data-date=""
 							data-date-format="yyyy-mm-dd hh:ii " data-link-field="dtp_input2"
 							data-link-format="yyyy-mm-dd hh:ii">
-							<input class="form-control" size="16" type="text" id="enddate"
-								value="<%=getNewDate()%>" name="enddate" readonly required>
-							<span class="input-group-addon"><span
-								class="glyphicon glyphicon-remove"></span></span> <span
-								class="input-group-addon"><span
-								class="glyphicon glyphicon-calendar"></span></span>
+							<input class="form-control" size="16" type="text" id="enddate" value="<%=getNewDate()%>"
+								name="enddate" readonly required>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> <span
+								class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 						</div>
 
 
@@ -280,8 +179,7 @@
 
 						<label for="exampleInputFile" class=" control-label">附件</label>
 						<p class="help-block">任意文件类型均可。</p>
-						<input type="file" multiple="multiple" id="exampleInputFile"
-							name="file" />
+						<input type="file" multiple="multiple" id="exampleInputFile" name="file" />
 
 					</div>
 
@@ -303,13 +201,11 @@
 
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
 
-	<%@ include file="../../shared/pageFooter.jsp"%>
 
-	
+
 	<%@ include file="../../shared/importdatetimepickerjs.jsp"%>
-
+	<%@ include file="../../shared/sysLastInclude.jsp"%>
 
 	<script type="text/javascript">
 		$("#collapseHomework").addClass("in");
@@ -318,103 +214,9 @@
 	</script>
 
 
-
-	<script>
-		$('.form_date').datetimepicker({
-			language : 'zh-CN',
-			weekStart : 1,
-			todayBtn : 1,
-			autoclose : 1,
-			todayHighlight : 1,
-			startView : 2,
-			minView : 0,
-			forceParse : 0
-		});
-
-		$('.summernote').summernote({
-			height : 300, // set editor height
-			lang : 'zh-CN' // default: 'en-US'
-		//  minHeight: null,             // set minimum height of editor
-		//  maxHeight: null,             // set maximum height of editor
-
-		//  focus: true,                 // set focus to editable area after initializing summernote
-		});
-	</script>
-
-	<script>
-	
-	function onAdd() {
-		
-
-		var sHTML = $('#addcontentDiv').code();
-		$('#addcontentTextArea').text(sHTML);
-
-	}
-	
-		function onSearch() {
-			var st = document.getElementById("SearchText").value;
-
-			if (st != null && st.trim().length > 0) {
-				var url = "select-" + st + ".html";
-
-				window.location.href = url;
-			} else
-				ShowInfoMsg("搜索内容不能为空");
-
-		}
-
-		function onfiletyperadio(type) {
-			if (type == 0) {
-				//具体类型
-				$('#filetypepanel0').show();
-				$('#filetypepanel1').hide();
-			} else {
-				//不限制类型
-				$('#filetypepanel1').show();
-				$('#filetypepanel0').hide();
-			}
-		}
-
-		function onfilenameformatradio(type) {
-			if (type == 0) {
-				//具体类型
-				$('#filenameformatpanel0').show();
-				$('#filenameformatpanel1').hide();
-			} else {
-				//自定义类型
-				$('#filenameformatpanel1').show();
-				$('#filenameformatpanel0').hide();
-			}
-		}
-
-		function onfilecountradio(type) {
-			if (type == 0) {
-				//具体类型
-				$('#filetypegroup').hide();
-				$('#filenameformatgroup').hide();
-			} else {
-				//自定义类型
-				$('#filetypegroup').show();
-				$('#filenameformatgroup').show();
-			}
-		}
-	</script>
+	<%@ include file="filerequirement.jsp"%>
 
 
-
-
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

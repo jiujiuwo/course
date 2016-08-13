@@ -34,7 +34,7 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 	
@@ -294,13 +294,11 @@
 
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
-
-
-	<%@ include file="../../shared/pageFooter.jsp"%>
+	
 
 	<%@ include file="../../shared/importJs.jsp"%>
 	<%@ include file="../../shared/importdatetimepickerjs.jsp"%>
+<%@ include file="../../shared/sysLastInclude.jsp"%>
 
 	<script>
 		function onSearch() {
@@ -420,18 +418,6 @@
 	</script>
 
 
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

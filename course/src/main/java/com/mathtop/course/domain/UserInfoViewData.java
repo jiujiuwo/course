@@ -9,19 +9,20 @@ public class UserInfoViewData extends BaseDomain{
 	public UserInfoViewData() {
 		// TODO Auto-generated constructor stub
 	}
-	private String t_user_contact_type;
-	private String user_contact_value;
-	public String getT_user_contact_type() {
-		return t_user_contact_type;
+	private String userContactType;
+	private String userContactValue;
+	public String getUserContactType() {
+		return userContactType;
 	}
-	public void setT_user_contact_type(String t_user_contact_type) {
-		this.t_user_contact_type = t_user_contact_type;
+	public void setUserContactType(String userContactType) {
+		this.userContactType = userContactType;
 	}
-	public String getUser_contact_value() {
-		return user_contact_value;
+	public String getUserContactValue() {
+		return userContactValue;
 	}
-	public void setUser_contact_value(String user_contact_value) {
-		this.user_contact_value = user_contact_value;
+	public void setUserContactValue(String userContactValue) {
+		this.userContactValue = userContactValue;
 	}
+
 
 }

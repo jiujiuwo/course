@@ -81,8 +81,8 @@ public class CourseTeachingClassHomeworkScoreDao extends BaseDao<CourseTeachingC
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				expriment.setId(id);
-				expriment.setT_course_teaching_class_homework_baseinfo_id(rs.getString("t_course_teaching_class_homework_baseinfo_id"));
-				expriment.setT_score_system_type_id(rs.getString("t_score_system_type_id"));				
+				expriment.setCourseTeachingClassHomeworkBaseinfoId(rs.getString("t_course_teaching_class_homework_baseinfo_id"));
+				expriment.setScoreSystemTypeId(rs.getString("t_score_system_type_id"));				
 				expriment.setScore(rs.getString("title"));
 				
 			
@@ -108,8 +108,8 @@ public class CourseTeachingClassHomeworkScoreDao extends BaseDao<CourseTeachingC
 			public void processRow(ResultSet rs) throws SQLException {
 				CourseTeachingClassHomeworkScore expriment = new CourseTeachingClassHomeworkScore();
 				expriment.setId(rs.getString("id"));
-				expriment.setT_course_teaching_class_homework_baseinfo_id(t_course_teaching_class_homework_baseinfo_id);
-				expriment.setT_score_system_type_id(rs.getString("t_score_system_type_id"));				
+				expriment.setCourseTeachingClassHomeworkBaseinfoId(t_course_teaching_class_homework_baseinfo_id);
+				expriment.setScoreSystemTypeId(rs.getString("t_score_system_type_id"));				
 				expriment.setScore(rs.getString("title"));
 			
 				list.add(expriment);
@@ -125,7 +125,7 @@ public class CourseTeachingClassHomeworkScoreDao extends BaseDao<CourseTeachingC
 	public String add(CourseTeachingClassHomeworkScore expriment) {
 		String id = GUID.getGUID();
 		expriment.setId(id);
-		Object params[] = new Object[] { expriment.getId(), expriment.getT_course_teaching_class_homework_baseinfo_id(), expriment.getT_score_system_type_id(),
+		Object params[] = new Object[] { expriment.getId(), expriment.getCourseTeachingClassHomeworkBaseinfoId(), expriment.getScoreSystemTypeId(),
 				expriment.getScore()
 				};
 		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR };
@@ -180,7 +180,7 @@ public class CourseTeachingClassHomeworkScoreDao extends BaseDao<CourseTeachingC
 						CourseTeachingClassHomeworkScore score = getByID(rs.getString("id"));
 						data.setScore(score);
 
-						ScoreSystemType systemType = scoreSystemTypeDao.getByID(score.getT_score_system_type_id());
+						ScoreSystemType systemType = scoreSystemTypeDao.getByID(score.getScoreSystemTypeId());
 						data.setSystemType(systemType);
 
 						

@@ -12,12 +12,12 @@ public class CourseTeachingClassForumReply extends BaseDomain{
 	private static final long serialVersionUID = -8765711094745814372L;
 
 	private String id;
-	private String t_course_teaching_class_forum_topic_id;
-	private String t_user_id;
+	private String courseTeachingClassForumTopicId;
+	private String userId;
 	private String title;
 	private String content;
-	private Date created_date;
-	private Date last_modified_date;
+	private Date createdDate;
+	private Date lastModifiedDate;
 	
 	public String getId() {
 		return id;
@@ -26,12 +26,7 @@ public class CourseTeachingClassForumReply extends BaseDomain{
 		this.id = id;
 	}
 	
-	public String getT_user_id() {
-		return t_user_id;
-	}
-	public void setT_user_id(String t_user_id) {
-		this.t_user_id = t_user_id;
-	}
+	
 	public String getTitle() {
 		return title;
 	}
@@ -44,23 +39,30 @@ public class CourseTeachingClassForumReply extends BaseDomain{
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Date getCreated_date() {
-		return created_date;
+	
+	public String getCourseTeachingClassForumTopicId() {
+		return courseTeachingClassForumTopicId;
 	}
-	public void setCreated_date(Date created_date) {
-		this.created_date = created_date;
+	public void setCourseTeachingClassForumTopicId(String courseTeachingClassForumTopicId) {
+		this.courseTeachingClassForumTopicId = courseTeachingClassForumTopicId;
 	}
-	public Date getLast_modified_date() {
-		return last_modified_date;
+	public String getUserId() {
+		return userId;
 	}
-	public void setLast_modified_date(Date last_modified_date) {
-		this.last_modified_date = last_modified_date;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-	public String getT_course_teaching_class_forum_topic_id() {
-		return t_course_teaching_class_forum_topic_id;
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
 	}
-	public void setT_course_teaching_class_forum_topic_id(String t_course_teaching_class_forum_topic_id) {
-		this.t_course_teaching_class_forum_topic_id = t_course_teaching_class_forum_topic_id;
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 	
 	

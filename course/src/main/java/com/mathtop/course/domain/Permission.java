@@ -10,8 +10,8 @@ public class Permission extends BaseDomain{
 	private String id;
 	private String name;
 	private String note;	
-	private String t_permission_operator_id;
-	private String t_resource_id;
+	private String permissionOperatorId;
+	private String resourceId;
 	public String getId() {
 		return id;
 	}
@@ -30,17 +30,18 @@ public class Permission extends BaseDomain{
 	public void setNote(String note) {
 		this.note = note;
 	}
-	public String getT_permission_operator_id() {
-		return t_permission_operator_id;
+	public String getPermissionOperatorId() {
+		return permissionOperatorId;
 	}
-	public void setT_permission_operator_id(String t_permission_operator_id) {
-		this.t_permission_operator_id = t_permission_operator_id;
+	public void setPermissionOperatorId(String permissionOperatorId) {
+		this.permissionOperatorId = permissionOperatorId;
 	}
-	public String getT_resource_id() {
-		return t_resource_id;
+	public String getResourceId() {
+		return resourceId;
 	}
-	public void setT_resource_id(String t_resource_id) {
-		this.t_resource_id = t_resource_id;
+	public void setResourceId(String resourceId) {
+		this.resourceId = resourceId;
 	}
+	
 
 }

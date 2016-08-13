@@ -48,22 +48,22 @@
 				<label class="form-label">学号或工号</label>
 				<div class="input-icon">
 					<i class="icon-user"></i>
-					<form:input path="user_name"
+					<form:input path="userName"
 						class="form-control placeholder-no-fix" autocomplete="off"
 						placeholder="学号或工号" />
 					<br />
-					<form:errors path="user_name" class="field-has-error"></form:errors>
+					<form:errors path="userName" class="field-has-error"></form:errors>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label visible-ie8 visible-ie9">密码</label>
 				<div class="input-icon">
 					<i class="icon-lock"></i>
-					<form:password path="user_password"
+					<form:password path="userPassword"
 						class="form-control placeholder-no-fix" autocomplete="off"
 						placeholder="密码" />
 					<br />
-					<form:errors path="user_password" class="field-has-error"></form:errors>
+					<form:errors path="userPassword" class="field-has-error"></form:errors>
 				</div>
 			</div>
 
@@ -80,6 +80,8 @@
 		<!-- END LOGIN FORM -->
 	</div>
 
+
+	<c:set var="errorMsg" value="null" />
 
 </body>
 

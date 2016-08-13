@@ -26,6 +26,7 @@ import com.mathtop.course.domain.CourseTeachingClassHomeworkReplyViewData;
 import com.mathtop.course.domain.CourseTeachingClassHomeworkStatisticsViewData;
 import com.mathtop.course.domain.CourseTeachingClassHomeworkSubmitBaseinfoViewData;
 import com.mathtop.course.domain.CourseTeachingClassHomeworkType;
+import com.mathtop.course.domain.FileRequirementManager;
 import com.mathtop.course.domain.StatisticsData;
 import com.mathtop.course.domain.Student;
 import com.mathtop.course.domain.Teacher;
@@ -70,9 +71,9 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 	 * @param user
 	 * @return
 	 */
-	@RequestMapping(value = "/addhomework-{t_course_teaching_class_id}-{t_course_teaching_class_homeworktype_id}")
+	@RequestMapping(value = "/addhomework-{t_course_teaching_class_id}-{t_course_teaching_class_homeworktype_id}-{flag}")
 	public ModelAndView addhomework(HttpServletRequest request, RedirectAttributes redirectAttributes,
-			@PathVariable String t_course_teaching_class_id, @PathVariable String t_course_teaching_class_homeworktype_id) {
+			@PathVariable String t_course_teaching_class_id, @PathVariable String t_course_teaching_class_homeworktype_id,@PathVariable int flag) {
 
 		ModelAndView view = new ModelAndView();
 
@@ -82,7 +83,13 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 		// 课程类型
 		CourseTeachingClassHomeworkType selectedCourseHomeworkTypeData = homeworktypeService
 				.getByID(t_course_teaching_class_homeworktype_id);
+		
+		
+		
 		view.addObject(SelectedObjectConst.Selected_CourseHomeworkTypeData, selectedCourseHomeworkTypeData);
+		
+		//作业标记
+		view.addObject(SelectedObjectConst.Selected_CourseHomeworkFlag, flag);
 
 		view.setViewName("coursehomework/new");
 		return view;
@@ -104,79 +111,47 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
+		String enddate = request.getParameter("enddate");		
+		String FileRequirementData= request.getParameter("FileRequirementData");//文件要求
+		String filerequirement_count = request.getParameter("filerequirement_count");//是否需要上传文件
+		Integer nfilecount = Integer.parseInt(filerequirement_count);
+		
+		//标记，例如是否是小组作业等
+		String flagval = request.getParameter("flag");
+		int flag= 0;
+		
+		if(flagval.equals("0"))
+			flag=CommonConstant.HOMEWORK_FLAG_INDIVIDUALITY;
+		else
+			flag=CommonConstant.HOMEWORK_FLAG_GROUP;
+		
 
-		String enddate = request.getParameter("enddate");
-		String filetype = "*.*";
-		String filenameformat = "{*}";
-		String filecount = request.getParameter("filecount");
-		Integer nfilecount = Integer.parseInt(filecount);
+		
+		if (nfilecount == 0) {
+			
 
-		if (nfilecount != 0) {
+			FileRequirementManager fileRequirementManager=new FileRequirementManager();
+			fileRequirementManager.ParseJson(FileRequirementData);
+			
+		
+			if(!fileRequirementManager.isFileTypeValidate()){
+			
+					redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg, "文件类型格式不对，请修改.");
 
-			String filetyperadio = request.getParameter("filetyperadio");
-
-			if (filetyperadio.equals("0")) {
-
-				/**
-				 * 文件类型 正确格式为*.doc;*.docx;*.txt
-				 */
-				String[] filetypes = request.getParameterValues("filetype");
-				filetype = "";
-				if (filetypes != null) {
-					for (String s : filetypes) {
-						filetype += s;
-					}
+					mav.setViewName("redirect:/coursehomework/list-" + t_course_teaching_class_id + "-"
+							+ t_course_teaching_class_homeworktype_id + ".html");
+					return mav;
 				}
 
-				// 用户自定义格式
-				String filetypecustom = request.getParameter("filetypecustom").replaceAll(" ", "");
-				if (filetypecustom.length() > 0) {
 
-					String[] typearray = filetypecustom.split(";");
-
-					for (String s : typearray) {
-						
-						if (s.length() > 0) {
-
-							String[] t = s.split("\\.");
-
-							if (t.length == 2) {
-								if (filetype.length() > 1)
-									filetype += (";*." + t[1]);
-								else
-									filetype = "*." + t[1];
-							} else if (t.length == 1) {
-								if (filetype.length() > 1)
-									filetype += (";*." + s);
-								else
-									filetype = "*." + s;
-							}
-						}
-					}
-				}
-
-			} else {
-				// 文件类型不限制
-
-			}
 
 			/**
 			 * 文件名称格式 文件格式:{}{}等格式
 			 */
-			String filenameformatradio = request.getParameter("filenameformatradio");
-
-			if (filenameformatradio.equals("0")) {
-
-				filenameformat = request.getParameter("filenameformat");
-
-			} else {
+			
 				// 自定义格式
-				String filenameformatcustom = request.getParameter("filenameformatcustom");
-				FileNameFormatParser ffp = new FileNameFormatParser();
-				if (ffp.IsFileNameFormatRight(filenameformatcustom))
-					filenameformat = filenameformatcustom;
-				else {
-
+			if(!fileRequirementManager.isFileNameFormatValidate()){
+			
 					redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg, "文件名称格式不对，请修改.");
 
 					mav.setViewName("redirect:/coursehomework/list-" + t_course_teaching_class_id + "-"
@@ -184,21 +159,23 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 					return mav;
 				}
 
-			}
+			
 
 		}
-
+		
 		UserSessionInfo userinfo = getSessionUser(request);
 
 		if (userinfo != null) {
 			Teacher teacher = userinfo.getTeacher();
 			if (teacher != null) {
-
-				homeworkService.add(request, t_course_teaching_class_id, t_course_teaching_class_homeworktype_id, teacher.getId(), filetype,
-						filenameformat, nfilecount, title, content, enddate, files);
+			
+				homeworkService.add(request, t_course_teaching_class_id, t_course_teaching_class_homeworktype_id, teacher.getId(), flag,
+						FileRequirementData,  title, content, enddate, files);
 
 			}
 		}
+		
+		
 
 		// mav.addObject(SelectedObjectConst.Selected_CourseTeachingClassID,
 		// t_course_teaching_class_id);
@@ -249,6 +226,7 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 				.getCourseTeachingClassHomeworkBaseinfoViewDataByID(t_course_teaching_class_homework_baseinfo_id);
 
 		view.addObject(SelectedObjectConst.Selected_CourseHomeworkBasicInfoViewData, selectedCourseHomeworkBasicInfoViewData);
+		
 
 		// 设置课程基本信息，包括授课、作业类型等
 		SetCourseTeachingClassBaseInfo(view, t_course_teaching_class_id);
@@ -275,74 +253,66 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 			@PathVariable String t_course_teaching_class_homework_baseinfo_id, @RequestParam("file") MultipartFile[] files) {
 		ModelAndView mav = new ModelAndView();
 
-		String updatetitle = request.getParameter("updatetitle");
-		String updatecontent = request.getParameter("updatecontent");
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+		String enddate = request.getParameter("enddate");		
+		String FileRequirementData= request.getParameter("FileRequirementData");//文件要求
+		String filerequirement_count = request.getParameter("filerequirement_count");//是否需要上传文件
+		Integer nfilecount = Integer.parseInt(filerequirement_count);
+		
+		
+		//标记，例如是否是小组作业等
+		String flagval = request.getParameter("flag");
+		int flag= 0;
+		
+	
+		
+		if(flagval.equals("0"))
+			flag=CommonConstant.HOMEWORK_FLAG_INDIVIDUALITY;
+		else
+			flag=CommonConstant.HOMEWORK_FLAG_GROUP;
+		
+		if(title==null || title.trim().length()==0){
+			
+			redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg, "文件标题不能为空，请修改.");
 
-		String updateenddate = request.getParameter("enddate");
+			mav.setViewName("redirect:/coursehomework/updatehomework-" + t_course_teaching_class_id + "-"
+					+ t_course_teaching_class_homeworktype_id +"-"+t_course_teaching_class_homework_baseinfo_id+ ".html");
+			return mav;
+		}
+		
+		if (nfilecount == 0) {
+			
 
-		String filetype = "*.*";
-		String filenameformat = "{*}";
-		String filecount = request.getParameter("filecount");
-		Integer nfilecount = Integer.parseInt(filecount);
+			FileRequirementManager fileRequirementManager=new FileRequirementManager();
+			fileRequirementManager.ParseJson(FileRequirementData);
+			if(!fileRequirementManager.isFileTypeValidate()){
+			
+					redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg, "文件类型格式不对，请修改.");
 
-		if (nfilecount != 0) {
-
-			String filetyperadio = request.getParameter("filetyperadio");
-
-			if (filetyperadio.equals("0")) {
-
-				/**
-				 * 文件类型 正确格式为*.doc;*.docx;*.txt
-				 */
-				String[] filetypes = request.getParameterValues("filetype");
-				filetype = "";
-				for (String s : filetypes) {
-					filetype += s;
-				}
-
-				// 用户自定义格式
-				String filetypecustom = request.getParameter("filetypecustom");
-				String[] typearray = filetypecustom.split(";");
-				for (String s : typearray) {
-					String[] t = s.split(".");
-					if (t.length == 2) {
-						if (filetype.length() > 1)
-							filetype += (";" + s);
-						else
-							filetype = s;
-					}
-				}
-			} else {
-				// 文件类型不限制
-
-			}
-
-			/**
-			 * 文件名称格式 文件格式:{}{}等格式
-			 */
-			String filenameformatradio = request.getParameter("filenameformatradio");
-
-			if (filenameformatradio.equals("0")) {
-
-				filenameformat = request.getParameter("filenameformat");
-
-			} else {
-				// 自定义格式
-				String filenameformatcustom = request.getParameter("filenameformatcustom");
-				FileNameFormatParser ffp = new FileNameFormatParser();
-				if (ffp.IsFileNameFormatRight(filenameformatcustom))
-					filenameformat = filenameformatcustom;
-				else {
-
-					redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg, "文件名称格式不对，请修改.");
-					// mav.addObject(CourseMessage.Message_errorMsg,
-					// "不存在自然班，请先添加自然班才能够添加学生.");
 					mav.setViewName("redirect:/coursehomework/list-" + t_course_teaching_class_id + "-"
 							+ t_course_teaching_class_homeworktype_id + ".html");
 					return mav;
 				}
 
-			}
+
+			
+
+			/**
+			 * 文件名称格式 文件格式:{}{}等格式
+			 */
+			
+				// 自定义格式
+			if(!fileRequirementManager.isFileNameFormatValidate()){
+
+					redirectAttributes.addFlashAttribute(CourseMessage.Message_errorMsg, "文件名称格式不对，请修改.");
+
+					mav.setViewName("redirect:/coursehomework/list-" + t_course_teaching_class_id + "-"
+							+ t_course_teaching_class_homeworktype_id + ".html");
+					return mav;
+				}
+
+			
 
 		}
 
@@ -352,8 +322,7 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 			Teacher teacher = userinfo.getTeacher();
 			if (teacher != null) {
 
-				homeworkService.Update(request, t_course_teaching_class_homework_baseinfo_id, teacher.getId(), filetype, filenameformat,
-						nfilecount, updatetitle, updatecontent, updateenddate, files);
+				homeworkService.Update(request, t_course_teaching_class_homework_baseinfo_id, teacher.getId(), flag, FileRequirementData,title, content, enddate, files);
 
 			}
 		}
@@ -612,6 +581,8 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 
 		// 设置课程基本信息，包括授课、作业类型等
 		SetCourseTeachingClassBaseInfo(view, t_course_teaching_class_id);
+		
+		
 
 		// 课程类型
 		CourseTeachingClassHomeworkType selectedCourseHomeworkTypeData = homeworktypeService
@@ -622,7 +593,7 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 		if (userinfo != null) {
 			Teacher teacher = userinfo.getTeacher();
 			if (teacher != null) {
-				// 作业信息
+				// 教师作业信息
 				Page<CourseTeachingClassHomeworkBaseinfoViewData> pagedCourseTeachingClassHomeworkBaseinfoViewData = homeworkService
 						.getPage(t_course_teaching_class_id, t_course_teaching_class_homeworktype_id, pageNo, CommonConstant.PAGE_SIZE);
 
@@ -635,7 +606,7 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 				if (student != null) {
 					String t_student_id = student.getId();
 
-					// 作业信息
+					// 学生作业信息
 					Page<CourseTeachingClassHomeworkBaseinfoStudentViewData> pagedCourseTeachingClassHomeworkBaseinfoViewData = homeworkService
 							.getPage(t_course_teaching_class_id, t_course_teaching_class_homeworktype_id, t_student_id, pageNo,
 									CommonConstant.PAGE_SIZE);
@@ -799,29 +770,35 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 		return view;
 	}
 
-	@RequestMapping(value = "/getRightExampleFileName-{t_course_teaching_class_homework_baseinfo_id}", method = RequestMethod.GET)
+	
+	/**
+	 * 得到合法文件名称示例
+	 * */
+	@RequestMapping(value = "/getRightExampleFileName-{t_course_teaching_class_homework_baseinfo_id}-{nodeID}", method = RequestMethod.GET)
 	@ResponseBody
 	public List<String> getRightExampleFileName(HttpServletRequest request,
-			@PathVariable String t_course_teaching_class_homework_baseinfo_id) {
+			@PathVariable String t_course_teaching_class_homework_baseinfo_id,@PathVariable int nodeID) {
+		
+		if(t_course_teaching_class_homework_baseinfo_id==null || nodeID<0)
+			return null;
 
 		UserSessionInfo userinfo = getSessionUser(request);
 		if (userinfo != null) {
 			Student student = userinfo.getStudent();
 			if (student != null) {
-
-				return filenameformatparser.getRightExampleFileName(t_course_teaching_class_homework_baseinfo_id, student.getId());
+				return filenameformatparser.getRightExampleFileName(t_course_teaching_class_homework_baseinfo_id, nodeID,student.getId());
 			}
 		}
 
 		return null;
 	}
 
-	@RequestMapping(value = "/getRightExampleFileNameEx-{t_course_teaching_class_homework_baseinfo_id}-{t_student_id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/getRightExampleFileNameEx-{t_course_teaching_class_homework_baseinfo_id}-{nodeID}-{t_student_id}", method = RequestMethod.GET)
 	@ResponseBody
 	public List<String> getRightExampleFileName(HttpServletRequest request,
-			@PathVariable String t_course_teaching_class_homework_baseinfo_id, @PathVariable String t_student_id) {
+			@PathVariable String t_course_teaching_class_homework_baseinfo_id,@PathVariable int nodeID, @PathVariable String t_student_id) {
 
-		return filenameformatparser.getRightExampleFileName(t_course_teaching_class_homework_baseinfo_id, t_student_id);
+		return filenameformatparser.getRightExampleFileName(t_course_teaching_class_homework_baseinfo_id,nodeID, t_student_id);
 
 	}
 

@@ -10,7 +10,7 @@ public class CourseTeachingClassReferenceFile extends BaseDomain {
 	private static final long serialVersionUID = 237605326519036820L;
 
 	 private String id;
-	 private String t_course_teaching_class_reference_id;
+	 private String courseTeachingClassReferenceId;
 	 private String filename;
 	 private String filepath;
 	 private String filelength;
@@ -33,17 +33,18 @@ public class CourseTeachingClassReferenceFile extends BaseDomain {
 	public void setFilepath(String filepath) {
 		this.filepath = filepath;
 	}
-	public String getT_course_teaching_class_reference_id() {
-		return t_course_teaching_class_reference_id;
-	}
-	public void setT_course_teaching_class_reference_id(String t_course_teaching_class_reference_id) {
-		this.t_course_teaching_class_reference_id = t_course_teaching_class_reference_id;
-	}
+	
 	public String getFilelength() {
 		return filelength;
 	}
 	public void setFilelength(String filelength) {
 		this.filelength = filelength;
+	}
+	public String getCourseTeachingClassReferenceId() {
+		return courseTeachingClassReferenceId;
+	}
+	public void setCourseTeachingClassReferenceId(String courseTeachingClassReferenceId) {
+		this.courseTeachingClassReferenceId = courseTeachingClassReferenceId;
 	}   
 	
 }

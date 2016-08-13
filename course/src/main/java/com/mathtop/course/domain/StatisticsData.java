@@ -7,9 +7,9 @@ public class StatisticsData extends BaseDomain{
 	 */
 	private static final long serialVersionUID = -690136133257609080L;
 	
-	private Integer totalCount;
-	private Integer submitCount;
-	private Integer replyCount;
+	private Integer totalCount;//总数
+	private Integer submitCount;//提交数
+	private Integer replyCount;//回复数
 	public Integer getTotalCount() {
 		return totalCount;
 	}

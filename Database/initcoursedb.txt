@@ -1,641 +1,637 @@
--- init t_user userid:admin,password:12345
-insert into t_user (id,user_name,user_password) values('FE4AAFD3666C4FCFB1593942917A92E5','admin','827ccb0eea8a706c4c34a16891f84e7b');
+ï»¿-- init t_user userid:admin,password:123456
+insert into t_user (id,user_name,user_password) values('FE4AAFD3666C4FCFB1593942917A92E5','admin','ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413');
 
 
--- school:Ñ§Ôº
-insert into t_school (id,name,note) values('7457A1C45F8B4FA881CF5E03FD747102','¼ÆËã»úÑ§Ôº','');
+-- school:å­¦é™¢
+insert into t_school (id,name,note) values('7457A1C45F8B4FA881CF5E03FD747102','è®¡ç®—æœºå­¦é™¢','');
 
--- department£ºÏµ²¿
-insert into t_department (id,name,note) values('54EF893B78E24874809FC4B1CA78C382','¼ÆËã»ú¿ÆÑ§Óë¼¼Êõ','');
-insert into t_department (id,name,note) values('2D1725FD8F224599B0E844631F7D0CFF','Èí¼ş¹¤³Ì','');
-insert into t_department (id,name,note) values('D6683CEF1F744FA6B94DFF834FD809FB','ÍøÂç¹¤³Ì','');
+-- departmentï¼šç³»éƒ¨
+insert into t_department (id,name,note) values('54EF893B78E24874809FC4B1CA78C382','è®¡ç®—æœºç§‘å­¦ä¸æŠ€æœ¯','');
+insert into t_department (id,name,note) values('2D1725FD8F224599B0E844631F7D0CFF','è½¯ä»¶å·¥ç¨‹','');
+insert into t_department (id,name,note) values('D6683CEF1F744FA6B94DFF834FD809FB','ç½‘ç»œå·¥ç¨‹','');
 
 
--- school-department£ºÑ§Ôº-Ïµ²¿
+-- school-departmentï¼šå­¦é™¢-ç³»éƒ¨
 insert into t_school_department (id,t_school_id,t_department_id) values('5E69C358DA6C40268B560CCFC14C2B84','7457A1C45F8B4FA881CF5E03FD747102','54EF893B78E24874809FC4B1CA78C382');
 insert into t_school_department (id,t_school_id,t_department_id) values('5763514E8DB4491ABD463C0898DB3C1F','7457A1C45F8B4FA881CF5E03FD747102','2D1725FD8F224599B0E844631F7D0CFF');
 insert into t_school_department (id,t_school_id,t_department_id) values('8325FD220F4C43BFB8D007B575EA7561','7457A1C45F8B4FA881CF5E03FD747102','D6683CEF1F744FA6B94DFF834FD809FB');
 
--- coursestyle£º¿Î³ÌÀà±ğ
-insert into t_course_style (id,name,note) values('E757B442FB3D458BAB6D4F0AA62AE834','¹«¹²»ù´¡¿Î','');
-insert into t_course_style (id,name,note) values('BF41DCC7107343F8B44451334540001B','×¨Òµ£¨¼¼Êõ£©»ù´¡¿Î','');
-insert into t_course_style (id,name,note) values('D39FB679A103415E99B0325664D6839C','×¨Òµ¿Î','');
-insert into t_course_style (id,name,note) values('B102B47E59FA4736BFBBB9E28370F337','¿Î³ÌÉè¼Æ','');
-insert into t_course_style (id,name,note) values('335BE42461934E79A2CC85D24BA32F13','ÊµÏ°','');
-insert into t_course_style (id,name,note) values('4B5D9CE142C74C879078D372E6A6C813','×ÛºÏÊµÑéÖÜ','');
+-- coursestyleï¼šè¯¾ç¨‹ç±»åˆ«
+insert into t_course_style (id,name,note) values('E757B442FB3D458BAB6D4F0AA62AE834','å…¬å…±åŸºç¡€è¯¾','');
+insert into t_course_style (id,name,note) values('BF41DCC7107343F8B44451334540001B','ä¸“ä¸šï¼ˆæŠ€æœ¯ï¼‰åŸºç¡€è¯¾','');
+insert into t_course_style (id,name,note) values('D39FB679A103415E99B0325664D6839C','ä¸“ä¸šè¯¾','');
+insert into t_course_style (id,name,note) values('B102B47E59FA4736BFBBB9E28370F337','è¯¾ç¨‹è®¾è®¡','');
+insert into t_course_style (id,name,note) values('335BE42461934E79A2CC85D24BA32F13','å®ä¹ ','');
+insert into t_course_style (id,name,note) values('4B5D9CE142C74C879078D372E6A6C813','ç»¼åˆå®éªŒå‘¨','');
 
--- coursetype£º¿Î³ÌĞÔÖÊ
-insert into t_course_type (id,name,note) values('F216EC4941AD4CDCBAC23FDD05054C31','±ØĞŞ','');
-insert into t_course_type (id,name,note) values('29F373E8F7E84D13BC209686A3B5D932','Ñ¡ĞŞ','');
-
-
--- t_attendance_state£º¿¼ÇÚ×´Ì¬
-insert into t_attendance_state (id,name,note) values('3B836DBB38B5417AB236A7974191B891','Õı³£','');
-insert into t_attendance_state (id,name,note) values('224DF4A2DCD044E7A2DED1C2E388D856','³Ùµ½','');
-insert into t_attendance_state (id,name,note) values('55586B2389A3491D93CD2E2FD76AA80A','ÔçÍË','');
-insert into t_attendance_state (id,name,note) values('C5915FAF2B77413CB11EEBD7CC891642','¿õ¿Î','');
+-- coursetypeï¼šè¯¾ç¨‹æ€§è´¨
+insert into t_course_type (id,name,note) values('F216EC4941AD4CDCBAC23FDD05054C31','å¿…ä¿®','');
+insert into t_course_type (id,name,note) values('29F373E8F7E84D13BC209686A3B5D932','é€‰ä¿®','');
 
 
--- t_attendance_type£º¿¼ÇÚÀà±ğ
-insert into t_attendance_type (id,name,note) values('66605E6A402248A2996698987EB8EAA0','¿ÎÌÃ','');
-insert into t_attendance_type (id,name,note) values('AB1E2FEE055742D4AFF51C6BAB4B619E','ÉÏ»ú','');
-insert into t_attendance_type (id,name,note) values('1C86EF2FBB554E718B4F9209D0737A0C','ÊµÏ°','');
-insert into t_attendance_type (id,name,note) values('8884D8E8F91D4890A555B006701F2BFC','²âÑé','');
-
--- t_attendance_mode£º¿¼ÇÚÇ©µ½·½Ê½
-insert into t_attendance_mode (id,name,note) values('243CB492BC814F128D7F79C1239C6A2D','Ë¢¿¨Ç©µ½','');
-insert into t_attendance_mode (id,name,note) values('B90202153B554061B4CCF689E700FEDF','ÊÖ»úappÇ©µ½','');
-insert into t_attendance_mode (id,name,note) values('B25DFDC4F374438DBF35FA92EB6A5FF4','½ÌÊ¦ÊÖ¹¤Ç©µ½','');
-insert into t_attendance_mode (id,name,note) values('0261A62974EE46FCA56A2CA226247712','¶şÎ¬ÂëÇ©µ½','');
+-- t_attendance_stateï¼šè€ƒå‹¤çŠ¶æ€
+insert into t_attendance_state (id,name,note) values('3B836DBB38B5417AB236A7974191B891','æ­£å¸¸','');
+insert into t_attendance_state (id,name,note) values('224DF4A2DCD044E7A2DED1C2E388D856','è¿Ÿåˆ°','');
+insert into t_attendance_state (id,name,note) values('55586B2389A3491D93CD2E2FD76AA80A','æ—©é€€','');
+insert into t_attendance_state (id,name,note) values('C5915FAF2B77413CB11EEBD7CC891642','æ—·è¯¾','');
 
 
--- t_user_contact_type£ºÓÃ»§ÁªÏµÀà±ğ
-insert into t_user_contact_type(id,name,note) values('DFB78A56411D41D6B4E41F1059D2FA4B','¼ÒÍ¥¹Ì¶¨µç»°','');
-insert into t_user_contact_type(id,name,note) values('6F067085B5FB4A9895856B9B0345BEDE','ÊÖ»ú','');
-insert into t_user_contact_type(id,name,note) values('81E2E67B2C444BB88D4469BEA2B76D64','¹¤×÷¹Ì¶¨µç»°','');
-insert into t_user_contact_type(id,name,note) values('67C556B4CA1C4C20BF97A30DB41580DC','µç×ÓÓÊÏä','');
-insert into t_user_contact_type(id,name,note) values('A9080BD6B3E84E16A441ECC1A37F0A91','¼ÒÍ¥µØÖ·','');
-insert into t_user_contact_type(id,name,note) values('3BC17E1EC6784544BE0C39DF8AC98EF4','°ì¹«µØÖ·','');
 
 
--- t_teaching_type£º
-insert into t_teaching_type(id,name,note) values('8CF2A78F8C5E4B308C344A9B6928E337','Ö÷½²','');
-insert into t_teaching_type(id,name,note) values('FDED0DCE6CD5489E90961878C0A36ED5','Öú½Ì','');
-insert into t_teaching_type(id,name,note) values('D0539CFEDAD544C7B6985248F5103CB3','ÉÏ»ú¸¨µ¼','');
+-- t_attendance_modeï¼šè€ƒå‹¤ç­¾åˆ°æ–¹å¼
+insert into t_attendance_mode (id,name,note) values('243CB492BC814F128D7F79C1239C6A2D','åˆ·å¡ç­¾åˆ°','');
+insert into t_attendance_mode (id,name,note) values('B90202153B554061B4CCF689E700FEDF','æ‰‹æœºappç­¾åˆ°','');
+insert into t_attendance_mode (id,name,note) values('B25DFDC4F374438DBF35FA92EB6A5FF4','æ•™å¸ˆæ‰‹å·¥ç­¾åˆ°','');
+insert into t_attendance_mode (id,name,note) values('0261A62974EE46FCA56A2CA226247712','äºŒç»´ç ç­¾åˆ°','');
+
+
+-- t_user_contact_typeï¼šç”¨æˆ·è”ç³»ç±»åˆ«
+insert into t_user_contact_type(id,name,note) values('DFB78A56411D41D6B4E41F1059D2FA4B','å®¶åº­å›ºå®šç”µè¯','');
+insert into t_user_contact_type(id,name,note) values('6F067085B5FB4A9895856B9B0345BEDE','æ‰‹æœº','');
+insert into t_user_contact_type(id,name,note) values('81E2E67B2C444BB88D4469BEA2B76D64','å·¥ä½œå›ºå®šç”µè¯','');
+insert into t_user_contact_type(id,name,note) values('67C556B4CA1C4C20BF97A30DB41580DC','ç”µå­é‚®ç®±','');
+insert into t_user_contact_type(id,name,note) values('A9080BD6B3E84E16A441ECC1A37F0A91','å®¶åº­åœ°å€','');
+insert into t_user_contact_type(id,name,note) values('3BC17E1EC6784544BE0C39DF8AC98EF4','åŠå…¬åœ°å€','');
+
+
+-- t_teaching_typeï¼š
+insert into t_teaching_type(id,name,note) values('8CF2A78F8C5E4B308C344A9B6928E337','ä¸»è®²','');
+insert into t_teaching_type(id,name,note) values('FDED0DCE6CD5489E90961878C0A36ED5','åŠ©æ•™','');
+insert into t_teaching_type(id,name,note) values('D0539CFEDAD544C7B6985248F5103CB3','ä¸Šæœºè¾…å¯¼','');
 
 
 -- t_examination_type
-insert into t_examination_type(id,name,note) values('CD63D347A2814CBAB61D432A550137ED','ÆÚÄ©¿¼ÊÔ','');
-insert into t_examination_type(id,name,note) values('8739914F93D24014B04DCA550EF72BA2','ÆÚÖĞ¿¼ÊÔ','');
-insert into t_examination_type(id,name,note) values('709F8D816FB14757ACDB1F973A0F29D3','²âÑé','');
-insert into t_examination_type(id,name,note) values('CD6697604BEB4F5182857E4665F635D9','×÷Òµ','');
-insert into t_examination_type(id,name,note) values('25C2D09B218C4E6AA253A4330135C14F','ÊµÑé','');
+insert into t_examination_type(id,name,note) values('CD63D347A2814CBAB61D432A550137ED','æœŸæœ«è€ƒè¯•','');
+insert into t_examination_type(id,name,note) values('8739914F93D24014B04DCA550EF72BA2','æœŸä¸­è€ƒè¯•','');
+insert into t_examination_type(id,name,note) values('709F8D816FB14757ACDB1F973A0F29D3','æµ‹éªŒ','');
+insert into t_examination_type(id,name,note) values('CD6697604BEB4F5182857E4665F635D9','ä½œä¸š','');
+insert into t_examination_type(id,name,note) values('25C2D09B218C4E6AA253A4330135C14F','å®éªŒ','');
 
 -- t_item_difficulty
-insert into t_item_difficulty(id,name,note) values('08A929EE2E474F21AD364BE6B5CEE5AF','ÈİÒ×','');
-insert into t_item_difficulty(id,name,note) values('BE3739D47E22403EBFCE668C9F2D15D9','ÆÕÍ¨','');
-insert into t_item_difficulty(id,name,note) values('8CF113D02F0448DF9E0FA69B72DEDFF9','À§ÄÑ','');
+insert into t_item_difficulty(id,name,note) values('08A929EE2E474F21AD364BE6B5CEE5AF','å®¹æ˜“','');
+insert into t_item_difficulty(id,name,note) values('BE3739D47E22403EBFCE668C9F2D15D9','æ™®é€š','');
+insert into t_item_difficulty(id,name,note) values('8CF113D02F0448DF9E0FA69B72DEDFF9','å›°éš¾','');
 
 
 
 -- t_item_type
-insert into t_item_type(id,name,note) values('53FDD89F7A104B459850B6A8B0633B5F','µ¥Ñ¡Ìâ','');
-insert into t_item_type(id,name,note) values('13078022DEB141BD8CE8555F1E16BBEE','¶àÑ¡Ìâ','');
-insert into t_item_type(id,name,note) values('D2AFC70F21FF4891A303376EE933BD67','Ìî¿ÕÌâ','');
-insert into t_item_type(id,name,note) values('3DD468A017374E509D7986F66502D2B5','¼ò´ğÌâ','');
-insert into t_item_type(id,name,note) values('AC38EBF23D864104AD0D7601AC546418','ÅĞ¶ÏÌâ','');
+insert into t_item_type(id,name,note) values('53FDD89F7A104B459850B6A8B0633B5F','å•é€‰é¢˜','');
+insert into t_item_type(id,name,note) values('13078022DEB141BD8CE8555F1E16BBEE','å¤šé€‰é¢˜','');
+insert into t_item_type(id,name,note) values('D2AFC70F21FF4891A303376EE933BD67','å¡«ç©ºé¢˜','');
+insert into t_item_type(id,name,note) values('3DD468A017374E509D7986F66502D2B5','ç®€ç­”é¢˜','');
+insert into t_item_type(id,name,note) values('AC38EBF23D864104AD0D7601AC546418','åˆ¤æ–­é¢˜','');
 
--- t_group£º×é
-insert into t_group(id,name,note) values('64F4AD3C1FA64CCDAA6DAD8B56B9F4BE','ÏµÍ³¹ÜÀíÔ±','');
-insert into t_group(id,name,note) values('5F412EF848D944668CA370C4D156C9C2','½ÌÑ§¹ÜÀíÈËÔ±','');
-insert into t_group(id,name,note) values('3AC4EA45959748C68A45833D03DA8291','Ö÷½²½ÌÊ¦','');
-insert into t_group(id,name,note) values('4ECFA4F62EA94EABBF1D53AD6473847F','ÉÏ»ú¸¨µ¼½ÌÊ¦','');
-insert into t_group(id,name,note) values('DAF7E2DB551546AAAD873F4193022783','Öú½Ì','');
-insert into t_group(id,name,note) values('A5DD3D7AB9A748658B631FD4647B8F43','Ñ§Éú','');
+-- t_groupï¼šç»„
+insert into t_group(id,name,note) values('64F4AD3C1FA64CCDAA6DAD8B56B9F4BE','ç³»ç»Ÿç®¡ç†å‘˜','');
+insert into t_group(id,name,note) values('5F412EF848D944668CA370C4D156C9C2','æ•™å­¦ç®¡ç†äººå‘˜','');
+insert into t_group(id,name,note) values('3AC4EA45959748C68A45833D03DA8291','ä¸»è®²æ•™å¸ˆ','');
+insert into t_group(id,name,note) values('4ECFA4F62EA94EABBF1D53AD6473847F','ä¸Šæœºè¾…å¯¼æ•™å¸ˆ','');
+insert into t_group(id,name,note) values('DAF7E2DB551546AAAD873F4193022783','åŠ©æ•™','');
+insert into t_group(id,name,note) values('A5DD3D7AB9A748658B631FD4647B8F43','å­¦ç”Ÿ','');
 
 -- t_user_group
--- ½«ÏµÍ³¹ÜÀíÔ±admin¼ÓÈëµ½¡®ÏµÍ³¹ÜÀíÔ±×é¡¯
+-- å°†ç³»ç»Ÿç®¡ç†å‘˜adminåŠ å…¥åˆ°â€˜ç³»ç»Ÿç®¡ç†å‘˜ç»„â€™
 insert into t_user_group(id,t_group_id,t_user_id) values('8A0034CF8008401DBC5F1E6C2812D1D2','64F4AD3C1FA64CCDAA6DAD8B56B9F4BE','FE4AAFD3666C4FCFB1593942917A92E5');
 
 -- t_role
-insert into t_role(id,name,note) values('55EC2B7458E846DD8BFC74B250910BC6','Ö÷½²½ÌÊ¦','');
-insert into t_role(id,name,note) values('7392699482B64FA3B75C445C316AC42A','ÉÏ»ú¸¨µ¼½ÌÊ¦','');
-insert into t_role(id,name,note) values('FBC207AB45D54BD6879107132C301EC6','Öú½Ì','');
-insert into t_role(id,name,note) values('BB30E55CB0A54FCDA761E9B3D9D4AA51','ÏµÍ³¹ÜÀí','');
-insert into t_role(id,name,note) values('ED5D23C0E2304EA7BA1EE9ABF2CE312F','½ÌÑ§¹ÜÀí','');
-insert into t_role(id,name,note) values('AC0DEFA732A948A1AA5300F95C7EEEE4','Ñ§Éú','');
+insert into t_role(id,name,note) values('55EC2B7458E846DD8BFC74B250910BC6','ä¸»è®²æ•™å¸ˆ','');
+insert into t_role(id,name,note) values('7392699482B64FA3B75C445C316AC42A','ä¸Šæœºè¾…å¯¼æ•™å¸ˆ','');
+insert into t_role(id,name,note) values('FBC207AB45D54BD6879107132C301EC6','åŠ©æ•™','');
+insert into t_role(id,name,note) values('BB30E55CB0A54FCDA761E9B3D9D4AA51','ç³»ç»Ÿç®¡ç†','');
+insert into t_role(id,name,note) values('ED5D23C0E2304EA7BA1EE9ABF2CE312F','æ•™å­¦ç®¡ç†','');
+insert into t_role(id,name,note) values('AC0DEFA732A948A1AA5300F95C7EEEE4','å­¦ç”Ÿ','');
 
 -- t_group_role
--- ÎªÏµÍ³¹ÜÀíÔ±×éÌí¼Ó¡°ÏµÍ³¹ÜÀí¡±½ÇÉ«
+-- ä¸ºç³»ç»Ÿç®¡ç†å‘˜ç»„æ·»åŠ â€œç³»ç»Ÿç®¡ç†â€è§’è‰²
 insert into t_group_role(id,t_group_id,t_role_id) values('AC79E4C983F6426A9BD9A22F89E98D37','64F4AD3C1FA64CCDAA6DAD8B56B9F4BE','BB30E55CB0A54FCDA761E9B3D9D4AA51');
 
--- Îª"ÉÏ»ú¸¨µ¼½ÌÊ¦"×éÌí¼ÓÉÏ»ú¸¨µ¼½ÌÊ¦½ÇÉ«
+-- ä¸º"ä¸Šæœºè¾…å¯¼æ•™å¸ˆ"ç»„æ·»åŠ ä¸Šæœºè¾…å¯¼æ•™å¸ˆè§’è‰²
 insert into t_group_role(id,t_group_id,t_role_id) values('E78B8744C5AC4D82B596FC49996F7787','4ECFA4F62EA94EABBF1D53AD6473847F','7392699482B64FA3B75C445C316AC42A');
 
--- Îª"½ÌÑ§¹ÜÀíÈËÔ±"×éÌí¼Ó"½ÌÑ§¹ÜÀí"½ÇÉ«
+-- ä¸º"æ•™å­¦ç®¡ç†äººå‘˜"ç»„æ·»åŠ "æ•™å­¦ç®¡ç†"è§’è‰²
 insert into t_group_role(id,t_group_id,t_role_id) values('E69383D2F5674E03B07C9A11FCA62049','5F412EF848D944668CA370C4D156C9C2','ED5D23C0E2304EA7BA1EE9ABF2CE312F');
 
--- Îª"Ö÷½²½ÌÊ¦"×éÌí¼Ó"Ö÷½²½ÌÊ¦"½ÇÉ«
+-- ä¸º"ä¸»è®²æ•™å¸ˆ"ç»„æ·»åŠ "ä¸»è®²æ•™å¸ˆ"è§’è‰²
 insert into t_group_role(id,t_group_id,t_role_id) values('3D13FCEF2CA941268468E8AED8721DC2','3AC4EA45959748C68A45833D03DA8291','55EC2B7458E846DD8BFC74B250910BC6');
 
--- Îª"ÉÏ»ú¸¨µ¼½ÌÊ¦"×éÌí¼Ó"ÉÏ»ú¸¨µ¼½ÌÊ¦"½ÇÉ«
+-- ä¸º"ä¸Šæœºè¾…å¯¼æ•™å¸ˆ"ç»„æ·»åŠ "ä¸Šæœºè¾…å¯¼æ•™å¸ˆ"è§’è‰²
 insert into t_group_role(id,t_group_id,t_role_id) values('563886E2719745F4869D43F1B9283611','64F4AD3C1FA64CCDAA6DAD8B56B9F4BE','BB30E55CB0A54FCDA761E9B3D9D4AA51');
 
--- Îª"Öú½Ì"×éÌí¼Ó"Öú½Ì"½ÇÉ«
+-- ä¸º"åŠ©æ•™"ç»„æ·»åŠ "åŠ©æ•™"è§’è‰²
 insert into t_group_role(id,t_group_id,t_role_id) values('A31CEF6E932F4013A094292164CB48D8','DAF7E2DB551546AAAD873F4193022783','FBC207AB45D54BD6879107132C301EC6');
 
--- Îª"Ñ§Éú"×éÌí¼Ó"Ñ§Éú"½ÇÉ«
+-- ä¸º"å­¦ç”Ÿ"ç»„æ·»åŠ "å­¦ç”Ÿ"è§’è‰²
 insert into t_group_role(id,t_group_id,t_role_id) values('D91C1AAD2AB2476ABFA824F7DCB7FA52','A5DD3D7AB9A748658B631FD4647B8F43','AC0DEFA732A948A1AA5300F95C7EEEE4');
 
 
 -- t_permission_operator
-insert into t_permission_operator(id,name,note) values('8C3E716E82074CC3A4764E5D9A88E621','²éÑ¯','');
-insert into t_permission_operator(id,name,note) values('30424564E7BC4A8FADE7FE903B993B9A','Ôö¼Ó','');
-insert into t_permission_operator(id,name,note) values('BED77E549718446BAF14434EF4C7F6AE','ĞŞ¸Ä','');
-insert into t_permission_operator(id,name,note) values('C865F986C86248F7924C5918B4198E79','É¾³ı','');
+insert into t_permission_operator(id,name,note) values('8C3E716E82074CC3A4764E5D9A88E621','æŸ¥è¯¢','');
+insert into t_permission_operator(id,name,note) values('30424564E7BC4A8FADE7FE903B993B9A','å¢åŠ ','');
+insert into t_permission_operator(id,name,note) values('BED77E549718446BAF14434EF4C7F6AE','ä¿®æ”¹','');
+insert into t_permission_operator(id,name,note) values('C865F986C86248F7924C5918B4198E79','åˆ é™¤','');
 
 
 -- t_resource
 
-- Ñ§Ôº
+-- å­¦é™¢
 insert into t_resource(id,uri,uri_element) values('39CB1B0715994A80A4CEA9209851652D','school','add');
 insert into t_resource(id,uri,uri_element) values('4C496BA1104B41D799BC73E16152B928','school','delete');
 insert into t_resource(id,uri,uri_element) values('B6506F02182C4CD4A2F010EDB3DEE999','school','update');
 insert into t_resource(id,uri,uri_element) values('845A74C25CEF45638C655436BC0F1480','school','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('8F338C38D60E4A2FA4D53D2BF407180F','Ñ§ÔºÔö¼Ó','','39CB1B0715994A80A4CEA9209851652D','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('0F08CDB276E14EFCA7505C8A8123D6CD','Ñ§ÔºÉ¾³ı','','4C496BA1104B41D799BC73E16152B928','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('B491606682DB4997AC4ACB092B66FF7B','Ñ§ÔºĞŞ¸Ä','','B6506F02182C4CD4A2F010EDB3DEE999','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('28B267DDD60440249B3454B1D9563082','Ñ§Ôº²éÑ¯','','845A74C25CEF45638C655436BC0F1480','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('8F338C38D60E4A2FA4D53D2BF407180F','å­¦é™¢å¢åŠ ','','39CB1B0715994A80A4CEA9209851652D','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('0F08CDB276E14EFCA7505C8A8123D6CD','å­¦é™¢åˆ é™¤','','4C496BA1104B41D799BC73E16152B928','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('B491606682DB4997AC4ACB092B66FF7B','å­¦é™¢ä¿®æ”¹','','B6506F02182C4CD4A2F010EDB3DEE999','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('28B267DDD60440249B3454B1D9563082','å­¦é™¢æŸ¥è¯¢','','845A74C25CEF45638C655436BC0F1480','8C3E716E82074CC3A4764E5D9A88E621');
 
--- Ïµ²¿
+-- ç³»éƒ¨
 insert into t_resource(id,uri,uri_element) values('D21BDC96CF2E4AD3AE0414AE1E4ED04E','department','add');
 insert into t_resource(id,uri,uri_element) values('D4450229B7404632B0EFE977D63C4293','department','delete');
 insert into t_resource(id,uri,uri_element) values('46080EC158FF4BEF957BF90A91B29EA0','department','update');
 insert into t_resource(id,uri,uri_element) values('67B41C5B80C5479CBB9D2C1985674AAB','department','select');
 
--- È¨ÏŞ
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('D7CC033A5662449D8ACC509311403A63','Ïµ²¿Ôö¼Ó','','D21BDC96CF2E4AD3AE0414AE1E4ED04E','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('B29580B0B3D14C88BB85B31A2C03F7CB','Ïµ²¿É¾³ı','','D4450229B7404632B0EFE977D63C4293','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('9D2D07A990E5482BAA5D0F4175CF7233','Ïµ²¿ĞŞ¸Ä','','46080EC158FF4BEF957BF90A91B29EA0','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('8F9B679CCC324EE6B58D5A5D6CC24710','Ïµ²¿²éÑ¯','','67B41C5B80C5479CBB9D2C1985674AAB','8C3E716E82074CC3A4764E5D9A88E621');
+-- æƒé™
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('D7CC033A5662449D8ACC509311403A63','ç³»éƒ¨å¢åŠ ','','D21BDC96CF2E4AD3AE0414AE1E4ED04E','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('B29580B0B3D14C88BB85B31A2C03F7CB','ç³»éƒ¨åˆ é™¤','','D4450229B7404632B0EFE977D63C4293','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('9D2D07A990E5482BAA5D0F4175CF7233','ç³»éƒ¨ä¿®æ”¹','','46080EC158FF4BEF957BF90A91B29EA0','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('8F9B679CCC324EE6B58D5A5D6CC24710','ç³»éƒ¨æŸ¥è¯¢','','67B41C5B80C5479CBB9D2C1985674AAB','8C3E716E82074CC3A4764E5D9A88E621');
 
 
 
 
--- ×ÔÈ»°à
+-- è‡ªç„¶ç­
 insert into t_resource(id,uri,uri_element) values('A38AF2D575F947DB856AD2D362D9CBF1','naturalclass','add');
 insert into t_resource(id,uri,uri_element) values('3792E133B7A7478588B87F05E895FE02','naturalclass','delete');
 insert into t_resource(id,uri,uri_element) values('62B8580214F641C7B773F0E758C3EFC6','naturalclass','update');
 insert into t_resource(id,uri,uri_element) values('54B6E2DB7BF74E478A5A50653A26D1F1','naturalclass','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('DA702EC09AFF4EE890BA6D522B557D22','×ÔÈ»°àÔö¼Ó','','A38AF2D575F947DB856AD2D362D9CBF1','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('8ACE54BCBF2B4DF2AFC3B0FA42B59A4D','×ÔÈ»°àÉ¾³ı','','3792E133B7A7478588B87F05E895FE02','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('ADF1F77FF70046AAB42C5C3C8C54DA83','×ÔÈ»°àĞŞ¸Ä','','62B8580214F641C7B773F0E758C3EFC6','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('39E9D404C3064842A15DCC0AD16F5FDF','×ÔÈ»°à²éÑ¯','','54B6E2DB7BF74E478A5A50653A26D1F1','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('DA702EC09AFF4EE890BA6D522B557D22','è‡ªç„¶ç­å¢åŠ ','','A38AF2D575F947DB856AD2D362D9CBF1','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('8ACE54BCBF2B4DF2AFC3B0FA42B59A4D','è‡ªç„¶ç­åˆ é™¤','','3792E133B7A7478588B87F05E895FE02','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('ADF1F77FF70046AAB42C5C3C8C54DA83','è‡ªç„¶ç­ä¿®æ”¹','','62B8580214F641C7B773F0E758C3EFC6','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('39E9D404C3064842A15DCC0AD16F5FDF','è‡ªç„¶ç­æŸ¥è¯¢','','54B6E2DB7BF74E478A5A50653A26D1F1','8C3E716E82074CC3A4764E5D9A88E621');
 
--- ¿¼ÇÚÇ©µ½·½Ê½
+-- è€ƒå‹¤ç­¾åˆ°æ–¹å¼
 insert into t_resource(id,uri,uri_element) values('0EE46624EBB24B92B0EA46135C739CB4','attendancemode','add');
 insert into t_resource(id,uri,uri_element) values('2AA1DC6C1F1E42628D3A268885EF3A93','attendancemode','delete');
 insert into t_resource(id,uri,uri_element) values('A0B12428ED204C66B064559A6B195A47','attendancemode','update');
 insert into t_resource(id,uri,uri_element) values('43513DDE65144255BFA215AADE9ED34E','attendancemode','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('00F23F64A8A14BEE82688A95ED088054','¿¼ÇÚÇ©µ½·½Ê½Ôö¼Ó','','0EE46624EBB24B92B0EA46135C739CB4','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('1D4597E04FB5470AA0457E56B81EF737','¿¼ÇÚÇ©µ½·½Ê½É¾³ı','','2AA1DC6C1F1E42628D3A268885EF3A93','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('1C1C5181AE454C319879AE96E45D0219','¿¼ÇÚÇ©µ½·½Ê½ĞŞ¸Ä','','A0B12428ED204C66B064559A6B195A47','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('CBC3E8942548472CA3952E218F042711','¿¼ÇÚÇ©µ½·½Ê½²éÑ¯','','43513DDE65144255BFA215AADE9ED34E','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('00F23F64A8A14BEE82688A95ED088054','è€ƒå‹¤ç­¾åˆ°æ–¹å¼å¢åŠ ','','0EE46624EBB24B92B0EA46135C739CB4','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('1D4597E04FB5470AA0457E56B81EF737','è€ƒå‹¤ç­¾åˆ°æ–¹å¼åˆ é™¤','','2AA1DC6C1F1E42628D3A268885EF3A93','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('1C1C5181AE454C319879AE96E45D0219','è€ƒå‹¤ç­¾åˆ°æ–¹å¼ä¿®æ”¹','','A0B12428ED204C66B064559A6B195A47','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('CBC3E8942548472CA3952E218F042711','è€ƒå‹¤ç­¾åˆ°æ–¹å¼æŸ¥è¯¢','','43513DDE65144255BFA215AADE9ED34E','8C3E716E82074CC3A4764E5D9A88E621');
 
 
--- ¿¼ÇÚ×´Ì¬ 
+-- è€ƒå‹¤çŠ¶æ€ 
 insert into t_resource(id,uri,uri_element) values('FC7F06BFD594459FAB3AAC2F8DDC34D2','attendancestate','add');
 insert into t_resource(id,uri,uri_element) values('8A541FE68E5D4593A04CE6700463C704','attendancestate','delete');
 insert into t_resource(id,uri,uri_element) values('79894BC31FC14976A5119F4573381579','attendancestate','update');
 insert into t_resource(id,uri,uri_element) values('9935E9001211497FB2EBB1BF1BE5DE09','attendancestate','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('251804BE34914527A46213BEABAB1389','¿¼ÇÚ×´Ì¬Ôö¼Ó','','FC7F06BFD594459FAB3AAC2F8DDC34D2','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('D803089472F444CCBD2724DEB137D755','¿¼ÇÚ×´Ì¬É¾³ı','','8A541FE68E5D4593A04CE6700463C704','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('BDD998EA7F52498499992330ADC81523','¿¼ÇÚ×´Ì¬ĞŞ¸Ä','','79894BC31FC14976A5119F4573381579','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('4F10A0611E4C4E62B9E7B75688B819D9','¿¼ÇÚ×´Ì¬²éÑ¯','','9935E9001211497FB2EBB1BF1BE5DE09','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('251804BE34914527A46213BEABAB1389','è€ƒå‹¤çŠ¶æ€å¢åŠ ','','FC7F06BFD594459FAB3AAC2F8DDC34D2','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('D803089472F444CCBD2724DEB137D755','è€ƒå‹¤çŠ¶æ€åˆ é™¤','','8A541FE68E5D4593A04CE6700463C704','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('BDD998EA7F52498499992330ADC81523','è€ƒå‹¤çŠ¶æ€ä¿®æ”¹','','79894BC31FC14976A5119F4573381579','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('4F10A0611E4C4E62B9E7B75688B819D9','è€ƒå‹¤çŠ¶æ€æŸ¥è¯¢','','9935E9001211497FB2EBB1BF1BE5DE09','8C3E716E82074CC3A4764E5D9A88E621');
 
 
--- ¿Î³ÌÀàĞÍ
+-- è¯¾ç¨‹ç±»å‹
 insert into t_resource(id,uri,uri_element) values('9966FBAF911F42C2A622D6BF0B8EF3FC','coursetype','add');
 insert into t_resource(id,uri,uri_element) values('1322388A54B34749B87F0214CC6CC67A','coursetype','delete');
 insert into t_resource(id,uri,uri_element) values('CDB449DCD4734145AEE39E6BEBED572E','coursetype','update');
 insert into t_resource(id,uri,uri_element) values('BEE72063E725498B99BB482E9AC30C9A','coursetype','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('A581F2B6812F4A32BB8FA2A4C2D3B6E9','¿Î³ÌÀàĞÍÔö¼Ó','','9966FBAF911F42C2A622D6BF0B8EF3FC','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('989CEF0512374B23B59D6CCF791B8F68','¿Î³ÌÀàĞÍÉ¾³ı','','1322388A54B34749B87F0214CC6CC67A','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('4F395F251DCF4E3B82384F264EA66CC2','¿Î³ÌÀàĞÍĞŞ¸Ä','','CDB449DCD4734145AEE39E6BEBED572E','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('CFE5F914957C495885253232DCEA5B9C','¿Î³ÌÀàĞÍ²éÑ¯','','BEE72063E725498B99BB482E9AC30C9A','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('A581F2B6812F4A32BB8FA2A4C2D3B6E9','è¯¾ç¨‹ç±»å‹å¢åŠ ','','9966FBAF911F42C2A622D6BF0B8EF3FC','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('989CEF0512374B23B59D6CCF791B8F68','è¯¾ç¨‹ç±»å‹åˆ é™¤','','1322388A54B34749B87F0214CC6CC67A','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('4F395F251DCF4E3B82384F264EA66CC2','è¯¾ç¨‹ç±»å‹ä¿®æ”¹','','CDB449DCD4734145AEE39E6BEBED572E','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('CFE5F914957C495885253232DCEA5B9C','è¯¾ç¨‹ç±»å‹æŸ¥è¯¢','','BEE72063E725498B99BB482E9AC30C9A','8C3E716E82074CC3A4764E5D9A88E621');
 
--- ¿Î³ÌÀà±ğ
+-- è¯¾ç¨‹ç±»åˆ«
 insert into t_resource(id,uri,uri_element) values('950A102CAD8A4FE7AD5E42C1076F79EB','coursestyle','add');
 insert into t_resource(id,uri,uri_element) values('52CC668544EE4906B8572D7CD374B3DB','coursestyle','delete');
 insert into t_resource(id,uri,uri_element) values('E7286D28673C49E88136DED1362CC640','coursestyle','update');
 insert into t_resource(id,uri,uri_element) values('4AAC86017DA4467186304DDF1956D5C5','coursestyle','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('8F3FC194AAE144BA8ADBC299B237F19D','¿Î³ÌÀà±ğÔö¼Ó','','950A102CAD8A4FE7AD5E42C1076F79EB','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('E292F9BC6F5D4AD183C85683AFB40F74','¿Î³ÌÀà±ğÉ¾³ı','','52CC668544EE4906B8572D7CD374B3DB','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('744B6B75538C4673966D259A7B683675','¿Î³ÌÀà±ğĞŞ¸Ä','','E7286D28673C49E88136DED1362CC640','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('7D3ED706BB8C425CB5CE9680A63926DB','¿Î³ÌÀà±ğ²éÑ¯','','4AAC86017DA4467186304DDF1956D5C5','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('8F3FC194AAE144BA8ADBC299B237F19D','è¯¾ç¨‹ç±»åˆ«å¢åŠ ','','950A102CAD8A4FE7AD5E42C1076F79EB','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('E292F9BC6F5D4AD183C85683AFB40F74','è¯¾ç¨‹ç±»åˆ«åˆ é™¤','','52CC668544EE4906B8572D7CD374B3DB','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('744B6B75538C4673966D259A7B683675','è¯¾ç¨‹ç±»åˆ«ä¿®æ”¹','','E7286D28673C49E88136DED1362CC640','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('7D3ED706BB8C425CB5CE9680A63926DB','è¯¾ç¨‹ç±»åˆ«æŸ¥è¯¢','','4AAC86017DA4467186304DDF1956D5C5','8C3E716E82074CC3A4764E5D9A88E621');
 
--- ¿Î³Ì
+-- è¯¾ç¨‹
 insert into t_resource(id,uri,uri_element) values('728208CA1C94454BB0220CFE99A7EAA3','course','add');
 insert into t_resource(id,uri,uri_element) values('8EB99A57C7C449A88C6C37890980D8BE','course','delete');
 insert into t_resource(id,uri,uri_element) values('0D8828B19764426DA131BE62E07EF06E','course','update');
 insert into t_resource(id,uri,uri_element) values('B02EE6CBF02647EAA062CBFBEE7E09D5','course','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('009D5571939A409486B70A739B8DB3A5','¿Î³ÌÔö¼Ó','','728208CA1C94454BB0220CFE99A7EAA3','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('8D81BE8ADD354DC195F4BB393319820A','¿Î³ÌÉ¾³ı','','8EB99A57C7C449A88C6C37890980D8BE','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('6767D5743EE24AC48CA2AF5D05E3F064','¿Î³ÌĞŞ¸Ä','','0D8828B19764426DA131BE62E07EF06E','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('8631695EE650462891E97EB1CFBB0F78','¿Î³Ì²éÑ¯','','B02EE6CBF02647EAA062CBFBEE7E09D5','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('009D5571939A409486B70A739B8DB3A5','è¯¾ç¨‹å¢åŠ ','','728208CA1C94454BB0220CFE99A7EAA3','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('8D81BE8ADD354DC195F4BB393319820A','è¯¾ç¨‹åˆ é™¤','','8EB99A57C7C449A88C6C37890980D8BE','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('6767D5743EE24AC48CA2AF5D05E3F064','è¯¾ç¨‹ä¿®æ”¹','','0D8828B19764426DA131BE62E07EF06E','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('8631695EE650462891E97EB1CFBB0F78','è¯¾ç¨‹æŸ¥è¯¢','','B02EE6CBF02647EAA062CBFBEE7E09D5','8C3E716E82074CC3A4764E5D9A88E621');
 
--- ½ÌÊ¦ÊÚ¿ÎÀàĞÍ
+-- æ•™å¸ˆæˆè¯¾ç±»å‹
 insert into t_resource(id,uri,uri_element) values('8BB0097FBE6D46CCA88C87EBBC479AC2','teachingtype','add');
 insert into t_resource(id,uri,uri_element) values('0D0C1EC4DCC24FBABED1CF0486020F06','teachingtype','delete');
 insert into t_resource(id,uri,uri_element) values('DCFC4F9D5E6B4FD0955D29942E403F4F','teachingtype','update');
 insert into t_resource(id,uri,uri_element) values('4463185A0B0E49E4868D22AF4A6094A1','teachingtype','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('966387D8C7724D909D8BDF2D44A4BEC5','½ÌÊ¦ÊÚ¿ÎÀàĞÍÔö¼Ó','','8BB0097FBE6D46CCA88C87EBBC479AC2','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('81506666760543BFA4446F487E0FD136','½ÌÊ¦ÊÚ¿ÎÀàĞÍÉ¾³ı','','0D0C1EC4DCC24FBABED1CF0486020F06','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('CEE5C8D7E27447A8B7B11C93804F08D9','½ÌÊ¦ÊÚ¿ÎÀàĞÍĞŞ¸Ä','','DCFC4F9D5E6B4FD0955D29942E403F4F','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('4363ECC137EB4DF8B2F80D3801A2EFD3','½ÌÊ¦ÊÚ¿ÎÀàĞÍ²éÑ¯','','4463185A0B0E49E4868D22AF4A6094A1','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('966387D8C7724D909D8BDF2D44A4BEC5','æ•™å¸ˆæˆè¯¾ç±»å‹å¢åŠ ','','8BB0097FBE6D46CCA88C87EBBC479AC2','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('81506666760543BFA4446F487E0FD136','æ•™å¸ˆæˆè¯¾ç±»å‹åˆ é™¤','','0D0C1EC4DCC24FBABED1CF0486020F06','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('CEE5C8D7E27447A8B7B11C93804F08D9','æ•™å¸ˆæˆè¯¾ç±»å‹ä¿®æ”¹','','DCFC4F9D5E6B4FD0955D29942E403F4F','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('4363ECC137EB4DF8B2F80D3801A2EFD3','æ•™å¸ˆæˆè¯¾ç±»å‹æŸ¥è¯¢','','4463185A0B0E49E4868D22AF4A6094A1','8C3E716E82074CC3A4764E5D9A88E621');
 
--- ½ÌÑ§°à
+-- æ•™å­¦ç­
 insert into t_resource(id,uri,uri_element) values('DB7DB03D6AF6456FA269F2DA9AE0783A','teachingclass','add');
 insert into t_resource(id,uri,uri_element) values('14482E720C934F38809D52826AAB4F38','teachingclass','delete');
 insert into t_resource(id,uri,uri_element) values('945749E4DB724FC4B7B054686B8295E6','teachingclass','update');
 insert into t_resource(id,uri,uri_element) values('702397291E2A480FA6C44EC05D8406CC','teachingclass','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('54E3892BBE1E4680BAC4A9EBBA889091','½ÌÑ§°àÔö¼Ó','','DB7DB03D6AF6456FA269F2DA9AE0783A','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('F30F8A509C1443EFA6A320ACD6C52E87','½ÌÑ§°àÉ¾³ı','','14482E720C934F38809D52826AAB4F38','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('A1876BED5F0242FFAC298AEABD5E0831','½ÌÑ§°àĞŞ¸Ä','','945749E4DB724FC4B7B054686B8295E6','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('BFC038DBA8E74D15995FD7358FACA74F','½ÌÑ§°à²éÑ¯','','702397291E2A480FA6C44EC05D8406CC','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('54E3892BBE1E4680BAC4A9EBBA889091','æ•™å­¦ç­å¢åŠ ','','DB7DB03D6AF6456FA269F2DA9AE0783A','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('F30F8A509C1443EFA6A320ACD6C52E87','æ•™å­¦ç­åˆ é™¤','','14482E720C934F38809D52826AAB4F38','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('A1876BED5F0242FFAC298AEABD5E0831','æ•™å­¦ç­ä¿®æ”¹','','945749E4DB724FC4B7B054686B8295E6','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('BFC038DBA8E74D15995FD7358FACA74F','æ•™å­¦ç­æŸ¥è¯¢','','702397291E2A480FA6C44EC05D8406CC','8C3E716E82074CC3A4764E5D9A88E621');
 
--- ½ÌÊ¦
+-- æ•™å¸ˆ
 insert into t_resource(id,uri,uri_element) values('58A2C5079CC24C4A97E7217193E98563','teacher','add');
 insert into t_resource(id,uri,uri_element) values('4DB834A5D1B84C83BC4EBC3D82203F6D','teacher','delete');
 insert into t_resource(id,uri,uri_element) values('BAE1297345BE4B6C82D8671D38FDECD2','teacher','update');
 insert into t_resource(id,uri,uri_element) values('4E50E2261A4C4AB5BDDF4ECF78C03B5E','teacher','');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('0DAB7F769634402FB6D3691EE873189C','½ÌÊ¦Ôö¼Ó','','58A2C5079CC24C4A97E7217193E98563','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('4BB595D9344E4294AF325F8A9BA9C77E','½ÌÊ¦É¾³ı','','4DB834A5D1B84C83BC4EBC3D82203F6D','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('6054E9B24D18496BB4C12E56DC35ABD4','½ÌÊ¦ĞŞ¸Ä','','BAE1297345BE4B6C82D8671D38FDECD2','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('AA472C6FD828412CBE8BAB7DBCFBC465','½ÌÊ¦²éÑ¯','','4E50E2261A4C4AB5BDDF4ECF78C03B5E','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('0DAB7F769634402FB6D3691EE873189C','æ•™å¸ˆå¢åŠ ','','58A2C5079CC24C4A97E7217193E98563','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('4BB595D9344E4294AF325F8A9BA9C77E','æ•™å¸ˆåˆ é™¤','','4DB834A5D1B84C83BC4EBC3D82203F6D','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('6054E9B24D18496BB4C12E56DC35ABD4','æ•™å¸ˆä¿®æ”¹','','BAE1297345BE4B6C82D8671D38FDECD2','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('AA472C6FD828412CBE8BAB7DBCFBC465','æ•™å¸ˆæŸ¥è¯¢','','4E50E2261A4C4AB5BDDF4ECF78C03B5E','8C3E716E82074CC3A4764E5D9A88E621');
 
--- Ñ§Éú
+-- å­¦ç”Ÿ
 insert into t_resource(id,uri,uri_element) values('1F1C6D2313CD4FD1A5E21286C6A6B231','student','add');
 insert into t_resource(id,uri,uri_element) values('D307BA93C6BB44E48A1E8C8D8B9EC33E','student','delete');
 insert into t_resource(id,uri,uri_element) values('B4F9692F9D4A459C98D441B07723F8A1','student','update');
 insert into t_resource(id,uri,uri_element) values('61666E8342DD403587912293E64B078F','student','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('4975B71D33A64CF487F73E8382DAE44E','Ñ§ÉúÔö¼Ó','','1F1C6D2313CD4FD1A5E21286C6A6B231','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('DF94AF2D8127478D9F81B897964E3BD7','Ñ§ÉúÉ¾³ı','','D307BA93C6BB44E48A1E8C8D8B9EC33E','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('DCA868C8A4D4480F9A8B4C62015045DC','Ñ§ÉúĞŞ¸Ä','','B4F9692F9D4A459C98D441B07723F8A1','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('60637E42582540C49579A1BB7136342C','Ñ§Éú²éÑ¯','','61666E8342DD403587912293E64B078F','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('4975B71D33A64CF487F73E8382DAE44E','å­¦ç”Ÿå¢åŠ ','','1F1C6D2313CD4FD1A5E21286C6A6B231','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('DF94AF2D8127478D9F81B897964E3BD7','å­¦ç”Ÿåˆ é™¤','','D307BA93C6BB44E48A1E8C8D8B9EC33E','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('DCA868C8A4D4480F9A8B4C62015045DC','å­¦ç”Ÿä¿®æ”¹','','B4F9692F9D4A459C98D441B07723F8A1','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('60637E42582540C49579A1BB7136342C','å­¦ç”ŸæŸ¥è¯¢','','61666E8342DD403587912293E64B078F','8C3E716E82074CC3A4764E5D9A88E621');
 
--- ÁªÏµÀàĞÍ
+-- è”ç³»ç±»å‹
 insert into t_resource(id,uri,uri_element) values('6C0B504E1503402098B8FAB2BD33C80A','contacttype','add');
 insert into t_resource(id,uri,uri_element) values('166BCB58807F451DA76B6CA507988A6A','contacttype','delete');
 insert into t_resource(id,uri,uri_element) values('1A300A9A312F44D395A9BDE84619E7DA','contacttype','update');
 insert into t_resource(id,uri,uri_element) values('7D2DB49B5AC24A748DD05F30B9CDF98B','contacttype','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('34B3ADCD35AA455BBA80A5C8D93A976E','ÁªÏµÀàĞÍÔö¼Ó','','6C0B504E1503402098B8FAB2BD33C80A','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('BDF7836B09454EF7AC68FB4D5A81EC86','ÁªÏµÀàĞÍÉ¾³ı','','166BCB58807F451DA76B6CA507988A6A','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('7C57708A5B644ACB936AF72F8146CC59','ÁªÏµÀàĞÍĞŞ¸Ä','','1A300A9A312F44D395A9BDE84619E7DA','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('A55E71278008409DB2D9C810BDDB48F3','ÁªÏµÀàĞÍ²éÑ¯','','7D2DB49B5AC24A748DD05F30B9CDF98B','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('34B3ADCD35AA455BBA80A5C8D93A976E','è”ç³»ç±»å‹å¢åŠ ','','6C0B504E1503402098B8FAB2BD33C80A','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('BDF7836B09454EF7AC68FB4D5A81EC86','è”ç³»ç±»å‹åˆ é™¤','','166BCB58807F451DA76B6CA507988A6A','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('7C57708A5B644ACB936AF72F8146CC59','è”ç³»ç±»å‹ä¿®æ”¹','','1A300A9A312F44D395A9BDE84619E7DA','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('A55E71278008409DB2D9C810BDDB48F3','è”ç³»ç±»å‹æŸ¥è¯¢','','7D2DB49B5AC24A748DD05F30B9CDF98B','8C3E716E82074CC3A4764E5D9A88E621');
 
--- È¨ÏŞ£º×é
+-- æƒé™ï¼šç»„
 insert into t_resource(id,uri,uri_element) values('FC2E7B8569774588B8663B281D5A9213','group','add');
 insert into t_resource(id,uri,uri_element) values('E639959C30A344E097740DFB9C7C6596','group','delete');
 insert into t_resource(id,uri,uri_element) values('2BEED41C682440939C36FEA87BC453C2','group','update');
 insert into t_resource(id,uri,uri_element) values('9B343F19777540DE8C8DAA6B07085704','group','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('2A9BB0729F434C3CB4E90F6282F1BC0B','È¨ÏŞ£º×éÔö¼Ó','','FC2E7B8569774588B8663B281D5A9213','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('9506399272784E90B8B322052E785C77','È¨ÏŞ£º×éÉ¾³ı','','E639959C30A344E097740DFB9C7C6596','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('18F5CD90B883496691078E086569679F','È¨ÏŞ£º×éĞŞ¸Ä','','2BEED41C682440939C36FEA87BC453C2','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('1C15DD845EC74E45952AB819899EAC25','È¨ÏŞ£º×é²éÑ¯','','9B343F19777540DE8C8DAA6B07085704','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('2A9BB0729F434C3CB4E90F6282F1BC0B','æƒé™ï¼šç»„å¢åŠ ','','FC2E7B8569774588B8663B281D5A9213','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('9506399272784E90B8B322052E785C77','æƒé™ï¼šç»„åˆ é™¤','','E639959C30A344E097740DFB9C7C6596','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('18F5CD90B883496691078E086569679F','æƒé™ï¼šç»„ä¿®æ”¹','','2BEED41C682440939C36FEA87BC453C2','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('1C15DD845EC74E45952AB819899EAC25','æƒé™ï¼šç»„æŸ¥è¯¢','','9B343F19777540DE8C8DAA6B07085704','8C3E716E82074CC3A4764E5D9A88E621');
 
--- È¨ÏŞ£º×é-ÓÃ»§
+-- æƒé™ï¼šç»„-ç”¨æˆ·
 insert into t_resource(id,uri,uri_element) values('7D2649DF0B954EA8820F2F019D4DAEFE','group-user','add');
 insert into t_resource(id,uri,uri_element) values('800C601955C5492096E7D7B581AC6C4B','group-user','delete');
 insert into t_resource(id,uri,uri_element) values('397E6DB2C9544F728174FF08B3799994','group-user','update');
 insert into t_resource(id,uri,uri_element) values('5D59F5AE9F5F4C259F7A8FEBE3CCC5ED','group-user','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('A3255E529C774522934C294BA53B1EE5','È¨ÏŞ£º×é-ÓÃ»§Ôö¼Ó','','7D2649DF0B954EA8820F2F019D4DAEFE','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('00F6C8C9EA184C6EBAEC03D4D4725C82','È¨ÏŞ£º×é-ÓÃ»§É¾³ı','','800C601955C5492096E7D7B581AC6C4B','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('1B712E79FDD34EDBAD37397B13F2879D','È¨ÏŞ£º×é-ÓÃ»§ĞŞ¸Ä','','397E6DB2C9544F728174FF08B3799994','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('DE34B7FFC8B94F1E94D75E8622F0E75A','È¨ÏŞ£º×é-ÓÃ»§²éÑ¯','','5D59F5AE9F5F4C259F7A8FEBE3CCC5ED','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('A3255E529C774522934C294BA53B1EE5','æƒé™ï¼šç»„-ç”¨æˆ·å¢åŠ ','','7D2649DF0B954EA8820F2F019D4DAEFE','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('00F6C8C9EA184C6EBAEC03D4D4725C82','æƒé™ï¼šç»„-ç”¨æˆ·åˆ é™¤','','800C601955C5492096E7D7B581AC6C4B','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('1B712E79FDD34EDBAD37397B13F2879D','æƒé™ï¼šç»„-ç”¨æˆ·ä¿®æ”¹','','397E6DB2C9544F728174FF08B3799994','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('DE34B7FFC8B94F1E94D75E8622F0E75A','æƒé™ï¼šç»„-ç”¨æˆ·æŸ¥è¯¢','','5D59F5AE9F5F4C259F7A8FEBE3CCC5ED','8C3E716E82074CC3A4764E5D9A88E621');
 
--- È¨ÏŞ£º½ÇÉ«
+-- æƒé™ï¼šè§’è‰²
 insert into t_resource(id,uri,uri_element) values('C332AF13E6E1444F8476333D09C39C1F','role','add');
 insert into t_resource(id,uri,uri_element) values('766ECAA12525477EA0019E6ECA3F085A','role','delete');
 insert into t_resource(id,uri,uri_element) values('2BBE701CCE6449E9B048F45015450FCA','role','update');
 insert into t_resource(id,uri,uri_element) values('387F7DBBC9C34FADAA7C7A8DA77AA53A','role','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('892B394659A4403F9B8CAA523A8AED38','È¨ÏŞ£º½ÇÉ«Ôö¼Ó','','C332AF13E6E1444F8476333D09C39C1F','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('1B0955953A9A4CCE8F435B1F3822AADC','È¨ÏŞ£º½ÇÉ«É¾³ı','','766ECAA12525477EA0019E6ECA3F085A','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('2D40C9BA3662427696BF72AC52B007F6','È¨ÏŞ£º½ÇÉ«ĞŞ¸Ä','','2BBE701CCE6449E9B048F45015450FCA','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('752D9C445762407AA2AF4B8F35BCDCFE','È¨ÏŞ£º½ÇÉ«²éÑ¯','','387F7DBBC9C34FADAA7C7A8DA77AA53A','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('892B394659A4403F9B8CAA523A8AED38','æƒé™ï¼šè§’è‰²å¢åŠ ','','C332AF13E6E1444F8476333D09C39C1F','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('1B0955953A9A4CCE8F435B1F3822AADC','æƒé™ï¼šè§’è‰²åˆ é™¤','','766ECAA12525477EA0019E6ECA3F085A','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('2D40C9BA3662427696BF72AC52B007F6','æƒé™ï¼šè§’è‰²ä¿®æ”¹','','2BBE701CCE6449E9B048F45015450FCA','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('752D9C445762407AA2AF4B8F35BCDCFE','æƒé™ï¼šè§’è‰²æŸ¥è¯¢','','387F7DBBC9C34FADAA7C7A8DA77AA53A','8C3E716E82074CC3A4764E5D9A88E621');
 
--- È¨ÏŞ£º×é-½ÇÉ«
+-- æƒé™ï¼šç»„-è§’è‰²
 insert into t_resource(id,uri,uri_element) values('491F0BF5838B46E98B5A563196E7E7BD','group-role','add');
 insert into t_resource(id,uri,uri_element) values('1D4B5E619E1D44DBBDAEF9009C96032D','group-role','delete');
 insert into t_resource(id,uri,uri_element) values('F8732C37872E485AA33466AD328ABDD0','group-role','update');
 insert into t_resource(id,uri,uri_element) values('A2150BDBF8C14A6E8BE8E6E9D95B3BFD','group-role','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('FF3E3D660015464FA66000D5F1DB197A','È¨ÏŞ£º×é-½ÇÉ«Ôö¼Ó','','491F0BF5838B46E98B5A563196E7E7BD','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('6E12ECEAB6EF4E48AA685511D9B8DA94','È¨ÏŞ£º×é-½ÇÉ«É¾³ı','','1D4B5E619E1D44DBBDAEF9009C96032D','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('13197B0D162346CDB3D80A5CF3C39038','È¨ÏŞ£º×é-½ÇÉ«ĞŞ¸Ä','','F8732C37872E485AA33466AD328ABDD0','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('B9E2436C6C4D43D49B65E8BE9884E208','È¨ÏŞ£º×é-½ÇÉ«²éÑ¯','','A2150BDBF8C14A6E8BE8E6E9D95B3BFD','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('FF3E3D660015464FA66000D5F1DB197A','æƒé™ï¼šç»„-è§’è‰²å¢åŠ ','','491F0BF5838B46E98B5A563196E7E7BD','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('6E12ECEAB6EF4E48AA685511D9B8DA94','æƒé™ï¼šç»„-è§’è‰²åˆ é™¤','','1D4B5E619E1D44DBBDAEF9009C96032D','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('13197B0D162346CDB3D80A5CF3C39038','æƒé™ï¼šç»„-è§’è‰²ä¿®æ”¹','','F8732C37872E485AA33466AD328ABDD0','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('B9E2436C6C4D43D49B65E8BE9884E208','æƒé™ï¼šç»„-è§’è‰²æŸ¥è¯¢','','A2150BDBF8C14A6E8BE8E6E9D95B3BFD','8C3E716E82074CC3A4764E5D9A88E621');
 
--- È¨ÏŞ£º½ÇÉ«-È¨ÏŞ
+-- æƒé™ï¼šè§’è‰²-æƒé™
 insert into t_resource(id,uri,uri_element) values('D526312BF51B405681EDE5B50C469743','role-permission','add');
 insert into t_resource(id,uri,uri_element) values('988401FB94404E8FBB97B6DD247ADA80','role-permission','delete');
 insert into t_resource(id,uri,uri_element) values('EAA61D84495747DA9C11B6F94DE6FFD7','role-permission','update');
 insert into t_resource(id,uri,uri_element) values('8606A0A77BB04792A59E004056621918','role-permission','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('FBD18B4127E44B55AFBBE69D0FCE8597','È¨ÏŞ£º½ÇÉ«-È¨ÏŞÔö¼Ó','','D526312BF51B405681EDE5B50C469743','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('7196B915D757468BA7AEA0E7930784AF','È¨ÏŞ£º½ÇÉ«-È¨ÏŞÉ¾³ı','','988401FB94404E8FBB97B6DD247ADA80','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('F0FC8DF438174B7B990B97EEDB75D3D2','È¨ÏŞ£º½ÇÉ«-È¨ÏŞĞŞ¸Ä','','EAA61D84495747DA9C11B6F94DE6FFD7','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('7CA3224309B449348C3BFF7F998A207E','È¨ÏŞ£º½ÇÉ«-È¨ÏŞ²éÑ¯','','8606A0A77BB04792A59E004056621918','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('FBD18B4127E44B55AFBBE69D0FCE8597','æƒé™ï¼šè§’è‰²-æƒé™å¢åŠ ','','D526312BF51B405681EDE5B50C469743','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('7196B915D757468BA7AEA0E7930784AF','æƒé™ï¼šè§’è‰²-æƒé™åˆ é™¤','','988401FB94404E8FBB97B6DD247ADA80','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('F0FC8DF438174B7B990B97EEDB75D3D2','æƒé™ï¼šè§’è‰²-æƒé™ä¿®æ”¹','','EAA61D84495747DA9C11B6F94DE6FFD7','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('7CA3224309B449348C3BFF7F998A207E','æƒé™ï¼šè§’è‰²-æƒé™æŸ¥è¯¢','','8606A0A77BB04792A59E004056621918','8C3E716E82074CC3A4764E5D9A88E621');
 
--- È¨ÏŞ£º×ÊÔ´
+-- æƒé™ï¼šèµ„æº
 insert into t_resource(id,uri,uri_element) values('6B1F3E7B2628468BBD8E48F3B1AD83F3','permissionresource','add');
 insert into t_resource(id,uri,uri_element) values('FE946C0A858541E1AA88D9D542664AD2','permissionresource','delete');
 insert into t_resource(id,uri,uri_element) values('E3EB14CADB26468A9D95ABA23A09E3A9','permissionresource','update');
 insert into t_resource(id,uri,uri_element) values('16D9B45E31C947FA8A17A952A88BC5E2','permissionresource','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('CADF3BCFA6B44DE088EF8C014160E74D','È¨ÏŞ£º×ÊÔ´Ôö¼Ó','','6B1F3E7B2628468BBD8E48F3B1AD83F3','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('5F90AEE387B7487AB0CD43B3618137C2','È¨ÏŞ£º×ÊÔ´É¾³ı','','FE946C0A858541E1AA88D9D542664AD2','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('E3A656CAC7C54E24BE465DD464B7CBDD','È¨ÏŞ£º×ÊÔ´ĞŞ¸Ä','','E3EB14CADB26468A9D95ABA23A09E3A9','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('BCE59F6F65C84418AFCAA1ABA6294117','È¨ÏŞ£º×ÊÔ´²éÑ¯','','16D9B45E31C947FA8A17A952A88BC5E2','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('CADF3BCFA6B44DE088EF8C014160E74D','æƒé™ï¼šèµ„æºå¢åŠ ','','6B1F3E7B2628468BBD8E48F3B1AD83F3','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('5F90AEE387B7487AB0CD43B3618137C2','æƒé™ï¼šèµ„æºåˆ é™¤','','FE946C0A858541E1AA88D9D542664AD2','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('E3A656CAC7C54E24BE465DD464B7CBDD','æƒé™ï¼šèµ„æºä¿®æ”¹','','E3EB14CADB26468A9D95ABA23A09E3A9','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('BCE59F6F65C84418AFCAA1ABA6294117','æƒé™ï¼šèµ„æºæŸ¥è¯¢','','16D9B45E31C947FA8A17A952A88BC5E2','8C3E716E82074CC3A4764E5D9A88E621');
 
--- È¨ÏŞ£º²Ù×÷
+-- æƒé™ï¼šæ“ä½œ
 insert into t_resource(id,uri,uri_element) values('2BEC885FB994470A9837835FA701AC63','permissionoperator','add');
 insert into t_resource(id,uri,uri_element) values('761B09EFEB354B1B8F28B72C09839894','permissionoperator','delete');
 insert into t_resource(id,uri,uri_element) values('C3C32C200F42457AB452D918DF0C2350','permissionoperator','update');
 insert into t_resource(id,uri,uri_element) values('6A06D3B0B6CE49BD82E1059AA010505D','permissionoperator','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('4CA7125069AC4D4D8EFDB10469298198','È¨ÏŞ£º²Ù×÷Ôö¼Ó','','2BEC885FB994470A9837835FA701AC63','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('D1F053DA785C499885CD227900154B43','È¨ÏŞ£º²Ù×÷É¾³ı','','761B09EFEB354B1B8F28B72C09839894','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('60C89BB14BDD41EAB464146DF0FE1AFC','È¨ÏŞ£º²Ù×÷ĞŞ¸Ä','','C3C32C200F42457AB452D918DF0C2350','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('CF6FBC25CEF84858AFBC3828063D3C1F','È¨ÏŞ£º²Ù×÷²éÑ¯','','6A06D3B0B6CE49BD82E1059AA010505D','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('4CA7125069AC4D4D8EFDB10469298198','æƒé™ï¼šæ“ä½œå¢åŠ ','','2BEC885FB994470A9837835FA701AC63','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('D1F053DA785C499885CD227900154B43','æƒé™ï¼šæ“ä½œåˆ é™¤','','761B09EFEB354B1B8F28B72C09839894','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('60C89BB14BDD41EAB464146DF0FE1AFC','æƒé™ï¼šæ“ä½œä¿®æ”¹','','C3C32C200F42457AB452D918DF0C2350','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('CF6FBC25CEF84858AFBC3828063D3C1F','æƒé™ï¼šæ“ä½œæŸ¥è¯¢','','6A06D3B0B6CE49BD82E1059AA010505D','8C3E716E82074CC3A4764E5D9A88E621');
 
--- È¨ÏŞ£ºÈ¨ÏŞ-×ÊÔ´
+-- æƒé™ï¼šæƒé™-èµ„æº
 insert into t_resource(id,uri,uri_element) values('FB60760D3F8A4C8CAF1BA8D0356DB9AA','permission-resource','add');
 insert into t_resource(id,uri,uri_element) values('E1D898F2D5164973815919F2ACCDDD04','permission-resource','delete');
 insert into t_resource(id,uri,uri_element) values('F9D150581AC5493FBACC7E2CF24E4A92','permission-resource','update');
 insert into t_resource(id,uri,uri_element) values('B523CC20C98B49E8964767501617EFD1','permission-resource','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('9C1CA99D99AC45028C32ECE83A487855','È¨ÏŞ£ºÈ¨ÏŞ-×ÊÔ´Ôö¼Ó','','FB60760D3F8A4C8CAF1BA8D0356DB9AA','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('0BD68719915B44899A2CB7649BA66BAF','È¨ÏŞ£ºÈ¨ÏŞ-×ÊÔ´É¾³ı','','E1D898F2D5164973815919F2ACCDDD04','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('988CC28B43144C90B9007ED9CFAD1BCB','È¨ÏŞ£ºÈ¨ÏŞ-×ÊÔ´ĞŞ¸Ä','','F9D150581AC5493FBACC7E2CF24E4A92','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('7DF5B26D2EC548F1BAD6ED01BDEE6C65','È¨ÏŞ£ºÈ¨ÏŞ-×ÊÔ´²éÑ¯','','B523CC20C98B49E8964767501617EFD1','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('9C1CA99D99AC45028C32ECE83A487855','æƒé™ï¼šæƒé™-èµ„æºå¢åŠ ','','FB60760D3F8A4C8CAF1BA8D0356DB9AA','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('0BD68719915B44899A2CB7649BA66BAF','æƒé™ï¼šæƒé™-èµ„æºåˆ é™¤','','E1D898F2D5164973815919F2ACCDDD04','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('988CC28B43144C90B9007ED9CFAD1BCB','æƒé™ï¼šæƒé™-èµ„æºä¿®æ”¹','','F9D150581AC5493FBACC7E2CF24E4A92','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('7DF5B26D2EC548F1BAD6ED01BDEE6C65','æƒé™ï¼šæƒé™-èµ„æºæŸ¥è¯¢','','B523CC20C98B49E8964767501617EFD1','8C3E716E82074CC3A4764E5D9A88E621');
 
 
--- Ìâ¿â
+-- é¢˜åº“
 insert into t_resource(id,uri,uri_element) values('75809165FBCA4C7B83833ADBE7C868B7','database','add');
 insert into t_resource(id,uri,uri_element) values('A5286D57099E4858878DAA60DC461F20','database','delete');
 insert into t_resource(id,uri,uri_element) values('C5D2D6823CCE4940B8291309DBDD8C52','database','update');
 insert into t_resource(id,uri,uri_element) values('82BB4F21A30D44FA8FFE383C1988368B','database','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('9CF2C5EFD1FA4D1A8B2FB2AF6C4E88DD','Ìâ¿âÔö¼Ó','','75809165FBCA4C7B83833ADBE7C868B7','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('CAC32918C6834CF3A9E03FCADA22A325','Ìâ¿âÉ¾³ı','','A5286D57099E4858878DAA60DC461F20','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('650EE25809B94238959C5E3E30F7DC1F','Ìâ¿âĞŞ¸Ä','','C5D2D6823CCE4940B8291309DBDD8C52','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('CB3C972ABF97459CAD8A10D647C9941A','Ìâ¿â²éÑ¯','','82BB4F21A30D44FA8FFE383C1988368B','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('9CF2C5EFD1FA4D1A8B2FB2AF6C4E88DD','é¢˜åº“å¢åŠ ','','75809165FBCA4C7B83833ADBE7C868B7','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('CAC32918C6834CF3A9E03FCADA22A325','é¢˜åº“åˆ é™¤','','A5286D57099E4858878DAA60DC461F20','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('650EE25809B94238959C5E3E30F7DC1F','é¢˜åº“ä¿®æ”¹','','C5D2D6823CCE4940B8291309DBDD8C52','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('CB3C972ABF97459CAD8A10D647C9941A','é¢˜åº“æŸ¥è¯¢','','82BB4F21A30D44FA8FFE383C1988368B','8C3E716E82074CC3A4764E5D9A88E621');
 
 
--- Ìâ¿âÈÕÖ¾ÀàĞÍ
+-- é¢˜åº“æ—¥å¿—ç±»å‹
 insert into t_resource(id,uri,uri_element) values('37C61C06018D447BA62BD0F59AD99F75','databaseloggingtype','add');
 insert into t_resource(id,uri,uri_element) values('E59BA28789A440BC923CC064BDB507E3','databaseloggingtype','delete');
 insert into t_resource(id,uri,uri_element) values('CAC2D1F5DFFA44D9930EE02DFDA90D43','databaseloggingtype','update');
 insert into t_resource(id,uri,uri_element) values('BD6B9CEB104F406D9784E6F81F98F48F','databaseloggingtype','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('C0956F0C79F247F7B3EF8E1C947BEE14','Ìâ¿âÈÕÖ¾ÀàĞÍÔö¼Ó','','37C61C06018D447BA62BD0F59AD99F75','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('B76CE88C8DF845DD8CE6DC9D44A06718','Ìâ¿âÈÕÖ¾ÀàĞÍÉ¾³ı','','E59BA28789A440BC923CC064BDB507E3','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('F777C419EE4B49A6AA08FE4E7B142173','Ìâ¿âÈÕÖ¾ÀàĞÍĞŞ¸Ä','','CAC2D1F5DFFA44D9930EE02DFDA90D43','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('CD83D03B4C93496188AC1773C4B487A6','Ìâ¿âÈÕÖ¾ÀàĞÍ²éÑ¯','','BD6B9CEB104F406D9784E6F81F98F48F','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('C0956F0C79F247F7B3EF8E1C947BEE14','é¢˜åº“æ—¥å¿—ç±»å‹å¢åŠ ','','37C61C06018D447BA62BD0F59AD99F75','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('B76CE88C8DF845DD8CE6DC9D44A06718','é¢˜åº“æ—¥å¿—ç±»å‹åˆ é™¤','','E59BA28789A440BC923CC064BDB507E3','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('F777C419EE4B49A6AA08FE4E7B142173','é¢˜åº“æ—¥å¿—ç±»å‹ä¿®æ”¹','','CAC2D1F5DFFA44D9930EE02DFDA90D43','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('CD83D03B4C93496188AC1773C4B487A6','é¢˜åº“æ—¥å¿—ç±»å‹æŸ¥è¯¢','','BD6B9CEB104F406D9784E6F81F98F48F','8C3E716E82074CC3A4764E5D9A88E621');
 
--- ×÷ÒµÀàĞÍ
+-- ä½œä¸šç±»å‹
 insert into t_resource(id,uri,uri_element) values('CDC02EBA8BDB4A4FBF4294210A943419','itemkinds','add');
 insert into t_resource(id,uri,uri_element) values('006AEDE48F5D41E096DF2E075B3672D7','itemkinds','delete');
 insert into t_resource(id,uri,uri_element) values('2A19C1DD00B948D1A57D4C2EC57AFA29','itemkinds','update');
 insert into t_resource(id,uri,uri_element) values('F39ACA04EEF54D79A7595976DD562EAE','itemkinds','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('2AF39B9D203C48C0B0C74607DF990D5C','×÷ÒµÀàĞÍÔö¼Ó','','CDC02EBA8BDB4A4FBF4294210A943419','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('058ED52DD0614643B7304CACE8AB513B','×÷ÒµÀàĞÍÉ¾³ı','','006AEDE48F5D41E096DF2E075B3672D7','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('668A2068F7AF4D43B053B0256B407419','×÷ÒµÀàĞÍĞŞ¸Ä','','2A19C1DD00B948D1A57D4C2EC57AFA29','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('13D606CF88774FA88E37B615E5965F59','×÷ÒµÀàĞÍ²éÑ¯','','F39ACA04EEF54D79A7595976DD562EAE','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('2AF39B9D203C48C0B0C74607DF990D5C','ä½œä¸šç±»å‹å¢åŠ ','','CDC02EBA8BDB4A4FBF4294210A943419','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('058ED52DD0614643B7304CACE8AB513B','ä½œä¸šç±»å‹åˆ é™¤','','006AEDE48F5D41E096DF2E075B3672D7','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('668A2068F7AF4D43B053B0256B407419','ä½œä¸šç±»å‹ä¿®æ”¹','','2A19C1DD00B948D1A57D4C2EC57AFA29','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('13D606CF88774FA88E37B615E5965F59','ä½œä¸šç±»å‹æŸ¥è¯¢','','F39ACA04EEF54D79A7595976DD562EAE','8C3E716E82074CC3A4764E5D9A88E621');
 
--- ÌâÄ¿ÀàĞÍ
+-- é¢˜ç›®ç±»å‹
 insert into t_resource(id,uri,uri_element) values('C85DD694662B44799A6C43260D5A5BA8','itemtype','add');
 insert into t_resource(id,uri,uri_element) values('90263BD952CD4D1E923254F718561A1D','itemtype','delete');
 insert into t_resource(id,uri,uri_element) values('78728108A97347B2BEA6F1A8D3E197DC','itemtype','update');
 insert into t_resource(id,uri,uri_element) values('1662148028FB43718932008CF667D783','itemtype','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('BF218D4A3E98495197510B759A5887A4','ÌâÄ¿ÀàĞÍÔö¼Ó','','C85DD694662B44799A6C43260D5A5BA8','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('61FF988411C840FD8AE88D838297C83A','ÌâÄ¿ÀàĞÍÉ¾³ı','','90263BD952CD4D1E923254F718561A1D','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('6568550E0AB64108ACE9AE2F8797B0A8','ÌâÄ¿ÀàĞÍĞŞ¸Ä','','78728108A97347B2BEA6F1A8D3E197DC','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('96F25E00AB874BC197290425D76B11E5','ÌâÄ¿ÀàĞÍ²éÑ¯','','1662148028FB43718932008CF667D783','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('BF218D4A3E98495197510B759A5887A4','é¢˜ç›®ç±»å‹å¢åŠ ','','C85DD694662B44799A6C43260D5A5BA8','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('61FF988411C840FD8AE88D838297C83A','é¢˜ç›®ç±»å‹åˆ é™¤','','90263BD952CD4D1E923254F718561A1D','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('6568550E0AB64108ACE9AE2F8797B0A8','é¢˜ç›®ç±»å‹ä¿®æ”¹','','78728108A97347B2BEA6F1A8D3E197DC','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('96F25E00AB874BC197290425D76B11E5','é¢˜ç›®ç±»å‹æŸ¥è¯¢','','1662148028FB43718932008CF667D783','8C3E716E82074CC3A4764E5D9A88E621');
 
 
--- ÌâÄ¿ÄÑ¶È
+-- é¢˜ç›®éš¾åº¦
 insert into t_resource(id,uri,uri_element) values('9B93304F08A4414C98A88AE86C408946','itemdifficulty','add');
 insert into t_resource(id,uri,uri_element) values('110164D220804A3DB875995A3E3CFE54','itemdifficulty','delete');
 insert into t_resource(id,uri,uri_element) values('EE04E4F4ACA74327A5D4D79E16552541','itemdifficulty','update');
 insert into t_resource(id,uri,uri_element) values('4FAE7CCEAD394EED82729AA16184DC8E','itemdifficulty','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('E6876DA4F5E94F7AB9CE7FF27F2F76B0','ÌâÄ¿ÄÑ¶ÈÔö¼Ó','','9B93304F08A4414C98A88AE86C408946','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('F9CDCAB8C51346C8A46AB35363768805','ÌâÄ¿ÄÑ¶ÈÉ¾³ı','','110164D220804A3DB875995A3E3CFE54','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('A7D052F4E9A0464AB833A9219C822FA5','ÌâÄ¿ÄÑ¶ÈĞŞ¸Ä','','EE04E4F4ACA74327A5D4D79E16552541','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('791CFDBE7C6E41258A8B46B775DFB181','ÌâÄ¿ÄÑ¶È²éÑ¯','','4FAE7CCEAD394EED82729AA16184DC8E','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('E6876DA4F5E94F7AB9CE7FF27F2F76B0','é¢˜ç›®éš¾åº¦å¢åŠ ','','9B93304F08A4414C98A88AE86C408946','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('F9CDCAB8C51346C8A46AB35363768805','é¢˜ç›®éš¾åº¦åˆ é™¤','','110164D220804A3DB875995A3E3CFE54','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('A7D052F4E9A0464AB833A9219C822FA5','é¢˜ç›®éš¾åº¦ä¿®æ”¹','','EE04E4F4ACA74327A5D4D79E16552541','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('791CFDBE7C6E41258A8B46B775DFB181','é¢˜ç›®éš¾åº¦æŸ¥è¯¢','','4FAE7CCEAD394EED82729AA16184DC8E','8C3E716E82074CC3A4764E5D9A88E621');
 
 
--- ¿¼ÊÔÀàĞÍ
+-- è€ƒè¯•ç±»å‹
 insert into t_resource(id,uri,uri_element) values('CC0C4C9564654B608E4075B6594F0183','examinationtype','add');
 insert into t_resource(id,uri,uri_element) values('7BA411F1A2FE4FE087C4A1EE4BDC4223','examinationtype','delete');
 insert into t_resource(id,uri,uri_element) values('AB4CD717B55646A6B570890D8024F661','examinationtype','update');
 insert into t_resource(id,uri,uri_element) values('CF0E015FA38D40FC81E10C0A98431197','examinationtype','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('32473FF7848E4D1D8D118F6A60D7FCE5','¿¼ÊÔÀàĞÍÔö¼Ó','','CC0C4C9564654B608E4075B6594F0183','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('01D0B8CD9D844C9CBEB40FEC08025916','¿¼ÊÔÀàĞÍÉ¾³ı','','7BA411F1A2FE4FE087C4A1EE4BDC4223','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('4477D7FDCC2842FB9D0ECC8B3EC3D908','¿¼ÊÔÀàĞÍĞŞ¸Ä','','AB4CD717B55646A6B570890D8024F661','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('81409984EC1E47DDB916560729315E56','¿¼ÊÔÀàĞÍ²éÑ¯','','CF0E015FA38D40FC81E10C0A98431197','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('32473FF7848E4D1D8D118F6A60D7FCE5','è€ƒè¯•ç±»å‹å¢åŠ ','','CC0C4C9564654B608E4075B6594F0183','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('01D0B8CD9D844C9CBEB40FEC08025916','è€ƒè¯•ç±»å‹åˆ é™¤','','7BA411F1A2FE4FE087C4A1EE4BDC4223','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('4477D7FDCC2842FB9D0ECC8B3EC3D908','è€ƒè¯•ç±»å‹ä¿®æ”¹','','AB4CD717B55646A6B570890D8024F661','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('81409984EC1E47DDB916560729315E56','è€ƒè¯•ç±»å‹æŸ¥è¯¢','','CF0E015FA38D40FC81E10C0A98431197','8C3E716E82074CC3A4764E5D9A88E621');
 
--- ¿¼ÊÔ¹ÜÀí
+-- è€ƒè¯•ç®¡ç†
 insert into t_resource(id,uri,uri_element) values('7EBD682A824941E9965D0F76A12642BC','examination','add');
 insert into t_resource(id,uri,uri_element) values('7EBD733F6C9D41A5BE11729D19E3CEA8','examination','delete');
 insert into t_resource(id,uri,uri_element) values('CAB59E35192F4898B4E53883F54DCFF1','examination','update');
 insert into t_resource(id,uri,uri_element) values('03A07F86A272477BADC7D603F9516390','examination','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('1B6F4BF75BD44F04BE74BC58B711E645','¿¼ÊÔ¹ÜÀíÔö¼Ó','','7EBD682A824941E9965D0F76A12642BC','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('021BA89515B748E7BE8C210D983E9EE5','¿¼ÊÔ¹ÜÀíÉ¾³ı','','7EBD733F6C9D41A5BE11729D19E3CEA8','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('839CD26B1E5E4668A45CE938D3F232CB','¿¼ÊÔ¹ÜÀíĞŞ¸Ä','','CAB59E35192F4898B4E53883F54DCFF1','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('560F384FA33742DDAD565DCC86FA25C4','¿¼ÊÔ¹ÜÀí²éÑ¯','','03A07F86A272477BADC7D603F9516390','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('1B6F4BF75BD44F04BE74BC58B711E645','è€ƒè¯•ç®¡ç†å¢åŠ ','','7EBD682A824941E9965D0F76A12642BC','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('021BA89515B748E7BE8C210D983E9EE5','è€ƒè¯•ç®¡ç†åˆ é™¤','','7EBD733F6C9D41A5BE11729D19E3CEA8','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('839CD26B1E5E4668A45CE938D3F232CB','è€ƒè¯•ç®¡ç†ä¿®æ”¹','','CAB59E35192F4898B4E53883F54DCFF1','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('560F384FA33742DDAD565DCC86FA25C4','è€ƒè¯•ç®¡ç†æŸ¥è¯¢','','03A07F86A272477BADC7D603F9516390','8C3E716E82074CC3A4764E5D9A88E621');
 
--- ³É¼¨
+-- æˆç»©
 insert into t_resource(id,uri,uri_element) values('B372B4105D71495980A243BA942BF1E0','score','add');
 insert into t_resource(id,uri,uri_element) values('0B6FD434FEA142E78751B5E2E1FB600C','score','delete');
 insert into t_resource(id,uri,uri_element) values('32AB83F2FEB1464AA89C858562E61190','score','update');
 insert into t_resource(id,uri,uri_element) values('F1A4FAE724F7401381D26DBE4A462260','score','select');
 
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('5185C97E2F45411E9A655BBF52401A5F','³É¼¨Ôö¼Ó','','B372B4105D71495980A243BA942BF1E0','30424564E7BC4A8FADE7FE903B993B9A');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('2960DA408B7F4E538FB84A734A16DD6B','³É¼¨É¾³ı','','0B6FD434FEA142E78751B5E2E1FB600C','C865F986C86248F7924C5918B4198E79');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('62FCB7B3C93745178B8D9FB951AF2BB2','³É¼¨ĞŞ¸Ä','','32AB83F2FEB1464AA89C858562E61190','BED77E549718446BAF14434EF4C7F6AE');
-insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('1AD5DF6DAAEC4165A378A7E8D5E3DF49','³É¼¨²éÑ¯','','F1A4FAE724F7401381D26DBE4A462260','8C3E716E82074CC3A4764E5D9A88E621');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('5185C97E2F45411E9A655BBF52401A5F','æˆç»©å¢åŠ ','','B372B4105D71495980A243BA942BF1E0','30424564E7BC4A8FADE7FE903B993B9A');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('2960DA408B7F4E538FB84A734A16DD6B','æˆç»©åˆ é™¤','','0B6FD434FEA142E78751B5E2E1FB600C','C865F986C86248F7924C5918B4198E79');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('62FCB7B3C93745178B8D9FB951AF2BB2','æˆç»©ä¿®æ”¹','','32AB83F2FEB1464AA89C858562E61190','BED77E549718446BAF14434EF4C7F6AE');
+insert into t_permission(id,name,note,t_resource_id,t_permission_operator_id) values('1AD5DF6DAAEC4165A378A7E8D5E3DF49','æˆç»©æŸ¥è¯¢','','F1A4FAE724F7401381D26DBE4A462260','8C3E716E82074CC3A4764E5D9A88E621');
 
--- ½ÇÉ«È¨ÏŞ
--- Îª¡°ÏµÍ³¹ÜÀí¡±½ÇÉ«Ìí¼ÓÈ¨ÏŞ
+-- è§’è‰²æƒé™
+-- ä¸ºâ€œç³»ç»Ÿç®¡ç†â€è§’è‰²æ·»åŠ æƒé™
 
--- Ñ§ÔºÔö¼Ó,É¾³ı,ĞŞ¸Ä,²éÑ¯
+-- å­¦é™¢å¢åŠ ,åˆ é™¤,ä¿®æ”¹,æŸ¥è¯¢
 insert into t_role_permission(id,t_role_id,t_permission_id) values('437C8F7703A64EB9B292793CBFE4073A','BB30E55CB0A54FCDA761E9B3D9D4AA51','8F338C38D60E4A2FA4D53D2BF407180F');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('6A2FD7336DB44D738BDA5EB14D772650','BB30E55CB0A54FCDA761E9B3D9D4AA51','0F08CDB276E14EFCA7505C8A8123D6CD');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('37CA79EE2A9F4871A3511DFE9AC8ADE0','BB30E55CB0A54FCDA761E9B3D9D4AA51','B491606682DB4997AC4ACB092B66FF7B');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('9B190606E1354E56A0FD22AAB6C270E3','BB30E55CB0A54FCDA761E9B3D9D4AA51','28B267DDD60440249B3454B1D9563082');
 
--- Ïµ²¿Ôö¼Ó,É¾³ı,ĞŞ¸Ä,²éÑ¯
+-- ç³»éƒ¨å¢åŠ ,åˆ é™¤,ä¿®æ”¹,æŸ¥è¯¢
 insert into t_role_permission(id,t_role_id,t_permission_id) values('C60304661C5E4D3996EEE90E1A2C0D71','BB30E55CB0A54FCDA761E9B3D9D4AA51','D7CC033A5662449D8ACC509311403A63');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('F62EA716ECE041279AF26BB0ED62EE02','BB30E55CB0A54FCDA761E9B3D9D4AA51','B29580B0B3D14C88BB85B31A2C03F7CB');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('4FEED1B93CAD4AA9BE7ECBD0B19A9EB2','BB30E55CB0A54FCDA761E9B3D9D4AA51','9D2D07A990E5482BAA5D0F4175CF7233');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('EAECD0AA31BE445AB3EADA0996B7F3C4','BB30E55CB0A54FCDA761E9B3D9D4AA51','8F9B679CCC324EE6B58D5A5D6CC24710');
 
--- ×ÔÈ»°à
+-- è‡ªç„¶ç­
 insert into t_role_permission(id,t_role_id,t_permission_id) values('1B59B8B2488348FA8C45F6DA5F542062','BB30E55CB0A54FCDA761E9B3D9D4AA51','DA702EC09AFF4EE890BA6D522B557D22');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('DB296353CE064917B24465256DF721FB','BB30E55CB0A54FCDA761E9B3D9D4AA51','8ACE54BCBF2B4DF2AFC3B0FA42B59A4D');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('AC95F5E4A47C489E8212674D2E4EEC71','BB30E55CB0A54FCDA761E9B3D9D4AA51','ADF1F77FF70046AAB42C5C3C8C54DA83');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('C56F148FEF1542B1BEE538DDC6481B5E','BB30E55CB0A54FCDA761E9B3D9D4AA51','39E9D404C3064842A15DCC0AD16F5FDF');
 
--- ¿¼ÇÚÇ©µ½·½Ê½
+-- è€ƒå‹¤ç­¾åˆ°æ–¹å¼
 insert into t_role_permission(id,t_role_id,t_permission_id) values('10C98616293641148AC6899B59BF94AE','BB30E55CB0A54FCDA761E9B3D9D4AA51','00F23F64A8A14BEE82688A95ED088054');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('D5325BDBADFC48C194CC2A17C92F8C99','BB30E55CB0A54FCDA761E9B3D9D4AA51','1D4597E04FB5470AA0457E56B81EF737');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('F2EA24BA78694B30857160EBF35E6B84','BB30E55CB0A54FCDA761E9B3D9D4AA51','1C1C5181AE454C319879AE96E45D0219');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('8C4A0720EB634CB3A8FAFFB323D3FE82','BB30E55CB0A54FCDA761E9B3D9D4AA51','CBC3E8942548472CA3952E218F042711');
 
--- ¿¼ÇÚ×´Ì¬ 
+-- è€ƒå‹¤çŠ¶æ€ 
 insert into t_role_permission(id,t_role_id,t_permission_id) values('D794276748F4496E8F7BC75B6F88D977','BB30E55CB0A54FCDA761E9B3D9D4AA51','251804BE34914527A46213BEABAB1389');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('682AE99BAF1B447DAA3562EC9D8DA460','BB30E55CB0A54FCDA761E9B3D9D4AA51','D803089472F444CCBD2724DEB137D755');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('D1D0453591C74A14ADF2CBB066CA78FC','BB30E55CB0A54FCDA761E9B3D9D4AA51','BDD998EA7F52498499992330ADC81523');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('13CECCC9B310414EBC90B8EF3F68364C','BB30E55CB0A54FCDA761E9B3D9D4AA51','4F10A0611E4C4E62B9E7B75688B819D9');
 
--- ¿Î³ÌÀàĞÍ
+-- è¯¾ç¨‹ç±»å‹
 insert into t_role_permission(id,t_role_id,t_permission_id) values('F7A291BF36F540AABDE4B68BF3635426','BB30E55CB0A54FCDA761E9B3D9D4AA51','A581F2B6812F4A32BB8FA2A4C2D3B6E9');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('51B0B489AF0D4E83BD5A713AB11ADD72','BB30E55CB0A54FCDA761E9B3D9D4AA51','989CEF0512374B23B59D6CCF791B8F68');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('83E3D78231B4463DB7C0033B32EFB97A','BB30E55CB0A54FCDA761E9B3D9D4AA51','4F395F251DCF4E3B82384F264EA66CC2');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('B0717675E85843608E31943D6A8CFA76','BB30E55CB0A54FCDA761E9B3D9D4AA51','CFE5F914957C495885253232DCEA5B9C');
 
--- ¿Î³ÌÀà±ğ
+-- è¯¾ç¨‹ç±»åˆ«
 insert into t_role_permission(id,t_role_id,t_permission_id) values('5CA6BCEA1CAF4CD5A9D590A043F1FC54','BB30E55CB0A54FCDA761E9B3D9D4AA51','8F3FC194AAE144BA8ADBC299B237F19D');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('E727ECEDC7E447668090A41C965843CB','BB30E55CB0A54FCDA761E9B3D9D4AA51','E292F9BC6F5D4AD183C85683AFB40F74');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('57C196A3CF7F4BFFBC38B478D945158A','BB30E55CB0A54FCDA761E9B3D9D4AA51','744B6B75538C4673966D259A7B683675');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('292DF58D1D2942B1971C3059EC002D1A','BB30E55CB0A54FCDA761E9B3D9D4AA51','7D3ED706BB8C425CB5CE9680A63926DB');
 
--- ¿Î³Ì
+-- è¯¾ç¨‹
 insert into t_role_permission(id,t_role_id,t_permission_id) values('8CD0C4EF23664D5FB05EF26BE9DCCEDE','BB30E55CB0A54FCDA761E9B3D9D4AA51','009D5571939A409486B70A739B8DB3A5');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('0879DD4E80254BC793817C7694DC508B','BB30E55CB0A54FCDA761E9B3D9D4AA51','8D81BE8ADD354DC195F4BB393319820A');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('A58996336FEE4A99BC844182F2F93666','BB30E55CB0A54FCDA761E9B3D9D4AA51','6767D5743EE24AC48CA2AF5D05E3F064');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('3C15F5A936C3479BA4387923FE37F850','BB30E55CB0A54FCDA761E9B3D9D4AA51','8631695EE650462891E97EB1CFBB0F78');
 
--- ½ÌÊ¦ÊÚ¿ÎÀàĞÍ
+-- æ•™å¸ˆæˆè¯¾ç±»å‹
 insert into t_role_permission(id,t_role_id,t_permission_id) values('2CED4E22A00046F583E20BF3FBC7ADEF','BB30E55CB0A54FCDA761E9B3D9D4AA51','966387D8C7724D909D8BDF2D44A4BEC5');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('DEC60136B0B44AA1866D6B73CD3D1B98','BB30E55CB0A54FCDA761E9B3D9D4AA51','81506666760543BFA4446F487E0FD136');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('3B4DEACE0B164C35811B0C6C75E0171B','BB30E55CB0A54FCDA761E9B3D9D4AA51','CEE5C8D7E27447A8B7B11C93804F08D9');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('D258BA22D4394633AEE17E5B98114AA6','BB30E55CB0A54FCDA761E9B3D9D4AA51','4363ECC137EB4DF8B2F80D3801A2EFD3');
 
--- ½ÌÑ§°à
+-- æ•™å­¦ç­
 insert into t_role_permission(id,t_role_id,t_permission_id) values('E13B9593A4234950958A5C0357146721','BB30E55CB0A54FCDA761E9B3D9D4AA51','54E3892BBE1E4680BAC4A9EBBA889091');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('8E3A15CE46C84D69A654C079810FC34E','BB30E55CB0A54FCDA761E9B3D9D4AA51','F30F8A509C1443EFA6A320ACD6C52E87');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('7ABF050AE6A347DE8D37B26CA0A497EF','BB30E55CB0A54FCDA761E9B3D9D4AA51','A1876BED5F0242FFAC298AEABD5E0831');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('0CDA5ED4BB354F76BE96E0ABC4B032C6','BB30E55CB0A54FCDA761E9B3D9D4AA51','BFC038DBA8E74D15995FD7358FACA74F');
 
--- ½ÌÊ¦
+-- æ•™å¸ˆ
 insert into t_role_permission(id,t_role_id,t_permission_id) values('4D6CB3E19BD2487795FADD13E8C53295','BB30E55CB0A54FCDA761E9B3D9D4AA51','0DAB7F769634402FB6D3691EE873189C');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('4A71D3FD7ABE4D358B061F1AC6F7208C','BB30E55CB0A54FCDA761E9B3D9D4AA51','4BB595D9344E4294AF325F8A9BA9C77E');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('7D8BD4978FDE4B14B81F50F30F8A96ED','BB30E55CB0A54FCDA761E9B3D9D4AA51','6054E9B24D18496BB4C12E56DC35ABD4');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('8061119067C34A3D856D4D1183013E83','BB30E55CB0A54FCDA761E9B3D9D4AA51','AA472C6FD828412CBE8BAB7DBCFBC465');
 
--- Ñ§Éú
+-- å­¦ç”Ÿ
 insert into t_role_permission(id,t_role_id,t_permission_id) values('6CEC79389B4D49F6BF267D9D3E5CA4A1','BB30E55CB0A54FCDA761E9B3D9D4AA51','4975B71D33A64CF487F73E8382DAE44E');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('49101E4969A948C3AE4E4D179503D082','BB30E55CB0A54FCDA761E9B3D9D4AA51','DF94AF2D8127478D9F81B897964E3BD7');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('3BC47FF35B274DBE8720E83690167EC5','BB30E55CB0A54FCDA761E9B3D9D4AA51','DCA868C8A4D4480F9A8B4C62015045DC');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('0ACB509A7F3D4E75975B8D213DAA05E4','BB30E55CB0A54FCDA761E9B3D9D4AA51','60637E42582540C49579A1BB7136342C');
 
--- È¨ÏŞ£º×é
+-- æƒé™ï¼šç»„
 insert into t_role_permission(id,t_role_id,t_permission_id) values('AB12AAC1CF4A4A5690DBD594C7BBA2B0','BB30E55CB0A54FCDA761E9B3D9D4AA51','2A9BB0729F434C3CB4E90F6282F1BC0B');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('12B7756EB59F455E9C9D628D1047BCB8','BB30E55CB0A54FCDA761E9B3D9D4AA51','9506399272784E90B8B322052E785C77');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('17122318767F40938E7583F2B19FBE75','BB30E55CB0A54FCDA761E9B3D9D4AA51','18F5CD90B883496691078E086569679F');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('C375714DC05D466A8BBB72B662639D5C','BB30E55CB0A54FCDA761E9B3D9D4AA51','1C15DD845EC74E45952AB819899EAC25');
 
--- È¨ÏŞ£º×é-ÓÃ»§
+-- æƒé™ï¼šç»„-ç”¨æˆ·
 insert into t_role_permission(id,t_role_id,t_permission_id) values('580AF779B88F4002820EC837CB152BED','BB30E55CB0A54FCDA761E9B3D9D4AA51','A3255E529C774522934C294BA53B1EE5');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('5C325A5161F24D4A9E00328CEEA7802C','BB30E55CB0A54FCDA761E9B3D9D4AA51','00F6C8C9EA184C6EBAEC03D4D4725C82');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('22ABEEC80C164C4B868097AE3EA0E2BB','BB30E55CB0A54FCDA761E9B3D9D4AA51','1B712E79FDD34EDBAD37397B13F2879D');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('9DF92669CDD344B2A86EC7327FEFED80','BB30E55CB0A54FCDA761E9B3D9D4AA51','DE34B7FFC8B94F1E94D75E8622F0E75A');
 
--- È¨ÏŞ£º½ÇÉ«
+-- æƒé™ï¼šè§’è‰²
 insert into t_role_permission(id,t_role_id,t_permission_id) values('5168BDB06B514481B9B982DD8732EDB4','BB30E55CB0A54FCDA761E9B3D9D4AA51','892B394659A4403F9B8CAA523A8AED38');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('D32CD9883BFE4EDC91A1C4D1CEBEB2CB','BB30E55CB0A54FCDA761E9B3D9D4AA51','1B0955953A9A4CCE8F435B1F3822AADC');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('2A6E7D72C9E740278D1D7960BF650BC7','BB30E55CB0A54FCDA761E9B3D9D4AA51','2D40C9BA3662427696BF72AC52B007F6');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('4EB4F210424F499A83A0F4680A92ACA6','BB30E55CB0A54FCDA761E9B3D9D4AA51','752D9C445762407AA2AF4B8F35BCDCFE');
 
--- È¨ÏŞ£º×é-½ÇÉ«
+-- æƒé™ï¼šç»„-è§’è‰²
 insert into t_role_permission(id,t_role_id,t_permission_id) values('38322DDCDBE34BF995CE29ACAD3EF0B3','BB30E55CB0A54FCDA761E9B3D9D4AA51','FF3E3D660015464FA66000D5F1DB197A');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('EF052CAF0B0E4C118832602E85CA3539','BB30E55CB0A54FCDA761E9B3D9D4AA51','6E12ECEAB6EF4E48AA685511D9B8DA94');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('6F5047BFA74E43CAB5868EAF30E30E74','BB30E55CB0A54FCDA761E9B3D9D4AA51','13197B0D162346CDB3D80A5CF3C39038');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('98046F4DBE814CE5AC369229DCC393B1','BB30E55CB0A54FCDA761E9B3D9D4AA51','B9E2436C6C4D43D49B65E8BE9884E208');
 
--- È¨ÏŞ£º½ÇÉ«-È¨ÏŞ
+-- æƒé™ï¼šè§’è‰²-æƒé™
 insert into t_role_permission(id,t_role_id,t_permission_id) values('73986409D0A84C0C97E2486571463559','BB30E55CB0A54FCDA761E9B3D9D4AA51','FBD18B4127E44B55AFBBE69D0FCE8597');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('E18070160C724F7EB4CB1E3A9F7291E5','BB30E55CB0A54FCDA761E9B3D9D4AA51','7196B915D757468BA7AEA0E7930784AF');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('F8B6C79D38874FB981B4ECAE88FC4D91','BB30E55CB0A54FCDA761E9B3D9D4AA51','F0FC8DF438174B7B990B97EEDB75D3D2');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('3322B943AC1A4FE9B7A733705C1C2C00','BB30E55CB0A54FCDA761E9B3D9D4AA51','7CA3224309B449348C3BFF7F998A207E');
 
--- È¨ÏŞ£º×ÊÔ´
+-- æƒé™ï¼šèµ„æº
 insert into t_role_permission(id,t_role_id,t_permission_id) values('7366DD70A34D463FA9407A3ECC845D32','BB30E55CB0A54FCDA761E9B3D9D4AA51','CADF3BCFA6B44DE088EF8C014160E74D');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('D9CC3C289BBF4FCEA7BB9A3A48FB19CB','BB30E55CB0A54FCDA761E9B3D9D4AA51','5F90AEE387B7487AB0CD43B3618137C2');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('FBF5A81F24C64DECAC359E856A8BDCAB','BB30E55CB0A54FCDA761E9B3D9D4AA51','E3A656CAC7C54E24BE465DD464B7CBDD');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('54E0911920E7433FBED6B67FC03EB91F','BB30E55CB0A54FCDA761E9B3D9D4AA51','BCE59F6F65C84418AFCAA1ABA6294117');
 
--- È¨ÏŞ£º²Ù×÷
+-- æƒé™ï¼šæ“ä½œ
 insert into t_role_permission(id,t_role_id,t_permission_id) values('5B97C63F179B46378160F3DAB7A5F76B','BB30E55CB0A54FCDA761E9B3D9D4AA51','4CA7125069AC4D4D8EFDB10469298198');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('A44181FFD85F4103AFA9F589620040A1','BB30E55CB0A54FCDA761E9B3D9D4AA51','D1F053DA785C499885CD227900154B43');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('4E7BE82AC73343569AFCAE6CB825FD11','BB30E55CB0A54FCDA761E9B3D9D4AA51','60C89BB14BDD41EAB464146DF0FE1AFC');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('AD37735E8B0649DDA6B5ED00F1C94288','BB30E55CB0A54FCDA761E9B3D9D4AA51','CF6FBC25CEF84858AFBC3828063D3C1F');
 
--- È¨ÏŞ£ºÈ¨ÏŞ-×ÊÔ´
+-- æƒé™ï¼šæƒé™-èµ„æº
 insert into t_role_permission(id,t_role_id,t_permission_id) values('8BE3C7670883418699A210D4262E9F16','BB30E55CB0A54FCDA761E9B3D9D4AA51','9C1CA99D99AC45028C32ECE83A487855');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('B1D4FFDCC8F74985BD54EA7B9045E14C','BB30E55CB0A54FCDA761E9B3D9D4AA51','0BD68719915B44899A2CB7649BA66BAF');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('3E34CAF3ABFA48C190CFAA9D358A8768','BB30E55CB0A54FCDA761E9B3D9D4AA51','988CC28B43144C90B9007ED9CFAD1BCB');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('479A585482F0493FA792C12674570492','BB30E55CB0A54FCDA761E9B3D9D4AA51','7DF5B26D2EC548F1BAD6ED01BDEE6C65');
 
--- Ìâ¿â
+-- é¢˜åº“
 insert into t_role_permission(id,t_role_id,t_permission_id) values('660751F77AD84A309265CD53D311B1A5','BB30E55CB0A54FCDA761E9B3D9D4AA51','9CF2C5EFD1FA4D1A8B2FB2AF6C4E88DD');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('4C095B58DDEE4C79AD30A70E1BD04E1E','BB30E55CB0A54FCDA761E9B3D9D4AA51','CAC32918C6834CF3A9E03FCADA22A325');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('13393C0743EE4492B3F8EE94DBD943A3','BB30E55CB0A54FCDA761E9B3D9D4AA51','650EE25809B94238959C5E3E30F7DC1F');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('6A9BC56A769C4760B0EB9200E785A901','BB30E55CB0A54FCDA761E9B3D9D4AA51','CB3C972ABF97459CAD8A10D647C9941A');
 
--- Ìâ¿âÈÕÖ¾ÀàĞÍ
+-- é¢˜åº“æ—¥å¿—ç±»å‹
 insert into t_role_permission(id,t_role_id,t_permission_id) values('8512A9B7D8BA4D2AA5A64A9F05D453F4','BB30E55CB0A54FCDA761E9B3D9D4AA51','C0956F0C79F247F7B3EF8E1C947BEE14');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('B1F589AC6EE940018AB71C5B02C2B399','BB30E55CB0A54FCDA761E9B3D9D4AA51','B76CE88C8DF845DD8CE6DC9D44A06718');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('0AADD88C2699402A880860E802D52D1F','BB30E55CB0A54FCDA761E9B3D9D4AA51','F777C419EE4B49A6AA08FE4E7B142173');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('F91FEB61986541F48156065C8484660D','BB30E55CB0A54FCDA761E9B3D9D4AA51','CD83D03B4C93496188AC1773C4B487A6');
 
 
--- ×÷ÒµÀàĞÍ
+-- ä½œä¸šç±»å‹
 insert into t_role_permission(id,t_role_id,t_permission_id) values('6D8DE06CF983403AAFDC1BF3578A7679','BB30E55CB0A54FCDA761E9B3D9D4AA51','2AF39B9D203C48C0B0C74607DF990D5C');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('816894FE0DBA427394752597399C4153','BB30E55CB0A54FCDA761E9B3D9D4AA51','058ED52DD0614643B7304CACE8AB513B');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('3AFFCA19FE674FC98A749BFD214AABCB','BB30E55CB0A54FCDA761E9B3D9D4AA51','668A2068F7AF4D43B053B0256B407419');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('D45F7B4ABEC04E02ABF321E88979FCDB','BB30E55CB0A54FCDA761E9B3D9D4AA51','13D606CF88774FA88E37B615E5965F59');
 
 
--- ÌâÄ¿ÀàĞÍ
+-- é¢˜ç›®ç±»å‹
 insert into t_role_permission(id,t_role_id,t_permission_id) values('2754D03B15EA4630949AA8D2AB8489CF','BB30E55CB0A54FCDA761E9B3D9D4AA51','BF218D4A3E98495197510B759A5887A4');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('6CED1D87C6294D369E5AF4A13E68BA34','BB30E55CB0A54FCDA761E9B3D9D4AA51','61FF988411C840FD8AE88D838297C83A');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('42CF5C1A88164FE0BAB9918241612469','BB30E55CB0A54FCDA761E9B3D9D4AA51','6568550E0AB64108ACE9AE2F8797B0A8');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('38F65A119ABE4CD3B5BAD6348DFDBFCF','BB30E55CB0A54FCDA761E9B3D9D4AA51','96F25E00AB874BC197290425D76B11E5');
 
 
--- ÌâÄ¿ÄÑ¶È
+-- é¢˜ç›®éš¾åº¦
 insert into t_role_permission(id,t_role_id,t_permission_id) values('5B675DFDC1004ADBAA184EFAB51F8591','BB30E55CB0A54FCDA761E9B3D9D4AA51','E6876DA4F5E94F7AB9CE7FF27F2F76B0');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('01875C9F891546688FF49A20EB7B66BE','BB30E55CB0A54FCDA761E9B3D9D4AA51','F9CDCAB8C51346C8A46AB35363768805');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('64E4C73B5D014A44880637DE998E663D','BB30E55CB0A54FCDA761E9B3D9D4AA51','A7D052F4E9A0464AB833A9219C822FA5');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('F0E5BA7F665A45C69B87E2002614B100','BB30E55CB0A54FCDA761E9B3D9D4AA51','791CFDBE7C6E41258A8B46B775DFB181');
 
 
--- ¿¼ÊÔÀàĞÍ
+-- è€ƒè¯•ç±»å‹
 insert into t_role_permission(id,t_role_id,t_permission_id) values('BEFF1F55CC40417286D59CC4C27707FF','BB30E55CB0A54FCDA761E9B3D9D4AA51','32473FF7848E4D1D8D118F6A60D7FCE5');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('F0BCE33AA6F649E3B56E06CFF5E7FF13','BB30E55CB0A54FCDA761E9B3D9D4AA51','01D0B8CD9D844C9CBEB40FEC08025916');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('53F02539AFC84637958203F69103F891','BB30E55CB0A54FCDA761E9B3D9D4AA51','4477D7FDCC2842FB9D0ECC8B3EC3D908');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('50EBBA1FB8DA41EE9CDE53447C77F98C','BB30E55CB0A54FCDA761E9B3D9D4AA51','81409984EC1E47DDB916560729315E56');
 
--- ¿¼ÊÔ¹ÜÀí
+-- è€ƒè¯•ç®¡ç†
 insert into t_role_permission(id,t_role_id,t_permission_id) values('90ADE4C8D68E49869D368E88BAA717EB','BB30E55CB0A54FCDA761E9B3D9D4AA51','1B6F4BF75BD44F04BE74BC58B711E645');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('C0EF52341C0F4F5B9AD110BF39D5657A','BB30E55CB0A54FCDA761E9B3D9D4AA51','021BA89515B748E7BE8C210D983E9EE5');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('3E5C2DE5DE1B4E8FB1E69620629029BC','BB30E55CB0A54FCDA761E9B3D9D4AA51','839CD26B1E5E4668A45CE938D3F232CB');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('973F8831BAB64E1287DD7E0C48F711E1','BB30E55CB0A54FCDA761E9B3D9D4AA51','560F384FA33742DDAD565DCC86FA25C4');
 
--- ³É¼¨
+-- æˆç»©
 insert into t_role_permission(id,t_role_id,t_permission_id) values('7289B36C01B14BA395CEB105DDD04807','BB30E55CB0A54FCDA761E9B3D9D4AA51','5185C97E2F45411E9A655BBF52401A5F');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('B254FB3BEEDD42A5BBDBF4D1BEC39967','BB30E55CB0A54FCDA761E9B3D9D4AA51','2960DA408B7F4E538FB84A734A16DD6B');
 insert into t_role_permission(id,t_role_id,t_permission_id) values('8FA80EFADDEA40B58BCCA4924071C533','BB30E55CB0A54FCDA761E9B3D9D4AA51','62FCB7B3C93745178B8D9FB951AF2BB2');

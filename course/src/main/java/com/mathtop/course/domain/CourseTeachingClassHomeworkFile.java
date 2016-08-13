@@ -10,7 +10,7 @@ public class CourseTeachingClassHomeworkFile extends BaseDomain {
 	private static final long serialVersionUID = 237605326519036820L;
 
 	 private String id;
-	 private String t_course_teaching_class_homework_baseinfo_id;
+	 private String courseTeachingClassHomeworkBaseinfoId;
 	 private String filename;
 	 private String filepath;
 	public String getId() {
@@ -19,12 +19,7 @@ public class CourseTeachingClassHomeworkFile extends BaseDomain {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getT_course_teaching_class_homework_baseinfo_id() {
-		return t_course_teaching_class_homework_baseinfo_id;
-	}
-	public void setT_course_teaching_class_homework_baseinfo_id(String t_course_teaching_class_homework_baseinfo_id) {
-		this.t_course_teaching_class_homework_baseinfo_id = t_course_teaching_class_homework_baseinfo_id;
-	}
+	
 	public String getFilename() {
 		return filename;
 	}
@@ -36,6 +31,12 @@ public class CourseTeachingClassHomeworkFile extends BaseDomain {
 	}
 	public void setFilepath(String filepath) {
 		this.filepath = filepath;
+	}
+	public String getCourseTeachingClassHomeworkBaseinfoId() {
+		return courseTeachingClassHomeworkBaseinfoId;
+	}
+	public void setCourseTeachingClassHomeworkBaseinfoId(String courseTeachingClassHomeworkBaseinfoId) {
+		this.courseTeachingClassHomeworkBaseinfoId = courseTeachingClassHomeworkBaseinfoId;
 	}   
 	
 }

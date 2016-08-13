@@ -61,7 +61,7 @@ public class PreCourseDao extends BaseDao<PreCourse> {
 		List<PreCourse> list = new ArrayList<PreCourse>();
 
 		PreCourse pc = new PreCourse();
-		pc.setT_course_id_this(t_course_id_this);
+		pc.setCourseIdThis(t_course_id_this);
 
 		List<String> preid = new ArrayList<String>();
 		List<String> prename = new ArrayList<String>();
@@ -82,8 +82,8 @@ public class PreCourseDao extends BaseDao<PreCourse> {
 		int nPreIdSize = preid.size();
 		if (nPreIdSize > 0) {
 
-			pc.setT_course_id_pre(preid.toArray(new String[nPreIdSize]));
-			pc.setT_course_pre_name(prename.toArray(new String[nPreIdSize]));
+			pc.setCourseIdPre(preid.toArray(new String[nPreIdSize]));
+			
 
 			list.add(pc);
 		}

@@ -22,7 +22,7 @@ public class UserService {
 	 * @param user
 	 */
 	public String register(User user) throws UserExistException {
-		User u = this.getUserByUserName(user.getUser_name());
+		User u = this.getUserByUserName(user.getUserName());
 		if (u != null) {
 			throw new UserExistException("用户名已经存在");
 		} else {

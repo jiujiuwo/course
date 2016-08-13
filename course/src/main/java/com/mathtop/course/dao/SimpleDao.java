@@ -156,7 +156,7 @@ public class SimpleDao<TDomain extends Simple>  extends BaseDao<TDomain>{
 
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
-				d.setId(rs.getString("id"));	
+				d.setId(rs.getString("id"));				
 				d.setName(userName);
 				d.setNote(rs.getString("note"));
 				
@@ -164,7 +164,13 @@ public class SimpleDao<TDomain extends Simple>  extends BaseDao<TDomain>{
 			
 		});
 		
+		
+	
+		
 	//	System.out.println(user.getUser_password());
+		if(d.getId()==null)
+			return null;
+		
 		return d;
 	}
 	

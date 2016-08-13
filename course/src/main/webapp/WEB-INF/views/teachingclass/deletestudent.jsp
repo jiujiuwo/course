@@ -34,7 +34,7 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 
@@ -60,7 +60,7 @@
 
 
 			<form class="form-horizontal" style="overflow: hidden;"
-				action="<c:url value="/teachingclass/dodeletestudent-${selectedCourseTeachingClassViewData.courseteachingclass.id }-${selectedStudentViewData.student.id }-${selectedtpageNo}.html"/>"
+				action="<c:url value="/teachingclass/dodeletestudent-${selectedCourseTeachingClassViewData.courseTeachingClass.id }-${selectedStudentViewData.student.id }-${selectedtpageNo}.html"/>"
 				method="post">
 
 				<div class="form-group">
@@ -81,7 +81,7 @@
 					<label for="course_num" class="col-sm-1 control-label">学年</label>
 
 					<div class="col-md-1">
-						<p class="form-control-static">${selectedCourseTeachingClassViewData.courseteachingclass.teaching_year_begin }-${selectedCourseTeachingClassViewData.courseteachingclass.teaching_year_end }</p>
+						<p class="form-control-static">${selectedCourseTeachingClassViewData.courseTeachingClass.teaching_year_begin }-${selectedCourseTeachingClassViewData.courseteachingclass.teaching_year_end }</p>
 					</div>
 
 
@@ -90,7 +90,7 @@
 					<label for="teaching_term" class="col-sm-1 control-label">学期</label>
 
 					<div class="col-md-1">
-						<p class="form-control-static">${selectedCourseTeachingClassViewData.courseteachingclass.teaching_term }</p>
+						<p class="form-control-static">${selectedCourseTeachingClassViewData.courseTeachingClass.teaching_term }</p>
 					</div>
 
 
@@ -135,7 +135,7 @@
 											<td scope="row">${index}</td>
 
 											<td>${teacher.school.name }</td>
-											<td>${teacher.userbasicinfo.user_basic_info_name }</td>
+											<td>${teacher.userbasicinfo.userBasicInfoName }</td>
 											<td>${selectedCourseTeachingClassViewData.teachingtype[index-1].name }</td>
 
 
@@ -184,9 +184,9 @@
 						<p class="form-control-static">${selectedStudentViewData.student.student_num}</p>
 					</div>
 
-					<label for="user_basic_info_name" class="col-sm-1 control-label">姓名</label>
+					<label for="userBasicInfoName" class="col-sm-1 control-label">姓名</label>
 					<div class="col-md-3">
-						<p class="form-control-static">${selectedStudentViewData.userbasicinfo.user_basic_info_name}</p>
+						<p class="form-control-static">${selectedStudentViewData.userbasicinfo.userBasicInfoName}</p>
 					</div>
 
 					<label for="user_basic_info_sex" class="col-sm-1 control-label">性别</label>
@@ -243,14 +243,13 @@
 
 
 
+<%@ include file="../../shared/importJs.jsp"%>
+
+	<%@ include file="../../shared/sysLastInclude.jsp"%>
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
 
-
-	<%@ include file="../../shared/pageFooter.jsp"%>
-
-	<%@ include file="../../shared/importJs.jsp"%>
+	
 	<%@ include file="../../shared/importdatetimepickerjs.jsp"%>
 
 
@@ -507,18 +506,6 @@
 		});
 	</script>
 
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

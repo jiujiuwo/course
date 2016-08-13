@@ -9,8 +9,7 @@
 <c:set var="pageUrl" value="${pageUrl}" />
 <%
 	String separator = pageUrl.indexOf("?") > -1 ? "&" : "?";
-	jspContext.setAttribute("pageResult",
-			request.getAttribute(pageAttrKey));
+	jspContext.setAttribute("pageResult", request.getAttribute(pageAttrKey));
 	jspContext.setAttribute("pageUrl", pageUrl);
 	jspContext.setAttribute("separator", separator);
 %>
@@ -31,13 +30,14 @@
 							<c:if test="${pageResult.totalPageCount>=i}">
 								<c:choose>
 									<c:when test="${pageResult.currentPageNo ==i}">
-										<li class="active"><a href="#">${i} <span
+										<li class="active"><a>${i} <span
 												class="sr-only">(current)</span></a></li>
 									</c:when>
 									<c:otherwise>
 										<li><a
-											href="<c:url value="${pageUrl}"/>${separator}pageNo=${i}">${i} <span
-												class="sr-only"></span></a></li>
+											href="<c:url value="${pageUrl}"/>${separator}pageNo=${i}">${i}
+												<span class="sr-only"></span>
+										</a></li>
 									</c:otherwise>
 								</c:choose>
 							</c:if>
@@ -60,8 +60,7 @@
 
 						<c:choose>
 							<c:when test="${pageResult.currentPageNo <=1}">
-								<li class="disabled"><span
-										aria-hidden="true">首页</span></li>
+								<li class="disabled"><span aria-hidden="true">首页</span></li>
 							</c:when>
 
 							<c:otherwise>
@@ -79,10 +78,72 @@
 							</c:when>
 
 							<c:otherwise>
-								<li class="disabled"><span
-										aria-hidden="true">上一页</span></li>
+								<li class="disabled"><span aria-hidden="true">上一页</span></li>
 							</c:otherwise>
 						</c:choose>
+
+
+						<c:choose>
+							<c:when test="${pageResult.currentPageNo<=6}">
+								<c:forEach var="i" begin="1"
+									end="10" step="1">
+
+									<c:choose>
+										<c:when test="${pageResult.currentPageNo ==i}">
+											<li class="active"><a >${i} <span
+													class="sr-only">(current)</span></a></li>
+										</c:when>
+										<c:otherwise>
+											<li><a
+												href="<c:url value="${pageUrl}"/>${separator}pageNo=${i}">${i}
+													<span class="sr-only"></span>
+											</a></li>
+										</c:otherwise>
+									</c:choose>
+
+								</c:forEach>
+							</c:when>
+							<c:when test="${pageResult.totalPageCount-pageResult.currentPageNo<6}">
+								<c:forEach var="i" begin="${pageResult.totalPageCount-10}"
+									end="${pageResult.totalPageCount}" step="1">
+
+									<c:choose>
+										<c:when test="${pageResult.currentPageNo ==i}">
+											<li class="active"><a >${i} <span
+													class="sr-only">(current)</span></a></li>
+										</c:when>
+										<c:otherwise>
+											<li><a
+												href="<c:url value="${pageUrl}"/>${separator}pageNo=${i}">${i}
+													<span class="sr-only"></span>
+											</a></li>
+										</c:otherwise>
+									</c:choose>
+
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="i" begin="${pageResult.currentPageNo-4}"
+									end="${pageResult.currentPageNo+5}" step="1">
+
+									<c:choose>
+										<c:when test="${pageResult.currentPageNo ==i}">
+											<li class="active"><a >${i} <span
+													class="sr-only">(current)</span></a></li>
+										</c:when>
+										<c:otherwise>
+											<li><a
+												href="<c:url value="${pageUrl}"/>${separator}pageNo=${i}">${i}
+													<span class="sr-only"></span>
+											</a></li>
+										</c:otherwise>
+									</c:choose>
+
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+
+
 
 
 
@@ -99,16 +160,13 @@
 							</c:when>
 
 							<c:otherwise>
-								<li class="disabled"><span
-										aria-hidden="true">下一页</span></li>
+								<li class="disabled"><span aria-hidden="true">下一页</span></li>
 							</c:otherwise>
 						</c:choose>
 
 						<c:choose>
-							<c:when
-								test="${pageResult.currentPageNo >= pageResult.totalPageCount}">
-								<li class="disabled"><span
-										aria-hidden="true">末页</span></li>
+							<c:when test="${pageResult.currentPageNo >= pageResult.totalPageCount}">
+								<li class="disabled"><span aria-hidden="true">末页</span></li>
 							</c:when>
 
 							<c:otherwise>

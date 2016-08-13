@@ -22,11 +22,13 @@
 <base href="<%=basePath%>" />
 
 <%@ include file="../../shared/importCss.jsp"%>
-
-
-
-<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet"
+<%@ include file="../../shared/importJs.jsp"%>
+<link href="<c:url value='/plugins/summernote-master/dist/summernote.css'/>" rel="stylesheet"
 	type="text/css" />
+<script src="<c:url value='/plugins/summernote-master/dist/summernote.js'/>"></script>
+<script src="<c:url value='/plugins/summernote-master/lang/summernote-zh-CN.js'/>"></script>
+
+
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -35,11 +37,11 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home" onLoad="ShowErrMsg()">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 	<%@ include file="../../shared/CourseTeachingClassInfo.jsp"%>
-	<div id="DocumentPageTopSeparatorLine"></div>
+
 
 	<div class="DocumentPage">
 		<div class="DocumentPageLeftArea ">
@@ -56,7 +58,7 @@
 			<ol class="breadcrumb">
 				<li><a href="#">课程系统</a></li>
 				<li><a
-					href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseteachingclass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
+						href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseTeachingClass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
 				<li class="active">${selectedCourseHomeworkTypeData.name}</li>
 			</ol>
 
@@ -66,22 +68,20 @@
 
 			<div class="CourseContentHeaderSeparatorLine"></div>
 
-			<div class="panel-group" id="accordion" role="tablist"
-				style="margin-right: 5px;" aria-multiselectable="true">
+			<div class="panel-group" id="accordion" role="tablist" style="margin-right: 5px;"
+				aria-multiselectable="true">
 
 				<div class="panel panel-primary">
 					<div class="panel-heading" role="tab" id="headingOne">
 						<h4 class="panel-title">
-							<a role="button" data-toggle="collapse" data-parent="#accordion"
-								href="#collapseOne" aria-expanded="true"
-								aria-controls="collapseOne">
+							<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+								aria-expanded="true" aria-controls="collapseOne">
 								${selectedCourseHomeworkTypeData.name}-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.title}-具体内容
 							</a>
 						</h4>
 					</div>
-					<div id="collapseOne" class="panel-collapse collapse in"
-						style="overflow: hidden;" role="tabpanel"
-						aria-labelledby="headingOne">
+					<div id="collapseOne" class="panel-collapse collapse in" style="overflow: hidden;"
+						role="tabpanel" aria-labelledby="headingOne">
 						<div class="panel-body">
 
 
@@ -91,7 +91,30 @@
 									<div class="col-md-1 text-right">
 										<strong>内容</strong>
 									</div>
-									<div class="col-md-10">${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.content}</div>
+									<div class="col-md-10">
+									<div class="panel panel-default">
+														<div class="panel-heading">
+															<h3 class="panel-title">${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.title}</h3>
+														</div>
+														<div class="panel-body">${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.content}</div>
+													</div>
+									</div>
+								</div>
+
+								<div class="row show-grid">
+									<div class="col-md-1 text-right">
+										<strong>作业类型</strong>
+									</div>
+									<div class="col-md-10">
+										<c:choose>
+											<c:when test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.flagGroup}">
+												<i class="icon-group"></i>小组作业
+												<a href="coursegroup/studentlist-${selectedCourseTeachingClassID}.html">小组信息</a>
+												</c:when>
+											<c:otherwise>
+												<i class="icon-user"></i>个人作业</c:otherwise>
+										</c:choose>
+									</div>
 								</div>
 
 
@@ -102,13 +125,11 @@
 									<div class="col-md-10">
 										<c:choose>
 
-											<c:when
-												test="${fn:length(selectedCourseHomeworkBasicInfoViewData.homeworkFileList)==0}">
+											<c:when test="${fn:length(selectedCourseHomeworkBasicInfoViewData.homeworkFileList)==0}">
 													无
 												</c:when>
 
-											<c:when
-												test="${fn:length(selectedCourseHomeworkBasicInfoViewData.homeworkFileList)==1}">
+											<c:when test="${fn:length(selectedCourseHomeworkBasicInfoViewData.homeworkFileList)==1}">
 												<a
 													href="<c:url value="/coursehomeworkfile/download-${selectedCourseHomeworkBasicInfoViewData.homeworkFileList[0].id}.html"/>">
 													${selectedCourseHomeworkBasicInfoViewData.homeworkFileList[0].filename}</a>
@@ -118,8 +139,7 @@
 												<ul>
 													<c:forEach var="datafile"
 														items="${selectedCourseHomeworkBasicInfoViewData.homeworkFileList}">
-														<li><a
-															href="<c:url value="/coursehomeworkfile/download-${datafile.id}.html"/>">
+														<li><a href="<c:url value="/coursehomeworkfile/download-${datafile.id}.html"/>">
 																${datafile.filename}</a></li>
 													</c:forEach>
 												</ul>
@@ -157,32 +177,66 @@
 									</div>
 									<div class="col-md-10">
 										<c:choose>
-
 											<c:when
-												test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filecount==0}">
-													不需要提交文件
-												</c:when>
-											<c:when
-												test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filecount==-1}">
-													提交多个文件（数目不限制）<br>文件类型:${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filetype}<br>文件名称格式:${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filenameformat}
-												</c:when>
+												test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.fileRequirement.size==0}">
+															不需要提交文件
+														</c:when>
 
 											<c:otherwise>
-													提交${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filecount}个文件<br>文件类型:${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filetype}<br>文件名称格式:${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filenameformat}		
-												</c:otherwise>
+												<ul class="list-group">
+													<c:forEach var="dataNode"
+														items="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.fileRequirement.array}">
+
+														<li class="list-group-item">
+															<div style="margin-left:${dataNode.level*50}px;">
+
+																<c:choose>
+																	<c:when test="${dataNode.data.fileType==2}">
+																		<h4>目录</h4>
+																	</c:when>
+																	<c:otherwise>
+																		<h4>文件</h4>
+																	</c:otherwise>
+																</c:choose>
+
+
+																<c:if test="${dataNode.data.fileType!=2}">
+																	<div>
+																		<span><strong>文件类型:</strong></span>${dataNode.data.fileTypeDescription}</div>
+																	<c:choose>
+																		<c:when test="${dataNode.data.fileCount==-1}">
+																			<div>
+																				<span><strong>文件个数:</strong></span>不限制个数
+																			</div>
+																		</c:when>
+																		<c:otherwise>文件</c:otherwise>
+																	</c:choose>
+																	<div>
+																		<span><strong>文件个数:</strong></span>${dataNode.data.fileCount}</div>
+
+
+																</c:if>
+
+																<div>
+																	<span><strong>文件名称格式:</strong></span> ${dataNode.data.filenameRequirementVal}
+																</div>
+
+																<div>
+																	<button type="button" class="btn btn-default btn-xs"
+																		onclick="onGetExample('${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}','${ dataNode.data.nodeID}')">取得合法文件名示例</button>
+																	<ul class="list-group"
+																		id="examplefilenames${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}${ dataNode.data.nodeID}">
+
+																	</ul>
+																</div>
+
+															</div>
+														</li>
+
+													</c:forEach>
+												</ul>
+											</c:otherwise>
 										</c:choose>
-
-										<c:if
-											test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filecount!=0}">
-											<div class="panel panel-default" style="margin-bottom: 10px;">
-												<div class="panel-heading">合法的文件名(下面文件名均为合法文件名)</div>
-												<div class="panel-body">
-													<ul class="list-group" id="examplefilenames">
-
-													</ul>
-												</div>
-											</div>
-										</c:if>
 
 
 
@@ -218,11 +272,10 @@
 					<div class="panel-heading" role="tab" id="headingTwo">
 						<h4 class="panel-title">
 
-							<a class="collapsed" role="button" data-toggle="collapse"
-								data-parent="#accordion" href="#collapseTwo"
-								aria-expanded="false" aria-controls="collapseTwo"> <c:choose>
-									<c:when
-										test="${pagedCourseTeachingClassHomeworkSubmitBaseinfoViewData.totalCount==0}">
+							<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+								href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+								<c:choose>
+									<c:when test="${pagedCourseTeachingClassHomeworkSubmitBaseinfoViewData.totalCount==0}">
 															作业尚未提交
 														</c:when>
 
@@ -238,29 +291,24 @@
 
 						</h4>
 					</div>
-					<div id="collapseTwo" class="panel-collapse collapse in"
-						style="overflow: hidden;" role="tabpanel"
-						aria-labelledby="headingTwo">
+					<div id="collapseTwo" class="panel-collapse collapse in" style="overflow: hidden;"
+						role="tabpanel" aria-labelledby="headingTwo">
 						<div class="panel-body">
 
-							<c:if
-								test="${pagedCourseTeachingClassHomeworkSubmitBaseinfoViewData.totalCount==0}">
+							<c:if test="${pagedCourseTeachingClassHomeworkSubmitBaseinfoViewData.totalCount==0}">
 
 								<c:choose>
 									<c:when
 										test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.canStudentSubmit }">
-										<button type="button" class="btn btn-default btn-sm"
-											style="margin: 10px;" data-toggle="modal"
-											data-target="#addModal">提交作业</button>
+										<button type="button" class="btn btn-default btn-sm" style="margin: 10px;"
+											onclick="onHomeworkSubmit()">提交作业</button>
 									</c:when>
-									
-									<c:when
-										test="${selectedCourseHomeworkBasicInfoViewData.canStudentSubmit }">
-										<button type="button" class="btn btn-default btn-sm"
-											style="margin: 10px;" data-toggle="modal"
-											data-target="#addModal">提交迟交作业</button>
+
+									<c:when test="${selectedCourseHomeworkBasicInfoViewData.canStudentSubmit }">
+										<button type="button" class="btn btn-default btn-sm" style="margin: 10px;"
+											data-toggle="modal" data-target="#addModal">提交迟交作业</button>
 									</c:when>
-									
+
 									<c:otherwise>
 										<p class="text-danger">作业已经过期，不能提交。</p>
 									</c:otherwise>
@@ -268,8 +316,7 @@
 
 
 							</c:if>
-							<c:if
-								test="${pagedCourseTeachingClassHomeworkSubmitBaseinfoViewData.totalCount>0}">
+							<c:if test="${pagedCourseTeachingClassHomeworkSubmitBaseinfoViewData.totalCount>0}">
 
 								<div class="Course-Table">
 
@@ -277,8 +324,8 @@
 										<div class="gridseparator"></div>
 										<div class="row show-grid">
 
-											<div class="col-md-2">
-												<strong>标题</strong>
+											<div class="col-md-4">
+												<strong>标题与内容</strong>
 											</div>
 
 											<div class="col-md-2">
@@ -308,17 +355,23 @@
 
 
 
-												<div class="col-md-2">
-													<strong>${data.homeworksubmitbaseinfo.title}</strong>
-													<p>${data.homeworksubmitbaseinfo.content}</p>
+												<div class="col-md-4">
+												
+													
+													<div class="panel panel-default">
+														<div class="panel-heading">
+															<h3 class="panel-title">${data.homeworksubmitbaseinfo.title}</h3>
+														</div>
+														<div class="panel-body">${data.homeworksubmitbaseinfo.content}</div>
+													</div>
+													
 												</div>
 
 												<div class="col-md-2">
 
 													<c:choose>
 
-														<c:when
-															test="${fn:length(data.homeworksubmitFileList)==1}">
+														<c:when test="${fn:length(data.homeworksubmitFileList)==1}">
 															<a
 																href="<c:url value="/coursehomeworksubmitfile/download-${data.homeworksubmitFileList[0].id}.html"/>">
 																${data.homeworksubmitFileList[0].filename}</a>
@@ -326,10 +379,9 @@
 
 														<c:otherwise>
 															<ul>
-																<c:forEach var="datafile"
-																	items="${data.homeworksubmitFileList}">
+																<c:forEach var="datafile" items="${data.homeworksubmitFileList}">
 																	<li><a
-																		href="<c:url value="/coursehomeworksubmitfile/download-${datafile.id}.html"/>">
+																			href="<c:url value="/coursehomeworksubmitfile/download-${datafile.id}.html"/>">
 																			${datafile.filename}</a></li>
 																</c:forEach>
 															</ul>
@@ -341,14 +393,12 @@
 												</div>
 
 												<div class="col-md-2">
-													<fmt:formatDate
-														value="${data.homeworksubmitbaseinfo.submitdate}"
+													<fmt:formatDate value="${data.homeworksubmitbaseinfo.submitdate}"
 														pattern="yyyy-MM-dd HH:mm" />
 												</div>
 
 												<div class="col-md-2">
-													<fmt:formatDate
-														value="${data.homeworksubmitbaseinfo.modifieddate}"
+													<fmt:formatDate value="${data.homeworksubmitbaseinfo.modifieddate}"
 														pattern="yyyy-MM-dd HH:mm" />
 												</div>
 
@@ -357,10 +407,9 @@
 
 												<div class="col-md-2">
 
-													<c:if
-														test="${data.homeworkbaseinfoViewData.homeworkbaseinfo.canStudentSubmit==true }">
+													<c:if test="${data.homeworkbaseinfoViewData.homeworkbaseinfo.canStudentSubmit==true }">
 														<button type="button" class="btn btn-default btn-xs"
-															onclick="onUpdate('${data.homeworksubmitbaseinfo.id}','${data.homeworksubmitbaseinfo.title}','${data.homeworksubmitbaseinfo.content}')">修改...</button>
+															onclick="onUpdate('${data.homeworksubmitbaseinfo.id}','${data.homeworksubmitbaseinfo.title}')">修改...</button>
 														<button type="button" class="btn btn-default btn-xs"
 															onclick="onDelete('${data.homeworksubmitbaseinfo.id}')">删除</button>
 													</c:if>
@@ -369,8 +418,7 @@
 											<c:set var="index" value="${index + 1}"></c:set>
 										</c:forEach>
 
-										<c:if
-											test="${pagedCourseTeachingClassHomeworkSubmitBaseinfoViewData.totalCount>0}">
+										<c:if test="${pagedCourseTeachingClassHomeworkSubmitBaseinfoViewData.totalCount>0}">
 											<div class="gridseparator"></div>
 										</c:if>
 
@@ -408,9 +456,9 @@
 					<div class="panel-heading" role="tab" id="headingReply">
 						<h4 class="panel-title">
 
-							<a class="collapsed" role="button" data-toggle="collapse"
-								data-parent="#accordion" href="#collapseReply"
-								aria-expanded="false" aria-controls="collapseReply"> <c:choose>
+							<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+								href="#collapseReply" aria-expanded="false" aria-controls="collapseReply">
+								<c:choose>
 									<c:when
 										test="${pagedCourseTeachingClassHomeworkReplyBaseinfoViewData==null or pagedCourseTeachingClassHomeworkReplyBaseinfoViewData.totalCount==0}">
 															作业尚未批复
@@ -428,13 +476,12 @@
 
 						</h4>
 					</div>
-					<div id="collapseReply" class="panel-collapse collapse in"
-						role="tabpanel" aria-labelledby="headingReply">
+					<div id="collapseReply" class="panel-collapse collapse in" role="tabpanel"
+						aria-labelledby="headingReply">
 						<div class="panel-body">
 
 
-							<c:if
-								test="${pagedCourseTeachingClassHomeworkReplyBaseinfoViewData.totalCount>0}">
+							<c:if test="${pagedCourseTeachingClassHomeworkReplyBaseinfoViewData.totalCount>0}">
 
 								<div class="Course-Table">
 
@@ -490,7 +537,7 @@
 															<ul>
 																<c:forEach var="datafile" items="${data.repplyFileList}">
 																	<li><a
-																		href="<c:url value="/coursehomeworkreplyfile/download-${datafile.id}.html"/>">
+																			href="<c:url value="/coursehomeworkreplyfile/download-${datafile.id}.html"/>">
 																			${datafile.filename}</a></li>
 																</c:forEach>
 															</ul>
@@ -502,13 +549,11 @@
 												</div>
 
 												<div class="col-md-2">
-													<fmt:formatDate value="${data.reply.submitdate}"
-														pattern="yyyy-MM-dd HH:mm" />
+													<fmt:formatDate value="${data.reply.submitdate}" pattern="yyyy-MM-dd HH:mm" />
 												</div>
 
 												<div class="col-md-2">
-													<fmt:formatDate value="${data.reply.modifieddate}"
-														pattern="yyyy-MM-dd HH:mm" />
+													<fmt:formatDate value="${data.reply.modifieddate}" pattern="yyyy-MM-dd HH:mm" />
 												</div>
 
 
@@ -517,8 +562,7 @@
 											<c:set var="index" value="${index + 1}"></c:set>
 										</c:forEach>
 
-										<c:if
-											test="${pagedCourseTeachingClassHomeworkReplyBaseinfoViewData.totalCount>0}">
+										<c:if test="${pagedCourseTeachingClassHomeworkReplyBaseinfoViewData.totalCount>0}">
 											<div class="gridseparator"></div>
 										</c:if>
 
@@ -552,13 +596,12 @@
 
 
 	<!-- 添加对话框 -->
-	<div class="modal fade" id="addModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="myModalLabel">
@@ -569,27 +612,28 @@
 
 
 
-				<form class="form-horizontal "
+				<form class="form-horizontal " id="myform"
 					action="<c:url value="/coursehomeworksubmit/add-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}.html"/>"
 					enctype="multipart/form-data" method="post">
 
-					<div class="modal-body"
-						style="margin-left: 10px; margin-right: 10px;">
+					<div class="modal-body" style="margin-left: 10px; margin-right: 10px;">
+					<input type="hidden" id="filesProperty" name="filesProperty" value="">
+					<input type="hidden" id="filesProperty" name="filesProperty" value="">
+					
 
 						<div class="form-group">
 							<label for="name" class=" control-label">标题</label>
 							<c:choose>
 								<c:when test="${sessionScope.USER_CONTEXT.student!=null}">
-									<c:if
-										test="${sessionScope.USER_CONTEXT.userbasicinfo.user_basic_info_name!=null}">
-										<input type="text" id="name" class="form-control" name="title"
-											value="${sessionScope.USER_CONTEXT.userbasicinfo.user_basic_info_name}(${sessionScope.USER_CONTEXT.user.user_name})-${selectedCourseHomeworkTypeData.name}-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.title}"
+									<c:if test="${sessionScope.USER_CONTEXT.userbasicinfo.userBasicInfoName!=null}">
+										<input type="text" id="title" class="form-control" name="title"
+											value="${sessionScope.USER_CONTEXT.userbasicinfo.userBasicInfoName}(${sessionScope.USER_CONTEXT.user.userName})-${selectedCourseHomeworkTypeData.name}-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.title}"
 											placeholder="标题" required />
 
 									</c:if>
 								</c:when>
 								<c:otherwise>
-									<input type="text" id="name" class="form-control" name="title"
+									<input type="text" id="title" class="form-control" name="title"
 										value="${selectedCourseHomeworkTypeData.name}-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.title}"
 										placeholder="标题" required />
 								</c:otherwise>
@@ -600,25 +644,105 @@
 
 						<div class="form-group">
 							<label for="note" class=" control-label">内容</label>
-							<textarea class="form-control" rows="5" name="content"></textarea>
+							<div class="summernote" id="addcontentDiv"></div>
+						<textarea class="form-control" rows="5" name="content" id="addcontentTextArea"
+							style="display: none;"></textarea>
 						</div>
 
 						<%
 							//是否需要文件提交
 						%>
 						<c:if
-							test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filecount!=0}">
+							test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.fileRequirement.size!=0}">
 
 							<div class="form-group">
 
 								<label for="exampleInputFile" class=" control-label">附件</label>
-								<p class="help-block">注意文件类型。</p>
-								<input type="file"
-									<c:if
-							test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filecount!=1}">
+
+
+								<c:choose>
+									<c:when
+										test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.fileRequirement.size==0}">
+															不需要提交文件
+														</c:when>
+
+									<c:otherwise>
+										<ul class="list-group">
+											<c:forEach var="dataNode"
+												items="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.fileRequirement.array}">
+
+												<li class="list-group-item">
+													<div style="margin-left:${dataNode.level*50}px;">
+
+														<c:choose>
+															<c:when test="${dataNode.data.fileType==2}">
+																<h4>目录</h4>
+															</c:when>
+															<c:otherwise>
+																<h4>文件</h4>
+															</c:otherwise>
+														</c:choose>
+
+
+														<c:if test="${dataNode.data.fileType!=2}">
+															<div>
+																<span><strong>文件类型:</strong></span>${dataNode.data.fileTypeDescription}</div>
+															<c:choose>
+																<c:when test="${dataNode.data.fileCount==-1}">
+																	<div>
+																		<span><strong>文件个数:</strong></span>不限制个数
+																	</div>
+																</c:when>
+																<c:otherwise>文件</c:otherwise>
+															</c:choose>
+															<div>
+																<span><strong>文件个数:</strong></span>${dataNode.data.fileCount}</div>
+
+
+														</c:if>
+
+														<div>
+															<span><strong>文件名称格式:</strong></span> ${dataNode.data.filenameRequirementVal}
+															<button type="button" class="btn btn-default btn-xs"
+																onclick="onDlgGetExample('${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}','${ dataNode.data.nodeID}')">取得合法文件名示例</button>
+														</div>
+
+														<div>
+
+															<ul class="list-group"
+																id="dlgexamplefilenames${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}${ dataNode.data.nodeID}">
+
+															</ul>
+														</div>
+
+														<div>
+														<label class="btn btn-default btn-xs">上传文件...
+															<input class="myfilecontainercls" type="file" style="position:absolute;clip:rect(0 0 0 0);" onChange="insertTitle(this,'${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}','${ dataNode.data.nodeID}');"
+																<c:if
+							test="${dataNode.data.fileCount>1}">
 								 multiple="multiple"
 								  </c:if>
-									id="exampleInputFile" name="file" />
+																id="exampleInputFile${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}${ dataNode.data.nodeID}" name="file" /></label>
+																
+																<div class="list-group myfilecontainercls"
+																id="dlguploadfilenames${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}${ dataNode.data.nodeID}">
+
+															</div>
+														</div>
+
+													</div>
+													<hr>
+												</li>
+
+											</c:forEach>
+										</ul>
+									</c:otherwise>
+								</c:choose>
+
+
+
+								<p class="help-block">注意文件类型。</p>
+
 
 							</div>
 						</c:if>
@@ -637,83 +761,9 @@
 	</div>
 
 
-	<!-- 修改对话框 -->
-	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">修改${selectedCourseHomeworkTypeData.name}</h4>
-				</div>
 
-
-
-				<form class="form-horizontal" id="myUpdateForm" name="myUpdateForm"
-					enctype="multipart/form-data" method="post">
-
-					<div class="modal-body"
-						style="margin-left: 10px; margin-right: 10px;">
-
-						<div class="form-group">
-							<label for="name" class=" control-label">标题</label> <input
-								type="text" id="inputtitle" class="form-control"
-								name="updatetitle" value="" placeholder="标题" required>
-						</div>
-
-
-						<div class="form-group">
-							<label for="note" class=" control-label">内容</label>
-							<textarea class="form-control" id="inputcontent" rows="5"
-								name="updatecontent"></textarea>
-						</div>
-
-
-
-
-						<%
-							//是否需要文件提交
-						%>
-						<c:if
-							test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filecount!=0}">
-
-							<div class="form-group">
-
-								<label for="exampleInputFile" class=" control-label">附件</label>
-								<p class="help-block">注意文件类型。</p>
-								<input type="file"
-									<c:if
-							test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.filecount!=1}">
-								 multiple="multiple"
-								  </c:if>
-									id="exampleInputFile" name="file" />
-
-							</div>
-						</c:if>
-
-
-					</div>
-
-					<div class="modal-footer">
-						<button type="submit" id="updatebtn" class="btn btn-primary">修改</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					</div>
-				</form>
-
-			</div>
-		</div>
-	</div>
-
-
-	<%@ include file="../../shared/dialog.jsp"%>
-
-	<%@ include file="../../shared/pageFooter.jsp"%>
-
-	<%@ include file="../../shared/importJs.jsp"%>
-
+	
+	<%@ include file="../../shared/sysLastInclude.jsp"%>
 
 
 	<script type="text/javascript">
@@ -722,28 +772,77 @@
 				"active");
 	</script>
 
-	<script type="text/javascript">
-		$(function() {
-			ongetexample("${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}");
-		});
-	</script>
+	<script>
+	
+
+	$('.summernote').summernote({
+		height : 300, // set editor height
+		lang : 'zh-CN' // default: 'en-US'
+	//  minHeight: null,             // set minimum height of editor
+	//  maxHeight: null,             // set maximum height of editor
+
+	//  focus: true,                 // set focus to editable area after initializing summernote
+	});
+</script>
 
 
 	<script>
-		function ongetexample(t_homework_baseinfo_id) {
+	
+		var NodePropertyArray = [];
+		
+		/**
+		添加节点
+		 */
+		function addNode(obj) {
+			NodePropertyArray.push(obj);
+		}
+
+		function deleteNode(nodeID) {
+			for (var i = 0; i < NodePropertyArray.length; i++) {
+				if (NodePropertyArray[i].nodeID == nodeID) {
+					NodePropertyArray.splice(i);
+					return;
+				}
+			}
+		}
+	
+		//取得合法文件名称示例
+		function onGetExample(t_homework_baseinfo_id, nodeID) {
 
 			var url = "<c:url value='/coursehomework/getRightExampleFileName-'/>"
-					+ t_homework_baseinfo_id + ".json";
+					+ t_homework_baseinfo_id + "-" + nodeID + ".json";
 
-			$("#examplefilenames").empty();
+			$("#examplefilenames" + t_homework_baseinfo_id+nodeID).empty();
 
 			$.get(url, function(data, status) {
 				if (status == "success") {
 
 					for (var i = 0; i < data.length; i++) {
-						$("#examplefilenames").append(
+						$("#examplefilenames" + t_homework_baseinfo_id+nodeID).append(
 								"<li  class='list-group-item'>" + data[i]
 										+ "</li>");
+					}
+				}
+			});
+
+		}
+
+		//取得合法文件名称示例
+		function onDlgGetExample(t_homework_baseinfo_id, nodeID) {
+
+			var url = "<c:url value='/coursehomework/getRightExampleFileName-'/>"
+					+ t_homework_baseinfo_id + "-" + nodeID + ".json";
+
+			$("#dlgexamplefilenames" + t_homework_baseinfo_id+nodeID).empty();
+
+			$.get(url, function(data, status) {
+				if (status == "success") {
+
+					for (var i = 0; i < data.length; i++) {
+						$("#dlgexamplefilenames" + t_homework_baseinfo_id+nodeID)
+								.append(
+										"<li  class='list-group-item'>"
+												+ data[i] + "</li>");
 					}
 				}
 			});
@@ -774,37 +873,114 @@
 
 		}
 
-		function onUpdate(id, title, content) {
-			var url = "<c:url value="/coursehomeworksubmit/update-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-"/>"
-			+ id + ".html";
+		function onUpdate(id, title) {
 			
+			var url = "<c:url value='/coursehomeworksubmit/getHomeworkById-"+id+".json'/>";
+			$.get(url, function(data, status) {
+				if (status == "success") {
+
+					NodePropertyArray.length=0;//清空数组
+					$('#addModal').find('.modal-body #filesProperty').val("");
+					$('#addModal').find('.modal-body input .myfilecontainercls')
+					$('#addModal').find('.modal-body input .myfilecontainercls').each(function(){
+						$(this).val("");
+					});
+					$('#addModal').find('.modal-body .myfilecontainercls').each(function(){
+						$(this).empty();
+					});
+					
+				
+					
+				
+					var url = "<c:url value="/coursehomeworksubmit/update-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-"/>"
+							+ id + ".html";
+
+					
+					$('#addModal').find('.modal-body input[name="title"]').val(title);
+					
+					
+					var sHTML = $('.summernote').summernote('code',data.content);			
+					
+					
+
+					$('#addModal').find("#myform").attr("action", url);
+					$('#addModal').find(".modal-footer :submit").text("修改");
+
+					$('#addModal').modal('show');
+
+				}
+			});
 		
-			$('#updateModal').find('.modal-body #inputid').val(id);
-			$('#updateModal').find('.modal-body #inputtitle').val(title);
-			$('#updateModal').find('.modal-body #inputcontent').val(content);
-
-			$("#myUpdateForm").attr("action", url);
-
-			$('#updateModal').modal('show');
+			
+			
 
 		}
+		
+		function onAdd(){
+			
+			var sHTML = $('.summernote').summernote('code');			
+			$('#addModal').find('.modal-body #addcontentTextArea').text(sHTML);
+
+			
+		
+			$('#addModal').find('.modal-body div .myfilecontainercls input[name="nodeID"]').each(
+					function (){
+						var s=$(this).val();
+						var words = s.split(';')
+						var obj = {
+								"nodeID" : words[0],
+								"filesCount" : words[1]					
+							};
+						deleteNode(words[0]);
+						addNode(obj);
+					}
+					);
+			
+			
+			
+			
+			$('#addModal').find('.modal-body #filesProperty').val(JSON.stringify(NodePropertyArray));
+			
+			
+		}
+		
+		function onHomeworkSubmit(){
+			NodePropertyArray.length=0;//清空数组
+			$('#addModal').find('.modal-body #filesProperty').val("");
+			$('#addModal').find('.modal-body input .myfilecontainercls')
+			$('#addModal').find('.modal-body input .myfilecontainercls').each(function(){
+				$(this).val("");
+			});
+			$('#addModal').find('.modal-body .myfilecontainercls').each(function(){
+				$(this).empty();
+			});
+			
+			var url = "<c:url value='/coursehomeworksubmit/add-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}.html'/>";
+			
+			$('#addModal').find(".modal-footer :submit").text("添加");
+			$('#addModal').modal('show');
+		}
+		
+		function insertTitle(e,homeworkbaseinfoid,nodeID){
+			var files=document.getElementById("exampleInputFile"+ homeworkbaseinfoid+nodeID).files
+			var filesCount=files.length;
+
+			
+				
+			$("#dlguploadfilenames" + homeworkbaseinfoid+nodeID).empty();
+			for(var i=0;i<filesCount;i++){
+				var tValue=files[i].name;				
+			  
+				   $("#dlguploadfilenames" + homeworkbaseinfoid+nodeID).append(
+							"<a  class='list-group-item'>" +"[" +i+"]"+tValue
+							+"<input type='hidden' name='nodeID' value='"+nodeID+";"+filesCount+"'>"							
+									+ "</a>");
+			    
+			}
+			}
 	</script>
 
 
-
-
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("错误", "${errorMsg}");
-
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

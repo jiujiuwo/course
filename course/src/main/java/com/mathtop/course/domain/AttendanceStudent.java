@@ -10,47 +10,47 @@ public class AttendanceStudent extends BaseDomain{
 	private static final long serialVersionUID = -7550500876608079344L;
 
 	private String id;
-	private String t_attendance_id;
-	private String t_student_id;
-	private String t_attendance_state_id;
+	private String attendanceId;
+	private String studentId;
+	private String attendanceStateId;
 	
-	private String t_attendance_mode_id;
-	private Date checking_in_datetime;
+	private String attendanceModeId;
+	private Date checkingInDatetime;
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getT_attendance_id() {
-		return t_attendance_id;
+	public String getAttendanceId() {
+		return attendanceId;
 	}
-	public void setT_attendance_id(String t_attendance_id) {
-		this.t_attendance_id = t_attendance_id;
+	public void setAttendanceId(String attendanceId) {
+		this.attendanceId = attendanceId;
 	}
-	public String getT_student_id() {
-		return t_student_id;
+	public String getStudentId() {
+		return studentId;
 	}
-	public void setT_student_id(String t_student_id) {
-		this.t_student_id = t_student_id;
+	public void setStudentId(String studentId) {
+		this.studentId = studentId;
 	}
-	public String getT_attendance_state_id() {
-		return t_attendance_state_id;
+	public String getAttendanceStateId() {
+		return attendanceStateId;
 	}
-	public void setT_attendance_state_id(String t_attendance_state_id) {
-		this.t_attendance_state_id = t_attendance_state_id;
+	public void setAttendanceStateId(String attendanceStateId) {
+		this.attendanceStateId = attendanceStateId;
 	}
-	
-	public Date getChecking_in_datetime() {
-		return checking_in_datetime;
+	public String getAttendanceModeId() {
+		return attendanceModeId;
 	}
-	public void setChecking_in_datetime(Date checking_in_datetime) {
-		this.checking_in_datetime = checking_in_datetime;
+	public void setAttendanceModeId(String attendanceModeId) {
+		this.attendanceModeId = attendanceModeId;
 	}
-	public String getT_attendance_mode_id() {
-		return t_attendance_mode_id;
+	public Date getCheckingInDatetime() {
+		return checkingInDatetime;
 	}
-	public void setT_attendance_mode_id(String t_attendance_mode_id) {
-		this.t_attendance_mode_id = t_attendance_mode_id;
+	public void setCheckingInDatetime(Date checkingInDatetime) {
+		this.checkingInDatetime = checkingInDatetime;
 	}
+
 }

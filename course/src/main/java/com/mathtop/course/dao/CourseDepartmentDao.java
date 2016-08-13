@@ -102,8 +102,8 @@ public class CourseDepartmentDao extends BaseDao<CourseDepartment> {
 			public void processRow(ResultSet rs) throws SQLException {
 
 				cd.setId(id);
-				cd.setT_course_id(rs.getString("t_course_id"));
-				cd.setT_department_id(rs.getString("t_department_id"));
+				cd.setCourseId(rs.getString("t_course_id"));
+				cd.setDepartmentId(rs.getString("t_department_id"));
 			}
 
 		});
@@ -119,10 +119,10 @@ public class CourseDepartmentDao extends BaseDao<CourseDepartment> {
 		CourseDepartment cd=getById(id);
 		cdvd.setCourseDepartment(cd);
 		
-		Course course=courseDao.getCourseById(cd.getT_course_id());
+		Course course=courseDao.getCourseById(cd.getCourseId());
 		cdvd.setCourse(course);
 		
-		Department department=departmentDao.getByID(cd.getT_department_id());
+		Department department=departmentDao.getByID(cd.getDepartmentId());
 		cdvd.setDepartment(department);
 		
 		return cdvd;

@@ -35,7 +35,7 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 	
@@ -54,7 +54,7 @@
 
 
 			<div class="CourseContentHeader">
-				<span class="text-info"><strong>${pagedTeachingClassViewData.result[0].teachingclass.name}</strong></span>教学班教师管理
+				<span class="text-info"><strong>${pagedTeachingClassViewData.result[0].courseTeachingClass.name}</strong></span>教学班教师管理
 			</div>
 			<p class="text-muted">
 				<strong>课程名称：</strong>${pagedTeachingClassViewData.result[0].course.name}</p>
@@ -65,13 +65,13 @@
 				<c:forEach var="t"
 					items="${pagedTeachingClassViewData.result[0].teacher}"
 					varStatus="status">
-							${t.userbasicinfo.user_basic_info_name}(${pagedTeachingClassViewData.result[0].teachingtype[status.index].name})
+							${t.userbasicinfo.userBasicInfoName}(${pagedTeachingClassViewData.result[0].teachingtype[status.index].name})
 							</c:forEach>
 
 			</p>
 
 			<p class="text-muted">
-				<strong>授课学期：</strong>${pagedTeachingClassViewData.result[0].courseteachingclass.teaching_year_begin}-${pagedTeachingClassViewData.result[0].courseteachingclass.teaching_year_end}学年第${pagedTeachingClassViewData.result[0].courseteachingclass.teaching_term}学期</p>
+				<strong>授课学期：</strong>${pagedTeachingClassViewData.result[0].term.teachingYearBegin}-${pagedTeachingClassViewData.result[0].term.teachingYearEnd}学年第${pagedTeachingClassViewData.result[0].term.teachingTerm}学期</p>
 			<div class="CourseContentHeaderSeparatorLine"></div>
 
 
@@ -160,7 +160,7 @@
 
 
 
-					<form class="form-horizontal" style="overflow: hidden;"
+					<form class="form-horizontal" style="overflow: hidden;" 
 						action="<c:url value="/teachingclass/addteacher2teachingclass.html"/>"
 						method="post">
 
@@ -171,7 +171,7 @@
 
 							<input id='selectedTeachingClassID'
 								name='selectedTeachingClassID'
-								value='${pagedTeachingClassViewData.result[0].courseteachingclass.id}' type='hidden' />
+								value='${pagedTeachingClassViewData.result[0].courseTeachingClass.id}' type='hidden' />
 
 
 
@@ -206,7 +206,7 @@
 													<!-- 授课教师 -->
 													<td><input id='teacherid' name='teacherid'
 														value='${dataitem.teacher.id}' type='hidden' />
-														${dataitem.userbasicinfo.user_basic_info_name}(${dataitem.teacher.teacher_num},${dataitem.department.name})</td>
+														${dataitem.userbasicinfo.userBasicInfoName}(${dataitem.teacher.teacherNum},${dataitem.department.name})</td>
 
 													<td><input id='teachingtypeid' name='teachingtypeid'
 														value='${pagedTeachingClassViewData.result[0].teachingtype[status.index].id}'
@@ -242,7 +242,7 @@
 						</div>
 
 						<div class="modal-footer">
-							<button type="submit" class="btn btn-primary">添加</button>
+							<button type="submit" class="btn btn-primary">确定</button>
 							<button type="button" class="btn btn-default"
 								onclick="window.history.back()">取消</button>
 						</div>
@@ -369,13 +369,10 @@
 		</div>
 	</div>
 
+<%@ include file="../../shared/importJs.jsp"%>
+	<%@ include file="../../shared/sysLastInclude.jsp"%>
 
-	<%@ include file="../../shared/dialog.jsp"%>
-
-
-	<%@ include file="../../shared/pageFooter.jsp"%>
-
-	<%@ include file="../../shared/importJs.jsp"%>
+	
 	<%@ include file="../../shared/importdatetimepickerjs.jsp"%>
 
 
@@ -389,15 +386,19 @@
 			if (status == "success") {
 				for (var i = 0; i < data.length; i++) {
 					$("#teacherSelectControlAdd").append(
-							"<option value='"+data[i].id+"'>"
-									+ data[i].teachername + "("
-									+ data[i].teachernum + ","
-									+ data[i].deptname + ")</option>");
+							"<option value='"+data[i].teacher.id+"'>"
+							+ data[i].userbasicinfo.userBasicInfoName
+							 +"(" + data[i].teacher.teacherNum
+							+ "," + data[i].department.name
+							 + ")</option>");
 				}
 			}
 		});
 	</script>
 	<script>
+	
+	    
+	    
 		function AddTeacherRow() {
 
 			var schoolctl = document.getElementById("SchoolSelectControlAdd");
@@ -479,12 +480,13 @@
 						var departmentjson;
 						$("#teacherSelectControlAdd").empty();
 						$.get(url, function(data, status) {
+							
 							if (status == "success") {
 								for (var i = 0; i < data.length; i++) {
 									$("#teacherSelectControlAdd").append(
 											"<option value='"+data[i].teacher.id+"'>"
-											+ data[i].userbasicinfo.user_basic_info_name
-											 +"(" + data[i].teacher.teacher_num
+											+ data[i].userbasicinfo.userBasicInfoName
+											 +"(" + data[i].teacher.teacherNum
 											+ "," + data[i].department.name
 											 +")</option>");
 								}
@@ -497,18 +499,6 @@
 	</script>
 
 
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

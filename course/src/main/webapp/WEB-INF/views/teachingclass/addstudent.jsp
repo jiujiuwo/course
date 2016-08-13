@@ -34,7 +34,7 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 	
@@ -53,24 +53,24 @@
 
 
 			<div class="CourseContentHeader">
-				<span class="text-info"><strong>${pagedTeachingClassViewData.result[0].teachingclass.name}</strong></span>教学班学生管理
+				<span class="text-info"><strong>${selectedCourseTeachingClassViewData.courseTeachingClass.name}</strong></span>教学班学生管理
 			</div>
 			<p class="text-muted">
-				<strong>课程名称：</strong>${pagedTeachingClassViewData.result[0].course.name}</p>
+				<strong>课程名称：</strong>${selectedCourseTeachingClassViewData.course.name}</p>
 
 			<p class="text-muted">
 				<strong>授课教师：</strong>
 
 				<c:forEach var="t"
-					items="${pagedTeachingClassViewData.result[0].teacher}"
+					items="${selectedCourseTeachingClassViewData.teacher}"
 					varStatus="status">
-							${t.userbasicinfo.user_basic_info_name}(${pagedTeachingClassViewData.result[0].teachingtype[status.index].name})
+							${t.userbasicinfo.userBasicInfoName}(${selectedCourseTeachingClassViewData.teachingtype[status.index].name})
 							</c:forEach>
 
 			</p>
 
 			<p class="text-muted">
-				<strong>授课时间：</strong>${pagedTeachingClassViewData.result[0].courseteachingclass.teaching_year_begin}-${pagedTeachingClassViewData.result[0].courseteachingclass.teaching_year_end}学年第${pagedTeachingClassViewData.result[0].courseteachingclass.teaching_term}学期</p>
+				<strong>授课时间：</strong>${selectedCourseTeachingClassViewData.term.term}</p>
 			<div class="CourseContentHeaderSeparatorLine"></div>
 
 
@@ -106,6 +106,8 @@
 
 							<button type="button" class="btn btn-default btn-sm"
 								data-toggle="modal" data-target="#addStudentModal">增加单个学生</button>
+								
+								<button type="button" class="btn btn-default btn-sm" onclick="onAddFromExcel()">从Excel导入学生</button>
 
 							<button type="button" class="btn btn-default btn-sm"
 								data-toggle="modal" data-target="#myModal">删除</button>
@@ -345,12 +347,13 @@
 	</div>
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
 
 
-	<%@ include file="../../shared/pageFooter.jsp"%>
+
+	
 
 	<%@ include file="../../shared/importJs.jsp"%>
+		<%@ include file="../../shared/sysLastInclude.jsp"%>
 	<%@ include file="../../shared/importdatetimepickerjs.jsp"%>
 
 
@@ -440,7 +443,7 @@
 								
 								
 								AddStudentRow(data[i].student.id,
-										data[i].student.student_num, data[i].userbasicinfo.user_basic_info_name);
+										data[i].student.student_num, data[i].userbasicinfo.userBasicInfoName);
 							}
 						}
 					});
@@ -460,7 +463,7 @@
 					.toArray();
 			var names = $("#naturalclassstudenttable #naturalclassstudentname")
 					.toArray();
-			for (i = 0; i < c.length; i++) {
+			for (var i = 0; i < c.length; i++) {
 				if (c[i].checked) {
 
 					AddStudentRow(ids[i].value, nums[i].value, names[i].value);
@@ -505,7 +508,7 @@
 		function IsExistInStudentTable(studentid) {
 
 			var x = $("#studenttable #studentid").toArray();
-			for (i = 0; i < x.length; i++) {
+			for (var i = 0; i < x.length; i++) {
 				if (x[i].value == studentid)
 					return true;
 			}
@@ -562,7 +565,7 @@
 
 			var x = $("#naturalclassstudenttable #naturalclassstudentid")
 					.toArray();
-			for (i = 0; i < x.length; i++) {
+			for (var i = 0; i < x.length; i++) {
 				if (x[i].value == studentid)
 					return true;
 			}
@@ -613,7 +616,7 @@
 		function IsExistInNaturalClassTable(t_natural_class_id) {
 
 			var x = $("#naturalclasstable #t_natural_class_id").toArray();
-			for (i = 0; i < x.length; i++) {
+			for (var i = 0; i < x.length; i++) {
 				if (x[i].value == t_natural_class_id)
 					return true;
 			}
@@ -631,6 +634,13 @@
 			}
 
 		}
+		
+		function onAddFromExcel() {
+			
+			var url = "<c:url value='/teachingclass/addfromexcel-${selectedCourseTeachingClassViewData.courseTeachingClass.id}.html'/>";
+			window.location.href = url;
+		
+	}
 	</script>
 
 	<script>
@@ -755,7 +765,7 @@
 						for (var i = 0; i < data.length; i++) {
 
 							AddNaturalClassStudentRow(data[i].student.id,
-									data[i].student.student_num, data[i].userbasicinfo.user_basic_info_name);
+									data[i].student.student_num, data[i].userbasicinfo.userBasicInfoName);
 						}
 					}
 				}
@@ -835,18 +845,6 @@
 
 		});
 	</script>
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

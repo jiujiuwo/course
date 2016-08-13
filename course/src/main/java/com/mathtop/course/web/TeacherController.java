@@ -118,14 +118,14 @@ public class TeacherController extends BaseController {
 	}
 
 	/**
-	 * 添加学院
+	 * 为特定学院添加教师
 	 * 
 	 * @param request
 	 * @param user
 	 * @return
 	 */
 	@RequestMapping(value = "/add-{t_school_id}")
-	public ModelAndView add(HttpServletRequest request, @PathVariable String t_school_id) {
+	public ModelAndView addTeacherForSchool(HttpServletRequest request, @PathVariable String t_school_id) {
 
 		Page<School> pagedSchool = schoolService.getPage(1, CommonConstant.PAGE_SIZE);
 
@@ -156,6 +156,49 @@ public class TeacherController extends BaseController {
 		return mav;
 	}
 
+	
+	/**
+	 * 为学院添加教师
+	 * 
+	 * @param request
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "/add")
+	public ModelAndView addTeacher(HttpServletRequest request) {
+
+		Page<School> pagedSchool = schoolService.getPage(1, CommonConstant.PAGE_SIZE);
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject(PagedObjectConst.Paged_School, pagedSchool);
+		
+		String t_school_id=null;
+
+		
+		List<School> schools = pagedSchool.getResult();
+		if (schools.size() > 0)
+			t_school_id = schools.get(0).getId();
+		
+
+		SetPage(mav, t_school_id, 1);
+
+		// 组
+
+		Page<Group> pagedGroup = groupService.getPage(1, CommonConstant.PAGE_SIZE);
+
+		mav.addObject(PagedObjectConst.Paged_Group, pagedGroup);
+
+		// 得到联系方式类型
+		Page<UserContactType> pagedContactType = contacttypeService.getPage(1, CommonConstant.PAGE_SIZE);
+
+		mav.addObject(PagedObjectConst.Paged_ContactType, pagedContactType);
+
+		mav.setViewName("/teacher/add");
+
+		return mav;
+	}
+
+	
 	/**
 	 * 添加学院
 	 * 
@@ -168,8 +211,8 @@ public class TeacherController extends BaseController {
 		String t_school_id = request.getParameter("t_school_id");
 		String t_department_id = request.getParameter("t_department_id");
 		String user_password = request.getParameter("user_password");
-		String teacher_num = request.getParameter("teacher_num");
-		String user_basic_info_name = request.getParameter("user_basic_info_name");
+		String teacherNum = request.getParameter("teacherNum");
+		String userBasicInfoName = request.getParameter("userBasicInfoName");
 		String user_basic_info_birthday = request.getParameter("user_basic_info_birthday");
 		String user_basic_info_sex = request.getParameter("user_basic_info_sex");
 		String[] contacttypeId = request.getParameterValues("contacttypeId");
@@ -187,16 +230,16 @@ public class TeacherController extends BaseController {
 
 		// user基本信息
 		User user = new User();
-		user.setUser_name(teacher_num);
-		user.setUser_password(user_password);
+		user.setUserName(teacherNum);
+		user.setUserPassword(user_password);
 
 		Teacher teacher = new Teacher();
-		teacher.setTeacher_num(teacher_num);
+		teacher.setTeacherNum(teacherNum);
 
 		UserBasicInfo userbasicinfo = new UserBasicInfo();
-		userbasicinfo.setUser_basic_info_name(user_basic_info_name);
-		userbasicinfo.setUser_basic_info_birthday(DateTimeSql.GetDate(user_basic_info_birthday));
-		userbasicinfo.setUser_basic_info_sex(Integer.parseInt(user_basic_info_sex));
+		userbasicinfo.setUserBasicInfoName(userBasicInfoName);
+		userbasicinfo.setUserBasicInfoBirthday(DateTimeSql.GetDate(user_basic_info_birthday));
+		userbasicinfo.setUserBasicInfoSex(Integer.parseInt(user_basic_info_sex));
 
 		if (contactCount > 0) {
 
@@ -206,8 +249,8 @@ public class TeacherController extends BaseController {
 
 				usercontactinfos[i] = new UserContactInfo();
 
-				usercontactinfos[i].setT_user_contact_type_id(contacttypeId[i]);
-				usercontactinfos[i].setUser_contact_value(user_contact_value[i]);
+				usercontactinfos[i].setUserContactTypeId(contacttypeId[i]);
+				usercontactinfos[i].setUserContactValue(user_contact_value[i]);
 			}
 
 			teacherService.addTeacher(user, department, teacher, userbasicinfo, usercontactinfos, groupId);
@@ -331,8 +374,8 @@ public class TeacherController extends BaseController {
 		String t_school_id = request.getParameter("t_school_id");
 		// String t_department_id = request.getParameter("t_department_id");
 		// String user_password = request.getParameter("user_password");
-		String teacher_num = request.getParameter("teacher_num");
-		String user_basic_info_name = request.getParameter("user_basic_info_name");
+		String teacherNum = request.getParameter("teacherNum");
+		String userBasicInfoName = request.getParameter("userBasicInfoName");
 		String user_basic_info_birthday = request.getParameter("user_basic_info_birthday");
 		String user_basic_info_sex = request.getParameter("user_basic_info_sex");
 		String[] contacttypeId = request.getParameterValues("contacttypeId");
@@ -348,17 +391,17 @@ public class TeacherController extends BaseController {
 
 		// user基本信息
 		User user = new User();
-		user.setUser_name(teacher_num);
+		user.setUserName(teacherNum);
 		user.setId(t_user_id);
 		// user.setUser_password(user_password);
 
 		Teacher teacher = new Teacher();
-		teacher.setTeacher_num(teacher_num);
+		teacher.setTeacherNum(teacherNum);
 
 		UserBasicInfo userbasicinfo = new UserBasicInfo();
-		userbasicinfo.setUser_basic_info_name(user_basic_info_name);
-		userbasicinfo.setUser_basic_info_birthday(DateTimeSql.GetDate(user_basic_info_birthday));
-		userbasicinfo.setUser_basic_info_sex(Integer.parseInt(user_basic_info_sex));
+		userbasicinfo.setUserBasicInfoName(userBasicInfoName);
+		userbasicinfo.setUserBasicInfoBirthday(DateTimeSql.GetDate(user_basic_info_birthday));
+		userbasicinfo.setUserBasicInfoSex(Integer.parseInt(user_basic_info_sex));
 
 		if (contactCount > 0) {
 
@@ -368,8 +411,8 @@ public class TeacherController extends BaseController {
 
 				usercontactinfos[i] = new UserContactInfo();
 
-				usercontactinfos[i].setT_user_contact_type_id(contacttypeId[i]);
-				usercontactinfos[i].setUser_contact_value(user_contact_value[i]);
+				usercontactinfos[i].setUserContactTypeId(contacttypeId[i]);
+				usercontactinfos[i].setUserContactValue(user_contact_value[i]);
 			}
 
 			teacherService.updateTeacher(user, teacher, userbasicinfo, usercontactinfos, groupId);
@@ -436,10 +479,10 @@ public class TeacherController extends BaseController {
 
 		User user = new User();
 
-		user.setUser_password(new_user_password);
+		user.setUserPassword(new_user_password);
 		user.EncoderPassword();
 
-		userService.updateUserPassword(t_user_id, user.getUser_password());
+		userService.updateUserPassword(t_user_id, user.getUserPassword());
 
 		ModelAndView mav = new ModelAndView();
 

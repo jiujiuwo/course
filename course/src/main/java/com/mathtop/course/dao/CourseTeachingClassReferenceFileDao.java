@@ -65,7 +65,7 @@ public class CourseTeachingClassReferenceFileDao extends BaseDao<CourseTeachingC
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				file.setId(id);
-				file.setT_course_teaching_class_reference_id(rs.getString("t_course_teaching_class_reference_id"));				
+				file.setCourseTeachingClassReferenceId(rs.getString("t_course_teaching_class_reference_id"));				
 				file.setFilename(rs.getString("filename"));
 				file.setFilepath(rs.getString("filepath"));
 
@@ -91,7 +91,7 @@ public class CourseTeachingClassReferenceFileDao extends BaseDao<CourseTeachingC
 			public void processRow(ResultSet rs) throws SQLException {
 				CourseTeachingClassReferenceFile file = new CourseTeachingClassReferenceFile();
 				file.setId(rs.getString("id"));				
-				file.setT_course_teaching_class_reference_id(t_course_teaching_class_reference_id);				
+				file.setCourseTeachingClassReferenceId(t_course_teaching_class_reference_id);				
 				file.setFilename(rs.getString("filename"));
 				file.setFilepath(rs.getString("filepath"));
 				list.add(file);
@@ -107,7 +107,7 @@ public class CourseTeachingClassReferenceFileDao extends BaseDao<CourseTeachingC
 	public String add(CourseTeachingClassReferenceFile file) {
 		String id = GUID.getGUID();
 		file.setId(id);
-		Object params[] = new Object[] { file.getId(), file.getT_course_teaching_class_reference_id(),file.getFilename(), file.getFilepath() };
+		Object params[] = new Object[] { file.getId(), file.getCourseTeachingClassReferenceId(),file.getFilename(), file.getFilepath() };
 		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
 		getJdbcTemplate().update(INSERT_PLAN, params, types);
 		return id;
@@ -160,7 +160,7 @@ public class CourseTeachingClassReferenceFileDao extends BaseDao<CourseTeachingC
 						CourseTeachingClassReferenceFile file = getByID(rs.getString("id"));
 						data.setFile(file);
 
-						CourseTeachingClassReference reference = courseTeachingClassReferenceDao.getByID(file.getT_course_teaching_class_reference_id());
+						CourseTeachingClassReference reference = courseTeachingClassReferenceDao.getByID(file.getCourseTeachingClassReferenceId());
 						data.setReference(reference);
 
 						

@@ -72,8 +72,8 @@ public class MailBoxSendDao extends BaseDao<MailBoxSend> {
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				send.setId(id);
-				send.setT_user_id_from(rs.getString("t_user_id_from"));
-				send.setT_user_id_to(rs.getString("t_user_id_to"));
+				send.setUserIdFrom(rs.getString("t_user_id_from"));
+				send.setUserIdTo(rs.getString("t_user_id_to"));
 				send.setState(rs.getString("state"));
 				send.setSenddate(rs.getTimestamp("senddate"));
 				send.setSubject(rs.getString("subject"));
@@ -103,8 +103,8 @@ public class MailBoxSendDao extends BaseDao<MailBoxSend> {
 			public void processRow(ResultSet rs) throws SQLException {
 				MailBoxSend send = new MailBoxSend();
 				send.setId(rs.getString("id"));
-				send.setT_user_id_from(t_user_id_from);
-				send.setT_user_id_to(rs.getString("t_user_id_to"));
+				send.setUserIdFrom(t_user_id_from);
+				send.setUserIdTo(rs.getString("t_user_id_to"));
 				send.setState(rs.getString("state"));
 				send.setSenddate(rs.getTimestamp("senddate"));
 				send.setSubject(rs.getString("subject"));
@@ -131,8 +131,8 @@ public class MailBoxSendDao extends BaseDao<MailBoxSend> {
 			public void processRow(ResultSet rs) throws SQLException {
 				MailBoxSend send = new MailBoxSend();
 				send.setId(rs.getString("id"));
-				send.setT_user_id_from(rs.getString("t_user_id_from"));
-				send.setT_user_id_to(t_user_id_to);
+				send.setUserIdFrom(rs.getString("t_user_id_from"));
+				send.setUserIdTo(t_user_id_to);
 				send.setState(rs.getString("t_course_teaching_class_homework_type_id"));
 				send.setSenddate(rs.getTimestamp("sendate"));
 				send.setSubject(rs.getString("subject"));
@@ -152,7 +152,7 @@ public class MailBoxSendDao extends BaseDao<MailBoxSend> {
 	public String add(MailBoxSend send) {
 		String id = GUID.getGUID();
 		send.setId(id);
-		Object params[] = new Object[] {send.getId(),send.getT_user_id_from(),send.getT_user_id_to(),send.getState(),send.getSubject(),send.getContent(),new Date()};
+		Object params[] = new Object[] {send.getId(),send.getUserIdFrom(),send.getUserIdTo(),send.getState(),send.getSubject(),send.getContent(),new Date()};
 		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,  Types.TIMESTAMP };
 		getJdbcTemplate().update(INSERT_MAILBOX, params, types);
 		return id;
@@ -210,10 +210,10 @@ public class MailBoxSendDao extends BaseDao<MailBoxSend> {
 		MailBoxSend send = getByID(id);
 		data.setSend(send);
 
-		UserBasicInfoViewData userFrom=userDao.getUserBasicInfoViewDataByt_user_id(send.getT_user_id_from());
+		UserBasicInfoViewData userFrom=userDao.getUserBasicInfoViewDataByt_user_id(send.getUserIdFrom());
 		data.setUserFrom(userFrom);
 		
-		UserBasicInfoViewData userTo=userDao.getUserBasicInfoViewDataByt_user_id(send.getT_user_id_to());
+		UserBasicInfoViewData userTo=userDao.getUserBasicInfoViewDataByt_user_id(send.getUserIdTo());
 		data.setUserTo(userTo);
 
 		List<MailBoxSendFile> sendfile = fileDao.getByMailBoxSendID(send.getId());				

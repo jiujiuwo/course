@@ -12,4 +12,6 @@ public class DepartmentDao extends SimpleDao<Department> {
 	}
 	
 	
+	
+	
 }

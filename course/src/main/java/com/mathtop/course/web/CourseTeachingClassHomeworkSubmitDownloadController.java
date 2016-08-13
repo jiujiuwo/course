@@ -74,6 +74,8 @@ public class CourseTeachingClassHomeworkSubmitDownloadController extends CourseT
 			throws IOException {
 
 		zip z = homeworksubmitService.zipByHomeworkBaseInfoId(request, t_course_teaching_class_homework_baseinfo_id);
+		
+		
 
 		if (z == null)
 			return null;

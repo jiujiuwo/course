@@ -159,9 +159,17 @@ public class CourseTeachingClassForumReplyService {
 		return forumReplyFileDao.getByID(id);
 	}
 
-	public Page<CourseTeachingClassForumReplyViewData> getPage(String t_forum_topic_id, int pageNo, int pageSize) {
-		forumtopicDao.incViewCount(t_forum_topic_id);
+	public Page<CourseTeachingClassForumReplyViewData> getPage(String t_forum_topic_id, int pageNo, int pageSize) {		
+		IncViewCount(t_forum_topic_id);
 		return forumreplyDao.getPage(t_forum_topic_id, pageNo, pageSize);
+	}
+	
+	
+	/**
+	 * 增加访问次数
+	 * */
+	public void IncViewCount(String t_forum_topic_id){
+		forumtopicDao.incViewCount(t_forum_topic_id);
 	}
 
 	public void update(HttpServletRequest request, String t_forum_reply_id, String t_user_id, String title, String content,

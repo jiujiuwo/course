@@ -24,8 +24,7 @@
 <%@ include file="../../shared/importCss.jsp"%>
 <%@ include file="../../shared/importJs.jsp"%>
 
-<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet"
-	type="text/css" />
+<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet" type="text/css" />
 
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -35,7 +34,7 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home" onLoad="ShowErrMsg()">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 
@@ -45,7 +44,7 @@
 
 		<%@ include file="../../shared/CourseTeachingClassInfo.jsp"%>
 
-		<div id="DocumentPageTopSeparatorLine"></div>
+
 	</c:if>
 
 	<div class="DocumentPage">
@@ -90,11 +89,9 @@
 							<!-- Split button -->
 							<div class="btn-group">
 								<button type="button" class="btn btn-default btn-sm">选择</button>
-								<button type="button"
-									class="btn btn-default dropdown-toggle btn-sm"
-									data-toggle="dropdown" aria-expanded="false">
-									<span class="caret"></span> <span class="sr-only">Toggle
-										Dropdown</span>
+								<button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown"
+									aria-expanded="false">
+									<span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
 								</button>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="#">全部选择</a></li>
@@ -107,18 +104,16 @@
 					<td style="width: 10px;"></td>
 					<td><div class="btn-group" role="group" aria-label="...">
 
-							<button type="button" class="btn btn-default btn-sm"
-								data-toggle="modal" data-target="#myModal">删除</button>
+							<button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+								data-target="#myModal">删除</button>
 
 
 						</div></td>
 					<td style="width: 10px;"></td>
 					<td><div class="input-group input-group-sm">
-							<input type="text" class="form-control" id="SearchText"
-								placeholder="Search for..." required> <span
-								class="input-group-btn">
-								<button class="btn btn-default" type="button"
-									onclick="onSearch()">搜索</button>
+							<input type="text" class="form-control" id="SearchText" placeholder="Search for..." required>
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button" onclick="onSearch()">搜索</button>
 							</span>
 						</div></td>
 				</tr>
@@ -157,8 +152,7 @@
 
 
 					<c:set var="index" value="0"></c:set>
-					<c:forEach var="data"
-						items="${pagedMailBoxReceivedViewData.result}">
+					<c:forEach var="data" items="${pagedMailBoxReceivedViewData.result}">
 						<div class="row show-grid">
 							<div class="col-md-1">
 
@@ -167,9 +161,9 @@
 
 							<div class="col-md-2">
 								<c:if test="${data.userFrom.student!=null}">
-							${data.userFrom.student.student_num}-
+							${data.userFrom.student.studentNum}-
 							</c:if>
-								${data.userFrom.userbasicinfo.user_basic_info_name}
+								${data.userFrom.userbasicinfo.userBasicInfoName}
 							</div>
 
 							<div class="col-md-4">
@@ -177,28 +171,32 @@
 									<c:when test="${selectedCourseTeachingClassID!=null}">
 										<c:choose>
 											<c:when test="${data.received.hasRead}">
+												<!-- 已读邮件 -->
 												<a
-													href="<c:url value="/mailbox/receivedcontentwithcourse-${selectedCourseTeachingClassID}-${data.received.id}.html"/>"><span
-													class="text-success">${data.received.subject}</span></a>
+													href="<c:url value="/mailbox/receivedcontentwithcourse-${selectedCourseTeachingClassID}-${data.received.id}.html"/>">
+													<span class="text-info">${data.received.subject}</span>
+												</a>
 											</c:when>
 											<c:otherwise>
-												<strong><a
-													href="<c:url value="/mailbox/receivedcontentwithcourse-${selectedCourseTeachingClassID}-${data.received.id}.html"/>"><span
-														class="text-info">${data.received.subject}</span></a></strong>
+												<!-- 未读邮件 -->
+												<a
+														href="<c:url value="/mailbox/receivedcontentwithcourse-${selectedCourseTeachingClassID}-${data.received.id}.html"/>"><span class="text-danger">${data.received.subject}</span></a>
 											</c:otherwise>
 										</c:choose>
 									</c:when>
 									<c:otherwise>
 										<c:choose>
 											<c:when test="${data.received.hasRead}">
-												<a
-													href="<c:url value="/mailbox/receivedcontent-${data.received.id}.html"/>"><span
-													class="text-success">${data.received.subject}</span></a>
+											<!-- 已读邮件 -->
+												<a href="<c:url value="/mailbox/receivedcontent-${data.received.id}.html"/>">
+													<span class="text-info">${data.received.subject}</span>
+												</a>
 											</c:when>
 											<c:otherwise>
-												<strong><a
-													href="<c:url value="/mailbox/receivedcontent-${data.received.id}.html"/>"><span
-														class="text-info">${data.received.subject}</span></a></strong>
+												<!-- 未读邮件 --><a
+														href="<c:url value="/mailbox/receivedcontent-${data.received.id}.html"/>">
+														<span class="text-danger">${data.received.subject}</span>
+													</a>
 											</c:otherwise>
 										</c:choose>
 									</c:otherwise>
@@ -207,8 +205,7 @@
 
 							</div>
 							<div class="col-md-2">
-								<fmt:formatDate value="${data.received.senddate}"
-									pattern="yyyy-MM-dd HH:mm:ss" />
+								<fmt:formatDate value="${data.received.senddate}" pattern="yyyy-MM-dd HH:mm:ss" />
 
 							</div>
 
@@ -240,8 +237,7 @@
 							pageAttrKey="pagedMailBoxReceivedViewData" />
 					</c:when>
 					<c:otherwise>
-						<mathtop:PageBar
-							pageUrl="/mailbox/receivedlist.html"
+						<mathtop:PageBar pageUrl="/mailbox/receivedlist.html"
 							pageAttrKey="pagedMailBoxReceivedViewData" />
 					</c:otherwise>
 				</c:choose>
@@ -256,9 +252,7 @@
 
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
-
-	<%@ include file="../../shared/pageFooter.jsp"%>
+	<%@ include file="../../shared/sysLastInclude.jsp"%>
 
 
 
@@ -304,18 +298,6 @@
 
 
 
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

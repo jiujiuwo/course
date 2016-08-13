@@ -26,8 +26,7 @@
 
 
 
-<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet"
-	type="text/css" />
+<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet" type="text/css" />
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -36,11 +35,11 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home" onLoad="ShowErrMsg()">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 	<%@ include file="../../shared/CourseTeachingClassInfo.jsp"%>
-	<div id="DocumentPageTopSeparatorLine"></div>
+
 
 	<div class="DocumentPage">
 		<div class="DocumentPageLeftArea ">
@@ -57,7 +56,7 @@
 			<ol class="breadcrumb">
 				<li><a href="#">课程系统</a></li>
 				<li><a
-					href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseteachingclass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
+						href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseTeachingClass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
 				<li class="active">${selectedCourseHomeworkTypeData.name}</li>
 			</ol>
 
@@ -73,11 +72,9 @@
 							<!-- Split button -->
 							<div class="btn-group">
 								<button type="button" class="btn btn-default btn-sm">选择</button>
-								<button type="button"
-									class="btn btn-default dropdown-toggle btn-sm"
-									data-toggle="dropdown" aria-expanded="false">
-									<span class="caret"></span> <span class="sr-only">Toggle
-										Dropdown</span>
+								<button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown"
+									aria-expanded="false">
+									<span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
 								</button>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="#">全部选择</a></li>
@@ -89,21 +86,33 @@
 						</div></td>
 					<td style="width: 10px;"></td>
 					<td><div class="btn-group" role="group" aria-label="...">
-							<button type="button" class="btn btn-default btn-sm"
-								onclick="location='<c:url value="/coursehomework/addhomework-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html"/>'">增加</button>
+							<c:choose>
+								<c:when test="${selectedCourseTeachingClassStudentGroupStatisticsViewData.nGroupCount>0 }">
+									<button type="button" class="btn btn-default btn-sm"
+										onclick="location='<c:url value="/coursehomework/addhomework-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-1.html"/>'">为小组增加作业</button>
 
-							<button type="button" class="btn btn-default btn-sm"
-								data-toggle="modal" data-target="#myModal">删除</button>
+									<button type="button" class="btn btn-default btn-sm"
+										onclick="location='<c:url value="/coursehomework/addhomework-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-0.html"/>'">为每个学生增加作业</button>
+
+								</c:when>
+								<c:otherwise>
+									<button type="button" class="btn btn-default btn-sm"
+										onclick="location='<c:url value="/coursehomework/addhomework-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html"/>'">增加</button>
+
+								</c:otherwise>
+
+							</c:choose>
+
+
+
 
 
 						</div></td>
 					<td style="width: 10px;"></td>
 					<td><div class="input-group input-group-sm">
-							<input type="text" class="form-control" id="SearchText"
-								placeholder="Search for..." required> <span
-								class="input-group-btn">
-								<button class="btn btn-default" type="button"
-									onclick="onSearch()">搜索</button>
+							<input type="text" class="form-control" id="SearchText" placeholder="Search for..." required>
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button" onclick="onSearch()">搜索</button>
 							</span>
 						</div></td>
 				</tr>
@@ -111,13 +120,10 @@
 
 			<c:choose>
 
-				<c:when
-					test="${pagedCourseTeachingClassHomeworkBaseinfoViewData.totalCount==0}">
+				<c:when test="${pagedCourseTeachingClassHomeworkBaseinfoViewData.totalCount==0}">
 
-					<div class="alert alert-warning alert-dismissible fade in"
-						role="alert">
-						<button type="button" class="close" data-dismiss="alert"
-							aria-label="Close">
+					<div class="alert alert-warning alert-dismissible fade in" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 						<strong>暂未有${selectedCourseHomeworkTypeData.name}作业</strong>
@@ -131,14 +137,12 @@
 				<c:otherwise>
 
 					<div class="panel-group" id="accordion" role="tablist"
-						style="margin-right: 5px; margin-top: 10px;"
-						aria-multiselectable="true">
+						style="margin-right: 5px; margin-top: 10px;" aria-multiselectable="true">
 
 
 
 						<c:set var="index" value="0"></c:set>
-						<c:forEach var="data"
-							items="${pagedCourseTeachingClassHomeworkBaseinfoViewData.result}">
+						<c:forEach var="data" items="${pagedCourseTeachingClassHomeworkBaseinfoViewData.result}">
 
 
 							<div
@@ -152,13 +156,10 @@
 						</c:if>
 					
 					">
-								<div class="panel-heading" role="tab"
-									id="heading${data.homeworkbaseinfo.id}">
+								<div class="panel-heading" role="tab" id="heading${data.homeworkbaseinfo.id}">
 									<h4 class="panel-title">
-										<a role="button" data-toggle="collapse"
-											data-parent="#accordion"
-											href="#collapse${data.homeworkbaseinfo.id}"
-											aria-expanded="true"
+										<a role="button" data-toggle="collapse" data-parent="#accordion"
+											href="#collapse${data.homeworkbaseinfo.id}" aria-expanded="true"
 											aria-controls="collapse${data.homeworkbaseinfo.id}">
 											${pagedCourseTeachingClassHomeworkBaseinfoViewData.totalCount-(pagedCourseTeachingClassHomeworkBaseinfoViewData.currentPageNo-1) * pagedCourseTeachingClassHomeworkBaseinfoViewData.pageSize -index}：${selectedCourseHomeworkTypeData.name}-${data.homeworkbaseinfo.title}-具体内容
 										</a>
@@ -193,8 +194,7 @@
 
 
 
-													<c:if
-														test="${data.homeworkbaseinfo.canStudentSubmit==true }">
+													<c:if test="${data.homeworkbaseinfo.canStudentSubmit==true }">
 														<button type="button" class="btn btn-default btn-xs"
 															onclick="location='<c:url value="/coursehomework/replylist-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${data.homeworkbaseinfo.id}.html"/>'">查看</button>
 													</c:if>
@@ -230,6 +230,18 @@
 												<div class="col-md-10">${data.homeworkbaseinfo.content}</div>
 											</div>
 
+											<div class="row show-grid">
+												<div class="col-md-1 text-right">
+													<strong>作业类型</strong>
+												</div>
+												<div class="col-md-10">
+													<c:choose>
+														<c:when test="${data.homeworkbaseinfo.flagGroup}"><i class="icon-group"></i>小组作业</c:when>
+														<c:otherwise><i class="icon-user"></i>个人作业</c:otherwise>
+													</c:choose>
+												</div>
+											</div>
+
 
 											<div class="row show-grid">
 												<div class="col-md-1 text-right">
@@ -250,10 +262,8 @@
 
 														<c:otherwise>
 															<ul>
-																<c:forEach var="datafile"
-																	items="${data.homeworkFileList}">
-																	<li><a
-																		href="<c:url value="coursehomeworkfile/download-${datafile.id}.html"/>">
+																<c:forEach var="datafile" items="${data.homeworkFileList}">
+																	<li><a href="<c:url value="coursehomeworkfile/download-${datafile.id}.html"/>">
 																			${datafile.filename}</a></li>
 																</c:forEach>
 															</ul>
@@ -267,8 +277,7 @@
 													<strong>发布日期</strong>
 												</div>
 												<div class="col-md-10">
-													<fmt:formatDate value="${data.homeworkbaseinfo.pubdate}"
-														pattern="yyyy-MM-dd HH:mm" />
+													<fmt:formatDate value="${data.homeworkbaseinfo.pubdate}" pattern="yyyy-MM-dd HH:mm" />
 												</div>
 											</div>
 
@@ -277,10 +286,11 @@
 													<strong>截止日期</strong>
 												</div>
 												<div class="col-md-10">
-													<fmt:formatDate value="${data.homeworkbaseinfo.enddate}"
-														pattern="yyyy-MM-dd HH:mm" />
+													<fmt:formatDate value="${data.homeworkbaseinfo.enddate}" pattern="yyyy-MM-dd HH:mm" />
 												</div>
 											</div>
+
+
 
 
 											<div class="row show-grid">
@@ -289,26 +299,62 @@
 												</div>
 												<div class="col-md-10">
 													<c:choose>
-
-														<c:when test="${data.homeworkbaseinfo.filecount==0}">
-													不需要提交文件
-												</c:when>
-														<c:when test="${data.homeworkbaseinfo.filecount==-1}">
-													提交多个文件（数目不限制）<br>文件类型:${data.homeworkbaseinfo.filetype}<br>文件名称格式:${data.homeworkbaseinfo.filenameformat}
-												</c:when>
+														<c:when test="${data.homeworkbaseinfo.fileRequirement.size==0}">
+															不需要提交文件
+														</c:when>
 
 														<c:otherwise>
-													提交${data.homeworkbaseinfo.filecount}个文件<br>文件类型:${data.homeworkbaseinfo.filetype}<br>文件名称格式:${data.homeworkbaseinfo.filenameformat}		
-												</c:otherwise>
+															<ul class="list-group">
+																<c:forEach var="dataNode" items="${data.homeworkbaseinfo.fileRequirement.array}">
+
+																	<a href="javascript:void(0);" class="list-group-item">
+																			<div style="margin-left:${dataNode.level*50}px;">
+
+																				<c:choose>
+																					<c:when test="${dataNode.data.fileType==2}">
+																						<h4>目录</h4>
+																					</c:when>
+																					<c:otherwise>
+																						<h4>文件</h4>
+																					</c:otherwise>
+																				</c:choose>
+
+
+																				<c:if test="${dataNode.data.fileType!=2}">
+																					<div>
+																						<span><strong>文件类型:</strong></span>${dataNode.data.fileTypeDescription}</div>
+																					<c:choose>
+																						<c:when test="${dataNode.data.fileCount==-1}">
+																							<div>
+																								<span><strong>文件个数:</strong></span>不限制个数
+																							</div>
+																						</c:when>
+																						<c:otherwise>文件</c:otherwise>
+																					</c:choose>
+																					<div>
+																						<span><strong>文件个数:</strong></span>${dataNode.data.fileCount}</div>
+
+
+																				</c:if>
+
+																				<div>
+																					<span><strong>文件名称格式:</strong></span> ${dataNode.data.filenameRequirementVal}
+																				</div>
+
+																			</div>
+																		</a>
+
+																</c:forEach>
+															</ul>
+														</c:otherwise>
 													</c:choose>
 
 													<c:if test="${sessionScope.USER_CONTEXT.student!=null}">
-														<c:if test="${data.homeworkbaseinfo.filecount!=0}">
+														<c:if test="${data.homeworkbaseinfo.fileRequirement.size()!=0}">
 															<br>
 															<button type="button" class="btn btn-default btn-xs"
 																onclick="ongetexample('${data.homeworkbaseinfo.id}')">取得合法文件名示例</button>
-															<ul class="list-group"
-																id="examplefilenames${data.homeworkbaseinfo.id}">
+															<ul class="list-group" id="examplefilenames${data.homeworkbaseinfo.id}">
 
 															</ul>
 														</c:if>
@@ -333,15 +379,13 @@
 													<div class="col-md-10">
 
 														<div class="panel-group" id="accordion" role="tablist"
-															style="margin-right: 5px; margin-top: 10px;"
-															aria-multiselectable="true">
+															style="margin-right: 5px; margin-top: 10px;" aria-multiselectable="true">
 
 
 
 															<c:set var="delayindex" value="1"></c:set>
 
-															<c:forEach var="dataDelay"
-																items="${data.homeworkDelayedList}">
+															<c:forEach var="dataDelay" items="${data.homeworkDelayedList}">
 																<div
 																	class="panel 
 					<c:if test="${dataDelay.canStudentSubmit==true }"> 
@@ -354,13 +398,10 @@
 					
 					">
 
-																	<div class="panel-heading" role="tab"
-																		id="heading${dataDelay.id}">
+																	<div class="panel-heading" role="tab" id="heading${dataDelay.id}">
 																		<h4 class="panel-title">
-																			<a role="button" data-toggle="collapse"
-																				data-parent="#accordion"
-																				href="#collapse${dataDelay.id}"
-																				aria-expanded="true"
+																			<a role="button" data-toggle="collapse" data-parent="#accordion"
+																				href="#collapse${dataDelay.id}" aria-expanded="true"
 																				aria-controls="collapse${dataDelay.id}">
 																				迟交${delayindex}：${selectedCourseHomeworkTypeData.name}-${data.homeworkbaseinfo.title}
 																			</a>
@@ -372,19 +413,16 @@
 						in
 						</c:if>
 						"
-																		style="overflow: hidden;" role="tabpanel"
-																		aria-labelledby="heading${dataDelay.id}">
+																		style="overflow: hidden;" role="tabpanel" aria-labelledby="heading${dataDelay.id}">
 																		<div class="panel-body">
 
-																			<div class="container-fluid"
-																				style="overflow: hidden;">
+																			<div class="container-fluid" style="overflow: hidden;">
 																				<div class="row show-grid">
 																					<div class="col-md-1 text-right">
 																						<strong>发布日期</strong>
 																					</div>
 																					<div class="col-md-10">
-																						<fmt:formatDate value="${dataDelay.pubdate}"
-																							pattern="yyyy-MM-dd HH:mm" />
+																						<fmt:formatDate value="${dataDelay.pubdate}" pattern="yyyy-MM-dd HH:mm" />
 																					</div>
 																				</div>
 
@@ -393,8 +431,7 @@
 																						<strong>截止日期</strong>
 																					</div>
 																					<div class="col-md-10">
-																						<fmt:formatDate value="${dataDelay.enddate}"
-																							pattern="yyyy-MM-dd HH:mm" />
+																						<fmt:formatDate value="${dataDelay.enddate}" pattern="yyyy-MM-dd HH:mm" />
 																					</div>
 																				</div>
 																			</div>
@@ -448,13 +485,12 @@
 
 
 	<!-- 简单修改对话框 -->
-	<div class="modal fade" id="updateSimpleModal" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="updateSimpleModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="myModalLabel">修改${selectedCourseHomeworkTypeData.name}要求</h4>
@@ -469,13 +505,13 @@
 	</div>
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
 
-	<%@ include file="../../shared/pageFooter.jsp"%>
+
+
+
 
 	<%@ include file="../../shared/importJs.jsp"%>
-
-
+	<%@ include file="../../shared/sysLastInclude.jsp"%>
 
 	<script type="text/javascript">
 		$("#collapseHomework").addClass("in");
@@ -552,19 +588,6 @@
 
 
 
-
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

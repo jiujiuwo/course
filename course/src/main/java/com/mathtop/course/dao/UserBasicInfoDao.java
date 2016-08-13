@@ -22,19 +22,19 @@ public class UserBasicInfoDao extends BaseDao<UserBasicInfo> {
 	private final String UPDATE_USERBASICINFO_0_BY_USER_ID = "update t_user_basic_info set user_contact_info_birthday=?,user_contact_info_sex=? WHERE t_user_id=?";
 	private final String UPDATE_USERBASICINFO_1_BY_USER_ID = "update t_user_basic_info set user_contact_info_name=?,user_contact_info_birthday=?,user_contact_info_sex=? WHERE t_user_id=?";
 
-	
 	/* 增加UserContactInfo */
 	public String add(UserBasicInfo userbasicinfo) {
 		String id = GUID.getGUID();
 		userbasicinfo.setId(id);
-		Object params[] = new Object[] { id, userbasicinfo.getT_user_id(), userbasicinfo.getUser_basic_info_name(),
-				DateTimeSql.GetDate(userbasicinfo.getUser_basic_info_birthday()), userbasicinfo.getUser_basic_info_sex(),
-				userbasicinfo.getUser_basic_info_address() };
-		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.TIMESTAMP, Types.INTEGER, Types.VARCHAR };
+		Object params[] = new Object[] { id, userbasicinfo.getUserId(), userbasicinfo.getUserBasicInfoName(),
+				DateTimeSql.GetDate(userbasicinfo.getUserBasicInfoBirthday()),
+				userbasicinfo.getUserBasicInfoSex(), userbasicinfo.getUserBasicInfoAddress() };
+		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.TIMESTAMP, Types.INTEGER,
+				Types.VARCHAR };
 		getJdbcTemplate().update(INSERT_USERBASICINFO, params, types);
 		return id;
 	}
-	
+
 	/*
 	 * 根据ID得到UserContactInfo
 	 */
@@ -47,11 +47,12 @@ public class UserBasicInfoDao extends BaseDao<UserBasicInfo> {
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				userbasicinfo.setId(userbasicinfoID);
-				userbasicinfo.setT_user_id(rs.getString("t_user_id"));
-				userbasicinfo.setUser_basic_info_name(rs.getString("user_contact_info_name"));
-				userbasicinfo.setUser_basic_info_birthday(DateTimeSql.GetDate(rs.getString("user_contact_info_birthday")));
-				userbasicinfo.setUser_basic_info_sex(Integer.parseInt(rs.getString("user_contact_info_sex")));
-				userbasicinfo.setUser_basic_info_address(rs.getString("user_contact_info_address"));
+				userbasicinfo.setUserId(rs.getString("t_user_id"));
+				userbasicinfo.setUserBasicInfoName(rs.getString("user_contact_info_name"));
+				userbasicinfo
+						.setUserBasicInfoBirthday(DateTimeSql.GetDate(rs.getString("user_contact_info_birthday")));
+				userbasicinfo.setUserBasicInfoSex(Integer.parseInt(rs.getString("user_contact_info_sex")));
+				userbasicinfo.setUserBasicInfoAddress(rs.getString("user_contact_info_address"));
 
 			}
 
@@ -64,35 +65,40 @@ public class UserBasicInfoDao extends BaseDao<UserBasicInfo> {
 
 	public void UpdateByt_user_id(String t_user_id, String user_basic_info_birthday, String user_basic_info_sex) {
 		if (t_user_id == null || user_basic_info_birthday == null || user_basic_info_sex == null)
-			return;	
+			return;
 
-		Object params[] = new Object[] { DateTimeSql.GetDate(user_basic_info_birthday),Integer.parseInt( user_basic_info_sex), t_user_id };
+		Object params[] = new Object[] { DateTimeSql.GetDate(user_basic_info_birthday),
+				Integer.parseInt(user_basic_info_sex), t_user_id };
 		int types[] = new int[] { Types.TIMESTAMP, Types.INTEGER, Types.VARCHAR };
 		getJdbcTemplate().update(UPDATE_USERBASICINFO_0_BY_USER_ID, params, types);
 	}
 
-	public void UpdateByt_user_id(String t_user_id, String user_contact_info_name,String user_basic_info_birthday, String user_basic_info_sex) {
+	public void UpdateByt_user_id(String t_user_id, String user_contact_info_name, String user_basic_info_birthday,
+			String user_basic_info_sex) {
 		if (t_user_id == null || user_basic_info_birthday == null || user_basic_info_sex == null)
 			return;
 
-		Object params[] = new Object[] {user_contact_info_name, DateTimeSql.GetDate(user_basic_info_birthday), Integer.parseInt(user_basic_info_sex), t_user_id };
-		int types[] = new int[] { Types.VARCHAR,Types.TIMESTAMP, Types.INTEGER, Types.VARCHAR };
+		Object params[] = new Object[] { user_contact_info_name, DateTimeSql.GetDate(user_basic_info_birthday),
+				Integer.parseInt(user_basic_info_sex), t_user_id };
+		int types[] = new int[] { Types.VARCHAR, Types.TIMESTAMP, Types.INTEGER, Types.VARCHAR };
 		getJdbcTemplate().update(UPDATE_USERBASICINFO_1_BY_USER_ID, params, types);
 	}
-	
-	public void UpdateByt_user_id(String t_user_id, String user_contact_info_name,Date user_basic_info_birthday, int user_basic_info_sex) {
-		if (t_user_id == null || user_basic_info_birthday == null )
+
+	public void UpdateByt_user_id(String t_user_id, String user_contact_info_name, Date user_basic_info_birthday,
+			int user_basic_info_sex) {
+		if (t_user_id == null || user_basic_info_birthday == null)
 			return;
 
-		Object params[] = new Object[] {user_contact_info_name, user_basic_info_birthday, user_basic_info_sex, t_user_id };
-		int types[] = new int[] { Types.VARCHAR,Types.TIMESTAMP, Types.INTEGER, Types.VARCHAR };
+		Object params[] = new Object[] { user_contact_info_name, user_basic_info_birthday, user_basic_info_sex,
+				t_user_id };
+		int types[] = new int[] { Types.VARCHAR, Types.TIMESTAMP, Types.INTEGER, Types.VARCHAR };
 		getJdbcTemplate().update(UPDATE_USERBASICINFO_1_BY_USER_ID, params, types);
 	}
-	
-	public void UpdateByt_user_id(String t_user_id, UserBasicInfo userbasicinfo) {
-		UpdateByt_user_id(t_user_id,userbasicinfo.getUser_basic_info_name(),userbasicinfo.getUser_basic_info_birthday(),userbasicinfo.getUser_basic_info_sex());
-	}
 
+	public void UpdateByt_user_id(String t_user_id, UserBasicInfo userbasicinfo) {
+		UpdateByt_user_id(t_user_id, userbasicinfo.getUserBasicInfoName(), userbasicinfo.getUserBasicInfoBirthday(),
+				userbasicinfo.getUserBasicInfoSex());
+	}
 
 	/*
 	 * 根据用户ID得到UserContactInfo
@@ -106,11 +112,11 @@ public class UserBasicInfoDao extends BaseDao<UserBasicInfo> {
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				userbasicinfo.setId(rs.getString("id"));
-				userbasicinfo.setT_user_id(t_user_id);
-				userbasicinfo.setUser_basic_info_name(rs.getString("user_contact_info_name"));
-				userbasicinfo.setUser_basic_info_birthday(DateTimeSql.GetDate(rs.getString("user_contact_info_birthday")));
-				userbasicinfo.setUser_basic_info_sex(Integer.parseInt(rs.getString("user_contact_info_sex")));
-				userbasicinfo.setUser_basic_info_address(rs.getString("user_contact_info_address"));
+				userbasicinfo.setUserId(t_user_id);
+				userbasicinfo.setUserBasicInfoName(rs.getString("user_contact_info_name"));
+				userbasicinfo.setUserBasicInfoBirthday(DateTimeSql.GetDate(rs.getString("user_contact_info_birthday")));
+				userbasicinfo.setUserBasicInfoSex(Integer.parseInt(rs.getString("user_contact_info_sex")));
+				userbasicinfo.setUserBasicInfoAddress(rs.getString("user_contact_info_address"));
 
 			}
 
@@ -143,5 +149,4 @@ public class UserBasicInfoDao extends BaseDao<UserBasicInfo> {
 
 	}
 
-	
 }

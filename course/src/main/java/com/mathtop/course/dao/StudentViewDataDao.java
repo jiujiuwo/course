@@ -55,27 +55,35 @@ public class StudentViewDataDao extends BaseDao<TeacherViewData> {
 	@Autowired
 	SchoolDepartmentDao schooldepartmentDao;
 
-	private final String GET_STUDENTVIEWDATA_BY_t_natural_class_id = "select id,t_user_id "
+	private final String GET_STUDENTVIEWDATA_BY_NATUAL_CLASS_ID = "select id,t_user_id "
 			+ " from t_student where id in(select t_student_id from t_natural_class_student where t_natural_class_id=?) order by student_num";
 
-	private final String GET_PAGED_STUDENTVIEWDATA_BY_t_natural_class_id = "select id,t_user_id "
+	private final String GET_PAGED_STUDENTVIEWDATA_BY_NATURAL_CLASS_ID = "select id,t_user_id "
 			+ " from t_student where id in(select t_student_id from t_natural_class_student where t_natural_class_id=?) order by student_num limit ?,?";
 
-	private final String GET_STUDENTVIEWDATA_BY_TEACHINGCLASSID = "select t_student.id,t_user_id " + " from t_student ,t_natural_class"
-			+ " where t_student.id in(select t_student_id from t_teaching_class_student where t_teaching_class_id =?) and "
-			+ " t_natural_class.id in (select t_natural_class_id from t_natural_class_student where t_student_id=t_student.id)"
-			+ " order by name,student_num limit ?,?";
+	private final String GET_STUDENTVIEWDATA_BY_COURSE_TEACHING_CLASS_ID = "select A.id,A.t_user_id  from t_student A "
+			+ "LEFT OUTER JOIN t_course_teaching_class_student  B ON B.t_student_id= A.id "
+			+ "where B.t_course_teaching_class_id =? " + "order by show_index " + "limit ?,?";
 
-	private final String GET_ALL_STUDENTVIEWDATA_BY_TEACHINGCLASSID = "select t_student.id,t_user_id " + " from t_student ,t_natural_class"
-			+ " where t_student.id in(select t_student_id from t_teaching_class_student where t_teaching_class_id =?) and "
-			+ " t_natural_class.id in (select t_natural_class_id from t_natural_class_student where t_student_id=t_student.id)"
-			+ " order by name,student_num";
+	private final String GET_ALL_STUDENTVIEWDATA_BY_COURSE_TEACHING_CLASS_ID = "select A.id,t_user_id " 
+			 +"from t_student A "
+			 +"left outer join t_course_teaching_class_student C on A.id=C.t_student_id "
+			 +"left outer join t_natural_class_student D on A.id=D.t_student_id "
+			 +"left outer join t_natural_class B on B.id=D.t_natural_class_id "			 
+			 +"where C.t_course_teaching_class_id =? "
+		 +"order by show_index,name,student_num";
 
-	private final String GET_STUDENTRVIEWDATA_COUNT_t_natural_class_id = "select count(*)" + " from t_student"
+	private final String GET_STUDENTRVIEWDATA_COUNT_NATURAL_CLASS_ID = "select count(*)" + " from t_student"
 			+ " where id in(select t_student_id from t_natural_class_student where t_natural_class_id=?)";
 
-	private final String GET_STUDENTRVIEWDATA_COUNT_BY_TEACHINGCLASSID = "select count(*)" + " from t_teaching_class_student"
-			+ " where t_teaching_class_id=?";
+	private final String GET_STUDENTRVIEWDATA_COUNT_BY_TEACHINGCLASSID = "select count(*)"
+			+ " from t_course_teaching_class_student" + " where t_course_teaching_class_id=?";
+
+	private final String GET_STUDENTRVIEWDATA_NOT_GROUPED_BY_COURSE_TEACHING_CLASS_ID = "select A.t_student_id ,B.t_user_id "
+			+ "from t_course_teaching_class_student A LEFT OUTER JOIN t_student  B ON B.id= A.t_student_id "
+			+ "where A.t_course_teaching_class_id=? and B.t_user_id not in (  select t_user_id  from t_user_group "
+			+ "where t_group_id in ( select t_group_id  from t_course_teaching_class_student_group "
+			+ "where t_course_teaching_class_id=? )) order by A.show_index";
 
 	/**
 	 * 根据id得到学生视图
@@ -84,7 +92,7 @@ public class StudentViewDataDao extends BaseDao<TeacherViewData> {
 
 		Student student = studentDao.getStudentByID(id);
 		if (student != null)
-			return getStudentViewDataByt_user_id(student.getT_user_id());
+			return getStudentViewDataByUserId(student.getUserId());
 		return null;
 	}
 
@@ -95,30 +103,33 @@ public class StudentViewDataDao extends BaseDao<TeacherViewData> {
 
 		Student student = studentDao.getStudentByStudentNum(student_num);
 		if (student != null)
-			return getStudentViewDataByt_user_id(student.getT_user_id());
+			return getStudentViewDataByUserId(student.getUserId());
 		return null;
 	}
 
 	/**
 	 * 根据t_user_id得到学生视图
 	 */
-	public StudentViewData getStudentViewDataByt_user_id(String t_user_id) {
+	public StudentViewData getStudentViewDataByUserId(String t_user_id) {
 
 		User u = userDao.getUserByID(t_user_id);
 		UserBasicInfo userbasicinfo = userbasicinfoDao.getUserBasicInfoByt_user_id(t_user_id);
-		List<UserContactInfoViewData> usercontactinfoviewdata = usercontactinfoviewDao.getUserContactInfoViewDataByt_user_id(t_user_id);
-		Student student = studentDao.getStudentByt_user_id(t_user_id);
+		List<UserContactInfoViewData> usercontactinfoviewdata = usercontactinfoviewDao
+				.getUserContactInfoViewDataByt_user_id(t_user_id);
+		Student student = studentDao.getStudentByUserId(t_user_id);
 		if (student != null) {
-			NaturalClassStudent naturalclassstudent = naturalclassstudentDao.getNaturalClassStudentByStudentId(student.getId());
+			NaturalClassStudent naturalclassstudent = naturalclassstudentDao
+					.getNaturalClassStudentByStudentId(student.getId());
 			if (naturalclassstudent != null) {
 				DepartmentNaturalClass naturalclassDepartment = naturalclassschoolDao
-						.getNaturalClassStudentByt_natural_class_id(naturalclassstudent.getT_natural_clas_id());
+						.getByNaturalclassId(naturalclassstudent.getNaturalClassId());
 				if (naturalclassDepartment != null) {
 					Department department = naturalclassschoolDao
-							.getDepartmentByt_natural_class_id(naturalclassDepartment.getT_natural_class_id());
+							.getDepartmentByt_natural_class_id(naturalclassDepartment.getNaturalClassId());
 
-					School school = schoolDao.getByID(schooldepartmentDao.gett_school_idByt_department_id(department.getId()));
-					NaturalClass naturalclass = naturalclassDao.getByID(naturalclassDepartment.getT_natural_class_id());
+					School school = schoolDao
+							.getByID(schooldepartmentDao.getSchoolIdByDepartmentId(department.getId()));
+					NaturalClass naturalclass = naturalclassDao.getByID(naturalclassDepartment.getNaturalClassId());
 					StudentViewData view = new StudentViewData();
 					view.setUser(u);
 					view.setStudent(student);
@@ -145,17 +156,18 @@ public class StudentViewDataDao extends BaseDao<TeacherViewData> {
 
 		List<StudentViewData> list = new ArrayList<StudentViewData>();
 
-		getJdbcTemplate().query(GET_STUDENTVIEWDATA_BY_t_natural_class_id, new Object[] { t_natural_class_id }, new RowCallbackHandler() {
+		getJdbcTemplate().query(GET_STUDENTVIEWDATA_BY_NATUAL_CLASS_ID, new Object[] { t_natural_class_id },
+				new RowCallbackHandler() {
 
-			@Override
-			public void processRow(ResultSet rs) throws SQLException {
-				StudentViewData tvd = getStudentViewDataByt_user_id(rs.getString("t_user_id"));
+					@Override
+					public void processRow(ResultSet rs) throws SQLException {
+						StudentViewData tvd = getStudentViewDataByUserId(rs.getString("t_user_id"));
 
-				list.add(tvd);
+						list.add(tvd);
 
-			}
+					}
 
-		});
+				});
 
 		return list;
 	}
@@ -167,12 +179,12 @@ public class StudentViewDataDao extends BaseDao<TeacherViewData> {
 
 		List<StudentViewData> list = new ArrayList<StudentViewData>();
 
-		getJdbcTemplate().query(GET_PAGED_STUDENTVIEWDATA_BY_t_natural_class_id,
+		getJdbcTemplate().query(GET_PAGED_STUDENTVIEWDATA_BY_NATURAL_CLASS_ID,
 				new Object[] { t_natural_class_id, PageBegin * PageSize, PageSize }, new RowCallbackHandler() {
 
 					@Override
 					public void processRow(ResultSet rs) throws SQLException {
-						StudentViewData tvd = getStudentViewDataByt_user_id(rs.getString("t_user_id"));
+						StudentViewData tvd = getStudentViewDataByUserId(rs.getString("t_user_id"));
 
 						list.add(tvd);
 
@@ -186,16 +198,18 @@ public class StudentViewDataDao extends BaseDao<TeacherViewData> {
 	/*
 	 * 根据教学班id得到用户
 	 */
-	public List<StudentViewData> getStudentViewByTeachingClassId(String t_course_teaching_class_id, int PageBegin, int PageSize) {
+	public List<StudentViewData> getStudentViewByCourseTeachingClassId(String t_course_teaching_class_id, int PageBegin,
+			int PageSize) {
 
 		List<StudentViewData> list = new ArrayList<StudentViewData>();
 
-		getJdbcTemplate().query(GET_STUDENTVIEWDATA_BY_TEACHINGCLASSID,
+		getJdbcTemplate().query(GET_STUDENTVIEWDATA_BY_COURSE_TEACHING_CLASS_ID,
 				new Object[] { t_course_teaching_class_id, PageBegin * PageSize, PageSize }, new RowCallbackHandler() {
 
 					@Override
 					public void processRow(ResultSet rs) throws SQLException {
-						StudentViewData tvd = getStudentViewDataByt_user_id(rs.getString("t_user_id"));
+
+						StudentViewData tvd = getStudentViewDataByUserId(rs.getString("t_user_id"));
 						if (tvd != null)
 							list.add(tvd);
 
@@ -209,17 +223,17 @@ public class StudentViewDataDao extends BaseDao<TeacherViewData> {
 	/*
 	 * 根据教学班id得到用户
 	 */
-	public List<StudentViewData> getStudentViewByTeachingClassId(String t_course_teaching_class_id) {
-
+	public List<StudentViewData> getStudentViewByCourseTeachingClassId(String t_course_teaching_class_id) {
+		System.out.println(t_course_teaching_class_id);
 		List<StudentViewData> list = new ArrayList<StudentViewData>();
 
-		getJdbcTemplate().query(GET_ALL_STUDENTVIEWDATA_BY_TEACHINGCLASSID, new Object[] { t_course_teaching_class_id },
-				new RowCallbackHandler() {
+		getJdbcTemplate().query(GET_ALL_STUDENTVIEWDATA_BY_COURSE_TEACHING_CLASS_ID,
+				new Object[] { t_course_teaching_class_id }, new RowCallbackHandler() {
 
 					@Override
 					public void processRow(ResultSet rs) throws SQLException {
-						StudentViewData tvd = getStudentViewDataByt_user_id(rs.getString("t_user_id"));
-
+						StudentViewData tvd = getStudentViewDataByUserId(rs.getString("t_user_id"));
+						
 						if (tvd != null)
 							list.add(tvd);
 
@@ -231,21 +245,44 @@ public class StudentViewDataDao extends BaseDao<TeacherViewData> {
 	}
 
 	/**
+	 * 得到所有未分组的学生
+	 */
+	public List<StudentViewData> getNotGroupedStudentViewByCourseTeachingClassId(String t_course_teaching_class_id) {
+
+		List<StudentViewData> list = new ArrayList<StudentViewData>();
+
+		getJdbcTemplate().query(GET_STUDENTRVIEWDATA_NOT_GROUPED_BY_COURSE_TEACHING_CLASS_ID,
+				new Object[] { t_course_teaching_class_id, t_course_teaching_class_id }, new RowCallbackHandler() {
+
+					@Override
+					public void processRow(ResultSet rs) throws SQLException {
+						StudentViewData tvd = getStudentViewDataByUserId(rs.getString("t_user_id"));
+
+						list.add(tvd);
+
+					}
+
+				});
+
+		return list;
+	}
+
+	/**
 	 * 得到指定自然班学生人数
 	 */
-	long getCountByt_natural_class_id(String t_naturalclass_id) {
+	long getCountByNaturalClassId(String t_natural_class_id) {
 
-		return getJdbcTemplate().queryForObject(GET_STUDENTRVIEWDATA_COUNT_t_natural_class_id, new Object[] { t_naturalclass_id },
-				new int[] { Types.VARCHAR }, Long.class);
+		return getJdbcTemplate().queryForObject(GET_STUDENTRVIEWDATA_COUNT_NATURAL_CLASS_ID,
+				new Object[] { t_natural_class_id }, new int[] { Types.VARCHAR }, Long.class);
 	}
 
 	/**
 	 * 得到指定教学班人数
 	 */
-	long getCountByTeachingClassId(String t_teaching_id) {
+	long getCountByCourseTeachingClassId(String t_course_teaching_class_id) {
 
-		return getJdbcTemplate().queryForObject(GET_STUDENTRVIEWDATA_COUNT_BY_TEACHINGCLASSID, new Object[] { t_teaching_id },
-				new int[] { Types.VARCHAR }, Long.class);
+		return getJdbcTemplate().queryForObject(GET_STUDENTRVIEWDATA_COUNT_BY_TEACHINGCLASSID,
+				new Object[] { t_course_teaching_class_id }, new int[] { Types.VARCHAR }, Long.class);
 	}
 
 	/**
@@ -257,43 +294,53 @@ public class StudentViewDataDao extends BaseDao<TeacherViewData> {
 	 *            每页的记录数
 	 * @return 包含分页信息的Page对象
 	 */
-	public Page<StudentViewData> getPageByt_natural_class_id(String t_naturalclass_id, int pageNo, int pageSize) {
+	public Page<StudentViewData> getPageByt_natural_class_id(String t_natural_class_id, int pageNo, int pageSize) {
 
-		long totalCount = getCountByt_natural_class_id(t_naturalclass_id);
+		long totalCount = getCountByNaturalClassId(t_natural_class_id);
 		if (totalCount < 1)
 			return new Page<StudentViewData>();
 
 		// 实际查询返回分页对象
 		int startIndex = Page.getStartOfPage(pageNo, pageSize);
 
-		List<StudentViewData> data = PageQuery(t_naturalclass_id, pageNo - 1, pageSize);
+		List<StudentViewData> data = PageQuery(t_natural_class_id, pageNo - 1, pageSize);
 
 		return new Page<StudentViewData>(startIndex, totalCount, pageSize, data);
 
 	}
 
-	public Page<StudentViewData> getPageByTeachingClassId(String t_teaching_id, int pageNo, int pageSize) {
-		long totalCount = getCountByTeachingClassId(t_teaching_id);
+	/**
+	 * 分页取得教学班（t_course_teaching_class_id）的全部学生
+	 */
+	public Page<StudentViewData> getPageByCourseTeachingClassId(String t_course_teaching_class_id, int pageNo,
+			int pageSize) {
+		long totalCount = getCountByCourseTeachingClassId(t_course_teaching_class_id);
+
 		if (totalCount < 1)
 			return new Page<StudentViewData>();
 
 		// 实际查询返回分页对象
 		int startIndex = Page.getStartOfPage(pageNo, pageSize);
 
-		List<StudentViewData> data = getStudentViewByTeachingClassId(t_teaching_id, pageNo - 1, pageSize);
+		List<StudentViewData> data = getStudentViewByCourseTeachingClassId(t_course_teaching_class_id, pageNo - 1,
+				pageSize);
 
 		return new Page<StudentViewData>(startIndex, totalCount, pageSize, data);
 	}
 
-	public Page<StudentViewData> getPageByTeachingClassId(String t_teaching_id) {
-		long totalCount = getCountByTeachingClassId(t_teaching_id);
+	/**
+	 * 取得教学班（t_course_teaching_class_id）的全部学生
+	 */
+	public Page<StudentViewData> getPageByCourseTeachingClassId(String t_course_teaching_class_id) {
+		long totalCount = getCountByCourseTeachingClassId(t_course_teaching_class_id);
 		if (totalCount < 1)
 			return new Page<StudentViewData>();
 
 		// 实际查询返回分页对象
 		int startIndex = 0;
 
-		List<StudentViewData> data = getStudentViewByTeachingClassId(t_teaching_id, 0, (int) totalCount);
+		List<StudentViewData> data = getStudentViewByCourseTeachingClassId(t_course_teaching_class_id, 0,
+				(int) totalCount);
 
 		return new Page<StudentViewData>(startIndex, totalCount, (int) totalCount, data);
 	}

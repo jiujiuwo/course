@@ -13,8 +13,8 @@ public class Course extends BaseDomain{
 	private String num;
 	private int class_hours;
 	private int experiment_hours;	
-	private String t_course_type_id;	
-	private String t_course_style_id;
+	private String courseTypeId;	
+	private String courseStyleId;
 	
 	
 	public String getId() {
@@ -53,18 +53,19 @@ public class Course extends BaseDomain{
 	public void setExperiment_hours(int experiment_hours) {
 		this.experiment_hours = experiment_hours;
 	}
+	public String getCourseTypeId() {
+		return courseTypeId;
+	}
+	public void setCourseTypeId(String courseTypeId) {
+		this.courseTypeId = courseTypeId;
+	}
+	public String getCourseStyleId() {
+		return courseStyleId;
+	}
+	public void setCourseStyleId(String courseStyleId) {
+		this.courseStyleId = courseStyleId;
+	}
 	
-	public String getT_course_type_id() {
-		return t_course_type_id;
-	}
-	public void setT_course_type_id(String t_course_type_id) {
-		this.t_course_type_id = t_course_type_id;
-	}
-	public String getT_course_style_id() {
-		return t_course_style_id;
-	}
-	public void setT_course_style_id(String t_course_style_id) {
-		this.t_course_style_id = t_course_style_id;
-	}
+	
 
 }

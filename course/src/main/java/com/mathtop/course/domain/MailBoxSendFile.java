@@ -12,7 +12,7 @@ public class MailBoxSendFile extends BaseDomain {
 	
 
 	 private String id;
-	 private String t_mail_box_send_id;
+	 private String mailBoxSendId;
 	 private String filename;
 	 private String filepath;
 	public String getId() {
@@ -34,10 +34,11 @@ public class MailBoxSendFile extends BaseDomain {
 	public void setFilepath(String filepath) {
 		this.filepath = filepath;
 	}
-	public String getT_mail_box_send_id() {
-		return t_mail_box_send_id;
+	public String getMailBoxSendId() {
+		return mailBoxSendId;
 	}
-	public void setT_mail_box_send_id(String t_mail_box_send_id) {
-		this.t_mail_box_send_id = t_mail_box_send_id;
-	}   
+	public void setMailBoxSendId(String mailBoxSendId) {
+		this.mailBoxSendId = mailBoxSendId;
+	}
+	
 }

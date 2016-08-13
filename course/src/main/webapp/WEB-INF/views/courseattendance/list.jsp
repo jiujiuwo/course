@@ -34,11 +34,11 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home" onLoad="ShowErrMsg()">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 	<%@ include file="../../shared/CourseTeachingClassInfo.jsp"%>
-	<div id="DocumentPageTopSeparatorLine"></div>
+	
 
 	<div class="DocumentPage">
 		<div class="DocumentPageLeftArea ">
@@ -54,7 +54,7 @@
 
 			<ol class="breadcrumb">
 				<li><a href="#">课程系统</a></li>
-				<li><a href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseteachingclass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
+				<li><a href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseTeachingClass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
 				<li class="active">${selectedCourseAttendanceTypeData.name}</li>
 			</ol>
 
@@ -341,13 +341,11 @@
 
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
-
-	<%@ include file="../../shared/pageFooter.jsp"%>
+	
 
 	<%@ include file="../../shared/importJs.jsp"%>
 	<%@ include file="../../shared/importdatetimepickerjs.jsp"%>
-
+<%@ include file="../../shared/sysLastInclude.jsp"%>
 
 	<script type="text/javascript">
 		$("#collapseAtendance").addClass("in");
@@ -408,19 +406,6 @@
 	</script>
 
 
-
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

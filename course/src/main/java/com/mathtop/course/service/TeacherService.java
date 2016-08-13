@@ -47,7 +47,7 @@ public class TeacherService {
 	 * @param user
 	 */
 	public String register(Department department, Teacher teacher) throws UserExistException {
-		Teacher u = teacherDao.getTeacherByTeacherNum(teacher.getTeacher_num());
+		Teacher u = teacherDao.getTeacherByTeacherNum(teacher.getTeacherNum());
 		if (u != null) {
 			throw new UserExistException("教师工号已经存在");
 		} else {
@@ -92,17 +92,17 @@ public class TeacherService {
 			String t_user_id = userService.register(user);
 
 			// 添加教师
-			teacher.setT_user_id(t_user_id);
+			teacher.setUserId(t_user_id);
 			register(department, teacher);
 
 			// 添加用户基本信息
-			userbasicinfo.setT_user_id(t_user_id);
+			userbasicinfo.setUserId(t_user_id);
 			userbasicinfoDao.add(userbasicinfo);
 
 			// 添加联系方式
 			if (usercontactinfos != null) {
 				for (UserContactInfo u : usercontactinfos)
-					u.setT_user_id(t_user_id);
+					u.setUserId(t_user_id);
 
 				for (UserContactInfo u : usercontactinfos)
 					usercontactinfoDao.add(u);
@@ -132,17 +132,17 @@ public class TeacherService {
 		String t_user_id=user.getId();
 		if(t_user_id==null)
 			return ;
-		String teacher_num=teacher.getTeacher_num();
+		String teacherNum=teacher.getTeacherNum();
 		
-		teacher=teacherDao.getTeacherByt_user_id(t_user_id);
+		teacher=teacherDao.getTeacherByUserId(t_user_id);
 		try {			
 
 			// 修改教师
-			teacherDao.UpdateTeacherNumById(teacher.getId(), teacher_num);
+			teacherDao.UpdateTeacherNumById(teacher.getId(), teacherNum);
 			
 			
 			//  修改用户基本信息
-			userbasicinfo.setT_user_id(t_user_id);
+			userbasicinfo.setUserId(t_user_id);
 			userbasicinfoDao.UpdateByt_user_id(t_user_id, userbasicinfo);
 
 			//  修改联系方式
@@ -163,8 +163,8 @@ public class TeacherService {
 	/**
 	 * 根据教师工号得到教师视图
 	 * */
-	public TeacherViewData getTeacherViewByTeacherNum(String teacher_num) {
-		return teacherviewdataDao.getTeacherViewDataByTeacherNum(teacher_num);
+	public TeacherViewData getTeacherViewByTeacherNum(String teacherNum) {
+		return teacherviewdataDao.getTeacherViewDataByTeacherNum(teacherNum);
 	}
 
 	public TeacherViewData getTeacherViewById(String id) {

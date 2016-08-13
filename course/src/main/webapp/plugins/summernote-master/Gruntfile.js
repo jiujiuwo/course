@@ -12,9 +12,62 @@ module.exports = function (grunt) {
       data = grunt.file.readJSON(filepath);
       // The concatenated file won't pass onevar
       // But our modules can
-      DELETE data.onever;
+      delete data.onever;
     } catch (e) { }
     return data;
+  };
+
+  var customLaunchers = {
+    /*
+    'SL_IE8': {
+      base: 'SauceLabs',
+      browserName: 'internet explorer',
+      version: '8.0',
+      platform: 'windows XP'
+    },
+    */
+    'SL_IE9': {
+      base: 'SauceLabs',
+      browserName: 'internet explorer',
+      version: '9.0',
+      platform: 'windows 7'
+    },
+    'SL_IE10': {
+      base: 'SauceLabs',
+      browserName: 'internet explorer',
+      version: '10.0',
+      platform: 'windows 8'
+    },
+    'SL_IE11': {
+      base: 'SauceLabs',
+      browserName: 'internet explorer',
+      version: '11.0',
+      platform: 'windows 8.1'
+    },
+    'SL_EDGE': {
+      base: 'SauceLabs',
+      browserName: 'microsoftedge',
+      version: '20',
+      platform: 'windows 10'
+    },
+    'SL_CHROME': {
+      base: 'SauceLabs',
+      browserName: 'chrome',
+      version: '43',
+      platform: 'windows 8'
+    },
+    'SL_FIREFOX': {
+      base: 'SauceLabs',
+      browserName: 'firefox',
+      version: '38',
+      platform: 'windows 8'
+    },
+    'SL_SAFARI': {
+      base: 'SauceLabs',
+      browserName: 'safari',
+      version: '8.0',
+      platform: 'OS X 10.10'
+    }
   };
 
   grunt.initConfig({
@@ -40,6 +93,7 @@ module.exports = function (grunt) {
           'lang/**/*.js',
           'Gruntfile.js',
           'test/**/*.js',
+          '!test/coverage/**/*.js',
           'build/*.js'
         ],
         options: {
@@ -52,9 +106,10 @@ module.exports = function (grunt) {
       }
     },
 
-    // qunit: javascript unit test.
-    qunit: {
-      all: [ 'test/*.html' ]
+    jscs: {
+      src: ['*.js', 'src/**/*.js', 'test/**/*.js'],
+      gruntfile: 'Gruntfile.js',
+      build: 'build'
     },
 
     // uglify: minify javascript
@@ -63,7 +118,16 @@ module.exports = function (grunt) {
         banner: '/*! Summernote v<%=pkg.version%> | (c) 2013-2015 Alan Hong and other contributors | MIT license */\n'
       },
       all: {
-        files: { 'dist/summernote.min.js': ['dist/summernote.js'] }
+        files: [
+          { 'dist/summernote.min.js': ['dist/summernote.js'] },
+          {
+            expand: true,
+            cwd: 'dist/lang',
+            src: '**/*.js',
+            dest: 'dist/lang',
+            ext: '.min.js'
+          }
+        ]
       }
     },
 
@@ -92,10 +156,11 @@ module.exports = function (grunt) {
           expand: true,
           src: [
             'dist/*.js',
-            'dist/summernote.css'
+            'dist/*.css',
+            'dist/font/*'
           ]
         }, {
-          src: ['plugin/*.js'],
+          src: ['plugin/**/*.js', 'lang/**/*.js'],
           dest: 'dist/'
         }]
       }
@@ -113,8 +178,8 @@ module.exports = function (grunt) {
     // watch source code change
     watch: {
       all: {
-        files: ['src/less/*.less', 'src/js/**/*.js'],
-        tasks: ['recess', 'jshint', 'qunit'],
+        files: ['src/less/*.less', 'src/js/**/*.js', 'test/unit/**/*.js'],
+        tasks: ['recess', 'lint'],
         options: {
           livereload: true
         }
@@ -131,43 +196,68 @@ module.exports = function (grunt) {
       }
     },
 
-    'saucelabs-qunit': {
-      'all': {
-        options: {
-          urls: ['http://localhost:3000/test/unit.html'],
+    karma: {
+      options: {
+        configFile: './test/karma.conf.js'
+      },
+      all: {
+        // Chrome, ChromeCanary, Firefox, Opera, Safari, PhantomJS, IE
+        browsers: ['PhantomJS'],
+        reporters: ['progress']
+      },
+      dist: {
+        singleRun: true,
+        browsers: ['PhantomJS']
+      },
+      travis: {
+        singleRun: true,
+        browsers: ['PhantomJS'],
+        reporters: ['progress', 'coverage']
+      },
+      saucelabs: {
+        reporters: ['saucelabs'],
+        sauceLabs: {
+          testName: '[Travis] unit tests for summernote',
+          startConnect: false,
+          tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
           build: process.env.TRAVIS_BUILD_NUMBER,
-          tags: [process.env.TRAVIS_BRANCH, process.env.TRAVIS_PULL_REQUEST],
-          browsers: [{
-            browserName: 'internet explorer',
-            version: '8.0',
-            platform: 'windows XP'
-          }, {
-            browserName: 'internet explorer',
-            version: '9.0',
-            platform: 'windows 7'
-          }, {
-            browserName: 'internet explorer',
-            version: '10.0',
-            platform: 'windows 8'
-          }, {
-            browserName: 'internet explorer',
-            version: '11.0',
-            platform: 'windows 8.1'
-          }, {
-            browserName: 'chrome',
-            version: '43',
-            platform: 'windows 8'
-          }, {
-            browserName: 'firefox',
-            version: '38',
-            platform: 'windows 8'
-          }, {
-            browserName: 'safari',
-            version: '8.0',
-            platform: 'OS X 10.10'
-          }],
-          testname: 'unit test for summernote',
-          'public': 'public'
+          tags: [process.env.TRAVIS_BRANCH, process.env.TRAVIS_PULL_REQUEST]
+        },
+        captureTimeout: 120000,
+        customLaunchers: customLaunchers,
+        browsers: Object.keys(customLaunchers),
+        singleRun: true
+      }
+    },
+
+    coveralls: {
+      options: {
+        force: false
+      },
+      travis: {
+        src: 'test/coverage/**/lcov.info'
+      }
+    },
+    clean: {
+      dist: ['dist/**/*']
+    },
+    copy: {
+      dist: {
+        files: [
+          { src: 'lang/*', dest: 'dist/' },
+          { expand: true, cwd: 'src/icons/dist/font/', src: ['**', '!*.html'], dest: 'dist/font/' },
+          { src: 'src/icons/dist/summernote.css', dest: 'src/icons/dist/summernote.less' }
+        ]
+      }
+    },
+    webfont: {
+      icons: {
+        src: 'src/icons/*.svg',
+        dest: 'src/icons/dist/font',
+        destCss: 'src/icons/dist/',
+        options: {
+          font: 'summernote',
+          template: 'src/icons/templates/summernote.css'
         }
       }
     }
@@ -182,14 +272,24 @@ module.exports = function (grunt) {
   // server: runt server for development
   grunt.registerTask('server', ['connect', 'watch']);
 
+  // lint
+  grunt.registerTask('lint', ['jshint', 'jscs']);
+
   // test: unit test on test folder
-  grunt.registerTask('test', ['jshint', 'qunit']);
+  grunt.registerTask('test', ['lint', 'karma:all']);
+
+  // test: unit test on travis
+  grunt.registerTask('test-travis', ['lint', 'karma:travis']);
 
   // test: saucelabs test
-  grunt.registerTask('saucelabs-test', ['connect', 'saucelabs-qunit']);
+  grunt.registerTask('saucelabs-test', ['karma:saucelabs']);
 
   // dist: make dist files
-  grunt.registerTask('dist', ['build', 'test', 'uglify', 'recess', 'compress']);
+  grunt.registerTask('dist', [
+    'clean:dist',
+    'build', 'webfont', 'lint', 'karma:dist',
+    'copy:dist', 'uglify', 'recess', 'compress'
+  ]);
 
   // default: server
   grunt.registerTask('default', ['server']);
@@ -198,5 +298,4 @@ module.exports = function (grunt) {
   grunt.registerTask('meteor-test', 'exec:meteor-test');
   grunt.registerTask('meteor-publish', 'exec:meteor-publish');
   grunt.registerTask('meteor', ['meteor-test', 'meteor-publish']);
-
 };

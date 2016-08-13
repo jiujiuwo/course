@@ -8,25 +8,26 @@ public class DepartmentNaturalClass extends BaseDomain{
 	private static final long serialVersionUID = -9162111942743408639L;
 	
 	private String id;
-	private String t_department_id;
-	private String t_natural_class_id;
+	private String departmentId;
+	private String naturalClassId;
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public String getDepartmentId() {
+		return departmentId;
+	}
+	public void setDepartmentId(String departmentId) {
+		this.departmentId = departmentId;
+	}
+	public String getNaturalClassId() {
+		return naturalClassId;
+	}
+	public void setNaturalClassId(String naturalClassId) {
+		this.naturalClassId = naturalClassId;
 	}	
-	public String getT_department_id() {
-		return t_department_id;
-	}
-	public void setT_department_id(String t_department_id) {
-		this.t_department_id = t_department_id;
-	}
-	public String getT_natural_class_id() {
-		return t_natural_class_id;
-	}
-	public void setT_natural_class_id(String t_natural_class_id) {
-		this.t_natural_class_id = t_natural_class_id;
-	}
+
 
 }

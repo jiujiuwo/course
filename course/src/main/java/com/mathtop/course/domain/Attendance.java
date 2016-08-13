@@ -10,46 +10,47 @@ public class Attendance extends BaseDomain{
 	private static final long serialVersionUID = 9012304761222807798L;
 
 	private String id;
-	private String t_course_teacing_class_id;
-	private String t_attendance_type_id;
-	private String t_teacher_id;
-	private Date begin_datetime;
-	private Date end_datetime;
+	private String courseTeacingClassId;
+	private String attendanceTypeId;
+	private String teacherId;
+	private Date beginDatetime;
+	private Date endDatetime;
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getT_course_teacing_class_id() {
-		return t_course_teacing_class_id;
+	public String getCourseTeacingClassId() {
+		return courseTeacingClassId;
 	}
-	public void setT_course_teacing_class_id(String t_course_teacing_class_id) {
-		this.t_course_teacing_class_id = t_course_teacing_class_id;
+	public void setCourseTeacingClassId(String courseTeacingClassId) {
+		this.courseTeacingClassId = courseTeacingClassId;
 	}
-	public String getT_teacher_id() {
-		return t_teacher_id;
+	public String getAttendanceTypeId() {
+		return attendanceTypeId;
 	}
-	public void setT_teacher_id(String t_teacher_id) {
-		this.t_teacher_id = t_teacher_id;
+	public void setAttendanceTypeId(String attendanceTypeId) {
+		this.attendanceTypeId = attendanceTypeId;
 	}
-	public Date getBegin_datetime() {
-		return begin_datetime;
+	public String getTeacherId() {
+		return teacherId;
 	}
-	public void setBegin_datetime(Date begin_datetime) {
-		this.begin_datetime = begin_datetime;
+	public void setTeacherId(String teacherId) {
+		this.teacherId = teacherId;
 	}
-	public Date getEnd_datetime() {
-		return end_datetime;
+	public Date getBeginDatetime() {
+		return beginDatetime;
 	}
-	public void setEnd_datetime(Date end_datetime) {
-		this.end_datetime = end_datetime;
+	public void setBeginDatetime(Date beginDatetime) {
+		this.beginDatetime = beginDatetime;
 	}
-	public String getT_attendance_type_id() {
-		return t_attendance_type_id;
+	public Date getEndDatetime() {
+		return endDatetime;
 	}
-	public void setT_attendance_type_id(String t_attendance_type_id) {
-		this.t_attendance_type_id = t_attendance_type_id;
+	public void setEndDatetime(Date endDatetime) {
+		this.endDatetime = endDatetime;
 	}
+	
 	
 }

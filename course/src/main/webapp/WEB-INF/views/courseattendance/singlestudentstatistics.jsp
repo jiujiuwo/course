@@ -4,8 +4,7 @@
 
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 
 	//设置左侧浏览状态
@@ -26,8 +25,7 @@
 
 
 
-<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet"
-	type="text/css" />
+<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet" type="text/css" />
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -36,11 +34,11 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home" onLoad="ShowErrMsg()">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 	<%@ include file="../../shared/CourseTeachingClassInfo.jsp"%>
-	<div id="DocumentPageTopSeparatorLine"></div>
+
 
 	<div class="DocumentPage">
 		<div class="DocumentPageLeftArea ">
@@ -56,19 +54,18 @@
 
 			<ol class="breadcrumb">
 				<li><a href="#">课程系统</a></li>
-				<li><a href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseteachingclass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
+				<li><a
+						href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseTeachingClass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
 				<li class="active">${selectedCourseHomeworkTypeData.name}</li>
 			</ol>
 
 
 			<div class="CourseContentHeader">${selectedCourseTeachingClassViewData.teachingclass.name }
 				<mark>
-					<fmt:formatDate
-						value="${selectedCourseAttendanceViewData.attendance.begin_datetime}"
+					<fmt:formatDate value="${selectedCourseAttendanceViewData.attendance.begin_datetime}"
 						pattern="yyyy-MM-dd HH:mm" />
 					-
-					<fmt:formatDate
-						value="${selectedCourseAttendanceViewData.attendance.end_datetime}"
+					<fmt:formatDate value="${selectedCourseAttendanceViewData.attendance.end_datetime}"
 						pattern="yyyy-MM-dd HH:mm" />
 
 				</mark>
@@ -83,14 +80,12 @@
 			<div class="panel panel-primary">
 				<div class="panel-heading" role="tab" id="headingTwo">
 					<h4 class="panel-title">
-						<a role="button" data-toggle="collapse" data-parent="#accordion"
-							href="#collapseTwo" aria-expanded="true"
-							aria-controls="collapseTwo"> 图表 </a>
+						<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"
+							aria-expanded="true" aria-controls="collapseTwo"> 图表 </a>
 					</h4>
 				</div>
-				<div id="collapseTwo" class="panel-collapse collapse in"
-					style="overflow: hidden;" role="tabpanel"
-					aria-labelledby="headingTwo">
+				<div id="collapseTwo" class="panel-collapse collapse in" style="overflow: hidden;"
+					role="tabpanel" aria-labelledby="headingTwo">
 					<div class="panel-body">
 
 						<canvas id="myChart" width="400" height="400"></canvas>
@@ -104,34 +99,29 @@
 			<div class="panel panel-primary">
 				<div class="panel-heading" role="tab" id="headingThree">
 					<h4 class="panel-title">
-						<a role="button" data-toggle="collapse" data-parent="#accordion"
-							href="#collapseThree" aria-expanded="true"
-							aria-controls="collapseThree"> 人数统计 </a>
+						<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree"
+							aria-expanded="true" aria-controls="collapseThree"> 人数统计 </a>
 					</h4>
 				</div>
-				<div id="collapseThree" class="panel-collapse collapse in"
-					style="overflow: hidden;" role="tabpanel"
-					aria-labelledby="headingThree">
+				<div id="collapseThree" class="panel-collapse collapse in" style="overflow: hidden;"
+					role="tabpanel" aria-labelledby="headingThree">
 					<div class="panel-body">
 						<div class="container-fluid" style="overflow: hidden;">
 							<div class="gridseparator"></div>
-							
-							
-							<c:forEach var="data"
-								items="${SelectedAttendanceSpecificStatistics}">
+
+
+							<c:forEach var="data" items="${SelectedAttendanceSpecificStatistics}">
 								<div class="row show-grid">
-								<div class="col-md-1">
-									<strong>${data.state.name}</strong>
+									<div class="col-md-1">
+										<strong>${data.state.name}</strong>
+									</div>
+									<div class="col-md-1">${data.nCount}</div>
+
 								</div>
-								<div class="col-md-1">
-									${data.nCount}
-								</div>
-								
-							</div>
-								
-								</c:forEach>
-							
-							
+
+							</c:forEach>
+
+
 						</div>
 
 
@@ -142,13 +132,11 @@
 			<div class="panel panel-primary">
 				<div class="panel-heading" role="tab" id="headingFour">
 					<h4 class="panel-title">
-						<a role="button" data-toggle="collapse" data-parent="#accordion"
-							href="#collapseFour" aria-expanded="true"
-							aria-controls="collapseFour"> 名单 </a>
+						<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour"
+							aria-expanded="true" aria-controls="collapseFour"> 名单 </a>
 					</h4>
 				</div>
-				<div id="collapseFour" class="panel-collapse collapse"
-					style="overflow: hidden;" role="tabpanel"
+				<div id="collapseFour" class="panel-collapse collapse" style="overflow: hidden;" role="tabpanel"
 					aria-labelledby="headingFour">
 					<div class="panel-body">
 						<div class="container-fluid" style="overflow: hidden;">
@@ -178,29 +166,23 @@
 							<c:set var="index" value="1"></c:set>
 							<c:forEach var="data" items="${pagedAttendanceStudentViewData.result}">
 								<div class="row show-grid">
-									<div class="col-md-1">
-
-										${(pagedAttendanceStudentViewData.currentPageNo-1) * pagedAttendanceStudentViewData.pageSize +index}
+									<div class="col-md-1">${(pagedAttendanceStudentViewData.currentPageNo-1) * pagedAttendanceStudentViewData.pageSize +index}
 									</div>
 
 									<div class="col-md-1">${data.studentviewdata.naturalclass.name}</div>
 
-									<div class="col-md-1">
-										${data.studentviewdata.student.student_num}</div>
+									<div class="col-md-1">${data.studentviewdata.student.student_num}</div>
 
-									<div class="col-md-1">
-										${data.studentviewdata.userbasicinfo.user_basic_info_name}</div>
+									<div class="col-md-1">${data.studentviewdata.userbasicinfo.userBasicInfoName}</div>
 
-									<div class="col-md-1">
-										${data.state.name}</div>
-
-									
+									<div class="col-md-1">${data.state.name}</div>
 
 
-									
-									<div class="col-md-1">
-										${data.mode.name}</div>
-									
+
+
+
+									<div class="col-md-1">${data.mode.name}</div>
+
 
 
 								</div>
@@ -227,14 +209,12 @@
 
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
 
-	<%@ include file="../../shared/pageFooter.jsp"%>
 
 	<%@ include file="../../shared/importJs.jsp"%>
+	<%@ include file="../../shared/sysLastInclude.jsp"%>
 
-	<script src="<c:url value='/plugins/Chart.js-master/Chart.min.js'/>"
-		type="text/javascript"></script>
+	<script src="<c:url value='/plugins/Chart.js-master/Chart.min.js'/>" type="text/javascript"></script>
 
 
 
@@ -279,19 +259,6 @@
 
 
 
-
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

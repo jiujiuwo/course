@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+
+    <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
+<!--    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />
+    <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter"/>-->
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
+    <!--
+    Most controllers will use the ControllerClassNameHandlerMapping above, but
+    for the index controller we are using ParameterizableViewController, so we must
+    define an explicit mapping for it.
+    -->
+    
+    <bean id="multipartResolver"  
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+        <!-- set the max upload size100MB -->  
+        <property name="defaultEncoding" value="utf-8"></property>
+        <property name="maxUploadSize" value="10485760000"></property>
+        <property name="maxInMemorySize" value="40960"></property>
+    </bean>  
+    
+    
+    
+    
+    
+    
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="managerPage.htm">ManagerPageController</prop>
+                <prop key="home.htm">HomeController</prop>
+                <prop key="index.htm">indexController</prop>
+                <prop key="adduser.htm">AddUserController</prop>
+                <prop key="login.htm">LoginController</prop>
+                <prop key="logout.htm">LoginController</prop>
+                <prop key="checkun.htm">LoginController</prop>
+                <prop key="findpwd.htm">LoginController</prop>
+                
+                
+                
+                
+                <prop key="checkidext.htm">CheckIdExistController</prop>
+                <prop key="active.htm">ActiveController</prop>
+                <prop key="homePage.htm">HomePageController</prop>
+                <prop key="homepage_1.htm">HomePageController</prop>
+                
+                
+                
+                <prop key="analytical.htm">SearchController</prop>
+                <prop key="results.htm">SearchController</prop>
+                <prop key="searchAll.htm">SearchController</prop>
+                <prop key="resultTerm.htm">SearchController</prop>
+                <prop key="getContent.htm">SearchContentController</prop>
+                <prop key="getStruct.htm">SearchStructController</prop>
+                <prop key="getRootStruct.htm">SearchRootController</prop>
+                <prop key="regist.htm">RegistController</prop>
+                
+                
+                <prop key="AdvancedSearch.htm">AdavncedSearchController</prop>
+                
+                <prop key="FastAdvancedSearch.htm">AdavncedSearchController</prop>
+                
+                <prop key="AdvancedSearchResults.htm">AdavncedSearchController</prop>
+                <prop key="advancedOverview.htm">AdavncedSearchController</prop>
+                <prop key="standatdOverview.htm">SearchStructController</prop>
+                <prop key="getOverview.htm">SearchRootController</prop>
+                <prop key="getStdOverview.htm">SearchContentController</prop>
+                <prop key="manageUsers.htm">ManageUsersController</prop>
+                <prop key="loadhtml.htm">ManageFileController</prop>
+                <prop key="savehtml.htm">ManageFileController</prop>
+
+                <prop key="importOne.htm">FileImportController</prop>
+                <prop key="fileUpload.htm">FileImportController</prop>
+                <prop key="showTerm.htm">FileImportController</prop>
+                 <prop key="fileexport.htm">FileIOController</prop>
+                 <prop key="fileimport.htm">FileIOController</prop>
+                 
+                 
+                  <prop key="setProperty.htm">SetPropertyController</prop>
+                 <prop key="showStader.htm">TermTagController</prop>
+                 <prop key="showItem.htm">TermTagController</prop>
+                  <prop key="tag.htm">TermTagController</prop>
+                  <prop key="changeTag.htm">TermTagController</prop>
+                  <prop key="tagtwo.htm">TermTagController</prop>
+                  <prop key="changeTagtwo.htm">TermTagController</prop>
+                  <prop key="termtagging.htm">TermTagController</prop>
+                   <prop key="termtaggingtwo.htm">TermTagController</prop>
+                  <prop key="termtagMany.htm">TermTagController</prop>
+                   <prop key="actiontag.htm">TermTagController</prop>
+                  <prop key="termCategory.htm">TermTagController</prop>
+                  
+                  <prop key="limits.htm">GetLimitsController</prop>
+                  <prop key="showuser.htm">UserController</prop>
+                  <prop key="adduser.htm">UserController</prop>
+                  <prop key="showoneuser.htm">UserController</prop>
+                  <prop key="altuser.htm">UserController</prop>
+                  <prop key="deluser.htm">UserController</prop>
+                  
+                  <prop key="showorg.htm">OrgController</prop>
+                  <prop key="addorg.htm">OrgController</prop>
+                  <prop key="showoneorg.htm">OrgController</prop>
+                  <prop key="altorg.htm">OrgController</prop>
+                  <prop key="delorg.htm">OrgController</prop>
+                  
+                  <prop key="getCategory.htm">SearchCategory</prop>
+                  <prop key="findCategory.htm">SearchCategory</prop>
+                  <prop key="categoryMana.htm">CategoryMangerController</prop>
+                  <prop key="delCategory.htm">CategoryMangerController</prop>
+                  <prop key="addCategory.htm">CategoryMangerController</prop>
+                  <prop key="addCategoryAction.htm">CategoryMangerController</prop>
+                  <prop key="chooseCategory.htm">CategoryMangerController</prop>
+                  <prop key="executeCategory.htm">CategoryMangerController</prop>
+                  <prop key="updateWarehouse.htm">WarehouseController</prop>
+                  
+                  <prop key="cateNumColl.htm">StdCollectionController</prop>
+                  <prop key="cateStdColl.htm">StdCollectionController</prop>
+                  
+                  <prop key="ChoosePath.htm">ChoosePathController</prop>
+                  
+                  <prop key="addnotice.htm">NoticeController</prop>
+<!--                  <prop key="homepagenew.htm">NoticeController</prop>-->
+                  <prop key="shownotice.htm">NoticeController</prop>
+                  <prop key="choosenotice.htm">NoticeController</prop>
+                   <prop key="shownoticebyname.htm">NoticeController</prop>
+
+                  <prop key="standardapply.htm">StandardController</prop>
+		 <prop key="addStandardOne.htm">StandardController</prop>
+                  <prop key="addStandardTow.htm">StandardController</prop>
+                  <prop key="addStandardThree.htm">StandardController</prop>
+                  <prop key="addStandardFour.htm">StandardController</prop>
+                  <prop key="addStandardFive.htm">StandardController</prop>
+                  <prop key="standard.htm">StandardController</prop>
+                  <prop key="homepagenew.htm">StandardController</prop>
+                  <prop key="updataStandardApply.htm">StandardController</prop>
+                  
+                  
+                  
+                  <prop key="addNewStandard.htm">StandardController</prop>
+                  <prop key="showStandards.htm">StandardController</prop>
+                   <prop key="showStandardbyname.htm">StandardController</prop>
+                   
+                   
+                   
+                   
+                  <prop key="fulltextsearch.htm">FullTextController</prop>
+                  <prop key="advanceSearch.htm">AdvanceSearchController</prop>
+                  <prop key="AdvanceSearch.htm">AdvanceSearchController</prop>
+                  <prop key="showcpl.htm">Cplcontriller</prop>
+                  <prop key="altercpl.htm">Cplcontriller</prop>
+                  <prop key="test.htm">AnnounceController</prop>
+                  
+                  
+                  <prop key="classifySearch.htm">ClassifySearch</prop>
+                  <prop key="findCategoryQuery.htm">ClassifySearch</prop>
+                  
+                  
+                  <prop key="resultsnew.htm">SearchResultsController</prop>
+                  
+                  
+                   <prop key="top.htm">TopController</prop>
+                    <prop key="bottom.htm">BottomController</prop>
+                     <prop key="middle.htm">MiddleController</prop>
+                     <prop key="query.htm">QueryController</prop>
+                     <prop key="telescopic.htm">TelescopicController</prop>
+                     <prop key="all.htm">AllController</prop> 
+                     
+                     <prop key="audit.htm">NoticeApproveController</prop>  
+                     <prop key="apply.htm">ApplyController</prop>
+                     
+                     
+                     <prop key="noticeApproval.htm">NoticeApproveController</prop>
+                     <prop key="screenStandards.htm">NoticeApproveController</prop>
+                     <prop key="checkStandardOne.htm">NoticeApproveController</prop>
+                     <prop key="checkStandardOne.htm">NoticeApproveController</prop>
+                        <prop key="checkStandardTwo.htm">NoticeApproveController</prop>
+                      <prop key="checkStandardThree.htm">NoticeApproveController</prop>
+                     <prop key="checkStandardFour.htm">NoticeApproveController</prop> 
+                     <prop key="checkStandardFive.htm">NoticeApproveController</prop>  
+                       
+                     <prop key="draftStandardManage.htm">DraftStandardManageController</prop>    
+                     <prop key="draftStandardScreen.htm">DraftStandardManageController</prop>
+                     <prop key="draftStandardSaveone.htm">DraftStandardManageController</prop>
+                     <prop key="draftStandardSavetwo.htm">DraftStandardManageController</prop>
+                   <!--backstage 页面跳转-->
+                <prop key="backstageall.htm">Backstage</prop>
+                <prop key="backstagetop.htm">Backstage</prop>
+                <prop key="backstageleft.htm">Backstage</prop>
+                <prop key="backstageright.htm">Backstage</prop>
+                <prop key="backstagebottom.htm">Backstage</prop>
+                
+                
+                 <!--标准类别统计-->
+                <prop key="categorycollection.htm">SearchCategory</prop>
+                <prop key="suncatecollection.htm">SearchCategory</prop>
+
+                 <!--杨君增加中的controller-->
+                <prop key="meetapply.htm">MeetController</prop>
+                <prop key="meetshow.htm">MeetController</prop>
+                    
+                 
+                 <prop key="expertise.htm">ExpertiseController</prop>
+                <prop key="experadvice.htm">ExpertiseController</prop>
+
+                    
+                    
+            </props>
+        </property>
+    </bean>
+
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:prefix="/WEB-INF/jsp/"
+          p:suffix=".jsp" />
+
+    <!--
+    The index controller.
+    -->
+    <bean name="indexController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="index" />
+    <bean name="ManagerPageController" class="com.kdzb.controller.ManagerPageController"/>
+    <bean name="HomeController" class="com.kdzb.controller.HomeController"/>
+    <bean name="AddUserController" class="com.kdzb.controller.AddUserController"/>
+    <bean name="LoginController" class="com.kdzb.controller.LoginController"/>
+    <bean name="CheckIdExistController" class="com.kdzb.controller.CheckIdExistController"/>
+    <bean name="ActiveController" class="com.kdzb.controller.ActiveController"/>
+    <bean name="HomePageController" class="com.kdzb.controller.HomePageController"/>
+    <bean name="SearchController" class="com.kdzb.controller.SearchController"/>
+    <bean name="SearchContentController" class="com.kdzb.controller.SearchContentController"/>
+    <bean name="SearchStructController" class="com.kdzb.controller.SearchStructController"/>
+    <bean name="SearchRootController" class="com.kdzb.controller.SearchRootController"/>
+    <bean name="RegistController" class="com.kdzb.controller.RegistController"/>
+    <bean name="AdavncedSearchController" class="com.kdzb.controller.AdvancedSearchController"/>
+    
+    <bean name="ManageUsersController" class="com.kdzb.controller.ManageUsersController"/>
+    <bean name="ManageFileController" class="com.kdzb.controller.ManageFileController"/>
+
+    <bean name="FileIOController" class="com.kdzb.controller.FileIOController"/>
+    <bean name="FileImportController" class="com.category.controller.FileImportController"/>
+    
+    <bean name="SetPropertyController" class="com.kdzb.controller.SetPropertyController"/>
+    <bean name="TermTagController" class="com.kdzb.controller.TermTagController"/>
+      
+    <bean name="GetLimitsController" class="com.lifeful.controller.GetLimitsController"/>
+     <bean name="UserController" class="com.lifeful.controller.UserController"/>
+    <bean name="OrgController" class="com.lifeful.controller.OrgController"/>
+    
+    <bean name="SearchCategory" class="com.category.controller.SearchCategoryController"/>
+    <bean name="CategoryMangerController" class="com.category.controller.CategoryMangerController"/>
+    <bean name="WarehouseController" class="com.category.controller.WarehouseController"/>
+    
+    <bean name="StdCollectionController" class="com.category.controller.StdCollectionController"/>
+    
+    <bean name="ChoosePathController" class="com.category.controller.ChoosePathController"/>
+    
+    <bean name="NoticeController" class="com.lifeful.controller.NoticeController"/>
+    <bean name="StandardController" class="com.lifeful.controller.StandardController"/>
+    <bean name="TestController" class="com.lifeful.controller.TestController"/>
+    
+    
+    
+    
+    <bean name="FullTextController" class="com.lifeful.controller.FullTextController"/>
+    <bean name="AdvanceSearchController" class="com.lifeful.controller.AdvanceSearchController"/>
+    
+     <bean name="Cplcontriller" class="com.lifeful.controller.CplController"/>
+     <bean name="AnnounceController" class="com.lifeful.controller.AnnounceController"/>
+     <bean name="ClassifySearch" class="com.lifeful.controller.ClassifySearchController"/>
+     <bean name="SearchResultsController" class="com.lifeful.controller.SearchResultsController"/>
+     <bean name="TopController" class="com.lifeful.controller.TopController"/>
+     <bean name="BottomController" class="com.lifeful.controller.BottomController"/>
+     
+     <bean name="MiddleController" class="com.lifeful.controller.MiddleController"/>
+     <bean name="QueryController" class="com.lifeful.controller.QueryController"/>
+     <bean name="TelescopicController" class="com.lifeful.controller.TelescopicController"/>
+     <bean name="AllController" class="com.lifeful.controller.AllController"/>
+     <bean name="AuditController" class="com.lifeful.controller.AuditController"/>
+     <bean name="ApplyController" class="com.lifeful.controller.ApplyController"/>
+     <bean name="NoticeApproveController" class="com.lifeful.controller.NoticeApproveController"/>
+     <bean name="DraftStandardManageController" class="com.lifeful.controller.DraftStandardManageController"/>
+     <!-- backstage -->
+    <bean name="Backstage" class="com.lifeful.backstage.controller.Backstage"/>
+    
+    <!--杨君增加中的controller-->
+    <bean name="MeetController" class="com.kdzb.meet.controller.MeetController"/>
+
+    <bean name="ExpertiseController" class="com.lifeful.controller.ExpertiseController"/>
+
+</beans>

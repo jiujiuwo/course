@@ -90,8 +90,8 @@ public class CourseTeachingClassHomeworkDelayedDao extends BaseDao<CourseTeachin
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				expriment.setId(id);
-				expriment.setT_course_teaching_class_homework_baseinfo_id(rs.getString("t_course_teaching_class_homework_baseinfo_id"));
-				expriment.setT_teacher_id(rs.getString("t_teacher_id"));
+				expriment.setCourseTeachingClassHomeworkBaseinfoId(rs.getString("t_course_teaching_class_homework_baseinfo_id"));
+				expriment.setTeacherId(rs.getString("t_teacher_id"));
 
 				expriment.setEnddate(rs.getTimestamp("enddate"));
 				expriment.setPubdate(rs.getTimestamp("pubdate"));
@@ -120,8 +120,8 @@ public class CourseTeachingClassHomeworkDelayedDao extends BaseDao<CourseTeachin
 					public void processRow(ResultSet rs) throws SQLException {
 						CourseTeachingClassHomeworkDelayed expriment = new CourseTeachingClassHomeworkDelayed();
 						expriment.setId(rs.getString("id"));
-						expriment.setT_course_teaching_class_homework_baseinfo_id(t_course_teaching_class_homework_baseinfo_id);
-						expriment.setT_teacher_id(rs.getString("t_teacher_id"));
+						expriment.setCourseTeachingClassHomeworkBaseinfoId(t_course_teaching_class_homework_baseinfo_id);
+						expriment.setTeacherId(rs.getString("t_teacher_id"));
 
 						expriment.setEnddate(rs.getTimestamp("enddate"));
 						expriment.setPubdate(rs.getTimestamp("pubdate"));
@@ -139,8 +139,8 @@ public class CourseTeachingClassHomeworkDelayedDao extends BaseDao<CourseTeachin
 	public String add(CourseTeachingClassHomeworkDelayed expriment) {
 		String id = GUID.getGUID();
 		expriment.setId(id);
-		Object params[] = new Object[] { expriment.getId(), expriment.getT_course_teaching_class_homework_baseinfo_id(),
-				expriment.getT_teacher_id(), expriment.getPubdate(), expriment.getEnddate() };
+		Object params[] = new Object[] { expriment.getId(), expriment.getCourseTeachingClassHomeworkBaseinfoId(),
+				expriment.getTeacherId(), expriment.getPubdate(), expriment.getEnddate() };
 		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.TIMESTAMP, Types.TIMESTAMP };
 		getJdbcTemplate().update(INSERT_PLAN, params, types);
 		return id;
@@ -198,11 +198,11 @@ public class CourseTeachingClassHomeworkDelayedDao extends BaseDao<CourseTeachin
 						CourseTeachingClassHomeworkDelayed homeworkdelayed = getByID(rs.getString("id"));
 						data.setHomeworkdelayed(homeworkdelayed);
 
-						TeacherViewData teacher = teacherviewdataDao.getTeacherViewDataByTeacherId(homeworkdelayed.getT_teacher_id());
+						TeacherViewData teacher = teacherviewdataDao.getTeacherViewDataByTeacherId(homeworkdelayed.getTeacherId());
 						data.setTeacher(teacher);
 
 						CourseTeachingClassHomeworkBaseinfo homeworkbaseinfo = homeworkbaseinfoDao
-								.getByID(homeworkdelayed.getT_course_teaching_class_homework_baseinfo_id());
+								.getByID(homeworkdelayed.getCourseTeachingClassHomeworkBaseinfoId());
 
 						data.setHomeworkbaseinfo(homeworkbaseinfo);
 

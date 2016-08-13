@@ -56,7 +56,7 @@ public class EncoderHandler {
 	 * @param str
 	 * @return String
 	 */
-	public static String encodeBySHA(String str) {
+	protected static String encodeBySHA(String str) {
 		if (str == null) {
 			return null;
 		}
@@ -77,7 +77,7 @@ public class EncoderHandler {
 	 * @param str
 	 * @return String
 	 */
-	public static String encodeBySHA256(String str) {
+	protected static String encodeBySHA256(String str) {
 		if (str == null) {
 			return null;
 		}
@@ -98,7 +98,7 @@ public class EncoderHandler {
 	 * @param str
 	 * @return String
 	 */
-	public static String encodeBySHA384(String str) {
+	protected static String encodeBySHA384(String str) {
 		if (str == null) {
 			return null;
 		}
@@ -119,7 +119,7 @@ public class EncoderHandler {
 	 * @param str
 	 * @return String
 	 */
-	public static String encodeBySHA512(String str) {
+	protected static String encodeBySHA512(String str) {
 		if (str == null) {
 			return null;
 		}
@@ -139,7 +139,7 @@ public class EncoderHandler {
 	 * @param str
 	 * @return String
 	 */
-	public static String encodeByMD5(String str) {
+	protected static String encodeByMD5(String str) {
 		if (str == null) {
 			return null;
 		}
@@ -153,6 +153,6 @@ public class EncoderHandler {
 	}
 	
 	public static String encode(String str){
-		return encodeByMD5(str);
+		return encodeBySHA512(str);
 	}
 }

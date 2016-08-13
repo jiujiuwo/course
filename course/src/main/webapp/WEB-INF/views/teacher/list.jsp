@@ -23,8 +23,7 @@
 <%@ include file="../../shared/importCss.jsp"%>
 
 
-<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet"
-	type="text/css" />
+<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet" type="text/css" />
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -33,7 +32,7 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home" onLoad="ShowErrMsg()">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 
@@ -63,8 +62,7 @@
 				<tr>
 					<td>
 						<div class="input-group input-group-sm">
-							<select id="SchoolSelectControl" class="form-control"
-								onchange="OnSelectControlChange(this)">
+							<select id="SchoolSelectControl" class="form-control" onchange="OnSelectControlChange(this)">
 								<c:forEach var="school" items="${pagedSchool.result}">
 									<option value="${school.id}">${school.name}</option>
 								</c:forEach>
@@ -80,11 +78,9 @@
 							<!-- Split button -->
 							<div class="btn-group">
 								<button type="button" class="btn btn-default btn-sm">选择</button>
-								<button type="button"
-									class="btn btn-default dropdown-toggle btn-sm"
-									data-toggle="dropdown" aria-expanded="false">
-									<span class="caret"></span> <span class="sr-only">Toggle
-										Dropdown</span>
+								<button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown"
+									aria-expanded="false">
+									<span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
 								</button>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="#">全部选择</a></li>
@@ -96,21 +92,18 @@
 						</div></td>
 					<td style="width: 10px;"></td>
 					<td><div class="btn-group" role="group" aria-label="...">
-							<button type="button" class="btn btn-default btn-sm"
-								onclick="onAdd()">增加</button>
+							<button type="button" class="btn btn-default btn-sm" onclick="onAdd()">增加</button>
 
-							<button type="button" class="btn btn-default btn-sm"
-								data-toggle="modal" data-target="#myModal">删除</button>
+							<button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+								data-target="#myModal">删除</button>
 
 
 						</div></td>
 					<td style="width: 10px;"></td>
 					<td><div class="input-group input-group-sm">
-							<input type="text" class="form-control" id="SearchText"
-								placeholder="Search for..." required> <span
-								class="input-group-btn">
-								<button class="btn btn-default" type="button"
-									onclick="onSearch()">搜索</button>
+							<input type="text" class="form-control" id="SearchText" placeholder="Search for..." required>
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button" onclick="onSearch()">搜索</button>
 							</span>
 						</div></td>
 				</tr>
@@ -121,79 +114,91 @@
 				<c:when test="${pagedTeacherViewData.totalCount >0}">
 
 					<div class="Course-Table">
+						<div class="gridseparator"></div>
 
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-1">
+									<strong>#</strong>
+								</div>
+								<div class="col-md-2">
+									<strong>姓名</strong>
+								</div>
+								<div class="col-md-2">
+									<strong>工号</strong>
+								</div>
+								<div class="col-md-2">
+									<strong>部门</strong>
+								</div>
+								<div class="col-md-1">
+									<strong>性别</strong>
+								</div>
+								<div class="col-md-2">
+									<strong>联系方式</strong>
+								</div>
+								<div class="col-md-2">
+									<strong>操作</strong>
+								</div>
+							</div>
 
-						<table class="table table-hover table-bordered"
-							style="margin-bottom: -10px;">
-							<thead>
-								<tr>
-									<th style="width: 10%;">#</th>
-									<th style="width: 10%;">姓名</th>
-									<th style="width: 10%;">工号</th>
-									<th style="width: 10%;">部门</th>
-									<th style="width: 10%;">性别</th>
-									<th style="width: 20%;">联系方式</th>
-									<th style="width: 20%;">操作</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:set var="index" value="1"></c:set>
-								<c:forEach var="dataitem" items="${pagedTeacherViewData.result}">
-									<tr>
-										<th scope="row"><input type="checkbox" value="">
-											${(pagedTeacherViewData.currentPageNo-1) * pagedTeacherViewData.pageSize +index}</th>
-										<td>${dataitem.userbasicinfo.user_basic_info_name}</td>
-										<td>${dataitem.teacher.teacher_num}</td>
-										<td>${dataitem.department.name}</td>
-										<td><c:if
-												test="${dataitem.userbasicinfo.user_basic_info_sex==0}">
+							<div class="gridseparator"></div>
+
+							<c:set var="index" value="1"></c:set>
+							<c:forEach var="dataitem" items="${pagedTeacherViewData.result}">
+								<div class="row">
+									<div class="col-md-1">
+										<input type="checkbox" value="">
+										${(pagedTeacherViewData.currentPageNo-1) * pagedTeacherViewData.pageSize +index}
+									</div>
+									<div class="col-md-2">${dataitem.userbasicinfo.userBasicInfoName}</div>
+									<div class="col-md-2">${dataitem.teacher.teacherNum}</div>
+									<div class="col-md-2">${dataitem.department.name}</div>
+									<div class="col-md-1">
+										<c:if test="${dataitem.userbasicinfo.userBasicInfoSex==0}">
 											男
-											</c:if> <c:if
-												test="${dataitem.userbasicinfo.user_basic_info_sex==1}">
+											</c:if>
+										<c:if test="${dataitem.userbasicinfo.userBasicInfoSex==1}">
 											女
-											</c:if></td>
-										<td>
+											</c:if>
+									</div>
+									<div class="col-md-2">
 
-											<div class="container-fluid" style="overflow: hidden;">
-												<c:forEach var="datauserinfo"
-													items="${dataitem.usercontactinfoviewdata}">
-													<div class="row">
-														<div class="col-md-6">${datauserinfo.usercontacttype.name}</div>
-														<div class="col-md-6">${datauserinfo.usercontactinfo.user_contact_value}</div>
-													</div>
-												</c:forEach>
-											</div>
+										<div class="container-fluid" style="overflow: hidden;">
+											<c:forEach var="datauserinfo" items="${dataitem.usercontactinfoviewdata}">
+												<div class="row">
+													<div class="col-md-6">${datauserinfo.usercontacttype.name}</div>
+													<div class="col-md-6">${datauserinfo.usercontactinfo.userContactValue}</div>
+												</div>
+											</c:forEach>
+										</div>
 
+									</div>
 
+									<div class="col-md-2">
+										<button type="button" class="btn btn-default btn-xs"
+											onclick="location='<c:url value="/teacher/update-${dataitem.user.id}.html"/>'">修改...</button>
 
-
-
-										</td>
-
-										<td><button type="button" class="btn btn-default btn-xs"
-												onclick="location='<c:url value="/teacher/update-${dataitem.user.id}.html"/>'">修改...</button>
-
-											<button type="button" class="btn btn-default btn-xs"
-												onclick="location='<c:url value="/teacher/setteacherpwd-${selectedt_school_id}-${dataitem.user.id}-${pagedTeacherViewData.currentPageNo }.html"/>'">修改密码...</button>
+										<button type="button" class="btn btn-default btn-xs"
+											onclick="location='<c:url value="/teacher/setteacherpwd-${selectedt_school_id}-${dataitem.user.id}-${pagedTeacherViewData.currentPageNo }.html"/>'">修改密码...</button>
 
 
-											<button type="button" class="btn btn-default btn-xs"
-												onclick="onDelete('${dataitem.user.id}')">删除</button></td>
-									</tr>
-									<c:set var="index" value="${index + 1}"></c:set>
-								</c:forEach>
-							</tbody>
-						</table>
+										<button type="button" class="btn btn-default btn-xs"
+											onclick="onDelete('${dataitem.user.id}')">删除</button>
+									</div>
+								</div>
+								<c:set var="index" value="${index + 1}"></c:set>
+							</c:forEach>
+							<div class="gridseparator"></div>
+						</div>
+
 
 						<c:choose>
 							<c:when test="${not empty selectedt_school_id }">
-								<mathtop:PageBar
-									pageUrl="/teacher/list.html?t_school_id=${selectedt_school_id }"
+								<mathtop:PageBar pageUrl="/teacher/list.html?t_school_id=${selectedt_school_id }"
 									pageAttrKey="pagedTeacherViewData" />
 							</c:when>
 							<c:otherwise>
-								<mathtop:PageBar pageUrl="/teacher/list.html"
-									pageAttrKey="pagedTeacherViewData" />
+								<mathtop:PageBar pageUrl="/teacher/list.html" pageAttrKey="pagedTeacherViewData" />
 							</c:otherwise>
 						</c:choose>
 
@@ -206,23 +211,18 @@
 					<%
 						//没有找到记录
 					%>
-					<div class="alert alert-warning alert-dismissible fade in"
-						role="alert" style="margin: 10px;">
-						<button type="button" class="close" data-dismiss="alert"
-							aria-label="Close">
+					<div class="alert alert-warning alert-dismissible fade in" role="alert" style="margin: 10px;">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 						<h3>没有找到记录,请选择下列操作之一：</h3>
 
 						<div class="list-group">
 
-							<a href="<c:url value="/teacher/add.html"/>"
-								class="list-group-item">添加教师</a> <a
-								href="<c:url value="/student/add.html"/>"
-								class="list-group-item">添加单个学生</a> <a
-								href="<c:url value="/student/addfromexcel.html"/>"
-								class="list-group-item">添加多个学生</a> <a
-								href="<c:url value="/permission/"/>" class="list-group-item">为组添加用户</a>
+							<a href="<c:url value="/teacher/add.html"/>" class="list-group-item">添加教师</a>
+							<a href="<c:url value="/student/add.html"/>" class="list-group-item">添加单个学生</a>
+							<a href="<c:url value="/student/addfromexcel.html"/>" class="list-group-item">添加多个学生</a>
+							<a href="<c:url value="/permission/"/>" class="list-group-item">为组添加用户</a>
 
 						</div>
 
@@ -242,13 +242,10 @@
 
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
-
-
-	<%@ include file="../../shared/pageFooter.jsp"%>
+	
 
 	<%@ include file="../../shared/importJs.jsp"%>
-
+<%@ include file="../../shared/sysLastInclude.jsp"%>
 
 
 	<script>
@@ -342,17 +339,7 @@
 	</script>
 
 
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
 
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

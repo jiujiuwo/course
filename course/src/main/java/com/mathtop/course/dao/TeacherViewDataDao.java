@@ -61,7 +61,7 @@ public class TeacherViewDataDao extends BaseDao<TeacherViewData> {
 	public TeacherViewData getTeacherViewDataById(String id) {
 		Teacher teacher = teacherDao.getTeacherByID(id);
 		if (teacher != null)
-			return getTeacherViewDataByt_user_id(teacher.getT_user_id());
+			return getTeacherViewDataByt_user_id(teacher.getUserId());
 		return null;
 	}
 
@@ -69,11 +69,11 @@ public class TeacherViewDataDao extends BaseDao<TeacherViewData> {
 		User u = userDao.getUserByID(t_user_id);
 		UserBasicInfo userbasicinfo = userbasicinfoDao.getUserBasicInfoByt_user_id(t_user_id);
 		List<UserContactInfoViewData> usercontactinfoviewdata = usercontactinfoviewDao.getUserContactInfoViewDataByt_user_id(t_user_id);
-		Teacher teacher = teacherDao.getTeacherByt_user_id(t_user_id);
+		Teacher teacher = teacherDao.getTeacherByUserId(t_user_id);
 		if (teacher != null) {
 			Department department = departmentteacherDao.getDepartmentByTeacherId(teacher.getId());
 			if (department != null) {
-				School school = schooldepartmentDao.getSchoolByt_department_id(department.getId());
+				School school = schooldepartmentDao.getSchoolByDepartmentId(department.getId());
 
 				TeacherViewData view = new TeacherViewData();
 				view.setUser(u);
@@ -94,14 +94,14 @@ public class TeacherViewDataDao extends BaseDao<TeacherViewData> {
 	public TeacherViewData getTeacherViewDataByTeacherNum(String teacher_num) {
 		Teacher teacher = teacherDao.getTeacherByTeacherNum(teacher_num);
 		if (teacher != null)
-			return getTeacherViewDataByt_user_id(teacher.getT_user_id());
+			return getTeacherViewDataByt_user_id(teacher.getUserId());
 		return null;
 	}
 	
 	public TeacherViewData getTeacherViewDataByTeacherId(String id) {
 		Teacher teacher = teacherDao.getTeacherByID(id);
 		if (teacher != null)
-			return getTeacherViewDataByt_user_id(teacher.getT_user_id());
+			return getTeacherViewDataByt_user_id(teacher.getUserId());
 		return null;
 	}
 

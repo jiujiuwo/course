@@ -12,9 +12,11 @@ public class CourseTeachingClassHomeworkSubmitBaseinfoViewData extends BaseDomai
 
 	private CourseTeachingClassHomeworkSubmitBaseinfo homeworksubmitbaseinfo;
 	private StudentViewData student;
-	private CourseTeachingClassHomeworkBaseinfoViewData homeworkbaseinfoViewData;
+	private CourseTeachingClassHomeworkBaseinfoStudentViewData homeworkbaseinfoViewData;
 	private List<CourseTeachingClassHomeworkSubmitFile> homeworksubmitFileList;
 	private boolean hasReply;// 是否已经回复
+	
+	private CourseTeachingClassStudentGroupViewData studentGroupViewData;
 
 	public CourseTeachingClassHomeworkSubmitBaseinfo getHomeworksubmitbaseinfo() {
 		return homeworksubmitbaseinfo;
@@ -61,12 +63,20 @@ public class CourseTeachingClassHomeworkSubmitBaseinfoViewData extends BaseDomai
 		return false;
 	}
 
-	public CourseTeachingClassHomeworkBaseinfoViewData getHomeworkbaseinfoViewData() {
+	public CourseTeachingClassHomeworkBaseinfoStudentViewData getHomeworkbaseinfoViewData() {
 		return homeworkbaseinfoViewData;
 	}
 
-	public void setHomeworkbaseinfoViewData(CourseTeachingClassHomeworkBaseinfoViewData homeworkbaseinfoViewData) {
+	public void setHomeworkbaseinfoViewData(CourseTeachingClassHomeworkBaseinfoStudentViewData homeworkbaseinfoViewData) {
 		this.homeworkbaseinfoViewData = homeworkbaseinfoViewData;
+	}
+
+	public CourseTeachingClassStudentGroupViewData getStudentGroupViewData() {
+		return studentGroupViewData;
+	}
+
+	public void setStudentGroupViewData(CourseTeachingClassStudentGroupViewData studentGroupViewData) {
+		this.studentGroupViewData = studentGroupViewData;
 	}
 
 }

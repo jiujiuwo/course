@@ -56,6 +56,8 @@ public class PagedObjectConst {
 
 	// 教学班
 	public static final String Paged_TeachingClassViewData = "pagedTeachingClassViewData";
+	
+	public static final String Paged_CourseTeachingTerm = "pagedCourseTeachingTerm";
 
 	// 课程-参考资料
 	public static final String Paged_CourseTeachingClassReferenceViewData = "pagedCourseTeachingClassReferenceViewData";

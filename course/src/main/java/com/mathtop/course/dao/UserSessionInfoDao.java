@@ -47,7 +47,7 @@ public class UserSessionInfoDao extends BaseDao<UserSessionInfo> {
 	RolePermissionDao rolepermissionDao;
 
 	@Autowired
-	TeachingClassViewDataDao teachingclassviewdataDao;
+	CourseTeachingClassViewDataDao teachingclassviewdataDao;
 
 	public List<PermissionViewData> getPermissionViewDataByUserId(String t_user_id) {		
 
@@ -56,11 +56,11 @@ public class UserSessionInfoDao extends BaseDao<UserSessionInfo> {
 		// 找到用户所在的组，找到组所具有的角色，找到角色具有的权限
 		List<UserGroup> usergrouplist = usergroupDao.getUserGroupByt_user_id(t_user_id);
 		for (UserGroup usergroup : usergrouplist) {			
-			List<GroupRole> grouprolelist = grouproleDao.getGroupRoleByGroupId(usergroup.getT_group_id());
+			List<GroupRole> grouprolelist = grouproleDao.getGroupRoleByGroupId(usergroup.getGroupId());
 			for (GroupRole grouprole : grouprolelist) {				
-				List<RolePermission> rolepermissionlist = rolepermissionDao.getRolePermissionByRoleId(grouprole.getT_role_id());
+				List<RolePermission> rolepermissionlist = rolepermissionDao.getRolePermissionByRoleId(grouprole.getRoleId());
 				for (RolePermission rolepermission : rolepermissionlist) {					
-					PermissionViewData view = permissionDao.getPermissionViewDataByPermissionId(rolepermission.getT_permission_id());
+					PermissionViewData view = permissionDao.getPermissionViewDataByPermissionId(rolepermission.getPermissionId());
 					data.add(view);
 				}
 			}
@@ -86,8 +86,8 @@ public class UserSessionInfoDao extends BaseDao<UserSessionInfo> {
 
 		usi.setUserbasicinfo(ubi);
 
-		Teacher teacher = teacherDao.getTeacherByt_user_id(user_id);
-		Student student = studentDao.getStudentByt_user_id(user_id);
+		Teacher teacher = teacherDao.getTeacherByUserId(user_id);
+		Student student = studentDao.getStudentByUserId(user_id);
 		usi.setTeacher(teacher);
 		usi.setStudent(student);
 

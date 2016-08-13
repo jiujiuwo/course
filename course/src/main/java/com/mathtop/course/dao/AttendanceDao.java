@@ -16,7 +16,6 @@ import com.mathtop.course.domain.AttendanceViewData;
 import com.mathtop.course.domain.Course;
 import com.mathtop.course.domain.CourseTeachingClass;
 import com.mathtop.course.domain.TeacherViewData;
-import com.mathtop.course.domain.TeachingClass;
 import com.mathtop.course.utility.DateTimeSql;
 import com.mathtop.course.utility.GUID;
 
@@ -26,8 +25,7 @@ public class AttendanceDao extends BaseDao<Attendance> {
 	@Autowired
 	CourseTeachingClassDao courseteachingclassDao;
 
-	@Autowired
-	TeachingClassDao teachingclassDao;
+	
 
 	@Autowired
 	CourseDao courseDao;
@@ -80,11 +78,11 @@ public class AttendanceDao extends BaseDao<Attendance> {
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				atte.setId(id);
-				atte.setT_course_teacing_class_id(rs.getString("t_course_teaching_class_id"));
-				atte.setT_attendance_type_id(rs.getString("t_attendance_type_id"));
-				atte.setT_teacher_id(rs.getString("t_teacher_id"));
-				atte.setBegin_datetime(rs.getTimestamp("begin_datetime"));
-				atte.setEnd_datetime(rs.getTimestamp("end_datetime"));
+				atte.setCourseTeacingClassId(rs.getString("t_course_teaching_class_id"));
+				atte.setAttendanceTypeId(rs.getString("t_attendance_type_id"));
+				atte.setTeacherId(rs.getString("t_teacher_id"));
+				atte.setBeginDatetime(rs.getTimestamp("begin_datetime"));
+				atte.setEndDatetime(rs.getTimestamp("end_datetime"));
 
 			}
 
@@ -108,11 +106,11 @@ public class AttendanceDao extends BaseDao<Attendance> {
 			public void processRow(ResultSet rs) throws SQLException {
 				Attendance atte = new Attendance();
 				atte.setId(rs.getString("id"));
-				atte.setT_course_teacing_class_id(t_course_teaching_class_id);
-				atte.setT_attendance_type_id(rs.getString("t_attendance_type_id"));
-				atte.setT_teacher_id(rs.getString("t_teacher_id"));
-				atte.setBegin_datetime(rs.getTimestamp("begin_datetime"));
-				atte.setEnd_datetime(rs.getTimestamp("end_datetime"));
+				atte.setCourseTeacingClassId(t_course_teaching_class_id);
+				atte.setAttendanceTypeId(rs.getString("t_attendance_type_id"));
+				atte.setTeacherId(rs.getString("t_teacher_id"));
+				atte.setBeginDatetime(rs.getTimestamp("begin_datetime"));
+				atte.setEndDatetime(rs.getTimestamp("end_datetime"));
 				list.add(atte);
 
 			}
@@ -136,11 +134,11 @@ public class AttendanceDao extends BaseDao<Attendance> {
 			public void processRow(ResultSet rs) throws SQLException {
 				Attendance atte = new Attendance();
 				atte.setId(rs.getString("id"));
-				atte.setT_course_teacing_class_id(rs.getString("t_course_teaching_class_id"));
-				atte.setT_attendance_type_id(rs.getString("t_attendance_type_id"));
-				atte.setT_teacher_id(t_teacher_id);
-				atte.setBegin_datetime(rs.getTimestamp("begin_datetime"));
-				atte.setEnd_datetime(rs.getTimestamp("end_datetime"));
+				atte.setCourseTeacingClassId(rs.getString("t_course_teaching_class_id"));
+				atte.setAttendanceTypeId(rs.getString("t_attendance_type_id"));
+				atte.setTeacherId(t_teacher_id);
+				atte.setBeginDatetime(rs.getTimestamp("begin_datetime"));
+				atte.setEndDatetime(rs.getTimestamp("end_datetime"));
 				list.add(atte);
 
 			}
@@ -163,11 +161,11 @@ public class AttendanceDao extends BaseDao<Attendance> {
 			public void processRow(ResultSet rs) throws SQLException {
 				Attendance atte = new Attendance();
 				atte.setId(rs.getString("id"));
-				atte.setT_course_teacing_class_id(rs.getString("t_course_teaching_class_id"));
-				atte.setT_attendance_type_id(t_attendance_type_id);
-				atte.setT_teacher_id(rs.getString("t_teacher_id"));
-				atte.setBegin_datetime(rs.getTimestamp("begin_datetime"));
-				atte.setEnd_datetime(rs.getTimestamp("end_datetime"));
+				atte.setCourseTeacingClassId(rs.getString("t_course_teaching_class_id"));
+				atte.setAttendanceTypeId(t_attendance_type_id);
+				atte.setTeacherId(rs.getString("t_teacher_id"));
+				atte.setBeginDatetime(rs.getTimestamp("begin_datetime"));
+				atte.setEndDatetime(rs.getTimestamp("end_datetime"));
 				list.add(atte);
 
 			}
@@ -182,8 +180,8 @@ public class AttendanceDao extends BaseDao<Attendance> {
 	public String add(Attendance atte) {
 		String id = GUID.getGUID();
 		atte.setId(id);
-		Object params[] = new Object[] { atte.getId(), atte.getT_course_teacing_class_id(), atte.getT_attendance_type_id(),
-				atte.getT_teacher_id(), atte.getBegin_datetime(), atte.getEnd_datetime() };
+		Object params[] = new Object[] { atte.getId(), atte.getCourseTeacingClassId(), atte.getAttendanceTypeId(),
+				atte.getTeacherId(), atte.getBeginDatetime(), atte.getEndDatetime() };
 		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.TIMESTAMP, Types.TIMESTAMP };
 		getJdbcTemplate().update(INSERT_ATTENDANCE, params, types);
 		return id;
@@ -248,16 +246,15 @@ public class AttendanceDao extends BaseDao<Attendance> {
 		data.setAttendance(attendance);
 
 		CourseTeachingClass courseteachingclass = courseteachingclassDao.getCourseTeachingClassById(attendance
-				.getT_course_teacing_class_id());
+				.getCourseTeacingClassId());
 		data.setCourseteachingclass(courseteachingclass);
 
-		TeachingClass teachingclass = teachingclassDao.getByID(courseteachingclass.getT_teaching_class_id());
-		data.setTeachingclass(teachingclass);
+	
 
-		Course course = courseDao.getCourseById(courseteachingclass.getT_course_id());
+		Course course = courseDao.getCourseById(courseteachingclass.getCourseId());
 		data.setCourse(course);
 
-		TeacherViewData teacherviewdata = teacherviewdataDao.getTeacherViewDataByTeacherId(attendance.getT_teacher_id());
+		TeacherViewData teacherviewdata = teacherviewdataDao.getTeacherViewDataByTeacherId(attendance.getTeacherId());
 		data.setTeacherviewdata(teacherviewdata);
 		
 		data.setHasCheckin(attendanceStudentDao.getCount(t_attendance_id)>0);

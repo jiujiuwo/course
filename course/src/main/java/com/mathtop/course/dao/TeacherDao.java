@@ -69,8 +69,8 @@ public class TeacherDao extends BaseDao<Teacher> {
 			public void processRow(ResultSet rs) throws SQLException {
 
 				teacher.setId(t_teacher_id);
-				teacher.setT_user_id(rs.getString("t_user_id"));
-				teacher.setTeacher_num(rs.getString("teacher_num"));
+				teacher.setUserId(rs.getString("t_user_id"));
+				teacher.setTeacherNum(rs.getString("teacher_num"));
 
 			}
 
@@ -92,9 +92,9 @@ public class TeacherDao extends BaseDao<Teacher> {
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				teacher.setId(rs.getString("id"));
-				teacher.setT_user_id(rs.getString("t_user_id"));
+				teacher.setUserId(rs.getString("t_user_id"));
 
-				teacher.setTeacher_num(teacher_num);
+				teacher.setTeacherNum(teacher_num);
 
 			}
 
@@ -108,7 +108,7 @@ public class TeacherDao extends BaseDao<Teacher> {
 	/*
 	 * 根据t_user_id得到用户
 	 */
-	public Teacher getTeacherByt_user_id(String t_user_id) {
+	public Teacher getTeacherByUserId(String t_user_id) {
 
 		Teacher teacher = new Teacher();
 
@@ -117,9 +117,9 @@ public class TeacherDao extends BaseDao<Teacher> {
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				teacher.setId(rs.getString("id"));
-				teacher.setT_user_id(t_user_id);
+				teacher.setUserId(t_user_id);
 
-				teacher.setTeacher_num(rs.getString("teacher_num"));
+				teacher.setTeacherNum(rs.getString("teacher_num"));
 
 			}
 
@@ -134,7 +134,7 @@ public class TeacherDao extends BaseDao<Teacher> {
 	public String add(Department department, Teacher teacher) {
 		String id = GUID.getGUID();
 		teacher.setId(id);
-		Object params[] = new Object[] { id, teacher.getT_user_id(), teacher.getTeacher_num() };
+		Object params[] = new Object[] { id, teacher.getUserId(), teacher.getTeacherNum() };
 		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR };
 		getJdbcTemplate().update(INSERT_TEACHER, params, types);
 

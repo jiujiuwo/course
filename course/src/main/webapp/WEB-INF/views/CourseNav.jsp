@@ -187,24 +187,26 @@
 						</h4>
 					</div>
 					<div id="collapseCourse"
-						class="panel-collapse collapse <%=isCollapse((String) session.getAttribute("nav"), "coursetype,coursestyle,teachingtype,course,teachingclass")%>"
+						class="panel-collapse collapse <%=isCollapse((String) session.getAttribute("nav"), "coursetype,coursestyle,teachingtype,course,teachingclass,teachingterm")%>"
 						role="tabpanel" aria-labelledby="headingCourse">
 						<div class="panel-body">
 							<div class="list-group">
 								<a href="coursetype/list.html"
-									class="list-group-item <%=nav((String) session.getAttribute("nav"), "coursetype")%>">课程性质管理</a>
+									class="list-group-item <%=nav((String) session.getAttribute("nav"), "coursetype")%>">课程性质</a>
 								<a href="coursestyle/list.html"
-									class="list-group-item <%=nav((String) session.getAttribute("nav"), "coursestyle")%>">课程类别管理</a>
+									class="list-group-item <%=nav((String) session.getAttribute("nav"), "coursestyle")%>">课程类别</a>
 
 
 								<a href="teachingtype/list.html"
-									class="list-group-item <%=nav((String) session.getAttribute("nav"), "teachingtype")%>">教师授课类型管理</a>
+									class="list-group-item <%=nav((String) session.getAttribute("nav"), "teachingtype")%>">教师授课类型</a>
 
 								<a href="course/list.html"
-									class="list-group-item <%=nav((String) session.getAttribute("nav"), "course")%>">课程管理</a>
+									class="list-group-item <%=nav((String) session.getAttribute("nav"), "course")%>">课程</a>
 
 								<a href="teachingclass/list.html"
-									class="list-group-item <%=nav((String) session.getAttribute("nav"), "teachingclass")%>">教学班管理</a>
+									class="list-group-item <%=nav((String) session.getAttribute("nav"), "teachingclass")%>">教学班</a>
+									<a href="courseteachingterm/list.html"
+									class="list-group-item <%=nav((String) session.getAttribute("nav"), "teachingterm")%>">教学学期</a>
 							</div>
 						</div>
 					</div>
@@ -246,20 +248,29 @@
 
 
 			<c:if test="${fn:contains(flag,'permission') }">
+			
+				
 				<div class="panel panel-default">
-					<div class="panel-heading" role="tab" id="headingPermission">
+					<div class="panel-heading" role="tab" id="headingSystemManage">
 						<h4 class="panel-title">
 							<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
 							<a class="collapsed" data-toggle="collapse"
-								data-parent="#accordion" href="#collapsePermission"
-								aria-expanded="false" aria-controls="collapsePermission">
-								权限管理</a>
+								data-parent="#accordion" href="#collapseSystemManage"
+								aria-expanded="false" aria-controls="collapseSystemManage">
+								系统管理</a>
 						</h4>
 					</div>
-					<div id="collapsePermission"
-						class="panel-collapse collapse <%=isCollapse((String) session.getAttribute("nav"), "permission")%>"
-						role="tabpanel" aria-labelledby="headingPermission">
+					<div id="collapseSystemManage"
+						class="panel-collapse collapse <%=isCollapse((String) session.getAttribute("nav"), "permission,systemResetMail")%>"
+						role="tabpanel" aria-labelledby="headingSystemManage">
 						<div class="panel-body">
+							<div class="list-group">
+								<a href="permission/group/list.html"
+									class="list-group-item <%=nav((String) session.getAttribute("nav"), "systemResetMail")%>">重置密码邮箱</a>
+
+
+
+							</div>
 							<div class="list-group">
 								<a href="permission/group/list.html"
 									class="list-group-item <%=nav((String) session.getAttribute("nav"), "permission")%>">权限管理</a>
@@ -398,7 +409,7 @@
 									items="${sessionScope.USER_CONTEXT.teachingclassviewdata}">
 									<a
 										class="list-group-item <%=nav((String) session.getAttribute("nav"), "CourseTeachingClass")%>"
-										href="<c:url value="/coursecontent/index-${dataitem.courseteachingclass.id}.html"/>">${dataitem.course.name }</a>
+										href="<c:url value="/coursecontent/index-${dataitem.courseTeachingClass.id}.html"/>">${dataitem.course.name }</a>
 								</c:forEach>
 
 

@@ -62,8 +62,8 @@ public class DepartmentTeacherDao extends BaseDao<DepartmentTeacher> {
 			public void processRow(ResultSet rs) throws SQLException {
 			
 				dt.setId(id);	
-				dt.setT_department_id(rs.getString("t_department_id"));
-				dt.setT_teacher_id(rs.getString("t_teacher_id"));
+				dt.setDepartmentId(rs.getString("t_department_id"));
+				dt.setTeacherId(rs.getString("t_teacher_id"));
 			
 			}
 			

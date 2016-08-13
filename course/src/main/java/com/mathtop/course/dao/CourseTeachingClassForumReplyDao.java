@@ -72,10 +72,10 @@ public class CourseTeachingClassForumReplyDao extends BaseDao<CourseTeachingClas
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				topic.setId(id);
-				topic.setT_course_teaching_class_forum_topic_id(rs.getString("t_course_teaching_class_forum_topic_id"));
-				topic.setT_user_id(rs.getString("t_user_id"));
-				topic.setCreated_date(DateTimeSql.GetDateTime(rs.getString("created_date")));
-				topic.setLast_modified_date(DateTimeSql.GetDateTime(rs.getString("last_modified_date")));
+				topic.setCourseTeachingClassForumTopicId(rs.getString("t_course_teaching_class_forum_topic_id"));
+				topic.setUserId(rs.getString("t_user_id"));
+				topic.setCreatedDate(DateTimeSql.GetDateTime(rs.getString("created_date")));
+				topic.setLastModifiedDate(DateTimeSql.GetDateTime(rs.getString("last_modified_date")));
 				topic.setTitle(rs.getString("title"));
 				topic.setContent(rs.getString("content"));
 
@@ -101,10 +101,10 @@ public class CourseTeachingClassForumReplyDao extends BaseDao<CourseTeachingClas
 			public void processRow(ResultSet rs) throws SQLException {
 				CourseTeachingClassForumReply topic = new CourseTeachingClassForumReply();
 				topic.setId(rs.getString("id"));
-				topic.setT_course_teaching_class_forum_topic_id(t_course_teaching_class_forum_topic_id);
-				topic.setT_user_id(rs.getString("t_user_id"));
-				topic.setCreated_date(DateTimeSql.GetDateTime(rs.getString("created_date")));
-				topic.setLast_modified_date(DateTimeSql.GetDateTime(rs.getString("last_modified_date")));
+				topic.setCourseTeachingClassForumTopicId(t_course_teaching_class_forum_topic_id);
+				topic.setUserId(rs.getString("t_user_id"));
+				topic.setCreatedDate(DateTimeSql.GetDateTime(rs.getString("created_date")));
+				topic.setLastModifiedDate(DateTimeSql.GetDateTime(rs.getString("last_modified_date")));
 				topic.setTitle(rs.getString("title"));
 				topic.setContent(rs.getString("content"));
 
@@ -131,10 +131,10 @@ public class CourseTeachingClassForumReplyDao extends BaseDao<CourseTeachingClas
 			public void processRow(ResultSet rs) throws SQLException {
 				CourseTeachingClassForumReply topic = new CourseTeachingClassForumReply();
 				topic.setId(rs.getString("id"));
-				topic.setT_course_teaching_class_forum_topic_id(rs.getString("t_course_teaching_class_forum_topic_id"));
-				topic.setT_user_id(t_user_id);
-				topic.setCreated_date(DateTimeSql.GetDateTime(rs.getString("created_date")));
-				topic.setLast_modified_date(DateTimeSql.GetDateTime(rs.getString("last_modified_date")));
+				topic.setCourseTeachingClassForumTopicId(rs.getString("t_course_teaching_class_forum_topic_id"));
+				topic.setUserId(t_user_id);
+				topic.setCreatedDate(DateTimeSql.GetDateTime(rs.getString("created_date")));
+				topic.setLastModifiedDate(DateTimeSql.GetDateTime(rs.getString("last_modified_date")));
 				topic.setTitle(rs.getString("title"));
 				topic.setContent(rs.getString("content"));
 
@@ -160,10 +160,10 @@ public class CourseTeachingClassForumReplyDao extends BaseDao<CourseTeachingClas
 			public void processRow(ResultSet rs) throws SQLException {
 				CourseTeachingClassForumReply topic = new CourseTeachingClassForumReply();
 				topic.setId(rs.getString("id"));
-				topic.setT_course_teaching_class_forum_topic_id(t_course_teaching_class_id);
-				topic.setT_user_id(t_user_id);
-				topic.setCreated_date(DateTimeSql.GetDateTime(rs.getString("created_date")));
-				topic.setLast_modified_date(DateTimeSql.GetDateTime(rs.getString("last_modified_date")));
+				topic.setCourseTeachingClassForumTopicId(t_course_teaching_class_id);
+				topic.setUserId(t_user_id);
+				topic.setCreatedDate(DateTimeSql.GetDateTime(rs.getString("created_date")));
+				topic.setLastModifiedDate(DateTimeSql.GetDateTime(rs.getString("last_modified_date")));
 				topic.setTitle(rs.getString("title"));
 				topic.setContent(rs.getString("content"));
 
@@ -222,7 +222,7 @@ public class CourseTeachingClassForumReplyDao extends BaseDao<CourseTeachingClas
 		if (forumreply == null)
 			return null;
 
-		UserBasicInfoViewData userbasicinfoviewdata = usersessioninfoDao.getUserBasicInfoViewDataByt_user_id(forumreply.getT_user_id());
+		UserBasicInfoViewData userbasicinfoviewdata = usersessioninfoDao.getUserBasicInfoViewDataByt_user_id(forumreply.getUserId());
 		if (userbasicinfoviewdata == null)
 			return null;
 		

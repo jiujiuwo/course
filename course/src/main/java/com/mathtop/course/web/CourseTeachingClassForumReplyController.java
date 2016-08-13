@@ -3,6 +3,7 @@ package com.mathtop.course.web;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mathtop.course.cons.CommonConstant;
+import com.mathtop.course.cons.CourseMessage;
 import com.mathtop.course.cons.PagedObjectConst;
 import com.mathtop.course.cons.SelectedObjectConst;
 import com.mathtop.course.dao.Page;
@@ -27,6 +30,7 @@ import com.mathtop.course.service.CourseTeachingClassService;
 @Controller
 @RequestMapping("/courseforumreply")
 public class CourseTeachingClassForumReplyController extends CourseTeachingClassBaseController {
+
 
 	/**
 	 * 自动注入
@@ -184,9 +188,12 @@ public class CourseTeachingClassForumReplyController extends CourseTeachingClass
 	 * @return
 	 */
 	@RequestMapping(value = "/list-{t_course_teaching_class_id}-{t_forum_topic_id}")
-	public ModelAndView ListAll(HttpServletRequest request, @PathVariable String t_course_teaching_class_id,
+	public ModelAndView ListAll(HttpServletRequest request,HttpSession httpSession, RedirectAttributes redirectAttributes,@PathVariable String t_course_teaching_class_id,
 			@PathVariable String t_forum_topic_id, @RequestParam(value = "pageNo", required = false) Integer pageNo) {
 		ModelAndView view = new ModelAndView();
+		
+		
+		
 
 		pageNo = pageNo == null ? 1 : pageNo;
 		Page<CourseTeachingClassForumReplyViewData> pagedForumReplyViewData = forumreplyService.getPage(t_forum_topic_id, pageNo, CommonConstant.PAGE_SIZE);

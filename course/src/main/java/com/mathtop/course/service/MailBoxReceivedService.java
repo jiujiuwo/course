@@ -169,6 +169,10 @@ public class MailBoxReceivedService {
 	public Page<MailBoxReceivedViewData> getPageNotRead(String t_user_id_to, int pageNo, int pageSize) {
 		return maiboxdao.getPageNotRead(t_user_id_to,  pageNo, pageSize);
 	}
+	
+	public boolean hasMailNotReaded(String t_user_id_to){
+		return maiboxdao.getCountNotRead(t_user_id_to)>0;
+	}
 
 
 }

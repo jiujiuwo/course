@@ -126,11 +126,11 @@ public class CourseDao extends BaseDao<Course> {
 						c.setClass_hours(rs.getInt("class_hours"));
 						c.setExperiment_hours(rs.getInt("experiment_hours"));
 
-						c.setT_course_style_id(rs
+						c.setCourseStyleId(rs
 								.getString("t_course_style_id"));
 						
 
-						c.setT_course_type_id(rs.getString("t_course_type_id"));
+						c.setCourseTypeId(rs.getString("t_course_type_id"));
 						
 
 					}
@@ -161,11 +161,11 @@ public class CourseDao extends BaseDao<Course> {
 						c.setClass_hours(rs.getInt("class_hours"));
 						c.setExperiment_hours(rs.getInt("experiment_hours"));
 
-						c.setT_course_style_id(rs
+						c.setCourseStyleId(rs
 								.getString("t_course_style_id"));
 						
 
-						c.setT_course_type_id(t_course_type_id);
+						c.setCourseTypeId(t_course_type_id);
 						list.add(c);
 
 					}
@@ -195,10 +195,10 @@ public class CourseDao extends BaseDao<Course> {
 						c.setClass_hours(rs.getInt("class_hours"));
 						c.setExperiment_hours(rs.getInt("experiment_hours"));
 
-						c.setT_course_style_id(t_course_style_id);
+						c.setCourseStyleId(t_course_style_id);
 						
 
-						c.setT_course_type_id(rs.getString("t_course_type_id"));
+						c.setCourseTypeId(rs.getString("t_course_type_id"));
 						list.add(c);
 
 					}
@@ -227,9 +227,9 @@ public class CourseDao extends BaseDao<Course> {
 						c.setNum(rs.getString("num"));
 						c.setClass_hours(rs.getInt("class_hours"));
 						c.setExperiment_hours(rs.getInt("experiment_hours"));
-						c.setT_course_style_id(t_course_style_id);						
+						c.setCourseStyleId(t_course_style_id);						
 
-						c.setT_course_type_id(t_course_type_id);
+						c.setCourseTypeId(t_course_type_id);
 						list.add(c);
 
 					}
@@ -248,10 +248,10 @@ public class CourseDao extends BaseDao<Course> {
 		CourseViewData courseViewData=new CourseViewData();
 		courseViewData.setCourse(course);
 		
-		CourseStyle courseStyle=courseStyleDao.getByID(course.getT_course_style_id());
+		CourseStyle courseStyle=courseStyleDao.getByID(course.getCourseStyleId());
 		courseViewData.setCourseStyle(courseStyle);
 		
-		CourseType courseType=courseTypeDao.getByID(course.getT_course_type_id());
+		CourseType courseType=courseTypeDao.getByID(course.getCourseTypeId());
 		courseViewData.setCourseType(courseType);
 		
 		List<CoursePrecourseViewData> listpre=coursePrecourseDao.getPreCourseViewData(t_course_id);
@@ -283,11 +283,11 @@ public class CourseDao extends BaseDao<Course> {
 						c.setClass_hours(rs.getInt("class_hours"));
 						c.setExperiment_hours(rs.getInt("experiment_hours"));
 
-						c.setT_course_style_id(rs
+						c.setCourseStyleId(rs
 								.getString("t_course_style_id"));
 					
 
-						c.setT_course_type_id(rs.getString("t_course_type_id"));
+						c.setCourseTypeId(rs.getString("t_course_type_id"));
 						
 
 					}

@@ -10,7 +10,7 @@ public class CourseTeachingClassForumTopicFile extends BaseDomain {
 	 */
 	private static final long serialVersionUID = -3525442298067390215L;
 	private String id;
-	private String t_course_teaching_class_forum_topic_id;
+	private String courseTeachingClassForumTopicId;
 	  private String filename;
 	  private String filepath;
 	public String getId() {
@@ -32,12 +32,12 @@ public class CourseTeachingClassForumTopicFile extends BaseDomain {
 	public void setFilepath(String filepath) {
 		this.filepath = filepath;
 	}
-	public String getT_course_teaching_class_forum_topic_id() {
-		return t_course_teaching_class_forum_topic_id;
+	public String getCourseTeachingClassForumTopicId() {
+		return courseTeachingClassForumTopicId;
 	}
-	public void setT_course_teaching_class_forum_topic_id(String t_course_teaching_class_forum_topic_id) {
-		this.t_course_teaching_class_forum_topic_id = t_course_teaching_class_forum_topic_id;
+	public void setCourseTeachingClassForumTopicId(String courseTeachingClassForumTopicId) {
+		this.courseTeachingClassForumTopicId = courseTeachingClassForumTopicId;
 	}
-   
+
 	
 }

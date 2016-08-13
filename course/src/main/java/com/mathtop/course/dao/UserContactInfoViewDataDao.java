@@ -28,7 +28,7 @@ public class UserContactInfoViewDataDao extends BaseDao<UserContactInfoViewData>
 			
 			view.setUsercontactinfo(d);
 			
-			UserContactType type=usercontacttypeDao.getByID(d.getT_user_contact_type_id());
+			UserContactType type=usercontacttypeDao.getByID(d.getUserContactTypeId());
 			view.setUsercontacttype(type);
 			list.add(view);
 		}

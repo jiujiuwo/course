@@ -10,7 +10,7 @@ public class CourseTeachingClassHomeworkType extends BaseDomain{
 	private static final long serialVersionUID = 2842734497709823461L;
 
 	private String id;
-	private String t_course_teaching_class_id;
+	private String courseTeachingClassId;
 
 	private String name;
 	private String note;
@@ -20,12 +20,7 @@ public class CourseTeachingClassHomeworkType extends BaseDomain{
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getT_course_teaching_class_id() {
-		return t_course_teaching_class_id;
-	}
-	public void setT_course_teaching_class_id(String t_course_teaching_class_id) {
-		this.t_course_teaching_class_id = t_course_teaching_class_id;
-	}
+	
 	
 	public String getName() {
 		return name;
@@ -38,5 +33,11 @@ public class CourseTeachingClassHomeworkType extends BaseDomain{
 	}
 	public void setNote(String note) {
 		this.note = note;
+	}
+	public String getCourseTeachingClassId() {
+		return courseTeachingClassId;
+	}
+	public void setCourseTeachingClassId(String courseTeachingClassId) {
+		this.courseTeachingClassId = courseTeachingClassId;
 	}  
 }

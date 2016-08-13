@@ -90,9 +90,9 @@ public class CourseTeachingClassReferenceDao extends BaseDao<CourseTeachingClass
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				reference.setId(id);
-				reference.setT_course_teaching_class_id(rs.getString("t_course_teaching_class_id"));
-				reference.setT_teacher_id(rs.getString("t_teacher_id"));
-				reference.setT_course_teaching_class_reference_type_id(rs.getString("t_course_teaching_class_reference_type_id"));
+				reference.setCourseTeachingClassId(rs.getString("t_course_teaching_class_id"));
+				reference.setTeacherId(rs.getString("t_teacher_id"));
+				reference.setCourseTeachingClassReferenceTypeId(rs.getString("t_course_teaching_class_reference_type_id"));
 				reference.setModifieddate(rs.getTimestamp("modifieddate"));
 				reference.setPubdate(rs.getTimestamp("pubdate"));
 				reference.setTitle(rs.getString("title"));
@@ -120,9 +120,9 @@ public class CourseTeachingClassReferenceDao extends BaseDao<CourseTeachingClass
 			public void processRow(ResultSet rs) throws SQLException {
 				CourseTeachingClassReference reference = new CourseTeachingClassReference();
 				reference.setId(rs.getString("id"));
-				reference.setT_course_teaching_class_id(t_course_teaching_class_id);
-				reference.setT_teacher_id(rs.getString("t_teacher_id"));
-				reference.setT_course_teaching_class_reference_type_id(rs.getString("t_course_teaching_class_reference_type_id"));
+				reference.setCourseTeachingClassId(t_course_teaching_class_id);
+				reference.setTeacherId(rs.getString("t_teacher_id"));
+				reference.setCourseTeachingClassReferenceTypeId(rs.getString("t_course_teaching_class_reference_type_id"));
 				reference.setModifieddate(rs.getTimestamp("modifieddate"));
 				reference.setPubdate(rs.getTimestamp("pubdate"));
 				reference.setTitle(rs.getString("title"));
@@ -150,9 +150,9 @@ public class CourseTeachingClassReferenceDao extends BaseDao<CourseTeachingClass
 			public void processRow(ResultSet rs) throws SQLException {
 				CourseTeachingClassReference reference = new CourseTeachingClassReference();
 				reference.setId(rs.getString("id"));
-				reference.setT_course_teaching_class_id(rs.getString("t_course_teaching_class_id"));
-				reference.setT_teacher_id(t_teacher_id);
-				reference.setT_course_teaching_class_reference_type_id(rs.getString("t_course_teaching_class_reference_type_id"));
+				reference.setCourseTeachingClassId(rs.getString("t_course_teaching_class_id"));
+				reference.setTeacherId(t_teacher_id);
+				reference.setCourseTeachingClassReferenceTypeId(rs.getString("t_course_teaching_class_reference_type_id"));
 				reference.setModifieddate(rs.getTimestamp("modifieddate"));
 				reference.setPubdate(rs.getTimestamp("pubdate"));
 				reference.setTitle(rs.getString("title"));
@@ -180,9 +180,9 @@ public class CourseTeachingClassReferenceDao extends BaseDao<CourseTeachingClass
 			public void processRow(ResultSet rs) throws SQLException {
 				CourseTeachingClassReference reference = new CourseTeachingClassReference();
 				reference.setId(rs.getString("id"));
-				reference.setT_course_teaching_class_id(rs.getString("t_course_teaching_class_id"));
-				reference.setT_teacher_id(rs.getString("t_teacher_id"));
-				reference.setT_course_teaching_class_reference_type_id(t_course_teaching_class_reference_type_id);
+				reference.setCourseTeachingClassId(rs.getString("t_course_teaching_class_id"));
+				reference.setTeacherId(rs.getString("t_teacher_id"));
+				reference.setCourseTeachingClassReferenceTypeId(t_course_teaching_class_reference_type_id);
 				reference.setModifieddate(rs.getTimestamp("modifieddate"));
 				reference.setPubdate(rs.getTimestamp("pubdate"));
 				reference.setTitle(rs.getString("title"));
@@ -211,9 +211,9 @@ public class CourseTeachingClassReferenceDao extends BaseDao<CourseTeachingClass
 			public void processRow(ResultSet rs) throws SQLException {
 				CourseTeachingClassReference reference = new CourseTeachingClassReference();
 				reference.setId(rs.getString("id"));
-				reference.setT_course_teaching_class_id(t_course_teaching_class_id);
-				reference.setT_teacher_id(t_teacher_id);
-				reference.setT_course_teaching_class_reference_type_id(rs.getString("t_course_teaching_class_reference_type_id"));
+				reference.setCourseTeachingClassId(t_course_teaching_class_id);
+				reference.setTeacherId(t_teacher_id);
+				reference.setCourseTeachingClassReferenceTypeId(rs.getString("t_course_teaching_class_reference_type_id"));
 				reference.setModifieddate(rs.getTimestamp("modifieddate"));
 				reference.setPubdate(rs.getTimestamp("pubdate"));
 				reference.setTitle(rs.getString("title"));
@@ -240,9 +240,9 @@ public class CourseTeachingClassReferenceDao extends BaseDao<CourseTeachingClass
 			public void processRow(ResultSet rs) throws SQLException {
 				CourseTeachingClassReference reference = new CourseTeachingClassReference();
 				reference.setId(rs.getString("id"));
-				reference.setT_course_teaching_class_id(t_course_teaching_class_id);
-				reference.setT_teacher_id(t_teacher_id);
-				reference.setT_course_teaching_class_reference_type_id(t_course_teaching_class_reference_type_id);
+				reference.setCourseTeachingClassId(t_course_teaching_class_id);
+				reference.setTeacherId(t_teacher_id);
+				reference.setCourseTeachingClassReferenceTypeId(t_course_teaching_class_reference_type_id);
 				reference.setModifieddate(rs.getTimestamp("modifieddate"));
 				reference.setPubdate(rs.getTimestamp("pubdate"));
 				reference.setTitle(rs.getString("title"));
@@ -261,8 +261,8 @@ public class CourseTeachingClassReferenceDao extends BaseDao<CourseTeachingClass
 	public String add(CourseTeachingClassReference reference) {
 		String id = GUID.getGUID();
 		reference.setId(id);
-		Object params[] = new Object[] { reference.getId(), reference.getT_course_teaching_class_id(), reference.getT_teacher_id(),
-				reference.getT_course_teaching_class_reference_type_id(), reference.getTitle(), reference.getContent(),
+		Object params[] = new Object[] { reference.getId(), reference.getCourseTeachingClassId(), reference.getTeacherId(),
+				reference.getCourseTeachingClassReferenceTypeId(), reference.getTitle(), reference.getContent(),
 				reference.getPubdate(), reference.getModifieddate() };
 		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.TIMESTAMP,
 				Types.TIMESTAMP };
@@ -315,14 +315,14 @@ public class CourseTeachingClassReferenceDao extends BaseDao<CourseTeachingClass
 		data.setReference(reference);
 
 		CourseTeachingClass courseteachingclass = courseteachingclassDao
-				.getCourseTeachingClassById(reference.getT_course_teaching_class_id());
+				.getCourseTeachingClassById(reference.getCourseTeachingClassId());
 		data.setCourseteachingclass(courseteachingclass);
 
-		TeacherViewData teacherviewdata = teacherviewdataDao.getTeacherViewDataByTeacherId(reference.getT_teacher_id());
+		TeacherViewData teacherviewdata = teacherviewdataDao.getTeacherViewDataByTeacherId(reference.getTeacherId());
 		data.setTeacher(teacherviewdata);
 
 		CourseTeachingClassReferenceType type = courseTeachingClassReferenceTypeDao
-				.getByID(reference.getT_course_teaching_class_reference_type_id());
+				.getByID(reference.getCourseTeachingClassReferenceTypeId());
 		data.setType(type);
 
 		List<CourseTeachingClassReferenceFile> fileList = referencefileDao.getByCourseTeachingClassHomeworkBaseInfoID(reference.getId());

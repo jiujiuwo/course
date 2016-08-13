@@ -30,7 +30,7 @@ for PACKAGE_FILE in meteor/package*.js; do
     ALL_EXIT_CODES=$(( $ALL_EXIT_CODES + $? ))
   fi
 
-  # DELETE temporary build files and package.js
+  # delete temporary build files and package.js
   rm -rf .build.* versions.json package.js
 
 done

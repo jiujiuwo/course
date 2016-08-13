@@ -35,7 +35,7 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 
@@ -102,19 +102,19 @@
 				<div class="form-group">
 					<label for="student_num" class="col-sm-1 control-label">学号</label>
 					<div class="col-md-3">
-						<p class="form-control-static">${selectedStudentViewData.student.student_num}</p>
+						<p class="form-control-static">${selectedStudentViewData.student.studentNum}</p>
 
 					</div>
 
-					<label for="user_basic_info_name" class="col-sm-1 control-label">姓名</label>
+					<label for="userBasicInfoName" class="col-sm-1 control-label">姓名</label>
 					<div class="col-md-3">
-						<p class="form-control-static">${selectedStudentViewData.userbasicinfo.user_basic_info_name}</p>
+						<p class="form-control-static">${selectedStudentViewData.userbasicinfo.userBasicInfoName}</p>
 
 					</div>
 				</div>
 
 				<input type="hidden" id="user_basic_info_birthday_buf"
-					value='<fmt:formatDate value="${selectedStudentViewData.userbasicinfo.user_basic_info_birthday}" pattern="yyyy-MM-dd"/>'
+					value='<fmt:formatDate value="${selectedStudentViewData.userbasicinfo.userBasicInfoBirthday}" pattern="yyyy-MM-dd"/>'
 					readonly>
 
 
@@ -145,13 +145,13 @@
 					<label for="user_basic_info_sex" class="col-sm-1 control-label">性别</label>
 					<div class="col-md-3">
 						<label class="radio-inline"> <input type="radio" value="0"
-							<c:if test="${selectedStudentViewData.userbasicinfo.user_basic_info_sex<1}">
+							<c:if test="${selectedStudentViewData.userbasicinfo.userBasicInfoSex<1}">
 							checked="checked"
 							</c:if>
 							name="user_basic_info_sex" id="inlineRadio1" value="option1">
 							男
 						</label> <label class="radio-inline"> <input type="radio"
-							<c:if test="${selectedStudentViewData.userbasicinfo.user_basic_info_sex>0}">
+							<c:if test="${selectedStudentViewData.userbasicinfo.userBasicInfoSex>0}">
 							checked="checked"
 							</c:if>
 							value="1" name="user_basic_info_sex" id="inlineRadio2"
@@ -245,7 +245,7 @@
 
 											</select></td>
 											<td><input type="text" name="user_contact_value"
-												value="${dataitem.usercontactinfo.user_contact_value}"></td>
+												value="${dataitem.usercontactinfo.userContactValue}"></td>
 											<td><button type='button' class='btn btn-default btn-sm'
 													onclick='DeleteContactRow("contactrow${dataitem.usercontacttype.id}")'>删除</button></td>
 										</tr>
@@ -279,12 +279,10 @@
 
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
 
-
-	<%@ include file="../../shared/pageFooter.jsp"%>
 
 	<%@ include file="../../shared/importJs.jsp"%>
+		<%@ include file="../../shared/sysLastInclude.jsp"%>
 	<%@ include file="../../shared/importdatetimepickerjs.jsp"%>
 
 
@@ -380,21 +378,6 @@
 	</script>
 
 
-
-
-
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

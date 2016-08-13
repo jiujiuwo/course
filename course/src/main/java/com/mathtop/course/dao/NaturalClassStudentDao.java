@@ -21,7 +21,19 @@ import com.mathtop.course.utility.GUID;
 public class NaturalClassStudentDao extends BaseDao<NaturalClassStudent> {
 
 	private final String GET_STUDENTID_BY_t_natural_class_id = "SELECT t_student_id FROM t_natural_class_student WHERE t_natural_class_id=?";
-	private final String GET_t_natural_class_id_BY_STUDENTID = "SELECT id,t_natural_class_id FROM t_natural_class_student WHERE t_student_id=?";
+	
+	private final String GET_NATURAL_CLASS_ID_BY_STUDENT_ID = "SELECT id,t_natural_class_id "
+			+ "FROM t_natural_class_student "
+			+ "WHERE t_student_id=?";
+	
+	private final String GET_STUDENT_ID_BY_NATURAL_CLASS_ID_STUDENT_NUM = "SELECT t_student_id "
+			+ "FROM t_natural_class_student A "
+			+ "left outer join t_student B on A.t_student_id=B.id "			
+			+ "WHERE A.t_natural_class_id=? and B.student_num=?";
+	
+
+	
+	
 	private final String GET_BY_ID = "SELECT t_natural_class_id，t_student_id FROM t_natural_class_student WHERE id=?";
 	private final String INSERT = "INSERT INTO t_natural_class_student(id,t_natural_class_id,t_student_id) VALUES(?,?,?)";
 	private final String DELETE_BY_ID = "DELETE FROM t_natural_class_student WHERE id=?";
@@ -102,9 +114,9 @@ public class NaturalClassStudentDao extends BaseDao<NaturalClassStudent> {
 					@Override
 					public void processRow(ResultSet rs) throws SQLException {
 						n.setId(id);
-						n.setT_natural_clas_id(rs
+						n.setNaturalClassId(rs
 								.getString("t_natural_class_id"));
-						n.setT_student_id(rs.getString("t_student_id"));
+						n.setStudentId(rs.getString("t_student_id"));
 
 					}
 
@@ -125,15 +137,15 @@ public class NaturalClassStudentDao extends BaseDao<NaturalClassStudent> {
 		Object params[] = new Object[] { t_student_id };
 		int types[] = new int[] { Types.VARCHAR };
 
-		getJdbcTemplate().query(GET_t_natural_class_id_BY_STUDENTID, params, types,
+		getJdbcTemplate().query(GET_NATURAL_CLASS_ID_BY_STUDENT_ID, params, types,
 				new RowCallbackHandler() {
 
 					@Override
 					public void processRow(ResultSet rs) throws SQLException {
 						n.setId(rs.getString("id"));
-						n.setT_natural_clas_id(rs
+						n.setNaturalClassId(rs
 								.getString("t_natural_class_id"));
-						n.setT_student_id(t_student_id);
+						n.setStudentId(t_student_id);
 
 					}
 
@@ -177,11 +189,11 @@ public class NaturalClassStudentDao extends BaseDao<NaturalClassStudent> {
 
 		if (ncs != null) {
 			DepartmentNaturalClass ncst = naturalclassschoolDao
-					.getNaturalClassStudentByt_natural_class_id(ncs
-							.getT_natural_clas_id());
+					.getByNaturalclassId(ncs
+							.getNaturalClassId());
 			if (ncst != null){
-				Department department=getDepartmentByStudentId(ncst.getT_department_id());
-				return schoolDao.getByID(schooldepartmentDao.gett_school_idByt_department_id(department.getId()));
+				Department department=getDepartmentByStudentId(ncst.getDepartmentId());
+				return schoolDao.getByID(schooldepartmentDao.getSchoolIdByDepartmentId(department.getId()));
 			}
 		}
 
@@ -196,10 +208,10 @@ public class NaturalClassStudentDao extends BaseDao<NaturalClassStudent> {
 
 		if (ncs != null) {
 			DepartmentNaturalClass ncst = naturalclassschoolDao
-					.getNaturalClassStudentByt_natural_class_id(ncs
-							.getT_natural_clas_id());
+					.getByNaturalclassId(ncs
+							.getNaturalClassId());
 			if (ncst != null)
-				return departmentDao.getByID(ncst.getT_department_id());
+				return departmentDao.getByID(ncst.getDepartmentId());
 		}
 
 		return null;
@@ -213,9 +225,25 @@ public class NaturalClassStudentDao extends BaseDao<NaturalClassStudent> {
 
 		if (ncs != null) {		
 			
-				return naturalclassDao.getByID(ncs.getT_natural_clas_id());
+				return naturalclassDao.getByID(ncs.getNaturalClassId());
 		}
 
+		return null;
+	}
+	
+	/**
+	 * 查询某个学号的学生是否在班级中
+	 * */
+	public String getStudentId(String t_natural_class_id, String t_student_num) {
+
+	
+		try{
+		return getJdbcTemplate().queryForObject(GET_STUDENT_ID_BY_NATURAL_CLASS_ID_STUDENT_NUM,
+				new Object[] { t_natural_class_id, t_student_num }, new int[] { Types.VARCHAR, Types.VARCHAR },
+				String.class);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		return null;
 	}
 

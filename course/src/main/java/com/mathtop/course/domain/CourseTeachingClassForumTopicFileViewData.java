@@ -13,6 +13,8 @@ public class CourseTeachingClassForumTopicFileViewData extends BaseDomain {
 
 	private CourseTeachingClassForumTopic topic;
 	private CourseTeachingClassForumTopicFile topicFile;
+	
+	
 	public CourseTeachingClassForumTopic getTopic() {
 		return topic;
 	}

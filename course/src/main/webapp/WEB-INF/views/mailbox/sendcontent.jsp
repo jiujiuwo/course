@@ -35,14 +35,14 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home" onLoad="ShowErrMsg()">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 	<c:if test="${selectedCourseTeachingClassID!=null}">
 
 		<%@ include file="../../shared/CourseTeachingClassInfo.jsp"%>
 
-		<div id="DocumentPageTopSeparatorLine"></div>
+		
 	</c:if>
 
 	<div class="DocumentPage">
@@ -115,9 +115,9 @@
 						</div>
 						<div class="col-md-10">
 							<c:if test="${selectedMailBoxSendViewData.userTo.student!=null}">
-							${selectedMailBoxSendViewData.userTo.student.student_num}-
+							${selectedMailBoxSendViewData.userTo.student.studentNum}-
 							</c:if>
-							${selectedMailBoxSendViewData.userTo.userbasicinfo.user_basic_info_name}
+							${selectedMailBoxSendViewData.userTo.userbasicinfo.userBasicInfoName}
 						</div>
 
 					</div>
@@ -129,9 +129,9 @@
 						<div class="col-md-10">
 							<c:if
 								test="${selectedMailBoxSendViewData.userFrom.student!=null}">
-							${selectedMailBoxSendViewData.userFrom.student.student_num}-
+							${selectedMailBoxSendViewData.userFrom.student.studentNum}-
 							</c:if>
-							${selectedMailBoxSendViewData.userFrom.userbasicinfo.user_basic_info_name}
+							${selectedMailBoxSendViewData.userFrom.userbasicinfo.userBasicInfoName}
 						</div>
 
 					</div>
@@ -206,9 +206,7 @@
 
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
-
-	<%@ include file="../../shared/pageFooter.jsp"%>
+	<%@ include file="../../shared/sysLastInclude.jsp"%>
 
 	<script>
 		function onSearch() {
@@ -247,17 +245,5 @@
 		}
 	</script>
 
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 </body>
 </html>

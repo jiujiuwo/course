@@ -165,13 +165,13 @@ public class CourseTeachingClassForumTopicDao extends BaseDao<CourseTeachingClas
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				topic.setId(id);
-				topic.setT_course_teaching_class_id(rs.getString("t_course_teaching_class_id"));
-				topic.setT_user_id(rs.getString("t_user_id"));
-				topic.setCreated_date(DateTimeSql.GetDateTime(rs.getString("created_date")));
-				topic.setLast_modified_date(DateTimeSql.GetDateTime(rs.getString("last_modified_date")));
+				topic.setCourseTeachingClassId(rs.getString("t_course_teaching_class_id"));
+				topic.setUserId(rs.getString("t_user_id"));
+				topic.setCreatedDate(DateTimeSql.GetDateTime(rs.getString("created_date")));
+				topic.setLastModifiedDate(DateTimeSql.GetDateTime(rs.getString("last_modified_date")));
 				topic.setTitle(rs.getString("title"));
 				topic.setContent(rs.getString("content"));
-				topic.setView_count(Integer.parseInt(rs.getString("view_count")));
+				topic.setViewCount(Integer.parseInt(rs.getString("view_count")));
 				topic.setFlag(Integer.parseInt(rs.getString("flag")));
 
 			}
@@ -188,7 +188,7 @@ public class CourseTeachingClassForumTopicDao extends BaseDao<CourseTeachingClas
 		if (forumtopic == null)
 			return null;
 		
-		UserBasicInfoViewData userbasicinfoviewdata = userinfoDao.getUserBasicInfoViewDataByt_user_id(forumtopic.getT_user_id());
+		UserBasicInfoViewData userbasicinfoviewdata = userinfoDao.getUserBasicInfoViewDataByt_user_id(forumtopic.getUserId());
 		if (userbasicinfoviewdata == null)
 			return null;
 		
@@ -221,13 +221,13 @@ public class CourseTeachingClassForumTopicDao extends BaseDao<CourseTeachingClas
 			public void processRow(ResultSet rs) throws SQLException {
 				CourseTeachingClassForumTopic topic = new CourseTeachingClassForumTopic();
 				topic.setId(rs.getString("id"));
-				topic.setT_course_teaching_class_id(t_course_teaching_class_id);
-				topic.setT_user_id(rs.getString("t_user_id"));
-				topic.setCreated_date(DateTimeSql.GetDateTime(rs.getString("created_date")));
-				topic.setLast_modified_date(DateTimeSql.GetDateTime(rs.getString("last_modified_date")));
+				topic.setCourseTeachingClassId(t_course_teaching_class_id);
+				topic.setUserId(rs.getString("t_user_id"));
+				topic.setCreatedDate(DateTimeSql.GetDateTime(rs.getString("created_date")));
+				topic.setLastModifiedDate(DateTimeSql.GetDateTime(rs.getString("last_modified_date")));
 				topic.setTitle(rs.getString("title"));
 				topic.setContent(rs.getString("content"));
-				topic.setView_count(Integer.parseInt(rs.getString("view_count")));
+				topic.setViewCount(Integer.parseInt(rs.getString("view_count")));
 				topic.setFlag(Integer.parseInt(rs.getString("flag")));
 
 				list.add(topic);
@@ -252,13 +252,13 @@ public class CourseTeachingClassForumTopicDao extends BaseDao<CourseTeachingClas
 			public void processRow(ResultSet rs) throws SQLException {
 				CourseTeachingClassForumTopic topic = new CourseTeachingClassForumTopic();
 				topic.setId(rs.getString("id"));
-				topic.setT_course_teaching_class_id(rs.getString("t_course_teaching_class_id"));
-				topic.setT_user_id(t_user_id);
-				topic.setCreated_date(DateTimeSql.GetDateTime(rs.getString("created_date")));
-				topic.setLast_modified_date(DateTimeSql.GetDateTime(rs.getString("last_modified_date")));
+				topic.setCourseTeachingClassId(rs.getString("t_course_teaching_class_id"));
+				topic.setUserId(t_user_id);
+				topic.setCreatedDate(DateTimeSql.GetDateTime(rs.getString("created_date")));
+				topic.setLastModifiedDate(DateTimeSql.GetDateTime(rs.getString("last_modified_date")));
 				topic.setTitle(rs.getString("title"));
 				topic.setContent(rs.getString("content"));
-				topic.setView_count(Integer.parseInt(rs.getString("view_count")));
+				topic.setViewCount(Integer.parseInt(rs.getString("view_count")));
 				topic.setFlag(Integer.parseInt(rs.getString("flag")));
 
 				list.add(topic);
@@ -283,13 +283,13 @@ public class CourseTeachingClassForumTopicDao extends BaseDao<CourseTeachingClas
 			public void processRow(ResultSet rs) throws SQLException {
 				CourseTeachingClassForumTopic topic = new CourseTeachingClassForumTopic();
 				topic.setId(rs.getString("id"));
-				topic.setT_course_teaching_class_id(t_course_teaching_class_id);
-				topic.setT_user_id(t_user_id);
-				topic.setCreated_date(DateTimeSql.GetDateTime(rs.getString("created_date")));
-				topic.setLast_modified_date(DateTimeSql.GetDateTime(rs.getString("last_modified_date")));
+				topic.setCourseTeachingClassId(t_course_teaching_class_id);
+				topic.setUserId(t_user_id);
+				topic.setCreatedDate(DateTimeSql.GetDateTime(rs.getString("created_date")));
+				topic.setLastModifiedDate(DateTimeSql.GetDateTime(rs.getString("last_modified_date")));
 				topic.setTitle(rs.getString("title"));
 				topic.setContent(rs.getString("content"));
-				topic.setView_count(Integer.parseInt(rs.getString("view_count")));
+				topic.setViewCount(Integer.parseInt(rs.getString("view_count")));
 				topic.setFlag(Integer.parseInt(rs.getString("flag")));
 
 				list.add(topic);

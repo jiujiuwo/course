@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<root>
+    <standards>
+        <standard>产品</standard>
+        <standard>基础</standard>
+        <standard>方法</standard>
+          
+        <standard>管理</standard>
+        <standard>安全</standard> 
+        
+    </standards>
+</root>

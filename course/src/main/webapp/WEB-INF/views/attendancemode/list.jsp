@@ -3,8 +3,7 @@
 
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 
 	//设置左侧浏览状态
@@ -24,8 +23,7 @@
 <%@ include file="../../shared/importCss.jsp"%>
 
 
-<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet"
-	type="text/css" />
+<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet" type="text/css" />
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -34,10 +32,10 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home" onLoad="ShowErrMsg()">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
-	
+
 
 	<div class="DocumentPage">
 		<div class="DocumentPageLeftArea ">
@@ -64,11 +62,9 @@
 							<!-- Split button -->
 							<div class="btn-group">
 								<button type="button" class="btn btn-default btn-sm">选择</button>
-								<button type="button"
-									class="btn btn-default dropdown-toggle btn-sm"
-									data-toggle="dropdown" aria-expanded="false">
-									<span class="caret"></span> <span class="sr-only">Toggle
-										Dropdown</span>
+								<button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown"
+									aria-expanded="false">
+									<span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
 								</button>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="#">全部选择</a></li>
@@ -80,21 +76,19 @@
 						</div></td>
 					<td style="width: 10px;"></td>
 					<td><div class="btn-group" role="group" aria-label="...">
-							<button type="button" class="btn btn-default btn-sm"
-								data-toggle="modal" data-target="#addModal">增加</button>
+							<button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+								data-target="#addModal">增加</button>
 
-							<button type="button" class="btn btn-default btn-sm"
-								data-toggle="modal" data-target="#myModal">删除</button>
+							<button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+								data-target="#myModal">删除</button>
 
 
 						</div></td>
 					<td style="width: 10px;"></td>
 					<td><div class="input-group input-group-sm">
-							<input type="text" class="form-control" id="SearchText"
-								placeholder="Search for..." required> <span
-								class="input-group-btn">
-								<button class="btn btn-default" type="button"
-									onclick="onSearch()">搜索</button>
+							<input type="text" class="form-control" id="SearchText" placeholder="Search for..." required>
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button" onclick="onSearch()">搜索</button>
 							</span>
 						</div></td>
 				</tr>
@@ -110,8 +104,7 @@
 			<div class="Course-Table">
 
 
-				<table class="table table-hover table-bordered"
-					style="margin-bottom: -10px;">
+				<table class="table table-hover table-bordered" style="margin-bottom: -10px;">
 					<thead>
 						<tr>
 							<th>#</th>
@@ -138,8 +131,7 @@
 					</tbody>
 				</table>
 
-				<mathtop:PageBar pageUrl="/${pagedURI}/list.html"
-					pageAttrKey="pagedAttendanceType" />
+				<mathtop:PageBar pageUrl="/${pagedURI}/list.html" pageAttrKey="pagedAttendanceType" />
 
 			</div>
 
@@ -148,30 +140,27 @@
 
 
 	<!-- 添加对话框 -->
-	<div class="modal fade" id="addModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="myModalLabel">添加考勤签到方式</h4>
 				</div>
 
-				<form class="form-signin" action="<c:url value="/attendancemode/add.html"/>"
-					method="post">
+				<form class="form-signin" action="<c:url value="/attendancemode/add.html"/>" method="post">
 
 
 					<div class="modal-body">
 						<h4 class="form-signin-heading">请输入新加考勤签到方式名称</h4>
-						<label for="inputname" class="sr-only">考勤签到方式名称</label> <input
-							type="text" id="inputname" class="form-control" name="name"
-							placeholder="考勤签到方式名称" required autofocus> <label
-							for="inputnote" class="sr-only">考勤签到方式描述</label> <input type="text"
-							id="inputnote" class="form-control" name="note"
-							placeholder="考勤签到方式描述">
+						<label for="inputname" class="sr-only">考勤签到方式名称</label>
+						<input type="text" id="inputname" class="form-control" name="name" placeholder="考勤签到方式名称"
+							required autofocus>
+						<label for="inputnote" class="sr-only">考勤签到方式描述</label>
+						<input type="text" id="inputnote" class="form-control" name="note" placeholder="考勤签到方式描述">
 
 					</div>
 
@@ -187,31 +176,29 @@
 
 
 	<!-- 修改对话框 -->
-	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="myModalLabel">修改考勤签到方式</h4>
 				</div>
 
-				<form class="form-signin"
-					action="<c:url value="/attendancemode/update.html"/>" method="post">
+				<form class="form-signin" action="<c:url value="/attendancemode/update.html"/>" method="post">
 
 
 					<div class="modal-body">
 						<h4 class="form-signin-heading">请修改考勤签到方式属性</h4>
-						<label for="inputname" class="sr-only">考勤签到方式名称</label> <input
-							type="text" id="inputid" class="form-control" name="id" value=""
-							placeholder="id" style="display: none;"> <input
-							type="text" id="inputname" class="form-control" name="name"
-							value="" placeholder="考勤签到方式名称" required autofocus> <label
-							for="inputnote" class="sr-only">考勤签到方式描述</label> <input type="text"
-							id="inputnote" class="form-control" name="note" value=""
+						<label for="inputname" class="sr-only">考勤签到方式名称</label>
+						<input type="text" id="inputid" class="form-control" name="id" value="" placeholder="id"
+							style="display: none;">
+						<input type="text" id="inputname" class="form-control" name="name" value=""
+							placeholder="考勤签到方式名称" required autofocus>
+						<label for="inputnote" class="sr-only">考勤签到方式描述</label>
+						<input type="text" id="inputnote" class="form-control" name="note" value=""
 							placeholder="考勤签到方式描述">
 
 					</div>
@@ -228,12 +215,10 @@
 
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
 
-	<%@ include file="../../shared/pageFooter.jsp"%>
 
 	<%@ include file="../../shared/importJs.jsp"%>
-
+	<%@ include file="../../shared/sysLastInclude.jsp"%>
 
 	<script>
 		function onSearch() {
@@ -249,7 +234,8 @@
 		}
 
 		function onUpdate(id, name, note) {
-			var url = "location='<c:url value="/attendancemode/update-"/>" + id + ".html'";
+			var url = "location='<c:url value="/attendancemode/update-"/>" + id
+					+ ".html'";
 			$('#updateModal').find('.modal-body #inputid').val(id);
 			$('#updateModal').find('.modal-body #inputname').val(name);
 			$('#updateModal').find('.modal-body #inputnote').val(note);
@@ -261,7 +247,8 @@
 		}
 
 		function onDelete(id, name) {
-			var url = "location='<c:url value="/attendancemode/DELETE-"/>" + id + ".html'";
+			var url = "location='<c:url value="/attendancemode/DELETE-"/>" + id
+					+ ".html'";
 
 			$('#deleteModal').find('.modal-body #deleteinfo').text(name);
 			$('#deleteModal').find('.modal-footer #deletebtn').attr("onclick",
@@ -275,17 +262,7 @@
 
 
 
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
 
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

@@ -3,8 +3,7 @@
 
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 
 	//设置左侧浏览状态
@@ -23,10 +22,9 @@
 
 <%@ include file="../../shared/importCss.jsp"%>
 
- <%@ include file="../../shared/importswitchcss.jsp" %> 
+<%@ include file="../../shared/importswitchcss.jsp"%>
 
-<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet"
-	type="text/css" />
+<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet" type="text/css" />
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -35,10 +33,10 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home" onLoad="ShowErrMsg()">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
-	
+
 
 	<div class="DocumentPage">
 		<div class="DocumentPageLeftArea ">
@@ -66,29 +64,24 @@
 
 				<!-- Nav tabs -->
 				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation"><a href="<c:url value="/permission/group/list.html"/>">组</a></li>
+					<li role="presentation"><a href="<c:url value="/permission/group-user/list.html"/>">组-用户</a></li>
+					<li role="presentation"><a href="<c:url value="/permission/role/list.html"/>">角色</a></li>
+					<li role="presentation"><a href="<c:url value="/permission/group-role/list.html"/>"
+							role="tab">组-角色</a></li>
+					<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab"
+							data-toggle="tab">角色-权限</a></li>
+					<li role="presentation"><a href="<c:url value="/permission/resource/list.html"/>"
+							role="tab">资源</a></li>
+					<li role="presentation"><a href="<c:url value="/permission/operator/list.html"/>"
+							role="tab">操作</a></li>
 					<li role="presentation"><a
-						href="<c:url value="/permission/group/list.html"/>">组</a></li>
-					<li role="presentation"><a
-						href="<c:url value="/permission/group-user/list.html"/>">组-用户</a></li>
-					<li role="presentation"><a
-						href="<c:url value="/permission/role/list.html"/>">角色</a></li>
-					<li role="presentation"><a
-						href="<c:url value="/permission/group-role/list.html"/>"
-						role="tab">组-角色</a></li>
-					<li role="presentation" class="active"><a href="#home"
-						aria-controls="home" role="tab" data-toggle="tab">角色-权限</a></li>
-					<li role="presentation"><a
-						href="<c:url value="/permission/resource/list.html"/>" role="tab">资源</a></li>
-					<li role="presentation"><a
-						href="<c:url value="/permission/operator/list.html"/>" role="tab">操作</a></li>
-					<li role="presentation"><a
-						href="<c:url value="/permission/permission-resource/list.html"/>">权限-资源</a></li>
+							href="<c:url value="/permission/permission-resource/list.html"/>">权限-资源</a></li>
 				</ul>
 
 				<!-- Tab panes -->
 				<div class="tab-content">
-					<div role="tabpanel" class="tab-pane fade in active" id="home">
-					</div>
+					<div role="tabpanel" class="tab-pane fade in active" id="home"></div>
 
 				</div>
 
@@ -102,8 +95,7 @@
 
 					<td>
 						<div class="input-group input-group-sm">
-							<select id="roleSelectControl" class="form-control"
-								onchange="OnSelectControlChange(this)">
+							<select id="roleSelectControl" class="form-control" onchange="OnSelectControlChange(this)">
 								<c:forEach var="d" items="${pagedRole.result}">
 									<option value="${d.id}">${d.name}</option>
 								</c:forEach>
@@ -119,11 +111,9 @@
 							<!-- Split button -->
 							<div class="btn-group">
 								<button type="button" class="btn btn-default btn-sm">选择</button>
-								<button type="button"
-									class="btn btn-default dropdown-toggle btn-sm"
-									data-toggle="dropdown" aria-expanded="false">
-									<span class="caret"></span> <span class="sr-only">Toggle
-										Dropdown</span>
+								<button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown"
+									aria-expanded="false">
+									<span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
 								</button>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="#">全部选择</a></li>
@@ -135,21 +125,19 @@
 						</div></td>
 					<td style="width: 10px;"></td>
 					<td><div class="btn-group" role="group" aria-label="...">
-							<button type="button" class="btn btn-default btn-sm"
-								data-toggle="modal" data-target="#addModal">增加</button>
+							<button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+								data-target="#addModal">增加</button>
 
-							<button type="button" class="btn btn-default btn-sm"
-								data-toggle="modal" data-target="#myModal">删除</button>
+							<button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+								data-target="#myModal">删除</button>
 
 
 						</div></td>
 					<td style="width: 10px;"></td>
 					<td><div class="input-group input-group-sm">
-							<input type="text" class="form-control" id="SearchText"
-								placeholder="Search for..." required> <span
-								class="input-group-btn">
-								<button class="btn btn-default" type="button"
-									onclick="onSearch()">搜索</button>
+							<input type="text" class="form-control" id="SearchText" placeholder="Search for..." required>
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button" onclick="onSearch()">搜索</button>
 							</span>
 						</div></td>
 				</tr>
@@ -162,13 +150,10 @@
 
 				<div class="Course-Table">
 
-<input id='selectedRoleID'
-								name='roleId'
-								value='${selectedRoleID}' type='hidden' />
-								
+					<input id='selectedRoleID' name='roleId' value='${selectedRoleID}' type='hidden' />
 
-					<table class="table table-hover table-bordered"
-						>
+
+					<table class="table table-hover table-bordered">
 						<thead>
 							<tr>
 								<th>#</th>
@@ -181,27 +166,24 @@
 						</thead>
 						<tbody>
 							<c:set var="index" value="1"></c:set>
-							<c:forEach var="dataitem"
-								items="${pagedPermissionViewData.result}">
+							<c:forEach var="dataitem" items="${pagedPermissionViewData.result}">
 								<tr>
-									<th scope="row">
-										${(pagedPermissionViewData.currentPageNo-1) * pagedPermissionViewData.pageSize +index}</th>
+									<th scope="row">${(pagedPermissionViewData.currentPageNo-1) * pagedPermissionViewData.pageSize +index}</th>
 
 
-									<td>${dataitem.permission.name}
-								</td>
+									<td>${dataitem.permission.name}</td>
 									<td>${dataitem.permission.note}</td>
 									<td>${dataitem.resource.uri}:${dataitem.resource.uri_element}</td>
 									<td>${dataitem.permissionoperator.name}</td>
-									<td><input id="permissionswitch${index}" name="permission" value="${dataitem.permission.id}"
-										type="checkbox"
-										<c:forEach var="rolepermission"
+									<td><input id="permissionswitch${index}" name="permission"
+											value="${dataitem.permission.id}" type="checkbox"
+											<c:forEach var="rolepermission"
 											items="${pagedRolePermissionViewData.result}">
 											<c:if test="${rolepermission.permission.id == dataitem.permission.id}">
 											checked
 										</c:if>					
 									</c:forEach>
-										data-size="mini" data-on-text="是" data-off-text="否"></td>
+											data-size="mini" data-on-text="是" data-off-text="否"></td>
 
 								</tr>
 								<c:set var="index" value="${index + 1}"></c:set>
@@ -218,8 +200,7 @@
 
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-primary">确定</button>
-					<button type="button" class="btn btn-default"
-						onclick="window.history.back()">取消</button>
+					<button type="button" class="btn btn-default" onclick="window.history.back()">取消</button>
 				</div>
 
 			</form>
@@ -233,12 +214,9 @@
 
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
-
-	<%@ include file="../../shared/pageFooter.jsp"%>
 
 	<%@ include file="../../shared/importJs.jsp"%>
-
+	<%@ include file="../../shared/sysLastInclude.jsp"%>
 	<%@ include file="../../shared/importswitchjs.jsp"%>
 
 
@@ -306,21 +284,6 @@
 	</script>
 
 
-
-
-
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

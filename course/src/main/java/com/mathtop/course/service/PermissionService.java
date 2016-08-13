@@ -21,7 +21,7 @@ public class PermissionService {
 	}
 	
 	public String add(Permission permission) {
-		return dao.add(permission.getName(),permission.getNote(),permission.getT_permission_operator_id(),permission.getT_resource_id());
+		return dao.add(permission.getName(),permission.getNote(),permission.getPermissionOperatorId(),permission.getResourceId());
 	}
 	
 	public Page<Permission> getPage(

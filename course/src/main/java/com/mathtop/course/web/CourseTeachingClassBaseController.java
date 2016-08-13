@@ -9,11 +9,13 @@ import com.mathtop.course.dao.Page;
 import com.mathtop.course.domain.AttendanceType;
 import com.mathtop.course.domain.CourseTeachingClassHomeworkType;
 import com.mathtop.course.domain.CourseTeachingClassReferenceType;
+import com.mathtop.course.domain.CourseTeachingClassStudentGroupStatisticsViewData;
 import com.mathtop.course.domain.CourseTeachingClassViewData;
 import com.mathtop.course.service.AttendanceTypeService;
 import com.mathtop.course.service.CourseTeachingClassHomeworkTypeService;
 import com.mathtop.course.service.CourseTeachingClassReferenceTypeService;
 import com.mathtop.course.service.CourseTeachingClassService;
+import com.mathtop.course.service.CourseTeachingClassStudentGroupService;
 
 public class CourseTeachingClassBaseController extends BaseController {
 
@@ -32,6 +34,9 @@ public class CourseTeachingClassBaseController extends BaseController {
 	@Autowired
 	private CourseTeachingClassReferenceTypeService referencektypeService;
 
+	@Autowired
+	CourseTeachingClassStudentGroupService courseTeachingClassStudentGroupService;
+
 	// 课程信息
 	protected void SetCourseTeachingClassBaseInfo(ModelAndView mav, String t_course_teaching_class_id) {
 
@@ -43,7 +48,7 @@ public class CourseTeachingClassBaseController extends BaseController {
 
 		// 作业类型
 		SetHomeworkInfo(mav, t_course_teaching_class_id);
-		
+
 		// 资料类型列表
 		SetReferenceInfo(mav, t_course_teaching_class_id);
 
@@ -62,18 +67,26 @@ public class CourseTeachingClassBaseController extends BaseController {
 
 		mav.addObject(SelectedObjectConst.Selected_CourseTeachingClassViewData, selectedCourseTeachingClassViewData);
 
+		// 教学班分组信息
+		CourseTeachingClassStudentGroupStatisticsViewData selectedCourseTeachingClassStudentGroupStatisticsViewData = courseTeachingClassStudentGroupService
+				.getGroupInfo(t_course_teaching_class_id);
+		mav.addObject(SelectedObjectConst.Selected_CourseTeachingClassStudentGroupStatisticsViewData,
+				selectedCourseTeachingClassStudentGroupStatisticsViewData);
+
 		SetHomeworkInfo(mav, t_course_teaching_class_id);
 	}
 
 	// 课程作业类型
 	private void SetHomeworkInfo(ModelAndView mav, String t_course_teaching_class_id) {
-		Page<CourseTeachingClassHomeworkType> pagedHomeworkTypeData = homeworkTypeService.getPage(t_course_teaching_class_id);
+		Page<CourseTeachingClassHomeworkType> pagedHomeworkTypeData = homeworkTypeService
+				.getPage(t_course_teaching_class_id);
 		mav.addObject(PagedObjectConst.Paged_CourseHomeworkTypeData, pagedHomeworkTypeData);
 	}
-	
+
 	// 资料类型列表
-	private void SetReferenceInfo(ModelAndView mav, String t_course_teaching_class_id) {		
-		Page<CourseTeachingClassReferenceType> pagedReferenceTypeData = referencektypeService.getPage(t_course_teaching_class_id);
+	private void SetReferenceInfo(ModelAndView mav, String t_course_teaching_class_id) {
+		Page<CourseTeachingClassReferenceType> pagedReferenceTypeData = referencektypeService
+				.getPage(t_course_teaching_class_id);
 		mav.addObject(PagedObjectConst.Paged_CourseReferenceTypeData, pagedReferenceTypeData);
 	}
 

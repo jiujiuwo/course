@@ -26,15 +26,11 @@
 <%@ include file="../../shared/importJs.jsp"%>
 
 
-<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet"
+<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet" type="text/css" />
+<link href="<c:url value='/plugins/summernote-master/dist/summernote.css'/>" rel="stylesheet"
 	type="text/css" />
-<link
-	href="<c:url value='/plugins/summernote-master/dist/summernote.css'/>"
-	rel="stylesheet" type="text/css" />
-<script
-	src="<c:url value='/plugins/summernote-master/dist/summernote.js'/>"></script>
-<script
-	src="<c:url value='/plugins/summernote-master/lang/summernote-zh-CN.js'/>"></script>
+<script src="<c:url value='/plugins/summernote-master/dist/summernote.js'/>"></script>
+<script src="<c:url value='/plugins/summernote-master/lang/summernote-zh-CN.js'/>"></script>
 
 
 
@@ -45,11 +41,11 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home" onLoad="ShowErrMsg()">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 	<%@ include file="../../shared/CourseTeachingClassInfo.jsp"%>
-	<div id="DocumentPageTopSeparatorLine"></div>
+
 
 	<div class="DocumentPage">
 		<div class="DocumentPageLeftArea ">
@@ -65,61 +61,129 @@
 
 			<ol class="breadcrumb">
 				<li><a href="#">课程系统</a></li>
-				<li><a href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseteachingclass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
+				<li><a
+						href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseTeachingClass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
 				<li class="active">${selectedCourseHomeworkTypeData.name}</li>
 			</ol>
 
-			<div class="CourseContentHeader">修改${selectedCourseTeachingClassViewData.teachingclass.name}-${selectedCourseHomeworkTypeData.name}</div>
+			<div class="CourseContentHeader">修改${selectedCourseTeachingClassViewData.courseTeachingClass.name}-${selectedCourseHomeworkTypeData.name}</div>
 
 			<div class="CourseContentHeaderSeparatorLine"></div>
 
 
 			<form class="form-horizontal" id="myUpdateForm" name="myUpdateForm"
-			action="<c:url value="/coursehomework/updatesimple-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}.html"/>"
+				action="<c:url value="/coursehomework/updatesimple-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.id}.html"/>"
 				enctype="multipart/form-data" method="post">
 
-					<div class="modal-body"
-						style="margin-left: 10px; margin-right: 10px; overflow: hidden;">
+				<div class="modal-body" style="margin-left: 10px; margin-right: 10px; overflow: hidden;">
 
-						<div class="form-group">
-							<label for="name" class=" control-label">标题</label> <input
-								type="text" id="inputtitle" class="form-control"
-								name="updatetitle" value="" placeholder="标题" required>
-						</div>
+					<div class="form-group">
+						<label for="name" class=" control-label">标题</label>
+						<input type="text" id="inputtitle" class="form-control" name="updatetitle" value=""
+							placeholder="标题" required>
+					</div>
 
 
-						<div class="form-group">
+					<div class="form-group">
 						<label for="note" class="control-label">内容</label>
 						<div class="summernote"></div>
-						<textarea class="form-control" rows="5" name="updatecontent"
-							id="addcontentTextArea" style="display: none;"></textarea>
+						<textarea class="form-control" rows="5" name="updatecontent" id="addcontentTextArea"
+							style="display: none;"></textarea>
 					</div>
-			
-						<div class="form-group">
-							<label for="enddate" class="control-label">截止时间</label>
 
-							<div class="input-group date form_date col-sm-5" data-date=""
-								data-date-format="yyyy-mm-dd hh:ii "
-								data-link-field="dtp_input2" data-link-format="yyyy-mm-dd hh:ii">
-								<input class="form-control" size="16" type="text" id="enddate"
-									value='<fmt:formatDate value="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.enddate}"
+					<div class="form-group">
+						<label for="flagGroup" class="control-label">作业类型</label>
+						<c:choose>
+							<c:when test="${data.homeworkbaseinfo.flagGroup}">
+								<i class="icon-group"></i>小组作业</c:when>
+							<c:otherwise>
+								<i class="icon-user"></i>个人作业</c:otherwise>
+						</c:choose>
+					</div>
+
+
+
+					<div class="form-group">
+						<label for="submitfilerequirment" class="control-label">提交文件要求</label>
+						<c:choose>
+							<c:when
+								test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.fileRequirement.size==0}">
+															不需要提交文件
+														</c:when>
+
+							<c:otherwise>
+								<ul class="list-group">
+									<c:forEach var="dataNode"
+										items="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.fileRequirement.array}">
+
+										<li class="list-group-item">
+											<div style="margin-left:${dataNode.level*50}px;">
+
+												<c:choose>
+													<c:when test="${dataNode.data.fileType==2}">
+														<h4>目录</h4>
+													</c:when>
+													<c:otherwise>
+														<h4>文件</h4>
+													</c:otherwise>
+												</c:choose>
+
+
+												<c:if test="${dataNode.data.fileType!=2}">
+													<div>
+														<span><strong>文件类型:</strong></span>${dataNode.data.fileTypeDescription}</div>
+													<c:choose>
+														<c:when test="${dataNode.data.fileCount==-1}">
+															<div>
+																<span><strong>文件个数:</strong></span>不限制个数
+															</div>
+														</c:when>
+														<c:otherwise>文件</c:otherwise>
+													</c:choose>
+													<div>
+														<span><strong>文件个数:</strong></span>${dataNode.data.fileCount}</div>
+
+
+												</c:if>
+
+												<div>
+													<span><strong>文件名称格式:</strong></span> ${dataNode.data.filenameRequirementVal}
+												</div>
+
+
+
+											</div>
+										</li>
+
+									</c:forEach>
+								</ul>
+							</c:otherwise>
+						</c:choose>
+					</div>
+
+					<div class="form-group">
+						<label for="enddate" class="control-label">截止时间</label>
+
+						<div class="input-group date form_date col-sm-5" data-date=""
+							data-date-format="yyyy-mm-dd hh:ii " data-link-field="dtp_input2"
+							data-link-format="yyyy-mm-dd hh:ii">
+							<input class="form-control" size="16" type="text" id="enddate"
+								value='<fmt:formatDate value="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.enddate}"
 														pattern="yyyy-MM-dd HH:mm" />'
-														 name="enddate" readonly required>
-								<span class="input-group-addon"><span
-									class="glyphicon glyphicon-remove"></span></span> <span
-									class="input-group-addon"><span
-									class="glyphicon glyphicon-calendar"></span></span>
-							</div>
-
-						</div>						
+								name="enddate" readonly required>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> <span
+								class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
 
 					</div>
 
-					<div class="modal-footer">
-						<button type="submit" id="updatebtn" class="btn btn-primary" onclick="onAdd()">修改</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					</div>
-				</form>
+				</div>
+
+				<div class="modal-footer">
+					<button type="submit" id="updatebtn" class="btn btn-primary" onclick="onAdd()">修改</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				</div>
+			</form>
 
 
 		</div>
@@ -129,10 +193,7 @@
 
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
-
-	<%@ include file="../../shared/pageFooter.jsp"%>
-
+	<%@ include file="../../shared/sysLastInclude.jsp"%>
 
 	<%@ include file="../../shared/importdatetimepickerjs.jsp"%>
 
@@ -166,14 +227,15 @@
 		//  focus: true,                 // set focus to editable area after initializing summernote
 		});
 	</script>
-	
-	<script type="text/javascript">
-	$('#inputtitle')
-	.val(
-			'${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.title}');
 
-		$('.summernote').code(
-				'${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.content}');
+	<script type="text/javascript">
+		$('#inputtitle')
+				.val(
+						'${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.title}');
+
+		$('.summernote')
+				.code(
+						'${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.content}');
 		//	$("#contentDiv").code("adf");
 	</script>
 
@@ -236,19 +298,6 @@
 
 
 
-
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

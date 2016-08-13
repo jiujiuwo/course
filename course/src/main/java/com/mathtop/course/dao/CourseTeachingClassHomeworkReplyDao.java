@@ -78,9 +78,9 @@ public class CourseTeachingClassHomeworkReplyDao extends BaseDao<CourseTeachingC
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				reply.setId(id);
-				reply.setT_course_teaching_class_homework_submit_baseinfo_id(rs
+				reply.setCourseTeachingClassHomeworkSubmitBaseinfoId(rs
 						.getString("t_course_teaching_class_homework_submit_baseinfo_id"));
-				reply.setT_teacher_id(rs.getString("t_teacher_id"));
+				reply.setTeacherId(rs.getString("t_teacher_id"));
 				reply.setSubmitdate(rs.getTimestamp("submitdate"));
 				reply.setModifieddate(rs.getTimestamp("modifieddate"));
 				reply.setTitle(rs.getString("title"));
@@ -110,8 +110,8 @@ public class CourseTeachingClassHomeworkReplyDao extends BaseDao<CourseTeachingC
 					public void processRow(ResultSet rs) throws SQLException {
 						CourseTeachingClassHomeworkReply reply = new CourseTeachingClassHomeworkReply();
 						reply.setId(rs.getString("id"));
-						reply.setT_course_teaching_class_homework_submit_baseinfo_id(t_course_teaching_class_homework_submit_baseinfo_id);
-						reply.setT_teacher_id(rs.getString("t_teacher_id"));
+						reply.setCourseTeachingClassHomeworkSubmitBaseinfoId(t_course_teaching_class_homework_submit_baseinfo_id);
+						reply.setTeacherId(rs.getString("t_teacher_id"));
 						reply.setSubmitdate(rs.getTimestamp("submitdate"));
 						reply.setModifieddate(rs.getTimestamp("modifieddate"));
 						reply.setTitle(rs.getString("title"));
@@ -140,8 +140,8 @@ public class CourseTeachingClassHomeworkReplyDao extends BaseDao<CourseTeachingC
 					public void processRow(ResultSet rs) throws SQLException {
 						CourseTeachingClassHomeworkReply reply = new CourseTeachingClassHomeworkReply();
 						reply.setId(rs.getString("id"));
-						reply.setT_course_teaching_class_homework_submit_baseinfo_id(rs.getString("t_course_teaching_class_homework_submit_baseinfo_id"));
-						reply.setT_teacher_id(t_teacher_id);
+						reply.setCourseTeachingClassHomeworkSubmitBaseinfoId(rs.getString("t_course_teaching_class_homework_submit_baseinfo_id"));
+						reply.setTeacherId(t_teacher_id);
 						reply.setSubmitdate(rs.getTimestamp("submitdate"));
 						reply.setModifieddate(rs.getTimestamp("modifieddate"));
 						reply.setTitle(rs.getString("title"));
@@ -159,8 +159,8 @@ public class CourseTeachingClassHomeworkReplyDao extends BaseDao<CourseTeachingC
 	public String add(CourseTeachingClassHomeworkReply expriment) {
 		String id = GUID.getGUID();
 		expriment.setId(id);
-		Object params[] = new Object[] { expriment.getId(), expriment.getT_course_teaching_class_homework_submit_baseinfo_id(),
-				expriment.getT_teacher_id(), expriment.getTitle(), expriment.getContent(), expriment.getSubmitdate(),
+		Object params[] = new Object[] { expriment.getId(), expriment.getCourseTeachingClassHomeworkSubmitBaseinfoId(),
+				expriment.getTeacherId(), expriment.getTitle(), expriment.getContent(), expriment.getSubmitdate(),
 				expriment.getModifieddate() };
 		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.TIMESTAMP,
 				Types.TIMESTAMP };
@@ -212,7 +212,7 @@ public class CourseTeachingClassHomeworkReplyDao extends BaseDao<CourseTeachingC
 		data.setReply(reply);
 
 		CourseTeachingClassHomeworkSubmitBaseinfo homeworksubmitbaseinfo = homeworksubmitBaseinfoDao.getByID(reply
-				.getT_course_teaching_class_homework_submit_baseinfo_id());
+				.getCourseTeachingClassHomeworkSubmitBaseinfoId());
 		data.setHomeworksubmitbaseinfo(homeworksubmitbaseinfo);
 
 		List<CourseTeachingClassHomeworkReplyFile> repplyFileList = homeworkreplyfileDao.getByCourseTeachingClassHomeworkReplyID(reply

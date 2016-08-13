@@ -82,8 +82,8 @@ public class MailBoxReceivedDao extends BaseDao<MailBoxReceived> {
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				received.setId(id);
-				received.setT_user_id_from(rs.getString("t_user_id_from"));
-				received.setT_user_id_to(rs.getString("t_user_id_to"));
+				received.setUserIdFrom(rs.getString("t_user_id_from"));
+				received.setUserIdTo(rs.getString("t_user_id_to"));
 				received.setState(rs.getString("state"));
 				received.setSenddate(rs.getTimestamp("senddate"));
 				received.setReaddate(rs.getTimestamp("readdate"));
@@ -113,8 +113,8 @@ public class MailBoxReceivedDao extends BaseDao<MailBoxReceived> {
 			public void processRow(ResultSet rs) throws SQLException {
 				MailBoxReceived received = new MailBoxReceived();
 				received.setId(rs.getString("id"));
-				received.setT_user_id_from(t_user_id_from);
-				received.setT_user_id_to(rs.getString("t_user_id_to"));
+				received.setUserIdFrom(t_user_id_from);
+				received.setUserIdTo(rs.getString("t_user_id_to"));
 				received.setState(rs.getString("state"));
 				received.setSenddate(rs.getTimestamp("senddate"));
 				received.setReaddate(rs.getTimestamp("readdate"));
@@ -144,8 +144,8 @@ public class MailBoxReceivedDao extends BaseDao<MailBoxReceived> {
 			public void processRow(ResultSet rs) throws SQLException {
 				MailBoxReceived received = new MailBoxReceived();
 				received.setId(rs.getString("id"));
-				received.setT_user_id_from(rs.getString("t_user_id_from"));
-				received.setT_user_id_to(t_user_id_to);
+				received.setUserIdFrom(rs.getString("t_user_id_from"));
+				received.setUserIdTo(t_user_id_to);
 				received.setState(rs.getString("t_course_teaching_class_homework_type_id"));
 				received.setSenddate(rs.getTimestamp("sendate"));
 				received.setReaddate(rs.getTimestamp("readdate"));
@@ -164,7 +164,7 @@ public class MailBoxReceivedDao extends BaseDao<MailBoxReceived> {
 	public String add(MailBoxReceived received) {
 		String id = GUID.getGUID();
 		received.setId(id);
-		Object params[] = new Object[] { received.getId(), received.getT_user_id_from(), received.getT_user_id_to(), received.getState(),
+		Object params[] = new Object[] { received.getId(), received.getUserIdFrom(), received.getUserIdTo(), received.getState(),
 				received.getSubject(), received.getContent(), new Date(), new Date() };
 		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
 				Types.TIMESTAMP, Types.TIMESTAMP };
@@ -213,7 +213,7 @@ public class MailBoxReceivedDao extends BaseDao<MailBoxReceived> {
 	/**
 	 * 没有读取的邮件数目
 	 * */
-	long getCountNotRead(String t_user_id_to) {
+	public long getCountNotRead(String t_user_id_to) {
 
 		return getJdbcTemplate().queryForObject(GET_COUNT_NOT_READ_BY_USER_ID_TO, new Object[] { t_user_id_to }, new int[] { Types.VARCHAR },
 				Long.class);
@@ -238,10 +238,10 @@ public class MailBoxReceivedDao extends BaseDao<MailBoxReceived> {
 		MailBoxReceived received = getByID(id);
 		data.setReceived(received);
 
-		UserBasicInfoViewData userFrom = userDao.getUserBasicInfoViewDataByt_user_id(received.getT_user_id_from());
+		UserBasicInfoViewData userFrom = userDao.getUserBasicInfoViewDataByt_user_id(received.getUserIdFrom());
 		data.setUserFrom(userFrom);
 
-		UserBasicInfoViewData userTo = userDao.getUserBasicInfoViewDataByt_user_id(received.getT_user_id_to());
+		UserBasicInfoViewData userTo = userDao.getUserBasicInfoViewDataByt_user_id(received.getUserIdTo());
 		data.setUserTo(userTo);
 
 		List<MailBoxReceivedFile> receivedfile = fileDao.getByMailBoxReceivedID(received.getId());

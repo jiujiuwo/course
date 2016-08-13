@@ -132,7 +132,7 @@ public class ResourceController extends BaseController {
 			return mav;
 		} else {
 
-			resourceService.update(item.getId(), item.getUri(),item.getUri_element());
+			resourceService.update(item.getId(), item.getUri(),item.getUriElement());
 
 			String toUrl = ("list.html");
 			mav.setViewName("redirect:" + toUrl);

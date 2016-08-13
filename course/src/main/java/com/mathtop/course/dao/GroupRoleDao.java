@@ -33,6 +33,7 @@ public class GroupRoleDao extends BaseDao<GroupRole> {
 	
 	
 	private String DELETE_BY_ID = "DELETE FROM t_group_role WHERE id=?";
+	private String DELETE_BY_GROUP_ID = "DELETE FROM t_group_role WHERE t_group_id=?";
 	
 	public String add(String t_group_id,String t_role_id){
 		String id = GUID.getGUID();
@@ -48,6 +49,12 @@ public class GroupRoleDao extends BaseDao<GroupRole> {
 		getJdbcTemplate().update(DELETE_BY_ID, params, types);
 	}
 	
+	public void deleteByGroupId(String t_group_id) {
+		Object params[] = new Object[] { t_group_id };
+		int types[] = new int[] { Types.VARCHAR };
+		getJdbcTemplate().update(DELETE_BY_GROUP_ID, params, types);
+	}
+	
 	public List<GroupRole> getGroupRoleByGroupId(String t_group_id){
 		List<GroupRole> list = new ArrayList<GroupRole>();
 
@@ -59,8 +66,8 @@ public class GroupRoleDao extends BaseDao<GroupRole> {
 					public void processRow(ResultSet rs) throws SQLException {
 						GroupRole ug = new GroupRole();
 						ug.setId(rs.getString("id"));
-						ug.setT_group_id(t_group_id);
-						ug.setT_role_id(rs.getString("t_role_id"));
+						ug.setGroupId(t_group_id);
+						ug.setRoleId(rs.getString("t_role_id"));
 						list.add(ug);
 					//	System.out.println(rs.getString("t_user_id"));
 					}
@@ -80,8 +87,8 @@ public class GroupRoleDao extends BaseDao<GroupRole> {
 					public void processRow(ResultSet rs) throws SQLException {
 						GroupRole ug = new GroupRole();
 						ug.setId(rs.getString("id"));
-						ug.setT_group_id(rs.getString("t_group_id"));
-						ug.setT_role_id(t_role_id);
+						ug.setGroupId(rs.getString("t_group_id"));
+						ug.setRoleId(t_role_id);
 						list.add(ug);
 					//	System.out.println(rs.getString("t_user_id"));
 					}
@@ -117,8 +124,8 @@ public class GroupRoleDao extends BaseDao<GroupRole> {
 						
 						GroupRole grouprole=new GroupRole();
 						grouprole.setId(rs.getString("id"));
-						grouprole.setT_group_id(group.getId());
-						grouprole.setT_role_id(roleid);
+						grouprole.setGroupId(group.getId());
+						grouprole.setRoleId(roleid);
 						g.setGrouprole(grouprole);
 						
 						list.add(g);

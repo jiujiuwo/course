@@ -71,8 +71,8 @@ public class CoursePrecourseDao extends BaseDao<CoursePrecourse> {
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				cp.setId(id);
-				cp.setT_course_id_this(rs.getString("t_course_id_this"));
-				cp.setT_course_id_pre(rs.getString("t_course_id_pre"));
+				cp.setCourseIdThis(rs.getString("t_course_id_this"));
+				cp.setCourseIdPre(rs.getString("t_course_id_pre"));
 
 			}
 
@@ -109,13 +109,13 @@ public class CoursePrecourseDao extends BaseDao<CoursePrecourse> {
 			public void processRow(ResultSet rs) throws SQLException {
 
 				CoursePrecourse courseprecourse = getById(rs.getString("id"));
-				Course coursethis = courseDao.getCourseById(courseprecourse.getT_course_id_this());
-				Course coursepre = courseDao.getCourseById(courseprecourse.getT_course_id_pre());
+				Course coursethis = courseDao.getCourseById(courseprecourse.getCourseIdThis());
+				Course coursepre = courseDao.getCourseById(courseprecourse.getCourseIdPre());
 
 				CoursePrecourseViewData cpvd = new CoursePrecourseViewData();
 				cpvd.setCourseprecourse(courseprecourse);
-				cpvd.setCoursethis(coursethis);
-				cpvd.setCoursepre(coursepre);
+				cpvd.setCourseThis(coursethis);
+				cpvd.setCoursePre(coursepre);
 				list.add(cpvd);
 			}
 

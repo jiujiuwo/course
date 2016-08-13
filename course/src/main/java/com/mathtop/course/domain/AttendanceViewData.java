@@ -9,7 +9,7 @@ public class AttendanceViewData extends BaseDomain{
 	 */
 	private static final long serialVersionUID = 7621102703636012436L;
 
-	private TeachingClass teachingclass;
+
 	private Course course;
 	private Attendance attendance;
 	private TeacherViewData teacherviewdata;
@@ -38,12 +38,6 @@ public class AttendanceViewData extends BaseDomain{
 	}
 	public void setCourse(Course course) {
 		this.course = course;
-	}
-	public TeachingClass getTeachingclass() {
-		return teachingclass;
-	}
-	public void setTeachingclass(TeachingClass teachingclass) {
-		this.teachingclass = teachingclass;
 	}
 	public boolean isHasCheckin() {
 		return hasCheckin;

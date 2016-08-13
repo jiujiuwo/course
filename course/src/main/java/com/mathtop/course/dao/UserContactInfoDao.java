@@ -44,14 +44,14 @@ public class UserContactInfoDao extends BaseDao<UserContactInfo> {
 
 				usercontactinfos[i] = new UserContactInfo();
 
-				usercontactinfos[i].setT_user_contact_type_id(contacttypeId[i]);
-				usercontactinfos[i].setUser_contact_value(user_contact_value[i]);
+				usercontactinfos[i].setUserContactTypeId(contacttypeId[i]);
+				usercontactinfos[i].setUserContactValue(user_contact_value[i]);
 			}
 
 			// 添加联系方式
 			if (usercontactinfos != null) {
 				for (UserContactInfo u : usercontactinfos)
-					u.setT_user_id(t_user_id);
+					u.setUserId(t_user_id);
 
 				for (UserContactInfo u : usercontactinfos)
 					add(u);
@@ -65,7 +65,7 @@ public class UserContactInfoDao extends BaseDao<UserContactInfo> {
 
 		if (usercontactinfos != null) {
 			for (UserContactInfo u : usercontactinfos)
-				u.setT_user_id(t_user_id);
+				u.setUserId(t_user_id);
 
 			for (UserContactInfo u : usercontactinfos)
 				add(u);
@@ -86,10 +86,10 @@ public class UserContactInfoDao extends BaseDao<UserContactInfo> {
 					@Override
 					public void processRow(ResultSet rs) throws SQLException {
 						usercontactinfo.setId(usercontactinfoID);
-						usercontactinfo.setT_user_id(rs.getString("t_user_id"));
-						usercontactinfo.setT_user_contact_type_id(rs
+						usercontactinfo.setUserId(rs.getString("t_user_id"));
+						usercontactinfo.setUserContactTypeId(rs
 								.getString("t_user_contact_type_id"));
-						usercontactinfo.setUser_contact_value(rs
+						usercontactinfo.setUserContactValue(rs
 								.getString("user_contact_value"));
 
 					}
@@ -115,10 +115,10 @@ public class UserContactInfoDao extends BaseDao<UserContactInfo> {
 					public void processRow(ResultSet rs) throws SQLException {
 						UserContactInfo usercontactinfo = new UserContactInfo();
 						usercontactinfo.setId(rs.getString("id"));
-						usercontactinfo.setT_user_id(t_user_id);
-						usercontactinfo.setT_user_contact_type_id(rs
+						usercontactinfo.setUserId(t_user_id);
+						usercontactinfo.setUserContactTypeId(rs
 								.getString("t_user_contact_type_id"));
-						usercontactinfo.setUser_contact_value(rs
+						usercontactinfo.setUserContactValue(rs
 								.getString("user_contact_value"));
 						list.add(usercontactinfo);
 
@@ -167,9 +167,9 @@ public class UserContactInfoDao extends BaseDao<UserContactInfo> {
 	public String add(UserContactInfo usercontactinfo) {
 		String id = GUID.getGUID();
 		usercontactinfo.setId(id);
-		Object params[] = new Object[] { id, usercontactinfo.getT_user_id(),
-				usercontactinfo.getT_user_contact_type_id(),
-				usercontactinfo.getUser_contact_value() };
+		Object params[] = new Object[] { id, usercontactinfo.getUserId(),
+				usercontactinfo.getUserContactTypeId(),
+				usercontactinfo.getUserContactValue() };
 		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
 				Types.VARCHAR };
 		getJdbcTemplate().update(INSERT_USERCONTACTINFO, params, types);

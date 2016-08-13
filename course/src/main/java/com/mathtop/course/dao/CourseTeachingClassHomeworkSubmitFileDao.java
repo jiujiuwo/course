@@ -22,27 +22,27 @@ public class CourseTeachingClassHomeworkSubmitFileDao extends BaseDao<CourseTeac
 	CourseTeachingClassHomeworkSubmitBaseinfoDao courseTeachingClassHomeworkSubmitBaseinfoDao;
 
 	// insert
-	private final String INSERT_PLAN = "INSERT INTO t_course_teaching_class_homework_submit_file( id,t_course_teaching_class_homework_submit_baseinfo_id,filename,filepath) VALUES(?,?,?,?)";
+	private final String INSERT = "INSERT INTO t_course_teaching_class_homework_submit_file( id,t_course_teaching_class_homework_submit_baseinfo_id,file_node_id,filename,filepath) VALUES(?,?,?,?,?)";
 
 	// select
 	private final String GET_VIEWDATA_BY_COURSE_TEACHING_CLASS_ID = "SELECT id FROM t_course_teaching_class_homework_submit_file WHERE t_course_teaching_class_homework_submit_baseinfo_id=?   limit ?,?";
 	private final String GET_COUNT_BY_COURSE_TEACHING_CLASS_ID = "SELECT count(*) FROM t_course_teaching_class_homework_submit_file WHERE t_course_teaching_class_homework_submit_baseinfo_id=?";
-	private final String GET_BY_COURSE_TEACHING_CLASS_ID = "SELECT id,  filename,filepath FROM t_course_teaching_class_homework_submit_file WHERE t_course_teaching_class_homework_submit_baseinfo_id=?";
-	private final String GET_BY_ID = "SELECT t_course_teaching_class_homework_submit_baseinfo_id, filename,filepath FROM t_course_teaching_class_homework_submit_file WHERE id=?";
+	private final String GET_BY_COURSE_TEACHING_CLASS_ID = "SELECT id,  file_node_id,filename,filepath FROM t_course_teaching_class_homework_submit_file WHERE t_course_teaching_class_homework_submit_baseinfo_id=?";
+	private final String GET_BY_ID = "SELECT t_course_teaching_class_homework_submit_baseinfo_id,file_node_id, filename,filepath FROM t_course_teaching_class_homework_submit_file WHERE id=?";
 
 	// DELETE
 	private String DELETE_BY_ID = "DELETE FROM t_course_teaching_class_homework_submit_file WHERE id=?";
 	private String DELETE_BY_COURSE_TEACHING_CLASS_ID = "DELETE FROM t_course_teaching_class_homework_submit_file WHERE t_course_teaching_class_homework_submit_baseinfo_id=?";
 
 	// update
-	private String UPDATE_BY_ID = "update t_course_teaching_class_homework_submit_file set t_course_teaching_class_homework_submit_baseinfo_id=?, filename=?,filepath=? WHERE id=?";
+	private String UPDATE_BY_ID = "update t_course_teaching_class_homework_submit_file set t_course_teaching_class_homework_submit_baseinfo_id=?, file_node_id=?,filename=?,filepath=? WHERE id=?";
 
-	public void update(String id, String t_course_teaching_class_homework_submit_baseinfo_id, String filename, String filepath) {
+	public void update(String id, String t_course_teaching_class_homework_submit_baseinfo_id, int fileNodeId,String filename, String filepath) {
 		if (id == null || t_course_teaching_class_homework_submit_baseinfo_id == null || filename == null || filepath == null)
 			return;
 
-		Object params[] = new Object[] { t_course_teaching_class_homework_submit_baseinfo_id, filename, filepath, id };
-		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR };
+		Object params[] = new Object[] { t_course_teaching_class_homework_submit_baseinfo_id, fileNodeId,filename, filepath, id };
+		int types[] = new int[] { Types.VARCHAR, Types.INTEGER,Types.VARCHAR, Types.VARCHAR, Types.VARCHAR };
 		getJdbcTemplate().update(UPDATE_BY_ID, params, types);
 	}
 
@@ -58,10 +58,11 @@ public class CourseTeachingClassHomeworkSubmitFileDao extends BaseDao<CourseTeac
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				submitfile.setId(id);
-				submitfile.setT_course_teaching_class_homework_submit_baseinfo_id(rs.getString("t_course_teaching_class_homework_submit_baseinfo_id"));
+				submitfile.setCourseTeachingClassHomeworkSubmitBaseinfoId(rs.getString("t_course_teaching_class_homework_submit_baseinfo_id"));
 
 				submitfile.setFilename(rs.getString("filename"));
 				submitfile.setFilepath(rs.getString("filepath"));
+				submitfile.setFileNodeId(rs.getInt("file_node_id"));
 
 			}
 
@@ -87,10 +88,11 @@ public class CourseTeachingClassHomeworkSubmitFileDao extends BaseDao<CourseTeac
 						CourseTeachingClassHomeworkSubmitFile submitfile = new CourseTeachingClassHomeworkSubmitFile();
 						submitfile.setId(rs.getString("id"));
 
-						submitfile.setT_course_teaching_class_homework_submit_baseinfo_id(t_course_teaching_class_homework_submit_baseinfo_id);
+						submitfile.setCourseTeachingClassHomeworkSubmitBaseinfoId(t_course_teaching_class_homework_submit_baseinfo_id);
 
 						submitfile.setFilename(rs.getString("filename"));
 						submitfile.setFilepath(rs.getString("filepath"));
+						submitfile.setFileNodeId(rs.getInt("file_node_id"));
 						list.add(submitfile);
 
 					}
@@ -104,20 +106,20 @@ public class CourseTeachingClassHomeworkSubmitFileDao extends BaseDao<CourseTeac
 	public String add(CourseTeachingClassHomeworkSubmitFile submitfile) {
 		String id = GUID.getGUID();
 		submitfile.setId(id);
-		Object params[] = new Object[] { submitfile.getId(), submitfile.getT_course_teaching_class_homework_submit_baseinfo_id(), submitfile.getFilename(),
+		Object params[] = new Object[] { submitfile.getId(), submitfile.getCourseTeachingClassHomeworkSubmitBaseinfoId(), submitfile.getFilename(),
 				submitfile.getFilepath() };
 		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR };
-		getJdbcTemplate().update(INSERT_PLAN, params, types);
+		getJdbcTemplate().update(INSERT, params, types);
 		return id;
 	}
 
-	public String add(String t_course_teaching_class_homework_baseinfo_id, String filename, String filepath) {
+	public String add(String t_course_teaching_class_homework_baseinfo_id, int fileNodeId,String filename, String filepath) {
 
 		String id = GUID.getGUID();
 
-		Object params[] = new Object[] { id, t_course_teaching_class_homework_baseinfo_id, filename, filepath };
-		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR };
-		getJdbcTemplate().update(INSERT_PLAN, params, types);
+		Object params[] = new Object[] { id, t_course_teaching_class_homework_baseinfo_id,fileNodeId, filename, filepath };
+		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR,Types.INTEGER, Types.VARCHAR, Types.VARCHAR };
+		getJdbcTemplate().update(INSERT, params, types);
 		return id;
 	}
 
@@ -157,7 +159,7 @@ public class CourseTeachingClassHomeworkSubmitFileDao extends BaseDao<CourseTeac
 						data.setHomeworksubmitfile(homeworksubmitfile);
 
 						CourseTeachingClassHomeworkSubmitBaseinfo homeworksubmitbaseinfo = courseTeachingClassHomeworkSubmitBaseinfoDao
-								.getByID(homeworksubmitfile.getT_course_teaching_class_homework_submit_baseinfo_id());
+								.getByID(homeworksubmitfile.getCourseTeachingClassHomeworkSubmitBaseinfoId());
 						data.setHomeworksubmitbaseinfo(homeworksubmitbaseinfo);
 
 						list.add(data);

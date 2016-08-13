@@ -16,7 +16,7 @@ import com.mathtop.course.dao.SchoolDao;
 import com.mathtop.course.dao.SchoolDepartmentDao;
 import com.mathtop.course.dao.StudentDao;
 import com.mathtop.course.dao.TeacherDao;
-import com.mathtop.course.dao.TeachingClassStudentDao;
+import com.mathtop.course.dao.CourseTeachingClassStudentDao;
 import com.mathtop.course.dao.CourseDepartmentDao;
 import com.mathtop.course.dao.CourseTeachingClassTeacherDao;
 import com.mathtop.course.dao.UserContactTypeDao;
@@ -78,7 +78,7 @@ public class DeleteService {
 	CourseTeachingClassTeacherDao courseTeachingClassTeacherDao;
 
 	@Autowired
-	TeachingClassStudentDao courseTeachingClassStudentDao;
+	CourseTeachingClassStudentDao courseTeachingClassStudentDao;
 
 	@Autowired
 	UserBasicInfoService userBasicInfoService;
@@ -123,14 +123,14 @@ public class DeleteService {
 	UserGroupService userGroupService;
 	
 	@Autowired
-	TeachingClassStudentService  teachingClassStudentService;
+	CourseTeachingClassStudentService  teachingClassStudentService;
 
 	/**
 	 * 删除学院
 	 */
 	public void deleteSchoolById(HttpServletRequest request, String t_school_id) {
 		// .删除本学院所有的系部
-		List<String> t_department_ids = schoolDepartmentDao.get_department_idByt_school_id(t_school_id);
+		List<String> t_department_ids = schoolDepartmentDao.getDepartmentIdBySchoolId(t_school_id);
 		for (String t_department_id : t_department_ids) {
 			deleteDepartmentById(request, t_department_id);
 		}
@@ -152,7 +152,7 @@ public class DeleteService {
 		}
 
 		// 删除所有的自然班
-		List<String> t_natural_class_ids = naturalClassDepartmentDao.gett_natural_class_idByt_department_id(t_department_id);
+		List<String> t_natural_class_ids = naturalClassDepartmentDao.getNaturalClassIdByDepartmentId(t_department_id);
 		for (String t_natural_class_id : t_natural_class_ids) {
 			deleteNaturalClassById(request, t_natural_class_id);
 		}
@@ -230,11 +230,11 @@ public class DeleteService {
 	 */
 	public void deleteByUserId(HttpServletRequest request, String t_user_id) {
 		// 学生或教师？
-		Student stu = studentDao.getStudentByt_user_id(t_user_id);
+		Student stu = studentDao.getStudentByUserId(t_user_id);
 		if (stu != null) {
 			deleteStudentById(request, stu.getId());
 		} else {
-			Teacher t = teacherDao.getTeacherByt_user_id(t_user_id);
+			Teacher t = teacherDao.getTeacherByUserId(t_user_id);
 			if (t != null) {
 				deleteTeacherById(request, t.getId());
 			}
@@ -250,7 +250,7 @@ public class DeleteService {
 		if (teacher == null)
 			return;
 
-		String t_user_id = teacher.getT_user_id();
+		String t_user_id = teacher.getUserId();
 
 		// 删除提交作业系统
 		courseTeachingClassHomeworkService.deleteByTeacherId(request, t_teacher_id);
@@ -277,7 +277,7 @@ public class DeleteService {
 		deleteUserInMail(request, t_user_id);
 		
 		//权限
-		userGroupService.deleteByUserId(request, t_user_id);
+		userGroupService.deleteByUserId( t_user_id);
 
 		// 删除用户基本信息
 		deleteUserBasic(t_user_id);
@@ -293,7 +293,7 @@ public class DeleteService {
 		if (stu == null)
 			return;
 
-		String t_user_id = stu.getT_user_id();
+		String t_user_id = stu.getUserId();
 
 		// 删除提交作业系统
 		courseTeachingClassHomeworkSubmitService.deleteByStudentID(request, t_student_id);
@@ -323,7 +323,7 @@ public class DeleteService {
 		deleteUserInMail(request, t_user_id);
 		
 		//权限
-		userGroupService.deleteByUserId(request, t_user_id);
+		userGroupService.deleteByUserId( t_user_id);
 
 		// 删除用户基本信息
 		deleteUserBasic(t_user_id);
@@ -393,7 +393,7 @@ public class DeleteService {
 		
 	
 
-		String t_user_id = stu.getT_user_id();
+		String t_user_id = stu.getUserId();
 
 		// 1.删除考勤
 		attendanceStudentService.deleteByCourseTeachingClassIdAndStudentId(t_course_teaching_class_id,t_student_id);

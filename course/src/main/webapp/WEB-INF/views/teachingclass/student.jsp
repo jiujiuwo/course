@@ -21,10 +21,9 @@
 <base href="<%=basePath%>" />
 
 <%@ include file="../../shared/importCss.jsp"%>
-<%@ include file="../../shared/importdatetimepickercss.jsp"%>
 
-<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet"
-	type="text/css" />
+
+
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -33,7 +32,7 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 
@@ -52,7 +51,7 @@
 
 
 			<div class="CourseContentHeader">
-				<span class="text-info"><strong>${selectedCourseTeachingClassViewData.teachingclass.name}</strong></span>教学班学生管理
+				<span class="text-info"><strong>${selectedCourseTeachingClassViewData.courseTeachingClass.name}</strong></span>教学班学生管理
 			</div>
 			<p class="text-muted">
 				<strong>课程名称：</strong>${selectedCourseTeachingClassViewData.course.name}</p>
@@ -60,16 +59,14 @@
 			<p class="text-muted">
 				<strong>授课教师：</strong>
 
-				<c:forEach var="t"
-					items="${selectedCourseTeachingClassViewData.teacher}"
-					varStatus="status">
-							${t.userbasicinfo.user_basic_info_name}(${selectedCourseTeachingClassViewData.teachingtype[status.index].name})
+				<c:forEach var="t" items="${selectedCourseTeachingClassViewData.teacher}" varStatus="status">
+							${t.userbasicinfo.userBasicInfoName}(${selectedCourseTeachingClassViewData.teachingtype[status.index].name})
 							</c:forEach>
 
 			</p>
 
 			<p class="text-muted">
-				<strong>授课时间：</strong>${selectedCourseTeachingClassViewData.courseteachingclass.teaching_year_begin}-${pagedTeachingClassViewData.result[0].courseteachingclass.teaching_year_end}学年第${pagedTeachingClassViewData.result[0].courseteachingclass.teaching_term}学期</p>
+				<strong>授课时间：</strong>${selectedCourseTeachingClassViewData.term.term}</p>
 			<div class="CourseContentHeaderSeparatorLine"></div>
 
 			<table>
@@ -80,11 +77,9 @@
 							<!-- Split button -->
 							<div class="btn-group">
 								<button type="button" class="btn btn-default btn-sm">选择</button>
-								<button type="button"
-									class="btn btn-default dropdown-toggle btn-sm"
-									data-toggle="dropdown" aria-expanded="false">
-									<span class="caret"></span> <span class="sr-only">Toggle
-										Dropdown</span>
+								<button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown"
+									aria-expanded="false">
+									<span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
 								</button>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="#">全部选择</a></li>
@@ -97,22 +92,20 @@
 					<td style="width: 10px;"></td>
 					<td><div class="btn-group" role="group" aria-label="...">
 							<button type="button" class="btn btn-default btn-sm"
-								onclick="window.location.href='teachingclass/addstudent-${selectedTeachingClassID}.html'">增加学生</button>
+								onclick="window.location.href='teachingclass/addstudent-${selectedCourseTeachingClassID}.html'">增加学生</button>
 
 
 
-							<button type="button" class="btn btn-default btn-sm"
-								data-toggle="modal" data-target="#myModal">删除</button>
+							<button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+								data-target="#myModal">删除</button>
 
 
 						</div></td>
 					<td style="width: 10px;"></td>
 					<td><div class="input-group input-group-sm">
-							<input type="text" class="form-control" id="SearchText"
-								placeholder="Search for..." required> <span
-								class="input-group-btn">
-								<button class="btn btn-default" type="button"
-									onclick="onSearch()">搜索</button>
+							<input type="text" class="form-control" id="SearchText" placeholder="Search for..." required>
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button" onclick="onSearch()">搜索</button>
 							</span>
 						</div></td>
 					<td style="width: 10px;"></td>
@@ -120,11 +113,9 @@
 							<!-- Split button -->
 							<div class="btn-group">
 								<button type="button" class="btn btn-default btn-sm">每页大小</button>
-								<button type="button"
-									class="btn btn-default dropdown-toggle btn-sm"
-									data-toggle="dropdown" aria-expanded="false">
-									<span class="caret"></span> <span class="sr-only">Toggle
-										Dropdown</span>
+								<button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown"
+									aria-expanded="false">
+									<span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
 								</button>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="#">默认(10)</a></li>
@@ -145,64 +136,69 @@
 			<c:choose>
 
 				<c:when test="${pagedStudentViewData.totalCount >0}">
+					<div class="Course-Table">
 
-					<div class="form-group">
+						<div class="gridseparator"></div>
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-1">
+									<strong>#</strong>
+								</div>
+								<div class="col-md-2">
+									<strong>学号</strong>
+								</div>
+								<div class="col-md-2">
+									<strong>姓名</strong>
+								</div>
+								<div class="col-md-2">
+									<strong>系部</strong>
+								</div>
+								<div class="col-md-2">
+									<strong>班级</strong>
+								</div>
 
-
-
-						<div class="col-md-12">
-
-
-							<div class="Course-Table">
-
-
-								<table id="studenttable"
-									class="table table-hover table-bordered">
-									<thead>
-										<tr>
-											<th style="width: 10%;">#</th>
-											<th style="width: 20%;">学号</th>
-											<th style="width: 30%;">姓名</th>
-											<th style="width: 30%;">系部</th>
-											<th style="width: 30%;">班级</th>
-											<th style="width: 10%;">操作</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:set var="index" value="1"></c:set>
-										<c:forEach var="dataitem"
-											items="${pagedStudentViewData.result}">
-											<tr>
-												<th scope="row"><input type="checkbox" value="">
-													${(pagedStudentViewData.currentPageNo-1) * pagedStudentViewData.pageSize +index}</th>
-												<td>${dataitem.student.student_num}</td>
-												<td>${dataitem.userbasicinfo.user_basic_info_name}</td>
-												<td>${dataitem.department.name}</td>
-												<td>${dataitem.naturalclass.name}</td>
-
-												<td>
-													<button type="button" class="btn btn-default btn-xs"
-														onclick="location='<c:url value="/teachingclass/deletestudent-${selectedCourseTeachingClassViewData.courseteachingclass.id}-${dataitem.student.id}-${pagedStudentViewData.currentPageNo}.html"/>'">删除...</button>
-
-												</td>
-											</tr>
-											<c:set var="index" value="${index + 1}"></c:set>
-										</c:forEach>
-									</tbody>
-								</table>
-
-								<c:if test="${not empty selectedCourseTeachingClassID}">
-									<mathtop:PageBar
-										pageUrl="/teachingclass/student-${selectedCourseTeachingClassID}.html"
-										pageAttrKey="pagedStudentViewData" />
-								</c:if>
-
+								<div class="col-md-2">
+									<strong>操作</strong>
+								</div>
 							</div>
+							<div class="gridseparator"></div>
+							<c:set var="index" value="1"></c:set>
+							<c:forEach var="dataitem" items="${pagedStudentViewData.result}">
+								<div class="row">
+									<div class="col-md-1">
+										<input type="checkbox" value=""> ${(pagedStudentViewData.currentPageNo-1) * pagedStudentViewData.pageSize +index}
+									</div>
+									<div class="col-md-2">${dataitem.student.studentNum}</div>
+									<div class="col-md-2">${dataitem.userbasicinfo.userBasicInfoName}</div>
+									<div class="col-md-2">${dataitem.department.name}</div>
+									<div class="col-md-2">${dataitem.naturalclass.name}</div>
+
+									<div class="col-md-2">
+										<button type="button" class="btn btn-default btn-xs"
+											onclick="location='<c:url value="/teachingclass/deletestudent-${selectedCourseTeachingClassViewData.courseTeachingClass.id}-${dataitem.student.id}-${pagedStudentViewData.currentPageNo}.html"/>'">删除...</button>
+
+										<button type="button" class="btn btn-default btn-xs"
+											onclick="location='<c:url value="/teachingclass/showindexmoveup-${selectedCourseTeachingClassViewData.courseTeachingClass.id}-${dataitem.student.id}-${pagedStudentViewData.currentPageNo}.html"/>'">
+											 <i class="icon-circle-arrow-up"></i>向上移动
+										</button>
+										
+										<button type="button" class="btn btn-default btn-xs"
+											onclick="location='<c:url value="/teachingclass/showindexmovedown-${selectedCourseTeachingClassViewData.courseTeachingClass.id}-${dataitem.student.id}-${pagedStudentViewData.currentPageNo}.html"/>'">
+											 <i class="icon-circle-arrow-down"></i>向下移动
+										</button>
+
+									</div>
+								</div>
+								<c:set var="index" value="${index + 1}"></c:set>
+							</c:forEach>
+
+							<div class="gridseparator"></div>
+							<c:if test="${not empty selectedCourseTeachingClassID}">
+								<mathtop:PageBar pageUrl="/teachingclass/student-${selectedCourseTeachingClassID}.html"
+									pageAttrKey="pagedStudentViewData" />
+							</c:if>
+
 						</div>
-
-
-
-
 
 					</div>
 
@@ -212,10 +208,8 @@
 					<%
 						//没有找到记录
 					%>
-					<div class="alert alert-warning alert-dismissible fade in"
-						role="alert" style="margin: 10px;">
-						<button type="button" class="close" data-dismiss="alert"
-							aria-label="Close">
+					<div class="alert alert-warning alert-dismissible fade in" role="alert" style="margin: 10px;">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 						<h3>没有找到记录,请选择下列操作之一：</h3>
@@ -223,18 +217,13 @@
 						<div class="list-group">
 
 
-							<a href="<c:url value="/teachingclass/add.html"/>"
-								class="list-group-item">添加教学班班</a> <a
-								href="<c:url value="/course/add.html"/>" class="list-group-item">添加课程</a>
+							<a href="<c:url value="/teachingclass/add.html"/>" class="list-group-item">添加教学班班</a>
+							<a href="<c:url value="/course/add.html"/>" class="list-group-item">添加课程</a>
 
-							<a href="<c:url value="/teacher/add.html"/>"
-								class="list-group-item">添加教师</a> <a
-								href="<c:url value="/naturalclass/list.html"/>"
-								class="list-group-item">添加自然班</a> <a
-								href="<c:url value="/school/list.html"/>"
-								class="list-group-item">添加学院</a> <a
-								href="<c:url value="/department/list.html"/>"
-								class="list-group-item">添加系部</a>
+							<a href="<c:url value="/teacher/add.html"/>" class="list-group-item">添加教师</a>
+							<a href="<c:url value="/naturalclass/list.html"/>" class="list-group-item">添加自然班</a>
+							<a href="<c:url value="/school/list.html"/>" class="list-group-item">添加学院</a>
+							<a href="<c:url value="/department/list.html"/>" class="list-group-item">添加系部</a>
 
 						</div>
 
@@ -248,13 +237,10 @@
 
 
 
+<%@ include file="../../shared/importJs.jsp"%>
+	<%@ include file="../../shared/sysLastInclude.jsp"%>
 
-	<%@ include file="../../shared/dialog.jsp"%>
 
-
-	<%@ include file="../../shared/pageFooter.jsp"%>
-
-	<%@ include file="../../shared/importJs.jsp"%>
 	<%@ include file="../../shared/importdatetimepickerjs.jsp"%>
 
 	<script>
@@ -262,7 +248,7 @@
 			var url = "location='<c:url value="/teachingclass/"/>"
 
 			url = url
-					+ "deletestudent-${selectedCourseTeachingClassViewData.courseteachingclass.id}-"
+					+ "deletestudent-${selectedCourseTeachingClassViewData.courseTeachingClass.id}-"
 					+ t_student_id + ".html'";
 
 			$('#deleteModal').find('.modal-body #deleteinfo').text(
@@ -275,17 +261,7 @@
 		}
 	</script>
 
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
 
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

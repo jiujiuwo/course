@@ -35,7 +35,7 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 	
@@ -122,10 +122,10 @@
 							autocomplete="off" placeholder="学号" value="${selectedStudentViewData.student.student_num }"/>
 					</div>
 
-					<label for="user_basic_info_name" class="col-sm-1 control-label">姓名</label>
+					<label for="userBasicInfoName" class="col-sm-1 control-label">姓名</label>
 					<div class="col-md-3">
-						<input name="user_basic_info_name"
-							class="form-control placeholder-no-fix" autocomplete="off" value="${selectedStudentViewData.userbasicinfo.user_basic_info_name }"
+						<input name="userBasicInfoName"
+							class="form-control placeholder-no-fix" autocomplete="off" value="${selectedStudentViewData.userbasicinfo.userBasicInfoName }"
 							placeholder="姓名" />
 					</div>
 				</div>
@@ -355,12 +355,10 @@
 
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
 
-
-	<%@ include file="../../shared/pageFooter.jsp"%>
 
 	<%@ include file="../../shared/importJs.jsp"%>
+		<%@ include file="../../shared/sysLastInclude.jsp"%>
 	<%@ include file="../../shared/importdatetimepickerjs.jsp"%>
 
 
@@ -414,7 +412,7 @@
 			$('#deleteModal').find('.modal-footer #deletebtn').attr("onclick",
 					url);
 
-			alert(url);
+		//	alert(url);
 
 			$('#deleteModal').modal('show');
 
@@ -600,18 +598,6 @@
 		});
 	</script>
 
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

@@ -58,7 +58,7 @@ public class CourseTeachingClassForumReplyFileDao extends BaseDao<CourseTeaching
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
 				submitfile.setId(id);
-				submitfile.setT_forum_reply_id(rs.getString("t_forum_reply_id"));
+				submitfile.setForumReplyId(rs.getString("t_forum_reply_id"));
 
 				submitfile.setFilename(rs.getString("filename"));
 				submitfile.setFilepath(rs.getString("filepath"));
@@ -87,7 +87,7 @@ public class CourseTeachingClassForumReplyFileDao extends BaseDao<CourseTeaching
 						CourseTeachingClassForumReplyFile submitfile = new CourseTeachingClassForumReplyFile();
 						submitfile.setId(rs.getString("id"));
 
-						submitfile.setT_forum_reply_id(t_forum_reply_id);
+						submitfile.setForumReplyId(t_forum_reply_id);
 
 						submitfile.setFilename(rs.getString("filename"));
 						submitfile.setFilepath(rs.getString("filepath"));
@@ -104,7 +104,7 @@ public class CourseTeachingClassForumReplyFileDao extends BaseDao<CourseTeaching
 	public String add(CourseTeachingClassForumReplyFile submitfile) {
 		String id = GUID.getGUID();
 		submitfile.setId(id);
-		Object params[] = new Object[] { submitfile.getId(), submitfile.getT_forum_reply_id(), submitfile.getFilename(),
+		Object params[] = new Object[] { submitfile.getId(), submitfile.getForumReplyId(), submitfile.getFilename(),
 				submitfile.getFilepath() };
 		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR };
 		getJdbcTemplate().update(INSERT_PLAN, params, types);
@@ -157,7 +157,7 @@ public class CourseTeachingClassForumReplyFileDao extends BaseDao<CourseTeaching
 						data.setReplyFile(replyFile);
 
 						CourseTeachingClassForumReply reply = forumReplyDao
-								.getByID(replyFile.getT_forum_reply_id());
+								.getByID(replyFile.getForumReplyId());
 						data.setReply(reply);
 
 						list.add(data);

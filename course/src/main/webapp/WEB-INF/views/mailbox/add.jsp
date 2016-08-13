@@ -44,14 +44,14 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home" onLoad="ShowErrMsg()">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 	<c:if test="${selectedCourseTeachingClassID!=null}">
 		
 			<%@ include file="../../shared/CourseTeachingClassInfo.jsp"%>
 		
-		<div id="DocumentPageTopSeparatorLine"></div>
+		
 	</c:if>
 
 	<div class="DocumentPage">
@@ -93,13 +93,13 @@
 					<c:otherwise>
 						<c:choose>
 							<c:when test="${selectedMailBoxNewReceiver.teacher!=null}">
-								向<span class="text-info"><i class="fa fa-user"></i>${selectedMailBoxNewReceiver.userbasicinfo.user_basic_info_name}</span>发送新邮件
+								向<span class="text-info"><i class="fa fa-user"></i>${selectedMailBoxNewReceiver.userbasicinfo.userBasicInfoName}</span>发送新邮件
 							</c:when>
 							<c:when test="${selectedMailBoxNewReceiver.student!=null}">
-								向<span class="text-info"><i class="fa fa-user"></i>${selectedMailBoxNewReceiver.student.student_num}-${selectedMailBoxNewReceiver.userbasicinfo.user_basic_info_name}</span>发送新邮件
+								向<span class="text-info"><i class="fa fa-user"></i>${selectedMailBoxNewReceiver.student.studentNum}-${selectedMailBoxNewReceiver.userbasicinfo.userBasicInfoName}</span>发送新邮件
 							</c:when>
 							<c:otherwise>
-								向<span class="text-info"><i class="fa fa-user"></i>${selectedMailBoxNewReceiver.user.user_name}</span>发送新邮件
+								向<span class="text-info"><i class="fa fa-user"></i>${selectedMailBoxNewReceiver.user.userName}</span>发送新邮件
 							</c:otherwise>
 						</c:choose>
 					
@@ -215,10 +215,10 @@
 
 							<div class="col-md-3">
 								<input type="checkbox" name="receiverUser"
-									value="${dataitem.user.id}" />${dataitem.userbasicinfo.user_basic_info_name}
+									value="${dataitem.user.id}" />${dataitem.userbasicinfo.userBasicInfoName}
 								<input type="text" class="form-control" style="display: none;"
 									id="user${dataitem.user.id}"
-									value="${dataitem.userbasicinfo.user_basic_info_name}" />
+									value="${dataitem.userbasicinfo.userBasicInfoName}" />
 							</div>
 
 							<c:if test="${index%4==3}">
@@ -256,10 +256,10 @@
 
 					<div class="col-md-3">
 						<input type="checkbox" name="receiverStudent"
-							value="${dataitem.user.id}" />${dataitem.student.student_num}-${dataitem.userbasicinfo.user_basic_info_name}
+							value="${dataitem.user.id}" />${dataitem.student.studentNum}-${dataitem.userbasicinfo.userBasicInfoName}
 						<input type="text" class="form-control" style="display: none;"
 							id="user${dataitem.user.id}"
-							value="${dataitem.student.student_num}-${dataitem.userbasicinfo.user_basic_info_name}" />
+							value="${dataitem.student.studentNum}-${dataitem.userbasicinfo.userBasicInfoName}" />
 					</div>
 
 					<c:if test="${index%4==3}">
@@ -291,9 +291,7 @@
 
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
-
-	<%@ include file="../../shared/pageFooter.jsp"%>
+	<%@ include file="../../shared/sysLastInclude.jsp"%>
 
 
 
@@ -322,8 +320,8 @@
 				ShowInfoMsg("提示", "请选择收件人");
 				return;
 			}
-
-			var sHTML = $('#addcontentDiv').code();
+			
+			var sHTML = $('.summernote').summernote('code');
 			$('#addcontentTextArea').text(sHTML);
 
 		}
@@ -419,19 +417,6 @@
 	</script>
 
 
-
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

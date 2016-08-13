@@ -12,9 +12,8 @@ public class CourseTeachingClassHomeworkSubmitBaseinfo extends BaseDomain {
 	private static final long serialVersionUID = -6387517426181912258L;
 
 	private String id;
-	private String t_course_teaching_class_homework_baseinfo_id;
-	private String t_student_id;
-
+	private String courseTeachingClassHomeworkBaseinfoId;
+	private String studentId;
 	private String title;
 	private String content;
 	private Date submitdate;
@@ -24,15 +23,7 @@ public class CourseTeachingClassHomeworkSubmitBaseinfo extends BaseDomain {
 	}
 	public void setId(String id) {
 		this.id = id;
-	}
-	
-	public String getT_student_id() {
-		return t_student_id;
-	}
-	public void setT_student_id(String t_student_id) {
-		this.t_student_id = t_student_id;
-	}
-	
+	}	
 	public String getTitle() {
 		return title;
 	}
@@ -57,11 +48,18 @@ public class CourseTeachingClassHomeworkSubmitBaseinfo extends BaseDomain {
 	public void setModifieddate(Date modifieddate) {
 		this.modifieddate = modifieddate;
 	}
-	public String getT_course_teaching_class_homework_baseinfo_id() {
-		return t_course_teaching_class_homework_baseinfo_id;
+	public String getCourseTeachingClassHomeworkBaseinfoId() {
+		return courseTeachingClassHomeworkBaseinfoId;
 	}
-	public void setT_course_teaching_class_homework_baseinfo_id(String t_course_teaching_class_homework_baseinfo_id) {
-		this.t_course_teaching_class_homework_baseinfo_id = t_course_teaching_class_homework_baseinfo_id;
+	public void setCourseTeachingClassHomeworkBaseinfoId(String courseTeachingClassHomeworkBaseinfoId) {
+		this.courseTeachingClassHomeworkBaseinfoId = courseTeachingClassHomeworkBaseinfoId;
 	}
+	public String getStudentId() {
+		return studentId;
+	}
+	public void setStudentId(String studentId) {
+		this.studentId = studentId;
+	}
+
 	
 }

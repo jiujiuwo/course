@@ -1,12 +1,13 @@
 language: node_js
-node_js: 0.1
+sudo: false
+node_js: 4.1
 before_script:
 - node --version
 - npm --version
 - npm install -g grunt-cli
 script:
-- grunt test --verbose
-- grunt saucelabs-test
+- grunt test-travis --verbose
+- if [[ $TRAVIS_PULL_REQUEST == "false" ]]; then grunt saucelabs-test; fi
 before_deploy:
 - npm install
 - grunt build
@@ -19,9 +20,10 @@ deploy:
   on:
     tags: true
     branch: develop
-env:
-  global:
-  - secure: JwRh/BsZPWG4VCt5CmLj8PzZp/qkTEciAQK8RlcA9xMvbh7KdrU8t8/nCo3qA4oTbgSPQQ1lh+nxQItgBS5lWOM2kov4JSCnHR4mxDyjycfPB7E+Xuzlp89PtGpL6fk2VfVNceSvH2vmKCibbo2bKYRCJ5khMTKljh9FmTyFxQ0=
-  - secure: ML6bw+59g8pHDGRRwUj4Sf4rrXIEopqHv3l8l9//GUdoLMLTvTCIoLVlIKam51/6REYrvvbx/62Xi5+TZPn82FAASlS9lFK21cJYWnW+o+Rzemj2PHhKx8RFfFFur9FSpH6y0/Zx88dNF0OS83KlmNXuWy3tKYnABwyoBnx/JP4=
 addons:
-  sauce_connect: true
+  sauce_connect:
+    username: 'summernoteis'
+    access_key:
+      secure: "E9Mq/lKN1xNA+PungEtlDEYqx5Dm52GPuvRMjZPkv5GiuFjof70CuqOIbqSh5YcDvn6/FmPlmlcZVNcXGzKkkSY9qqFpsbmsu2VXmbHlmpjr0Yhm7LQLoZYj+fmrO3WITai6yEyvb8cjGTjHhTjULDORJgC9U4DLfzju5OQFW0Q="
+after_success:
+- grunt coveralls:travis

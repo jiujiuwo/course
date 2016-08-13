@@ -10,21 +10,17 @@ public class CourseTeachingClassHomeworkSubmitFile extends BaseDomain {
 	private static final long serialVersionUID = 2713446233772077003L;
 
 	 private String id;
-	 private String t_course_teaching_class_homework_submit_baseinfo_id;
+	 private String courseTeachingClassHomeworkSubmitBaseinfoId;
 	 private String filename;
 	 private String filepath;
+	 private int fileNodeId;
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getT_course_teaching_class_homework_submit_baseinfo_id() {
-		return t_course_teaching_class_homework_submit_baseinfo_id;
-	}
-	public void setT_course_teaching_class_homework_submit_baseinfo_id(String t_course_teaching_class_homework_submit_baseinfo_id) {
-		this.t_course_teaching_class_homework_submit_baseinfo_id = t_course_teaching_class_homework_submit_baseinfo_id;
-	}
+	
 	public String getFilename() {
 		return filename;
 	}
@@ -36,5 +32,17 @@ public class CourseTeachingClassHomeworkSubmitFile extends BaseDomain {
 	}
 	public void setFilepath(String filepath) {
 		this.filepath = filepath;
+	}
+	public String getCourseTeachingClassHomeworkSubmitBaseinfoId() {
+		return courseTeachingClassHomeworkSubmitBaseinfoId;
+	}
+	public void setCourseTeachingClassHomeworkSubmitBaseinfoId(String courseTeachingClassHomeworkSubmitBaseinfoId) {
+		this.courseTeachingClassHomeworkSubmitBaseinfoId = courseTeachingClassHomeworkSubmitBaseinfoId;
+	}
+	public int getFileNodeId() {
+		return fileNodeId;
+	}
+	public void setFileNodeId(int fileNodeId) {
+		this.fileNodeId = fileNodeId;
 	}   
 }

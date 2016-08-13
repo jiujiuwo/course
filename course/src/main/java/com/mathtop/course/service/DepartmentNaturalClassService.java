@@ -40,7 +40,7 @@ public class DepartmentNaturalClassService {
 		return departmentNaturalClassDao.getPage(t_department_id,pageNo, pageSize);
 	}
 	
-	public String gett_natural_class_idByNaturalClassName(String naturalclassname){
+	public String getNaturalclassIdByNaturalClassName(String naturalclassname){
 		NaturalClass n= naturalclassDao.getByName(naturalclassname);
 		if(n!=null)
 			return n.getId();
@@ -54,7 +54,7 @@ public class DepartmentNaturalClassService {
 	 * @return
 	 */
 	public List<NaturalClass> getNaturalClassByt_department_id(String t_department_id) {
-		return departmentNaturalClassDao.getNaturalClassByt_department_id(t_department_id);
+		return departmentNaturalClassDao.getNaturalClassByDepartmentId(t_department_id);
 	}
 	
 	public Page<NaturalClass> getNaturalClassPage(String t_department_id,int pageNo, int pageSize) {

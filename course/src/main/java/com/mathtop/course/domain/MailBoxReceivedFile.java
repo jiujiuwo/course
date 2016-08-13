@@ -12,7 +12,7 @@ public class MailBoxReceivedFile extends BaseDomain {
 	 */
 	private static final long serialVersionUID = 4832081916661131375L;
 	private String id;
-	 private String t_mail_box_received_id;
+	 private String mailBoxReceivedId;
 	 private String filename;
 	 private String filepath;
 	public String getId() {
@@ -34,11 +34,11 @@ public class MailBoxReceivedFile extends BaseDomain {
 	public void setFilepath(String filepath) {
 		this.filepath = filepath;
 	}
-	public String getT_mail_box_received_id() {
-		return t_mail_box_received_id;
+	public String getMailBoxReceivedId() {
+		return mailBoxReceivedId;
 	}
-	public void setT_mail_box_received_id(String t_mail_box_received_id) {
-		this.t_mail_box_received_id = t_mail_box_received_id;
+	public void setMailBoxReceivedId(String mailBoxReceivedId) {
+		this.mailBoxReceivedId = mailBoxReceivedId;
 	}
-	 
+	
 }

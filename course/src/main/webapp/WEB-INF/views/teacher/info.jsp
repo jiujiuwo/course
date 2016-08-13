@@ -34,7 +34,7 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home">
+<body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 
@@ -98,14 +98,14 @@
 
 				</div>
 				<div class="form-group">
-					<label for="teacher_num" class="col-sm-1 control-label">工号</label>
+					<label for="teacherNum" class="col-sm-1 control-label">工号</label>
 					<div class="col-md-3">
-						<p class="form-control-static">${selectedTeacherViewData.teacher.teacher_num}</p>
+						<p class="form-control-static">${selectedTeacherViewData.teacher.teacherNum}</p>
 					</div>
 
-					<label for="user_basic_info_name" class="col-sm-1 control-label">姓名</label>
+					<label for="userBasicInfoName" class="col-sm-1 control-label">姓名</label>
 					<div class="col-md-3">
-						<p class="form-control-static">${selectedTeacherViewData.userbasicinfo.user_basic_info_name}</p>
+						<p class="form-control-static">${selectedTeacherViewData.userbasicinfo.userBasicInfoName}</p>
 					</div>
 				</div>
 
@@ -114,7 +114,7 @@
 
 
 				<input type="hidden" id="user_basic_info_birthday_buf"
-					value='<fmt:formatDate value="${selectedTeacherViewData.userbasicinfo.user_basic_info_birthday}" pattern="yyyy-MM-dd"/>'
+					value='<fmt:formatDate value="${selectedTeacherViewData.userbasicinfo.userBasicInfoBirthday}" pattern="yyyy-MM-dd"/>'
 					readonly>
 
 
@@ -143,13 +143,13 @@
 					<label for="user_basic_info_sex" class="col-sm-1 control-label">性别</label>
 					<div class="col-md-3">
 						<label class="radio-inline"> <input type="radio" value="0"
-							<c:if test="${selectedTeacherViewData.userbasicinfo.user_basic_info_sex<1}">
+							<c:if test="${selectedTeacherViewData.userbasicinfo.userBasicInfoSex<1}">
 							checked="checked"
 							</c:if>
 							name="user_basic_info_sex" id="inlineRadio1" value="option1">
 							男
 						</label> <label class="radio-inline"> <input type="radio"
-							<c:if test="${selectedTeacherViewData.userbasicinfo.user_basic_info_sex>0}">
+							<c:if test="${selectedTeacherViewData.userbasicinfo.userBasicInfoSex>0}">
 							checked="checked"
 							</c:if>
 							value="1" name="user_basic_info_sex" id="inlineRadio2"
@@ -275,12 +275,10 @@
 
 
 
-	<%@ include file="../../shared/dialog.jsp"%>
-
-
-	<%@ include file="../../shared/pageFooter.jsp"%>
+	
 
 	<%@ include file="../../shared/importJs.jsp"%>
+	<%@ include file="../../shared/sysLastInclude.jsp"%>
 	<%@ include file="../../shared/importdatetimepickerjs.jsp"%>
 
 
@@ -375,21 +373,6 @@
 	</script>
 
 
-
-
-
-
-	<c:if test="${!empty errorMsg}">
-		<script>
-			function ShowErrMsg() {
-				ShowInfoMsg("${errorMsg}");
-
-			}
-		</script>
-
-	</c:if>
-
-	<c:set var="errorMsg" value="null" />
 
 </body>
 </html>

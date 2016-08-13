@@ -16,61 +16,93 @@ import com.mathtop.course.utility.GUID;
 
 @Repository
 public class SchoolDepartmentDao extends BaseDao<SchoolDepartment> {
-	
+
 	@Autowired
 	private SchoolDao schoolDao;
 
 	private final String GET_SCHOOL_ID_BY_DEPARTMENT_ID = "SELECT t_school_id FROM t_school_department WHERE t_department_id=?";
+	private final String GET_ID_BY_SCHOOL_ID_AND_DEPARTMENT_ID = "SELECT id FROM t_school_department WHERE t_school_id=? and t_department_id=?";
 	private final String GET_DEPARTMENT_ID_BY_SCHOOL_ID = "SELECT t_department_id FROM t_school_department WHERE t_school_id=?";
 	private final String GET_DEPARTMENT_COUNT_BY_SCHOOL_ID_DEPARTMENT_NAME = "select count(*) from t_school_department,t_department where  t_school_department.t_department_id=t_department.id and t_school_department.t_school_id=? and t_department.name=?";
+
+	// 根据t_school_id、department_name得到id
+	private final String GET_ID_BY_SCHOOL_ID_DEPARTMENT_NAME = "select id from t_school_department,t_department where  t_school_department.t_department_id=t_department.id and t_school_department.t_school_id=? and t_department.name=?";
+
 	private final String INSERT = "INSERT INTO t_school_department(id,t_school_id,t_department_id) VALUES(?,?,?)";
 	private final String DELETE = "DELETE FROM t_school_department WHERE t_school_id=? and t_department_id=?";
 	private final String DELETE_BY_DEPARTMENT_ID = "DELETE FROM t_school_department WHERE t_department_id=?";
-	
-	public String add(String t_school_id,String t_department_id){
-		String newid=GUID.getGUID();
-		
-		Object params[]=new Object[]{newid,t_school_id,t_department_id};
-		int types[]=new int[]{Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
+
+	public String add(String t_school_id, String t_department_id) {
+		String newid = GUID.getGUID();
+
+		Object params[] = new Object[] { newid, t_school_id, t_department_id };
+		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR };
 		getJdbcTemplate().update(INSERT, params, types);
-		
+
 		return newid;
 	}
-	
-	public void deleteByDepartmentId(String t_department_id){
-		Object params[]=new Object[]{t_department_id};
-		int types[]=new int[]{Types.VARCHAR};
+
+	public void deleteByDepartmentId(String t_department_id) {
+		Object params[] = new Object[] { t_department_id };
+		int types[] = new int[] { Types.VARCHAR };
 		getJdbcTemplate().update(DELETE_BY_DEPARTMENT_ID, params, types);
 	}
-	
-	
-	public void DELETE(String t_school_id,String t_department_id){
-		Object params[]=new Object[]{t_school_id,t_department_id};
-		int types[]=new int[]{Types.VARCHAR,Types.VARCHAR};
+
+	public void DELETE(String t_school_id, String t_department_id) {
+		Object params[] = new Object[] { t_school_id, t_department_id };
+		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR };
 		getJdbcTemplate().update(DELETE, params, types);
 	}
-	
-	
-	public String gett_school_idByt_department_id(String t_department_id){
-		return getJdbcTemplate().queryForObject(
-				GET_SCHOOL_ID_BY_DEPARTMENT_ID,
-				new Object[] { t_department_id, },
-				new int[] { Types.VARCHAR}, String.class);
+
+	public String getSchoolIdByDepartmentId(String t_department_id) {
+		return getJdbcTemplate().queryForObject(GET_SCHOOL_ID_BY_DEPARTMENT_ID, new Object[] { t_department_id, },
+				new int[] { Types.VARCHAR }, String.class);
 	}
-	
-	public School getSchoolByt_department_id(String t_department_id){
-		String id= gett_school_idByt_department_id(t_department_id);
-		
-		if(id!=null)
+
+	public School getSchoolByDepartmentId(String t_department_id) {
+		String id = getSchoolIdByDepartmentId(t_department_id);
+
+		if (id != null)
 			return schoolDao.getByID(id);
 		return null;
-					
+
 	}
-	
-	/*
+
+	public String getIdBySchoolIdDepartmentId(String t_school_id, String t_department_id) {
+
+		return getJdbcTemplate().queryForObject(GET_ID_BY_SCHOOL_ID_AND_DEPARTMENT_ID,
+				new Object[] { t_school_id, t_department_id, }, new int[] { Types.VARCHAR, Types.VARCHAR },
+				String.class);
+	}
+
+	public List<String> getIdBySchoolIdDepartmentName(String t_school_id, String departmentName) {
+
+		if (t_school_id == null || t_school_id.length() == 0)
+			return null;
+
+		List<String> list = new ArrayList<String>();
+		Object params[] = new Object[] { t_school_id, departmentName };
+		int types[] = new int[] {  Types.VARCHAR, Types.VARCHAR};
+
+		getJdbcTemplate().query(GET_ID_BY_SCHOOL_ID_DEPARTMENT_NAME, params, types, new RowCallbackHandler() {
+
+			@Override
+			public void processRow(ResultSet rs) throws SQLException {
+				list.add(rs.getString("id"));
+
+			}
+
+		});
+
+		return list;
+		
+		
+	}
+
+	/**
 	 * 
 	 */
-	public List<String> get_department_idByt_school_id(String t_school_id) {
+	public List<String> getDepartmentIdBySchoolId(String t_school_id) {
 		if (t_school_id == null || t_school_id.length() == 0)
 			return null;
 
@@ -78,16 +110,15 @@ public class SchoolDepartmentDao extends BaseDao<SchoolDepartment> {
 		Object params[] = new Object[] { t_school_id };
 		int types[] = new int[] { Types.VARCHAR };
 
-		getJdbcTemplate().query(GET_DEPARTMENT_ID_BY_SCHOOL_ID, params, types,
-				new RowCallbackHandler() {
+		getJdbcTemplate().query(GET_DEPARTMENT_ID_BY_SCHOOL_ID, params, types, new RowCallbackHandler() {
 
-					@Override
-					public void processRow(ResultSet rs) throws SQLException {
-						list.add(rs.getString("t_department_id"));
+			@Override
+			public void processRow(ResultSet rs) throws SQLException {
+				list.add(rs.getString("t_department_id"));
 
-					}
+			}
 
-				});
+		});
 
 		return list;
 	}
@@ -97,9 +128,8 @@ public class SchoolDepartmentDao extends BaseDao<SchoolDepartment> {
 	public long getDepartmentCount(String t_school_id, String departmentName) {
 		Object params[] = new Object[] { t_school_id, departmentName };
 		int types[] = new int[] { Types.VARCHAR, Types.VARCHAR };
-		return getJdbcTemplate().queryForObject(
-				GET_DEPARTMENT_COUNT_BY_SCHOOL_ID_DEPARTMENT_NAME, params,
-				types, Long.class);
+		return getJdbcTemplate().queryForObject(GET_DEPARTMENT_COUNT_BY_SCHOOL_ID_DEPARTMENT_NAME, params, types,
+				Long.class);
 	}
 
 }
