@@ -26,7 +26,32 @@ public class DepartmentTeacherDao extends BaseDao<DepartmentTeacher> {
 	
 	private final String INSERT_DEPARTMENTTEACHER = "INSERT INTO t_department_teacher(id,t_department_id,t_teacher_id) VALUES(?,?,?)";
 	
+	private final String DELETE_BY_ID = "DELETE FROM t_department_teacher WHERE id=?";
+	private final String DELETE_BY_DEPARTMENT_ID = "DELETE FROM t_department_teacher WHERE t_department_id=?";
+	private final String DELETE_BY_TEACHER_ID = "DELETE FROM t_department_teacher WHERE t_teacher_id=?";
 	
+	
+	public void deleteById(String id) {
+		Object params[] = new Object[] { id };
+		int types[] = new int[] { Types.VARCHAR };
+		getJdbcTemplate().update(DELETE_BY_ID, params, types);
+	}
+
+	
+	
+	public void deleteByTeacherId(String t_teacher_id) {
+		Object params[] = new Object[] { t_teacher_id };
+		int types[] = new int[] { Types.VARCHAR };
+		getJdbcTemplate().update(DELETE_BY_TEACHER_ID, params, types);
+	}
+
+	
+	public void deleteByDepartmentId(String t_department_id) {
+		Object params[] = new Object[] { t_department_id };
+		int types[] = new int[] { Types.VARCHAR };
+		getJdbcTemplate().update(DELETE_BY_DEPARTMENT_ID, params, types);
+	}
+
 	/**
 	 * */
 	public String gett_department_idByTeacherId(String t_teacher_id){

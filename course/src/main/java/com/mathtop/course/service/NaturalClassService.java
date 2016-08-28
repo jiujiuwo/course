@@ -257,9 +257,13 @@ public class NaturalClassService extends SimpleService<NaturalClassDao, NaturalC
 	public String getDefaultNaturalClassIdBySchoolNameAndDepartmentNameAndNaturallClassName(String school_name,
 			String department_name,String natural_class_name) {
 
+		
+		
 		School s = schoolService.getByName(school_name);
 		if (s == null)
 			return null;
+		
+		
 
 		List<Department> list = departmentService.getAll(s.getId());
 		if (list == null)
@@ -281,7 +285,7 @@ public class NaturalClassService extends SimpleService<NaturalClassDao, NaturalC
 	 */
 	public String getNaturalClassId(String schoolName, String departmentName, String naturalclassname) {
 
-		
+	
 		
 		if (schoolName !=null && schoolName.trim().length() == 0)
 			schoolName = null;
@@ -303,6 +307,8 @@ public class NaturalClassService extends SimpleService<NaturalClassDao, NaturalC
 
 		} else if (schoolName == null && departmentName == null && naturalclassname != null) {
 			// 001
+			
+			
 			
 			// 查找班级，如果存在，则放到该班级中
 			NaturalClass naturalclass = getByName(naturalclassname);

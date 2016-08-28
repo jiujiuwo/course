@@ -18,6 +18,7 @@ import com.mathtop.course.cons.CourseMessage;
 import com.mathtop.course.cons.PagedObjectConst;
 import com.mathtop.course.dao.Page;
 import com.mathtop.course.domain.School;
+import com.mathtop.course.service.DeleteService;
 import com.mathtop.course.service.SchoolService;
 
 @Controller
@@ -29,6 +30,9 @@ public class SchoolController extends BaseController {
 	 */
 	@Autowired
 	private SchoolService schoolService;
+	
+	@Autowired
+	DeleteService deleteService;
 
 	/**
 	 * 添加学院
@@ -42,12 +46,12 @@ public class SchoolController extends BaseController {
 
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/school/list");
+		
+		System.out.println(school.getName());
 
 		School dbschool = schoolService.getByName(school.getName());
 
-		if (dbschool == null) {
-			return mav;
-		} else if (dbschool.getName() != null) {
+		if (dbschool!=null && dbschool.getName() != null) {
 			mav.addObject(CourseMessage.Message_errorMsg, "学院名已经存在");
 
 			Integer pageNo = 1;
@@ -55,34 +59,32 @@ public class SchoolController extends BaseController {
 					CommonConstant.PAGE_SIZE);
 
 			mav.addObject("pagedSchool", pagedSchool);
-			String toUrl=("list.html");
-			mav.setViewName("redirect:" + toUrl);
+			mav.setViewName("redirect:list.html");
 
 		} else {
 			schoolService.add(school.getName(), school.getNote());
 
-			String toUrl=("list.html");
-			mav.setViewName("redirect:" + toUrl);
+			
+			mav.setViewName("redirect:list.html");
 
 		}
 		return mav;
 	}
 
 	/**
-	 * 删除
+	 * 删除学院，注意删除该学院下所有的系部、学生及其相关数据
 	 * 
 	 * @param request
 	 * @param user
 	 * @return
 	 */
 	@RequestMapping(value = "/DELETE-{t_school_id}", method = RequestMethod.GET)
-	public ModelAndView DELETE(@PathVariable String t_school_id) {
+	public ModelAndView DELETE(HttpServletRequest request,@PathVariable String t_school_id) {
 		if (t_school_id != null)
-			schoolService.deleteById(t_school_id);
+			deleteService.deleteSchoolById(request, t_school_id);
 
-		ModelAndView mav = new ModelAndView();
-		String toUrl=("list.html");
-		mav.setViewName("redirect:" + toUrl);
+		ModelAndView mav = new ModelAndView();		
+		mav.setViewName("redirect:list.html");		
 		return mav;
 	}
 

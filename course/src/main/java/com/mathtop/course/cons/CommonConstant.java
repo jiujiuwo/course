@@ -52,5 +52,5 @@ public class CommonConstant {
 	public static final String LAST_ACCESS_TIME = "LastAccessTime";
 	public static final String ACCESS_COUNT = "AccessCount";
 	
-	public static final int  FREQUENT_ACCESS_WAITING_TIME=300;//频繁访问需要等待300秒，即5分钟
+	public static final int  FREQUENT_ACCESS_WAITING_TIME=30;//频繁访问需要等待30秒
 }

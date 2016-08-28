@@ -32,7 +32,7 @@ public class DepartmentService extends SimpleService<DepartmentDao, Department> 
 
 	public String add(String t_school_id, String departmentName, String departmentNote) {
 		Department department = new Department();
-		department.setName(CommonConstant.DEFAULT_DEPARTMENT_NAME);
+		department.setName(departmentName);
 		department.setNote(departmentNote);
 		String t_department_id = departmentDao.add(department);
 		if (t_department_id == null)
@@ -47,7 +47,7 @@ public class DepartmentService extends SimpleService<DepartmentDao, Department> 
 	public String add(String t_school_id, String departmentName) {
 		// 没有找到，创建默认系部
 		Department department = new Department();
-		department.setName(CommonConstant.DEFAULT_DEPARTMENT_NAME);
+		department.setName(departmentName);
 		String t_department_id = departmentDao.add(department);
 		if (t_department_id == null)
 			return null;
@@ -74,7 +74,7 @@ public class DepartmentService extends SimpleService<DepartmentDao, Department> 
 		String t_school_id = schoolService.getDefaultSchoolId();
 		if (t_school_id == null)
 			return null;
-		System.out.println("t_school_id A:" + t_school_id);
+		
 
 		// 在默认学院下面查找默认系部
 		return getDefaultDepartmentIdInSchoolId(t_school_id);
@@ -113,6 +113,9 @@ public class DepartmentService extends SimpleService<DepartmentDao, Department> 
 		List<String> schools = schooldepartmentdao.getDepartmentIdBySchoolId(t_school_id);
 		List<Department> data = new ArrayList<Department>();
 
+		if(schools==null)
+			return null;
+		
 		for (String tmp : schools) {
 			Department d = departmentDao.getByID(tmp);
 			data.add(d);

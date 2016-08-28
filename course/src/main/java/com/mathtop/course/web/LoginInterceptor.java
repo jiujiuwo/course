@@ -70,7 +70,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 						return true;
 					}
 
-				} else if (nAccessCount < 10) {
+				} else if (nAccessCount < 100) {
 					httpSession.setAttribute(CommonConstant.ACCESS_COUNT, nAccessCount + 1);
 				} else {
 

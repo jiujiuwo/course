@@ -49,7 +49,7 @@ public class LoginController extends BaseController {
 	@ResponseBody
 	public User androidLogin(HttpServletRequest request, @RequestBody User user) {
 
-		System.out.println("androidLogin");
+	//	System.out.println("androidLogin");
 		
 		// 如果用户已经登录，则直接进入到主页面
 		if (getSessionUser(request) != null) {
@@ -57,8 +57,7 @@ public class LoginController extends BaseController {
 			return user;
 		}
 		
-		System.out.println(user.getUserName());
-		System.out.println(user.getUserPassword());
+		
 
 		// 对密码进行md5运算，比较两个密码其实是比较两个密码的md5值
 		user.EncoderPassword();
@@ -66,21 +65,22 @@ public class LoginController extends BaseController {
 		User dbUser = userService.getUserByUserName(user.getUserName());
 
 		if (dbUser == null) {
-
+			
 			return null;
 		} else if (dbUser.getUserName() == null || !dbUser.getUserName().equals(user.getUserName())) {
 			// 用户名不存在
-
+		
 			dbUser.setUserName(null);
 		} else if (dbUser.getUserPassword() == null || !dbUser.getUserPassword().equals(user.getUserPassword())) {
 			// 用户密码不正确
-
+			
 			dbUser.setUserPassword(null);
 		} else {
-
+			
 			// 写入到登录日志中
 			loginService.Add(dbUser.getId(), request.getRemoteAddr());
 		}
+		
 		return dbUser;
 	}
 

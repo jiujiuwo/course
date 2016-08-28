@@ -44,6 +44,7 @@ public class DepartmentController extends BaseController {
 	@RequestMapping(value = "/add")
 	public ModelAndView add(HttpServletRequest request, Department d) {
 		String t_school_id = request.getParameter("t_school_id");
+		
 
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/department/list");

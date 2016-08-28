@@ -221,7 +221,7 @@ public class NaturalClassController extends BaseController {
 		view.addObject(PagedObjectConst.Paged_Department, pagedDeparment);
 		
 		
-		if(t_depratment_id==null){
+		if(t_depratment_id==null && pagedDeparment!=null){
 			
 			List<Department> departments = pagedDeparment.getResult();
 			if (departments.size() > 0) {

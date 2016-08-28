@@ -559,12 +559,15 @@ public class StudentService {
 	 */
 	public String AddStudent(String schoolName, String departmentName, String naturalclassname, String name,
 			String student_num, String[] groupId) {
-
+		
+		
+		
+		
 	
 		
 		
 		String t_student_id = AddStudent(schoolName, departmentName, naturalclassname, name, student_num);
-
+		
 	
 		
 		if (t_student_id == null)

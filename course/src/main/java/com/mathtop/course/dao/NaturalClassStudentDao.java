@@ -20,7 +20,7 @@ import com.mathtop.course.utility.GUID;
 @Repository
 public class NaturalClassStudentDao extends BaseDao<NaturalClassStudent> {
 
-	private final String GET_STUDENTID_BY_t_natural_class_id = "SELECT t_student_id FROM t_natural_class_student WHERE t_natural_class_id=?";
+	private final String GET_STUDENTID_BY_NATURAL_CLASS_ID = "SELECT t_student_id FROM t_natural_class_student WHERE t_natural_class_id=?";
 	
 	private final String GET_NATURAL_CLASS_ID_BY_STUDENT_ID = "SELECT id,t_natural_class_id "
 			+ "FROM t_natural_class_student "
@@ -30,6 +30,12 @@ public class NaturalClassStudentDao extends BaseDao<NaturalClassStudent> {
 			+ "FROM t_natural_class_student A "
 			+ "left outer join t_student B on A.t_student_id=B.id "			
 			+ "WHERE A.t_natural_class_id=? and B.student_num=?";
+	
+	private final String GET_COUNT_ID_BY_NATURAL_CLASS_ID_STUDENT_NUM = "SELECT count(*) "
+			+ "FROM t_natural_class_student A "
+			+ "left outer join t_student B on A.t_student_id=B.id "			
+			+ "WHERE A.t_natural_class_id=? and B.student_num=?";
+	
 	
 
 	
@@ -166,12 +172,12 @@ public class NaturalClassStudentDao extends BaseDao<NaturalClassStudent> {
 		Object params[] = new Object[] { t_natural_class_id };
 		int types[] = new int[] { Types.VARCHAR };
 
-		getJdbcTemplate().query(GET_STUDENTID_BY_t_natural_class_id, params, types,
+		getJdbcTemplate().query(GET_STUDENTID_BY_NATURAL_CLASS_ID, params, types,
 				new RowCallbackHandler() {
 
 					@Override
 					public void processRow(ResultSet rs) throws SQLException {
-						list.add(rs.getString("t_natural_class_id"));
+						list.add(rs.getString("t_student_id"));
 
 					}
 
@@ -231,20 +237,43 @@ public class NaturalClassStudentDao extends BaseDao<NaturalClassStudent> {
 		return null;
 	}
 	
+	
 	/**
-	 * 查询某个学号的学生是否在班级中
+	 * 指定学号是否存在
+	 * */
+	public boolean isStudentExist(String t_natural_class_id, String t_student_num){
+		return getJdbcTemplate().queryForObject(GET_COUNT_ID_BY_NATURAL_CLASS_ID_STUDENT_NUM, new Object[] { t_natural_class_id ,t_student_num},
+				new int[] { Types.VARCHAR,Types.VARCHAR }, Long.class)>0;
+	}
+	
+	/**
+	 * 获得指定学号的id
 	 * */
 	public String getStudentId(String t_natural_class_id, String t_student_num) {
 
 	
-		try{
-		return getJdbcTemplate().queryForObject(GET_STUDENT_ID_BY_NATURAL_CLASS_ID_STUDENT_NUM,
-				new Object[] { t_natural_class_id, t_student_num }, new int[] { Types.VARCHAR, Types.VARCHAR },
-				String.class);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		List<String> list = new ArrayList<String>();
+		
+
+		Object params[] = new Object[] { t_natural_class_id ,t_student_num};
+		int types[] = new int[] { Types.VARCHAR,Types.VARCHAR  };
+
+		getJdbcTemplate().query(GET_STUDENT_ID_BY_NATURAL_CLASS_ID_STUDENT_NUM, params, types,
+				new RowCallbackHandler() {
+
+					@Override
+					public void processRow(ResultSet rs) throws SQLException {
+						list.add(rs.getString("t_student_id"));
+
+					}
+
+				});
+		
+		if(list.size()==1)
+			return list.get(0);
+		
 		return null;
+
 	}
 
 	

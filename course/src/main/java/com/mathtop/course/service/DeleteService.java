@@ -179,6 +179,9 @@ public class DeleteService {
 		
 		//删除自然班-学生
 		naturalClassStudentDao.deleteByNaturalClassId(t_natural_class_id);
+		
+		//删除班级-系部关系
+		naturalClassDepartmentDao.deleteByNaturalclassId(t_natural_class_id);
 
 		// 删除自己
 		naturalClassDao.deleteById(t_natural_class_id);
@@ -268,6 +271,12 @@ public class DeleteService {
 		for (CourseTeachingClassTeacher c : listCourseTeachingClassTeacher) {
 			deleteCourseTeachingClassTeacher(c.getId());
 		}
+		
+		//删除教师-部门关系表
+		departmentTeacherDao.deleteByTeacherId(t_teacher_id);
+		
+		//删除教师-授课关系表
+		courseTeachingClassTeacherDao.deleteByTeacherId(t_teacher_id);
 
 		
 		// 删除教师

@@ -44,7 +44,7 @@ public class CourseTeachingClassForumTopicDao extends BaseDao<CourseTeachingClas
 	private final String GET_FLAG_BY_ID = "SELECT flag FROM t_course_teaching_class_forum_topic WHERE id=?";
 	private final String GET_BY_COURSE_TEACHING_CLASS_ID = "SELECT id,t_user_id ,title,content,created_date,last_modified_date,view_count,flag FROM t_course_teaching_class_forum_topic WHERE t_course_teaching_class_id=?";
 	private final String GET_BY_ID = "SELECT t_course_teaching_class_id,t_user_id ,title,content,created_date,last_modified_date,view_count,flag FROM t_course_teaching_class_forum_topic WHERE id=?";
-	private final String GET_BY_USER_ID = "SELECT t_course_teaching_class_id,title,content,created_date,last_modified_date,view_count,flag FROM t_course_teaching_class_forum_topic WHERE t_user_id=?";
+	private final String GET_BY_USER_ID = "SELECT id,t_course_teaching_class_id,title,content,created_date,last_modified_date,view_count,flag FROM t_course_teaching_class_forum_topic WHERE t_user_id=?";
 	private final String GET_BY_COURSE_TEACHING_CLASS_ID_AND_USER_ID = "SELECT title,content,created_date,last_modified_date,view_count,flag FROM t_course_teaching_class_forum_topic WHERE t_course_teaching_class_id=? and t_user_id=?";
 	
 	private String DELETE_BY_ID = "DELETE FROM t_course_teaching_class_forum_topic WHERE id=?";
