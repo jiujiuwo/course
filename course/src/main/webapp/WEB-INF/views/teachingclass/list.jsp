@@ -187,7 +187,7 @@
 									<!-- 学生 -->
 									<div class="col-md-1">
 										<button type="button" class="btn btn-default btn-xs"
-											onclick="window.location.href='teachingclass/student-${dataitem.courseTeachingClass.id}.html'">详细...</button>
+											onclick="window.location.href='<c:url value="/teachingclass/student-${dataitem.courseTeachingClass.id}.html"/>'">详细...</button>
 									</div>
 
 									<!-- 操作 -->

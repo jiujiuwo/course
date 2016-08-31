@@ -80,15 +80,15 @@
 				<!-- 作业要求json -->
 				<input type="hidden" name="FileRequirementData" id="FileRequirementData" value="" />
 
-			
-				
+
+
 
 				<div class="modal-body" style="margin-left: 10px; margin-right: 10px; overflow: hidden;">
 
 					<div class="form-group">
 						<label for="title" class=" control-label">标题</label>
-						<input type="text" id="title" class="form-control" name="title" value=""
-							placeholder="标题" required>
+						<input type="text" id="title" class="form-control" name="title" value="" placeholder="标题"
+							required>
 					</div>
 
 
@@ -99,17 +99,33 @@
 							style="display: none;"></textarea>
 					</div>
 
-					<div class="form-group">
-						<label for="homeworkflag" class="control-label">作业类型</label>
-						<input type="radio" name="flag"
-							<c:if test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.flagGroup }"> checked="checked"</c:if>
-							value="1" />
-						小组作业
-						<input type="radio" value="0" name="flag"
-							<c:if test="${not selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.flagGroup }"> checked="checked"</c:if> />
-						个人作业
 
-					</div>
+					<c:choose>
+						<c:when test="${selectedCourseTeachingClassStudentGroupStatisticsViewData.nGroupCount>0 }">
+							<div class="form-group">
+								<label for="homeworkflag" class="control-label">作业类型</label>
+								<input type="radio" name="flag"
+									<c:if test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.flagGroup }"> checked="checked"</c:if>
+									value="1" />
+								小组作业
+								<input type="radio" value="0" name="flag"
+									<c:if test="${not selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.flagGroup }"> checked="checked"</c:if> />
+								个人作业
+
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="form-group">
+								<label for="homeworkflag" class="control-label">作业类型</label>
+								<input type="hidden" value="0" name="flag" />
+
+								个人作业
+							</div>
+						</c:otherwise>
+					</c:choose>
+
+
+
 
 
 
@@ -117,10 +133,13 @@
 					<div class="form-group">
 						<label for="filerequirement" class=" control-label">文件要求</label>
 						<div>
-							<input type="radio" name="filerequirement_count" value="0" checked="checked"
+							<input type="radio" name="filerequirement_count" value="0"
+								<c:if test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.fileRequirement.size>0}">checked="checked"</c:if>
 								onclick="onfilecountradio(0)" />
 							上传文件
-							<input type="radio" name="filerequirement_count" value="1" onclick="onfilecountradio(1)" />
+							<input type="radio" name="filerequirement_count" value="1"
+								<c:if test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.fileRequirement.size==0}">checked="checked"</c:if>
+								onclick="onfilecountradio(1)" />
 							不上传文件
 						</div>
 						<div id="filerequirement_container">
@@ -235,7 +254,11 @@ addNode(obj);
 
 
 
-
+	<script type="text/javascript">
+<c:if test="${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.fileRequirement.size==0}">
+onfilecountradio(1);
+</c:if>
+</script>
 
 
 

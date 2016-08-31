@@ -79,7 +79,7 @@
 				<li class="active">${selectedCourseReferenceTypeData.name}</li>
 			</ol>
 
-			<div class="CourseContentHeader">添加${selectedCourseTeachingClassViewData.teachingclass.name}-${selectedCourseReferenceTypeData.name}</div>
+			<div class="CourseContentHeader">添加${selectedCourseTeachingClassViewData.courseTeachingClass.name}-${selectedCourseReferenceTypeData.name}</div>
 
 			<div class="CourseContentHeaderSeparatorLine"></div>
 

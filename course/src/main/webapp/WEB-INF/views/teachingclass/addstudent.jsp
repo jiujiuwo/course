@@ -3,8 +3,7 @@
 
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 
 	//设置左侧浏览状态
@@ -24,8 +23,7 @@
 <%@ include file="../../shared/importCss.jsp"%>
 <%@ include file="../../shared/importdatetimepickercss.jsp"%>
 
-<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet"
-	type="text/css" />
+<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet" type="text/css" />
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -37,7 +35,7 @@
 <body>
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
-	
+
 
 	<div class="DocumentPage">
 		<div class="DocumentPageLeftArea ">
@@ -61,9 +59,7 @@
 			<p class="text-muted">
 				<strong>授课教师：</strong>
 
-				<c:forEach var="t"
-					items="${selectedCourseTeachingClassViewData.teacher}"
-					varStatus="status">
+				<c:forEach var="t" items="${selectedCourseTeachingClassViewData.teacher}" varStatus="status">
 							${t.userbasicinfo.userBasicInfoName}(${selectedCourseTeachingClassViewData.teachingtype[status.index].name})
 							</c:forEach>
 
@@ -85,11 +81,9 @@
 							<!-- Split button -->
 							<div class="btn-group">
 								<button type="button" class="btn btn-default btn-sm">选择</button>
-								<button type="button"
-									class="btn btn-default dropdown-toggle btn-sm"
-									data-toggle="dropdown" aria-expanded="false">
-									<span class="caret"></span> <span class="sr-only">Toggle
-										Dropdown</span>
+								<button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown"
+									aria-expanded="false">
+									<span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
 								</button>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="#">全部选择</a></li>
@@ -101,26 +95,24 @@
 						</div></td>
 					<td style="width: 10px;"></td>
 					<td><div class="btn-group" role="group" aria-label="...">
-							<button type="button" class="btn btn-default btn-sm"
-								data-toggle="modal" data-target="#addModal">增加自然班</button>
+							<button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+								data-target="#addModal">增加自然班</button>
 
-							<button type="button" class="btn btn-default btn-sm"
-								data-toggle="modal" data-target="#addStudentModal">增加单个学生</button>
-								
-								<button type="button" class="btn btn-default btn-sm" onclick="onAddFromExcel()">从Excel导入学生</button>
+							<button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+								data-target="#addStudentModal">增加单个学生</button>
 
-							<button type="button" class="btn btn-default btn-sm"
-								data-toggle="modal" data-target="#myModal">删除</button>
+							<button type="button" class="btn btn-default btn-sm" onclick="onAddFromExcel()">从Excel导入学生</button>
+
+							<button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+								data-target="#myModal">删除</button>
 
 
 						</div></td>
 					<td style="width: 10px;"></td>
 					<td><div class="input-group input-group-sm">
-							<input type="text" class="form-control" id="SearchText"
-								placeholder="Search for..." required> <span
-								class="input-group-btn">
-								<button class="btn btn-default" type="button"
-									onclick="onSearch()">搜索</button>
+							<input type="text" class="form-control" id="SearchText" placeholder="Search for..." required>
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button" onclick="onSearch()">搜索</button>
 							</span>
 						</div></td>
 				</tr>
@@ -128,8 +120,7 @@
 
 
 			<form class="form-horizontal" style="overflow: hidden;"
-				action="<c:url value="/teachingclass/addstudent2teachingclass.html"/>"
-				method="post">
+				action="<c:url value="/teachingclass/addstudent2teachingclass.html"/>" method="post">
 
 
 				<div class="form-group">
@@ -167,8 +158,7 @@
 
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-primary">添加</button>
-					<button type="button" class="btn btn-default"
-						onclick="window.history.back()">取消</button>
+					<button type="button" class="btn btn-default" onclick="window.history.back()">取消</button>
 				</div>
 
 			</form>
@@ -180,13 +170,12 @@
 	<%
 		//添加自然班全体学生对话框
 	%>
-	<div class="modal fade" id="addModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="myModalLabel">添加自然班</h4>
@@ -199,11 +188,8 @@
 						<div class="row">
 							<div class="col-md-2">学院</div>
 							<div class="col-md-10">
-								<select id="SchoolSelectControl" class="form-control"
-									name="t_school_id">
-									<c:forEach var="school" items="${pagedSchool.result}">
-										<option value="${school.id}">${school.name}</option>
-									</c:forEach>
+								<select id="SchoolSelectControl" class="form-control" name="t_school_id">
+
 								</select>
 							</div>
 						</div>
@@ -211,11 +197,8 @@
 						<div class="row">
 							<div class="col-md-2">系部</div>
 							<div class="col-md-10">
-								<select id="departmentSelectControl" class="form-control"
-									name="t_department_id">
-									<c:forEach var="d" items="${pagedDepartment.result}">
-										<option value="${d.id}">${d.name}</option>
-									</c:forEach>
+								<select id="departmentSelectControl" class="form-control" name="t_department_id">
+
 								</select>
 							</div>
 						</div>
@@ -224,8 +207,7 @@
 						<div class="row">
 							<div class="col-md-2">班级</div>
 							<div class="col-md-10">
-								<table id="naturalclasstable"
-									class="table table-hover table-bordered">
+								<table id="naturalclasstable" class="table table-hover table-bordered">
 									<thead>
 										<tr>
 											<th style="width: 10%;">#</th>
@@ -248,8 +230,7 @@
 				</div>
 
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary"
-						onclick="onNaturalclassAdd()">添加</button>
+					<button type="button" class="btn btn-primary" onclick="onNaturalclassAdd()">添加</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 				</div>
 
@@ -261,13 +242,12 @@
 	<%
 		//添加单个学生对话框
 	%>
-	<div class="modal fade" id="addStudentModal" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="addStudentModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="myModalLabel">添加学生</h4>
@@ -280,8 +260,7 @@
 						<div class="row">
 							<div class="col-md-2">学院</div>
 							<div class="col-md-10">
-								<select id="studentSchoolSelectControl" class="form-control"
-									name="studentt_school_id">
+								<select id="studentSchoolSelectControl" class="form-control" name="studentt_school_id">
 
 								</select>
 							</div>
@@ -298,10 +277,9 @@
 						</div>
 
 						<div class="row">
-							<div class="col-md-2">系部</div>
+							<div class="col-md-2">班级</div>
 							<div class="col-md-10">
-								<select id="naturalclassSelectControl" class="form-control"
-									name="t_natural_class_id">
+								<select id="naturalclassSelectControl" class="form-control" name="t_natural_class_id">
 
 								</select>
 							</div>
@@ -311,8 +289,7 @@
 						<div class="row">
 							<div class="col-md-2">学生</div>
 							<div class="col-md-10">
-								<table id="naturalclassstudenttable"
-									class="table table-hover table-bordered">
+								<table id="naturalclassstudenttable" class="table table-hover table-bordered">
 									<thead>
 										<tr>
 											<th style="width: 10%;">#</th>
@@ -336,8 +313,7 @@
 				</div>
 
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary"
-						onclick="onNaturalclassStudentAdd()">添加</button>
+					<button type="button" class="btn btn-primary" onclick="onNaturalclassStudentAdd()">添加</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 				</div>
 
@@ -350,10 +326,10 @@
 
 
 
-	
+
 
 	<%@ include file="../../shared/importJs.jsp"%>
-		<%@ include file="../../shared/sysLastInclude.jsp"%>
+	<%@ include file="../../shared/sysLastInclude.jsp"%>
 	<%@ include file="../../shared/importdatetimepickerjs.jsp"%>
 
 
@@ -362,26 +338,25 @@
 
 
 	<script>
-	
-	//系部
-	function OnDepartmentChange() {
+		//系部
+		function OnDepartmentChange() {
 
-		var t_department_id = $("#departmentSelectControl").val();
-		var url = "<c:url value="/naturalclass/"/>"
+			var t_department_id = $("#departmentSelectControl").val();
+			var url = "<c:url value="/naturalclass/"/>"
 
-		url = url + "selectbyt_department_id-" + t_department_id + ".json";
+			url = url + "selectbyt_department_id-" + t_department_id + ".json";
 
-		$.get(url, function(data, status) {
-			if (status == "success") {
+			$.get(url, function(data, status) {
+				if (status == "success") {
 
-				for (var i = 0; i < data.length; i++) {
+					for (var i = 0; i < data.length; i++) {
 
-					AddNaturalClassRow(data[i].id, data[i].name);
+						AddNaturalClassRow(data[i].id, data[i].name);
+					}
 				}
-			}
-		});
-	}
-	
+			});
+		}
+
 		function onSearch() {
 			var st = document.getElementById("SearchText").value;
 
@@ -408,8 +383,8 @@
 
 		function onDelete(t_department_id, departmentname) {
 			var t_school_id = gett_school_id();
-			var url = "location='<c:url value="/DELETE-"/>" + t_school_id + "-" + t_department_id
-					+ ".html'";
+			var url = "location='<c:url value="/DELETE-"/>" + t_school_id + "-"
+					+ t_department_id + ".html'";
 
 			$('#deleteModal').find('.modal-body #deleteinfo').text(
 					departmentname);
@@ -421,7 +396,7 @@
 			$('#deleteModal').modal('show');
 
 		}
-	<%//%>
+
 		function onNaturalclassAdd() {
 
 			var c = $("#naturalclasstable #naturalclasscheckbox").toArray();
@@ -435,18 +410,21 @@
 					url = url + "selectbyt_natural_class_id-" + natruralclassid
 							+ ".json";
 
-					$.get(url, function(data, status) {
-						if (status == "success") {
+					$
+							.get(
+									url,
+									function(data, status) {
+										if (status == "success") {
 
-							for (var i = 0; i < data.length; i++) {
+											for (var i = 0; i < data.length; i++) {
 
-								
-								
-								AddStudentRow(data[i].student.id,
-										data[i].student.student_num, data[i].userbasicinfo.userBasicInfoName);
-							}
-						}
-					});
+												AddStudentRow(
+														data[i].student.id,
+														data[i].student.student_num,
+														data[i].userbasicinfo.userBasicInfoName);
+											}
+										}
+									});
 
 				}
 			}
@@ -474,8 +452,7 @@
 			$('#addStudentModal').modal('hide');
 		}
 
-		function 
-		AddStudentRow(studentid, studentnum, studentname) {
+		function AddStudentRow(studentid, studentnum, studentname) {
 
 			if (IsExistInStudentTable(studentid) == true)
 				return;
@@ -527,14 +504,12 @@
 
 		}
 	<%/****************************************************************************************************
-			 *添加学生对话框
-			 */%>
+							 *添加学生对话框
+							 */%>
 		function AddNaturalClassStudentRow(studentid, studentnum, studentname) {
 
 			if (IsExistInNaturalClassStudentTable(studentid) == true)
 				return;
-			
-			
 
 			var table = document.getElementById("naturalclassstudenttable");
 			var trCnt = table.tBodies[0].rows.length;
@@ -584,8 +559,8 @@
 
 		}
 	<%/****************************************************************************************************
-			 *添加自然班学生对话框
-			 */%>
+						 *添加自然班学生对话框
+						 */%>
 		function AddNaturalClassRow(t_natural_class_id, naturalclassname) {
 			if (IsExistInNaturalClassTable(t_natural_class_id) == true)
 				return;
@@ -634,13 +609,13 @@
 			}
 
 		}
-		
+
 		function onAddFromExcel() {
-			
+
 			var url = "<c:url value='/teachingclass/addfromexcel-${selectedCourseTeachingClassViewData.courseTeachingClass.id}.html'/>";
 			window.location.href = url;
-		
-	}
+
+		}
 	</script>
 
 	<script>
@@ -654,10 +629,92 @@
 				if (ctrl.options[i].value == (schooledid))
 					index = i;
 			ctrl.selectedIndex = index;
-			var schooltext = (ctrl.options[index].text);
+			//	var schooltext = (ctrl.options[index].text);
 
-			$('#addModal').find('.modal-body #schoolname').text(schooltext);
-			$('#updateModal').find('.modal-body #schoolname').text(schooltext);
+			//	$('#addModal').find('.modal-body #schoolname').text(schooltext);
+			//	$('#updateModal').find('.modal-body #schoolname').text(schooltext);
+		});
+	</script>
+
+	<script type="text/javascript">
+		
+	<%//填充学院%>
+		function fill_addModal_school() {
+			var url = "<c:url value="/school/"/>"
+			url = url + "getall.json";
+
+			$("#addModal #SchoolSelectControl").empty();
+			$.get(url, function(data, status) {
+				if (status == "success") {
+					for (var i = 0; i < data.length; i++) {
+						if (i == 0)
+							fill_addModal_department(data[i].id);
+
+						$("#addModal #SchoolSelectControl").append(
+								"<option value='"+data[i].id+"'>"
+										+ data[i].name + "</option>");
+					}
+				}
+			});
+
+			$("#addModal #SchoolSelectControl").get(0).selectedIndex = 0;
+		}
+	<%//根据学院填充部门%>
+		function fill_addModal_department(selt_school_id) {
+
+			if (selt_school_id == null)
+				selt_school_id = $("#addModal #SchoolSelectControl").val();
+
+			if (selt_school_id == null)
+				return;
+
+			var url = "<c:url value="/department/"/>"
+
+			url = url + "selectbyschool-" + selt_school_id + ".json";
+
+			var departmentjson;
+			$("#addModal #SchoolSelectControl").empty();
+			$.get(url, function(data, status) {
+				if (status == "success") {
+					for (var i = 0; i < data.length; i++) {
+
+						if (i == 0)
+							fill_addModal_naturalclass(data[i].id);
+						$("#addModal #departmentSelectControl").append(
+								"<option value='"+data[i].id+"'>"
+										+ data[i].name + "</option>");
+					}
+				}
+			});
+
+			return true;
+		}
+	<%//根据部门填充班级%>
+		function fill_addModal_naturalclass(t_department_id) {
+			
+			if (t_department_id == null)
+				t_department_id= $("#addModal #departmentSelectControl").val();
+			if (t_department_id == null)
+				return;
+
+			var url = "<c:url value="/naturalclass/"/>"
+
+			url = url + "selectbyt_department_id-" + t_department_id + ".json";
+		
+
+			$.get(url, function(data, status) {
+				if (status == "success") {
+
+					for (var i = 0; i < data.length; i++) {
+
+						AddNaturalClassRow(data[i].id, data[i].name);
+					}
+				}
+			});
+		}
+	<%//addModal对话框显示之后执行，填充学院、部门、班级%>
+		$('#addModal').on('show.bs.modal', function(e) {
+			fill_addModal_school();
 		});
 	</script>
 
@@ -753,7 +810,8 @@
 
 			var url = "<c:url value="/student/"/>"
 
-			url = url + "selectbyt_natural_class_id-" + t_natural_class_id + ".json";
+			url = url + "selectbyt_natural_class_id-" + t_natural_class_id
+					+ ".json";
 
 			$("#naturalclassstudenttable tbody").empty();
 
@@ -765,63 +823,57 @@
 						for (var i = 0; i < data.length; i++) {
 
 							AddNaturalClassStudentRow(data[i].student.id,
-									data[i].student.student_num, data[i].userbasicinfo.userBasicInfoName);
+									data[i].student.studentNum,
+									data[i].userbasicinfo.userBasicInfoName);
 						}
 					}
 				}
 			});
 		}
-	<%//addModal对话框显示之后执行，填充学院、部门、班级%>
-		$('#addModal').on('show.bs.modal', function(e) {
-			var t_department_id = $("#departmentSelectControl").val();
-			var url = "<c:url value="/naturalclass/"/>"
-
-			url = url + "selectbyt_department_id-" + t_department_id + ".json";
-
-			$.get(url, function(data, status) {
-				if (status == "success") {
-
-					for (var i = 0; i < data.length; i++) {
-
-						AddNaturalClassRow(data[i].id, data[i].name);
-					}
-				}
-			});
-		});
 	<%//addStudentModal对话框显示之后执行，填充学院、部门、班级和学生%>
 		$('#addStudentModal').on('show.bs.modal', function(e) {
 			fillschool();
 		});
 
 		$(function() {
-			$("#SchoolSelectControl").change(
-					function() {
-						var selt_school_id = $("#SchoolSelectControl").val();
-						var url = "<c:url value="/department/"/>"
+			$("#SchoolSelectControl")
+					.change(
+							function() {
+								var selt_school_id = $("#SchoolSelectControl")
+										.val();
+								var url = "<c:url value="/department/"/>"
 
-						url = url + "selectbyschool-" + selt_school_id + ".json";
+								url = url + "selectbyschool-" + selt_school_id
+										+ ".json";
 
-						var departmentjson;
-						$("#departmentSelectControl").empty();
-						$.get(url, function(data, status) {
-							if (status == "success") {
+								var departmentjson;
+								$("#departmentSelectControl").empty();
+								$
+										.get(
+												url,
+												function(data, status) {
+													if (status == "success") {
 
-								for (var i = 0; i < data.length; i++) {
-									$("#departmentSelectControl").append(
-											"<option value='"+data[i].id+"'>"
-													+ data[i].name
-													+ "</option>");
-								}
-								
-								if(data.length>0){
-									$("#departmentSelectControl").get(0).selectedIndex = 0;
-									
-									OnDepartmentChange();
-								}
-							}
-						});
+														for (var i = 0; i < data.length; i++) {
+															$(
+																	"#departmentSelectControl")
+																	.append(
+																			"<option value='"+data[i].id+"'>"
+																					+ data[i].name
+																					+ "</option>");
+														}
 
-					});
+														if (data.length > 0) {
+															$(
+																	"#departmentSelectControl")
+																	.get(0).selectedIndex = 0;
+
+															OnDepartmentChange();
+														}
+													}
+												});
+
+							});
 
 			$("#departmentSelectControl").change(function() {
 				OnDepartmentChange();

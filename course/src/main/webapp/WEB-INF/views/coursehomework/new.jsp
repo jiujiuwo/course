@@ -81,7 +81,7 @@
 				<!-- 作业要求json -->
 				<input type="hidden" name="FileRequirementData" id="FileRequirementData" value="" />
 
-			
+
 				<div class="modal-body" style="margin-left: 10px; margin-right: 10px; overflow: hidden;">
 
 					<div class="form-group">
@@ -99,18 +99,30 @@
 						<textarea class="form-control" rows="5" name="content" id="addcontentTextArea"
 							style="display: none;"></textarea>
 					</div>
-					
-						<div class="form-group">
-						<label for="homeworkflag" class="control-label">作业类型</label>
-						<input type="radio" name="flag"
-							<c:if test="${selectedCourseHomeworkFlag==1}"> checked="checked"</c:if>
-							value="1" />
-						小组作业
-						<input type="radio" value="0" name="flag"
-							<c:if test="${selectedCourseHomeworkFlag==0}"> checked="checked"</c:if> />
-						个人作业
 
-					</div>
+					<c:choose>
+						<c:when test="${selectedCourseTeachingClassStudentGroupStatisticsViewData.nGroupCount>0 }">
+							<div class="form-group">
+								<label for="homeworkflag" class="control-label">作业类型</label>
+								<input type="radio" name="flag"
+									<c:if test="${selectedCourseHomeworkFlag==1}"> checked="checked"</c:if> value="1" />
+								小组作业
+								<input type="radio" value="0" name="flag"
+									<c:if test="${selectedCourseHomeworkFlag==0}"> checked="checked"</c:if> />
+								个人作业
+
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="form-group">
+						<label for="homeworkflag" class="control-label">作业类型</label>
+							<input type="hidden" value="0" name="flag" />
+								
+							个人作业
+							</div>
+					</c:otherwise>
+					</c:choose>
+
 
 					<div class="form-group">
 						<label for="filerequirement" class=" control-label">文件要求</label>

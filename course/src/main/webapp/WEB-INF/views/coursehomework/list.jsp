@@ -97,7 +97,7 @@
 								</c:when>
 								<c:otherwise>
 									<button type="button" class="btn btn-default btn-sm"
-										onclick="location='<c:url value="/coursehomework/addhomework-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html"/>'">增加</button>
+										onclick="location='<c:url value="/coursehomework/addhomework-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}-0.html"/>'">增加</button>
 
 								</c:otherwise>
 
@@ -236,8 +236,10 @@
 												</div>
 												<div class="col-md-10">
 													<c:choose>
-														<c:when test="${data.homeworkbaseinfo.flagGroup}"><i class="icon-group"></i>小组作业</c:when>
-														<c:otherwise><i class="icon-user"></i>个人作业</c:otherwise>
+														<c:when test="${data.homeworkbaseinfo.flagGroup}">
+															<i class="icon-group"></i>小组作业</c:when>
+														<c:otherwise>
+															<i class="icon-user"></i>个人作业</c:otherwise>
 													</c:choose>
 												</div>
 											</div>
@@ -308,41 +310,41 @@
 																<c:forEach var="dataNode" items="${data.homeworkbaseinfo.fileRequirement.array}">
 
 																	<a href="javascript:void(0);" class="list-group-item">
-																			<div style="margin-left:${dataNode.level*50}px;">
+																		<div style="margin-left:${dataNode.level*50}px;">
 
-																				<c:choose>
-																					<c:when test="${dataNode.data.fileType==2}">
-																						<h4>目录</h4>
-																					</c:when>
-																					<c:otherwise>
-																						<h4>文件</h4>
-																					</c:otherwise>
-																				</c:choose>
-
-
-																				<c:if test="${dataNode.data.fileType!=2}">
-																					<div>
-																						<span><strong>文件类型:</strong></span>${dataNode.data.fileTypeDescription}</div>
-																					<c:choose>
-																						<c:when test="${dataNode.data.fileCount==-1}">
-																							<div>
-																								<span><strong>文件个数:</strong></span>不限制个数
-																							</div>
-																						</c:when>
-																						<c:otherwise>文件</c:otherwise>
-																					</c:choose>
-																					<div>
-																						<span><strong>文件个数:</strong></span>${dataNode.data.fileCount}</div>
+																			<c:choose>
+																				<c:when test="${dataNode.data.fileType==2}">
+																					<h4>目录</h4>
+																				</c:when>
+																				<c:otherwise>
+																					<h4>文件</h4>
+																				</c:otherwise>
+																			</c:choose>
 
 
-																				</c:if>
-
+																			<c:if test="${dataNode.data.fileType!=2}">
 																				<div>
-																					<span><strong>文件名称格式:</strong></span> ${dataNode.data.filenameRequirementVal}
-																				</div>
+																					<span><strong>文件类型:</strong></span>${dataNode.data.fileTypeDescription}</div>
+																				<c:choose>
+																					<c:when test="${dataNode.data.fileCount==-1}">
+																						<div>
+																							<span><strong>文件个数:</strong></span>不限制个数
+																						</div>
+																					</c:when>
+																					<c:otherwise>文件</c:otherwise>
+																				</c:choose>
+																				<div>
+																					<span><strong>文件个数:</strong></span>${dataNode.data.fileCount}</div>
 
+
+																			</c:if>
+
+																			<div>
+																				<span><strong>文件名称格式:</strong></span> ${dataNode.data.filenameRequirementVal}
 																			</div>
-																		</a>
+
+																		</div>
+																	</a>
 
 																</c:forEach>
 															</ul>

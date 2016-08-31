@@ -234,15 +234,17 @@
 						'${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.title}');
 
 		$('.summernote')
-				.code(
-						'${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.content}');
+		.summernote('code',
+				'${selectedCourseHomeworkBasicInfoViewData.homeworkbaseinfo.content}');
 		//	$("#contentDiv").code("adf");
 	</script>
 
 	<script>
 		function onAdd() {
 
-			var sHTML = $('.summernote').code();
+			
+			var sHTML = $('.summernote').summernote('code');
+			
 			$('#addcontentTextArea').text(sHTML);
 
 		}
