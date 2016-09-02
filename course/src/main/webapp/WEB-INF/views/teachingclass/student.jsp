@@ -92,7 +92,7 @@
 					<td style="width: 10px;"></td>
 					<td><div class="btn-group" role="group" aria-label="...">
 							<button type="button" class="btn btn-default btn-sm"
-								onclick="window.location.href='teachingclass/addstudent-${selectedCourseTeachingClassID}.html'">增加学生</button>
+								onclick="window.location.href='<c:url value="/teachingclass/addstudent-${selectedCourseTeachingClassID}.html"/>'">增加学生</button>
 
 
 

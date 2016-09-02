@@ -195,6 +195,7 @@ public class CourseTeachingClassStudentDao extends BaseDao<CourseTeachingClassSt
 	 */
 	public boolean IsStudentExist(String t_course_teaching_class_id, String t_student_id) {
 
+		
 		return getJdbcTemplate().queryForObject(IS_STUDENT_EXIST,
 				new Object[] { t_course_teaching_class_id, t_student_id }, new int[] { Types.VARCHAR, Types.VARCHAR },
 				Long.class) > 0;
@@ -207,6 +208,7 @@ public class CourseTeachingClassStudentDao extends BaseDao<CourseTeachingClassSt
 
 		if (IsStudentExist(t_course_teaching_class_id, t_student_id))
 			return null;
+	
 
 		String id = GUID.getGUID();
 

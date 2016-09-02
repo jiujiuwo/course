@@ -317,7 +317,7 @@
 		}
 
 		function onDelete(id, name) {
-			var url = "location='<c:url value="coursereference/DELETE-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}-"/>"
+			var url = "location='<c:url value="/coursereference/DELETE-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}-"/>"
 					+ id + ".html'";
 
 			$('#deleteModal').find('.modal-body #deleteinfo').text(name);

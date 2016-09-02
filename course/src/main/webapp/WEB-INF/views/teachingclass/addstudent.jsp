@@ -125,7 +125,7 @@
 
 				<div class="form-group">
 					<input id='selectedTeachingClassID' name='selectedTeachingClassID'
-						value='${selectedTeachingClassID}' type='hidden' />
+						value='${selectedCourseTeachingClassViewData.courseTeachingClass.id}' type='hidden' />
 
 
 					<div class="col-md-12">

@@ -224,6 +224,7 @@ public class CourseTeachingClassController extends BaseController {
 	public ModelAndView addstudent2teachingclass(HttpServletRequest request) {
 
 		String teachingclassid = request.getParameter("selectedTeachingClassID");
+		
 
 		String[] studentid = request.getParameterValues("studentid");
 

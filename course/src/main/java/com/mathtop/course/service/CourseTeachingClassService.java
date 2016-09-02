@@ -359,6 +359,7 @@ public class CourseTeachingClassService {
 
 		int show_index = 10;
 		for (String stuid : studentid) {
+			
 			courseTeachingClassStudentDao.add(teachingclassid, stuid, show_index);
 			show_index += 10;
 		}

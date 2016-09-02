@@ -69,7 +69,7 @@
 				<li class="active">${selectedCourseReferenceTypeData.name}</li>
 			</ol>
 
-		<div class="CourseContentHeader">修改${selectedCourseTeachingClassViewData.teachingclass.name}-${selectedCourseReferenceTypeData.name}-${selectedCourseReferenceViewData.reference.title }</div>
+		<div class="CourseContentHeader">修改${selectedCourseTeachingClassViewData.courseTeachingClass.name}-${selectedCourseReferenceTypeData.name}-${selectedCourseReferenceViewData.reference.title }</div>
 
 			<div class="CourseContentHeaderSeparatorLine"></div>
 

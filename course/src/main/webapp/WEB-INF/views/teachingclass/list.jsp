@@ -93,7 +93,7 @@
 					<td style="width: 10px;"></td>
 					<td><div class="btn-group" role="group" aria-label="...">
 							<button type="button" class="btn btn-default btn-sm"
-								onclick="window.location.href='teachingclass/add.html'">增加</button>
+								onclick="window.location.href='<c:url value="/teachingclass/add.html"/>'">增加</button>
 
 							<button type="button" class="btn btn-default btn-sm" data-toggle="modal"
 								data-target="#myModal">删除</button>
@@ -175,7 +175,7 @@
 												</div>
 												<div class="col-xs-6 col-md-4" style="margin: 0px; padding: 0px;">
 													<button type="button" class="btn btn-default btn-xs"
-														onclick="window.location.href='teachingclass/teacher-${dataitem.courseTeachingClass.id}.html'">详细...</button>
+														onclick="window.location.href='<c:url value="/teachingclass/teacher-${dataitem.courseTeachingClass.id}.html"/>'">详细...</button>
 												</div>
 											</div>
 										</div>
