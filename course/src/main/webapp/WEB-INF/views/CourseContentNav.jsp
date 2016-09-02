@@ -232,7 +232,7 @@
 				</div>
 			</c:if>
 			
-			<c:if test="${sessionScope.USER_CONTEXT.student!=null}">
+			<c:if test="${sessionScope.USER_CONTEXT.student!=null and selectedCourseTeachingClassStudentGroupStatisticsViewData.nGroupCount>0 }">
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab" id="headingStudentGroup">
 						<h4 class="panel-title">

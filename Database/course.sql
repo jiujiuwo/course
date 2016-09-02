@@ -97,9 +97,9 @@ CREATE TABLE IF NOT EXISTS `t_attendance_type` (
 -- 导出  表 coursedb.t_course 结构
 CREATE TABLE IF NOT EXISTS `t_course` (
   `id` char(32) NOT NULL,
-  `name` varchar(45) NOT NULL,
-  `num` varchar(45) NOT NULL,
-  `english_name` varchar(45) DEFAULT NULL,
+  `name` varchar(2048) NOT NULL,
+  `num` varchar(1024) NOT NULL,
+  `english_name` varchar(2048) DEFAULT NULL,
   `experiment_hours` int(11) NOT NULL,
   `class_hours` int(11) NOT NULL,
   `t_course_style_id` char(32) NOT NULL,
@@ -1143,6 +1143,19 @@ CREATE TABLE IF NOT EXISTS `t_user_basic_info` (
   PRIMARY KEY (`id`),
   KEY `fk_t_user_basic_info_t_user1_idx` (`t_user_id`),
   CONSTRAINT `fk_t_user_basic_info_t_user1` FOREIGN KEY (`t_user_id`) REFERENCES `t_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 数据导出被取消选择。
+
+
+-- 导出  表 coursedb.t_user_config 结构
+CREATE TABLE IF NOT EXISTS `t_user_config` (
+  `id` char(32) NOT NULL,
+  `t_user_id` char(32) NOT NULL,
+  `page_size` smallint(6) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_t_user_config_t_user` (`t_user_id`),
+  CONSTRAINT `FK_t_user_config_t_user` FOREIGN KEY (`t_user_id`) REFERENCES `t_user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 数据导出被取消选择。

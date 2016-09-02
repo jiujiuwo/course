@@ -10,6 +10,7 @@ public class UserSessionInfo extends BaseDomain {
 	private static final long serialVersionUID = 82015374000057602L;
 
 	private User user;
+	private int pageSize;
 	private Teacher teacher;
 	private Student student;
 	private UserBasicInfo userbasicinfo;
@@ -68,6 +69,15 @@ public class UserSessionInfo extends BaseDomain {
 		if (teachingclassviewdata != null)
 			return teachingclassviewdata.size();
 		return 0;
+	}
+
+	
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
 	}
 
 }

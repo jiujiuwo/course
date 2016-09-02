@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mathtop.course.cons.CommonConstant;
-import com.mathtop.course.cons.CourseMessage;
 import com.mathtop.course.cons.PagedObjectConst;
 import com.mathtop.course.cons.SelectedObjectConst;
 import com.mathtop.course.dao.Page;

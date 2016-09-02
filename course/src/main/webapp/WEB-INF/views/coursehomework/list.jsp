@@ -115,6 +115,107 @@
 								<button class="btn btn-default" type="button" onclick="onSearch()">搜索</button>
 							</span>
 						</div></td>
+						
+						<c:if
+						test="${pagedCourseTeachingClassHomeworkBaseinfoViewData!=null and pagedCourseTeachingClassHomeworkBaseinfoViewData.totalCount>10}">
+
+						
+
+								<td style="width: 10px;"></td>
+								<td><div class="btn-group" role="group" aria-label="...">
+										<!-- Split button -->
+										<div class="btn-group">
+											<button type="button" class="btn btn-default btn-sm">每页大小</button>
+											<button type="button" class="btn btn-default dropdown-toggle btn-sm"
+												data-toggle="dropdown" aria-expanded="false">
+												<span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
+											</button>
+											<ul class="dropdown-menu" role="menu">
+												<li><a
+														href="coursehomework/list-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html?pageSize=10">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==10}">
+															<i class="icon-ok"></i>
+														</c:if>
+														默认(10)
+													</a></li>
+												<li class="divider"></li>
+												<li><a
+														href="coursehomework/list-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html?pageSize=20">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==20}">
+															<i class="icon-ok"></i>
+														</c:if>
+														20
+													</a></li>
+												<li><a
+														href="coursehomework/list-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html?pageSize=30">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==30}">
+															<i class="icon-ok"></i>
+														</c:if>
+														30
+													</a></li>
+												<li><a
+														href="coursehomework/list-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html?pageSize=40">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==40}">
+															<i class="icon-ok"></i>
+														</c:if>
+														40
+													</a></li>
+												<li><a
+														href="coursehomework/list-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html?pageSize=50">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==50}">
+															<i class="icon-ok"></i>
+														</c:if>
+														50
+													</a></li>
+												<li><a
+														href="coursehomework/list-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html?pageSize=60">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==60}">
+															<i class="icon-ok"></i>
+														</c:if>
+														60
+													</a></li>
+												<li><a
+														href="coursehomework/list-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html?pageSize=70">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==70}">
+															<i class="icon-ok"></i>
+														</c:if>
+														70
+													</a></li>
+												<li><a
+														href="coursehomework/list-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html?pageSize=80">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==80}">
+															<i class="icon-ok"></i>
+														</c:if>
+														80
+													</a></li>
+												<li><a
+														href="coursehomework/list-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html?pageSize=90">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==90}">
+															<i class="icon-ok"></i>
+														</c:if>
+														90
+													</a></li>
+												<li><a
+														href="coursehomework/list-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html?pageSize=100">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==100}">
+															<i class="icon-ok"></i>
+														</c:if>
+														100
+													</a></li>
+												<li class="divider"></li>
+												<li><a
+														href="coursehomework/list-${selectedCourseTeachingClassID}-${selectedCourseHomeworkTypeData.id}.html?pageSize=1000">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize>100}">
+															<i class="icon-ok"></i>
+														</c:if>
+														不分页
+													</a></li>
+											</ul>
+										</div>
+									</div></td>
+							
+					</c:if>
+					
 				</tr>
 			</table>
 

@@ -157,13 +157,15 @@ public class ContactTypeController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list")
-	public ModelAndView ListAll(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public ModelAndView ListAll(HttpServletRequest request,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 
 		pageNo = pageNo == null ? 1 : pageNo;
+
+pageSize=getPageSize(request,pageSize);
 		Page<UserContactType> pagedContactType = contacttypeService.getPage(pageNo,
-				CommonConstant.PAGE_SIZE);
+				pageSize);
 
 		view.addObject(PagedObjectConst.Paged_ContactType, pagedContactType);
 		

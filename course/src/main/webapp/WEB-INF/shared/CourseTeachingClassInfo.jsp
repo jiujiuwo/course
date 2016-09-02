@@ -7,7 +7,7 @@
 
 
 
-		<div class="col-md-3">
+		<div class="col-md-4">
 
 			<p class="text-muted">
 
@@ -19,7 +19,7 @@
 
 		</div>
 
-		<div class="col-md-2">
+		<div class="col-md-4">
 			<p class="text-muted">
 				<strong>授课教师：</strong>
 
@@ -33,7 +33,7 @@
 
 		</div>
 
-		<div class="col-md-2">
+		<div class="col-md-4">
 			<p class="text-muted">
 				<strong>授课学期：</strong>${selectedCourseTeachingClassViewData.term.term}
 			</p>

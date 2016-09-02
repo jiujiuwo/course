@@ -64,6 +64,9 @@ public class DeleteService {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	UserConfigService userConfigService;
 
 	@Autowired
 	LoginService loginService;
@@ -223,6 +226,9 @@ public class DeleteService {
 
 		// 删除登录信息
 		loginService.deleteByUserId(t_user_id);
+		
+		//删除用户配置
+		userConfigService.deleteByUserId(t_user_id);
 
 		// 删除用户
 		userService.deleteByUserId(t_user_id);

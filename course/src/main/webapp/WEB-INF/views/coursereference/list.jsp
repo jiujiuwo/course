@@ -26,8 +26,7 @@
 <%@ include file="../../shared/importdatetimepickercss.jsp"%>
 
 
-<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet"
-	type="text/css" />
+<link href="<c:url value='/css/pages/index.css'/>" rel="stylesheet" type="text/css" />
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -40,7 +39,7 @@
 
 	<%@ include file="../../shared/pageHeader.jsp"%>
 	<%@ include file="../../shared/CourseTeachingClassInfo.jsp"%>
-	
+
 
 	<div class="DocumentPage">
 		<div class="DocumentPageLeftArea ">
@@ -56,7 +55,8 @@
 
 			<ol class="breadcrumb">
 				<li><a href="#">课程系统</a></li>
-				<li><a href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseTeachingClass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
+				<li><a
+						href="<c:url value="/coursecontent/index-${selectedCourseTeachingClassViewData.courseTeachingClass.id}.html"/>">${selectedCourseTeachingClassViewData.course.name}</a></li>
 				<li class="active">${selectedCourseReferenceTypeData.name}</li>
 			</ol>
 
@@ -68,63 +68,263 @@
 
 			<div class="CourseContentHeaderSeparatorLine"></div>
 
+			<c:choose>
 
-			<c:if test="${sessionScope.USER_CONTEXT.teacher!=null}">
-				<table>
-					<tr>
-						<td><div class="btn-group" role="group" aria-label="...">
-								<!-- Split button -->
-								<div class="btn-group">
-									<button type="button" class="btn btn-default btn-sm">选择</button>
-									<button type="button"
-										class="btn btn-default dropdown-toggle btn-sm"
-										data-toggle="dropdown" aria-expanded="false">
-										<span class="caret"></span> <span class="sr-only">Toggle
-											Dropdown</span>
-									</button>
-									<ul class="dropdown-menu" role="menu">
-										<li><a href="#">全部选择</a></li>
-										<li><a href="#">全部不选</a></li>
-										<li class="divider"></li>
-										<li><a href="#">反选</a></li>
-									</ul>
-								</div>
-							</div></td>
-						<td style="width: 10px;"></td>
-						<td><div class="btn-group" role="group" aria-label="...">
-								<button type="button" class="btn btn-default btn-sm"
-									onclick="location='<c:url value="/coursereference/addreference-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html"/>'">增加</button>
-
-
-								<button type="button" class="btn btn-default btn-sm"
-									data-toggle="modal" data-target="#myModal">删除</button>
+				<c:when test="${sessionScope.USER_CONTEXT.teacher!=null}">
+					<table>
+						<tr>
+							<td><div class="btn-group" role="group" aria-label="...">
+									<!-- Split button -->
+									<div class="btn-group">
+										<button type="button" class="btn btn-default btn-sm">选择</button>
+										<button type="button" class="btn btn-default dropdown-toggle btn-sm"
+											data-toggle="dropdown" aria-expanded="false">
+											<span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
+										</button>
+										<ul class="dropdown-menu" role="menu">
+											<li><a href="#">全部选择</a></li>
+											<li><a href="#">全部不选</a></li>
+											<li class="divider"></li>
+											<li><a href="#">反选</a></li>
+										</ul>
+									</div>
+								</div></td>
+							<td style="width: 10px;"></td>
+							<td><div class="btn-group" role="group" aria-label="...">
+									<button type="button" class="btn btn-default btn-sm"
+										onclick="location='<c:url value="/coursereference/addreference-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html"/>'">增加</button>
 
 
-							</div></td>
-						<td style="width: 10px;"></td>
-						<td><div class="input-group input-group-sm">
-								<input type="text" class="form-control" id="SearchText"
-									placeholder="Search for..." required> <span
-									class="input-group-btn">
-									<button class="btn btn-default" type="button"
-										onclick="onSearch()">搜索</button>
-								</span>
-							</div></td>
-					</tr>
-				</table>
-			</c:if>
+									<button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+										data-target="#myModal">删除</button>
 
 
+								</div></td>
+							<td style="width: 10px;"></td>
+							<td><div class="input-group input-group-sm">
+									<input type="text" class="form-control" id="SearchText" placeholder="Search for..."
+										required>
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button" onclick="onSearch()">搜索</button>
+									</span>
+								</div></td>
+
+							<c:if
+								test="${pagedCourseTeachingClassReferenceViewData!=null and pagedCourseTeachingClassReferenceViewData.totalCount>10}">
+
+								<td style="width: 10px;"></td>
+								<td><div class="btn-group" role="group" aria-label="...">
+										<!-- Split button -->
+										<div class="btn-group">
+											<button type="button" class="btn btn-default btn-sm">每页大小</button>
+											<button type="button" class="btn btn-default dropdown-toggle btn-sm"
+												data-toggle="dropdown" aria-expanded="false">
+												<span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
+											</button>
+											<ul class="dropdown-menu" role="menu">
+												<li><a
+														href="coursereference/list-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html?pageSize=10">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==10}">
+															<i class="icon-ok"></i>
+														</c:if>
+														默认(10)
+													</a></li>
+												<li class="divider"></li>
+												<li><a
+														href="coursereference/list-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html?pageSize=20">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==20}">
+															<i class="icon-ok"></i>
+														</c:if>
+														20
+													</a></li>
+												<li><a
+														href="coursereference/list-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html?pageSize=30">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==30}">
+															<i class="icon-ok"></i>
+														</c:if>
+														30
+													</a></li>
+												<li><a
+														href="coursereference/list-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html?pageSize=40">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==40}">
+															<i class="icon-ok"></i>
+														</c:if>
+														40
+													</a></li>
+												<li><a
+														href="coursereference/list-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html?pageSize=50">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==50}">
+															<i class="icon-ok"></i>
+														</c:if>
+														50
+													</a></li>
+												<li><a
+														href="coursereference/list-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html?pageSize=60">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==60}">
+															<i class="icon-ok"></i>
+														</c:if>
+														60
+													</a></li>
+												<li><a
+														href="coursereference/list-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html?pageSize=70">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==70}">
+															<i class="icon-ok"></i>
+														</c:if>
+														70
+													</a></li>
+												<li><a
+														href="coursereference/list-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html?pageSize=80">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==80}">
+															<i class="icon-ok"></i>
+														</c:if>
+														80
+													</a></li>
+												<li><a
+														href="coursereference/list-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html?pageSize=90">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==90}">
+															<i class="icon-ok"></i>
+														</c:if>
+														90
+													</a></li>
+												<li><a
+														href="coursereference/list-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html?pageSize=100">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==100}">
+															<i class="icon-ok"></i>
+														</c:if>
+														100
+													</a></li>
+												<li class="divider"></li>
+												<li><a
+														href="coursereference/list-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html?pageSize=1000">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize>100}">
+															<i class="icon-ok"></i>
+														</c:if>
+														不分页
+													</a></li>
+											</ul>
+										</div>
+									</div></td>
+							</c:if>
+						</tr>
+					</table>
+				</c:when>
+				<c:otherwise>
+
+					<c:if
+						test="${pagedCourseTeachingClassReferenceViewData!=null and pagedCourseTeachingClassReferenceViewData.totalCount>10}">
+
+
+						<table>
+							<tr>
+
+
+								<td><div class="btn-group" role="group" aria-label="...">
+										<!-- Split button -->
+										<div class="btn-group">
+											<button type="button" class="btn btn-default btn-sm">每页大小</button>
+											<button type="button" class="btn btn-default dropdown-toggle btn-sm"
+												data-toggle="dropdown" aria-expanded="false">
+												<span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
+											</button>
+											<ul class="dropdown-menu" role="menu">
+												<li><a
+														href="coursereference/list-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html?pageSize=10">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==10}">
+															<i class="icon-ok"></i>
+														</c:if>
+														默认(10)
+													</a></li>
+												<li class="divider"></li>
+												<li><a
+														href="coursereference/list-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html?pageSize=20">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==20}">
+															<i class="icon-ok"></i>
+														</c:if>
+														20
+													</a></li>
+												<li><a
+														href="coursereference/list-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html?pageSize=30">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==30}">
+															<i class="icon-ok"></i>
+														</c:if>
+														30
+													</a></li>
+												<li><a
+														href="coursereference/list-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html?pageSize=40">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==40}">
+															<i class="icon-ok"></i>
+														</c:if>
+														40
+													</a></li>
+												<li><a
+														href="coursereference/list-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html?pageSize=50">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==50}">
+															<i class="icon-ok"></i>
+														</c:if>
+														50
+													</a></li>
+												<li><a
+														href="coursereference/list-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html?pageSize=60">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==60}">
+															<i class="icon-ok"></i>
+														</c:if>
+														60
+													</a></li>
+												<li><a
+														href="coursereference/list-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html?pageSize=70">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==70}">
+															<i class="icon-ok"></i>
+														</c:if>
+														70
+													</a></li>
+												<li><a
+														href="coursereference/list-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html?pageSize=80">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==80}">
+															<i class="icon-ok"></i>
+														</c:if>
+														80
+													</a></li>
+												<li><a
+														href="coursereference/list-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html?pageSize=90">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==90}">
+															<i class="icon-ok"></i>
+														</c:if>
+														90
+													</a></li>
+												<li><a
+														href="coursereference/list-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html?pageSize=100">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize==100}">
+															<i class="icon-ok"></i>
+														</c:if>
+														100
+													</a></li>
+												<li class="divider"></li>
+												<li><a
+														href="coursereference/list-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html?pageSize=1000">
+														<c:if test="${sessionScope.USER_CONTEXT.pageSize>100}">
+															<i class="icon-ok"></i>
+														</c:if>
+														不分页
+													</a></li>
+											</ul>
+										</div>
+									</div></td>
+							</tr>
+						</table>
+
+					</c:if>
+
+
+				</c:otherwise>
+
+			</c:choose>
 
 			<c:choose>
 
-				<c:when
-					test="${pagedCourseTeachingClassReferenceViewData.totalCount==0}">
+				<c:when test="${pagedCourseTeachingClassReferenceViewData.totalCount==0}">
 
-					<div class="alert alert-warning alert-dismissible fade in"
-						role="alert">
-						<button type="button" class="close" data-dismiss="alert"
-							aria-label="Close">
+					<div class="alert alert-warning alert-dismissible fade in" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 						<strong>暂未有${selectedCourseReferenceTypeData.name}资料</strong>
@@ -182,9 +382,9 @@
 
 
 							<c:set var="index" value="0"></c:set>
-							<c:forEach var="data"
-								items="${pagedCourseTeachingClassReferenceViewData.result}">
-								<div class="row show-grid 
+							<c:forEach var="data" items="${pagedCourseTeachingClassReferenceViewData.result}">
+								<div
+									class="row show-grid 
 								<c:if test="${index%2==1 }">
 								bg-info
 								</c:if> 
@@ -212,19 +412,20 @@
 										<c:choose>
 
 											<c:when test="${fn:length(data.fileList)==1}">
-												<a
-													href="<c:url value="/coursereferencefile/download-${data.fileList[0].id}.html"/>">
+												<a href="<c:url value="/coursereferencefile/download-${data.fileList[0].id}.html"/>">
 													<span class="glyphicon glyphicon-download" aria-hidden="true"></span>${data.fileList[0].filename}</a>(${data.fileList[0].filelength})
 											</c:when>
 
 											<c:otherwise>
-												
-													<c:forEach var="datafile" items="${data.fileList}">
-													<p>	<a
-															href="<c:url value="/coursereferencefile/download-${datafile.id}.html"/>">
-																<span class="glyphicon glyphicon-download" aria-hidden="true"></span>${datafile.filename}</a>(${datafile.filelength})</p>
-													</c:forEach>
-												
+
+												<c:forEach var="datafile" items="${data.fileList}">
+													<p>
+														<a href="<c:url value="/coursereferencefile/download-${datafile.id}.html"/>">
+															<span class="glyphicon glyphicon-download" aria-hidden="true"></span>${datafile.filename}</a>
+														(${datafile.filelength})
+													</p>
+												</c:forEach>
+
 											</c:otherwise>
 										</c:choose>
 
@@ -236,13 +437,11 @@
 
 
 									<div class="col-md-1">
-										<fmt:formatDate value="${data.reference.pubdate}"
-											pattern="yyyy-MM-dd HH:mm" />
+										<fmt:formatDate value="${data.reference.pubdate}" pattern="yyyy-MM-dd HH:mm" />
 									</div>
 
 									<div class="col-md-1">
-										<fmt:formatDate value="${data.reference.modifieddate}"
-											pattern="yyyy-MM-dd HH:mm" />
+										<fmt:formatDate value="${data.reference.modifieddate}" pattern="yyyy-MM-dd HH:mm" />
 									</div>
 
 
@@ -263,8 +462,7 @@
 								<c:set var="index" value="${index + 1}"></c:set>
 							</c:forEach>
 
-							<c:if
-								test="${pagedCourseTeachingClassReferenceViewData.totalCount>0}">
+							<c:if test="${pagedCourseTeachingClassReferenceViewData.totalCount>0}">
 								<div class="gridseparator"></div>
 							</c:if>
 
@@ -273,11 +471,10 @@
 
 
 
-						<c:if
-							test="${not empty selectedCourseTeachingClassID}">
+						<c:if test="${not empty selectedCourseTeachingClassID}">
 							<mathtop:PageBar
 								pageUrl="/coursereference/list-${selectedCourseTeachingClassID}-${selectedCourseReferenceTypeData.id}.html"
-								pageAttrKey="pagedCourseTeachingClassReferenceViewData" />        
+								pageAttrKey="pagedCourseTeachingClassReferenceViewData" />
 						</c:if>
 
 					</div>
@@ -289,10 +486,10 @@
 	</div>
 
 
-	
+
 
 	<%@ include file="../../shared/importJs.jsp"%>
-<%@ include file="../../shared/sysLastInclude.jsp"%>
+	<%@ include file="../../shared/sysLastInclude.jsp"%>
 
 	<script type="text/javascript">
 		$("#collapseReference").addClass("in");

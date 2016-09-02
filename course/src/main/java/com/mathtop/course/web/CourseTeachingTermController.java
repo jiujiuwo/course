@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mathtop.course.cons.CommonConstant;
 import com.mathtop.course.cons.CourseMessage;
 import com.mathtop.course.cons.PagedObjectConst;
 import com.mathtop.course.dao.Page;
@@ -148,13 +147,15 @@ public class CourseTeachingTermController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list")
-	public ModelAndView ListAll(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public ModelAndView ListAll(HttpServletRequest request, 
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize=getPageSize(request,pageSize);
+		
 		Page<CourseTeachingTerm> pagedCourseTeachingTerm = courseTeachingTermService.getPage(pageNo,
-				CommonConstant.PAGE_SIZE);
+				pageSize);
 
 		view.addObject(PagedObjectConst.Paged_CourseTeachingTerm, pagedCourseTeachingTerm);
 		

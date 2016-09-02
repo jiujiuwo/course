@@ -12,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.mathtop.course.cons.CommonConstant;
 import com.mathtop.course.cons.PagedObjectConst;
 import com.mathtop.course.cons.SelectedObjectConst;
 import com.mathtop.course.dao.Page;
@@ -49,7 +48,8 @@ public class CourseTeachingClassReferenceController extends CourseTeachingClassB
 	 */
 	@RequestMapping(value = "/addreference-{t_course_teaching_class_id}-{t_course_teaching_class_reference_type_id}")
 	public ModelAndView addreference(HttpServletRequest request, RedirectAttributes redirectAttributes,
-			@PathVariable String t_course_teaching_class_id, @PathVariable String t_course_teaching_class_reference_type_id) {
+			@PathVariable String t_course_teaching_class_id,
+			@PathVariable String t_course_teaching_class_reference_type_id) {
 
 		ModelAndView view = new ModelAndView();
 
@@ -75,7 +75,8 @@ public class CourseTeachingClassReferenceController extends CourseTeachingClassB
 	 */
 	@RequestMapping(value = "/add-{t_course_teaching_class_id}-{t_course_teaching_class_reference_type_id}")
 	public ModelAndView add(HttpServletRequest request, RedirectAttributes redirectAttributes,
-			@PathVariable String t_course_teaching_class_id, @PathVariable String t_course_teaching_class_reference_type_id,
+			@PathVariable String t_course_teaching_class_id,
+			@PathVariable String t_course_teaching_class_reference_type_id,
 			@RequestParam("file") MultipartFile[] files) {
 
 		ModelAndView mav = new ModelAndView();
@@ -89,14 +90,14 @@ public class CourseTeachingClassReferenceController extends CourseTeachingClassB
 			Teacher teacher = userinfo.getTeacher();
 			if (teacher != null) {
 
-				referenceService.add(request, t_course_teaching_class_id, t_course_teaching_class_reference_type_id, teacher.getId(), title,
-						content, files);
+				referenceService.add(request, t_course_teaching_class_id, t_course_teaching_class_reference_type_id,
+						teacher.getId(), title, content, files);
 
 			}
 		}
 
-		mav.setViewName(
-				"redirect:/coursereference/list-" + t_course_teaching_class_id + "-" + t_course_teaching_class_reference_type_id + ".html");
+		mav.setViewName("redirect:/coursereference/list-" + t_course_teaching_class_id + "-"
+				+ t_course_teaching_class_reference_type_id + ".html");
 
 		return mav;
 	}
@@ -117,8 +118,8 @@ public class CourseTeachingClassReferenceController extends CourseTeachingClassB
 
 		ModelAndView mav = new ModelAndView();
 
-		mav.setViewName(
-				"redirect:/coursereference/list-" + t_course_teaching_class_id + "-" + t_course_teaching_class_reference_type_id + ".html");
+		mav.setViewName("redirect:/coursereference/list-" + t_course_teaching_class_id + "-"
+				+ t_course_teaching_class_reference_type_id + ".html");
 
 		return mav;
 	}
@@ -132,7 +133,8 @@ public class CourseTeachingClassReferenceController extends CourseTeachingClassB
 	 */
 	@RequestMapping(value = "/updatereference-{t_course_teaching_class_id}-{t_course_teaching_class_reference_type_id}-{t_course_teaching_class_reference_id}")
 	public ModelAndView updatereference(HttpServletRequest request, RedirectAttributes redirectAttributes,
-			@PathVariable String t_course_teaching_class_id, @PathVariable String t_course_teaching_class_reference_type_id,
+			@PathVariable String t_course_teaching_class_id,
+			@PathVariable String t_course_teaching_class_reference_type_id,
 			@PathVariable String t_course_teaching_class_reference_id) {
 
 		ModelAndView view = new ModelAndView();
@@ -164,7 +166,8 @@ public class CourseTeachingClassReferenceController extends CourseTeachingClassB
 	 */
 	@RequestMapping(value = "/update-{t_course_teaching_class_id}-{t_course_teaching_class_reference_type_id}-{t_course_teaching_class_reference_id}")
 	public ModelAndView update(HttpServletRequest request, RedirectAttributes redirectAttributes,
-			@PathVariable String t_course_teaching_class_id, @PathVariable String t_course_teaching_class_reference_type_id,
+			@PathVariable String t_course_teaching_class_id,
+			@PathVariable String t_course_teaching_class_reference_type_id,
 			@PathVariable String t_course_teaching_class_reference_id, @RequestParam("file") MultipartFile[] files) {
 		ModelAndView mav = new ModelAndView();
 
@@ -177,13 +180,14 @@ public class CourseTeachingClassReferenceController extends CourseTeachingClassB
 			Teacher teacher = userinfo.getTeacher();
 			if (teacher != null) {
 
-				referenceService.update(request, t_course_teaching_class_reference_id, teacher.getId(), updatetitle, updatecontent, files);
+				referenceService.update(request, t_course_teaching_class_reference_id, teacher.getId(), updatetitle,
+						updatecontent, files);
 
 			}
 		}
 
-		mav.setViewName(
-				"redirect:/coursereference/list-" + t_course_teaching_class_id + "-" + t_course_teaching_class_reference_type_id + ".html");
+		mav.setViewName("redirect:/coursereference/list-" + t_course_teaching_class_id + "-"
+				+ t_course_teaching_class_reference_type_id + ".html");
 
 		return mav;
 
@@ -198,7 +202,8 @@ public class CourseTeachingClassReferenceController extends CourseTeachingClassB
 	 */
 	@RequestMapping(value = "/content-{t_course_teaching_class_id}-{t_course_teaching_class_reference_type_id}-{t_course_teaching_class_reference_id}")
 	public ModelAndView content(HttpServletRequest request, RedirectAttributes redirectAttributes,
-			@PathVariable String t_course_teaching_class_id, @PathVariable String t_course_teaching_class_reference_type_id,
+			@PathVariable String t_course_teaching_class_id,
+			@PathVariable String t_course_teaching_class_reference_type_id,
 			@PathVariable String t_course_teaching_class_reference_id) {
 
 		ModelAndView view = new ModelAndView();
@@ -231,14 +236,18 @@ public class CourseTeachingClassReferenceController extends CourseTeachingClassB
 	@RequestMapping(value = "/list-{t_course_teaching_class_id}-{t_course_teaching_class_reference_type_id}")
 	public ModelAndView ListAll(HttpServletRequest request, @PathVariable String t_course_teaching_class_id,
 			@PathVariable String t_course_teaching_class_reference_type_id,
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 
 		pageNo = pageNo == null ? 1 : pageNo;
-		Page<CourseTeachingClassReferenceViewData> pagedCourseTeachingClassReferenceViewData = referenceService
-				.getPage(request,t_course_teaching_class_id, t_course_teaching_class_reference_type_id, pageNo, CommonConstant.PAGE_SIZE);
+		pageSize = getPageSize(request, pageSize);
 
-		view.addObject(PagedObjectConst.Paged_CourseTeachingClassReferenceViewData, pagedCourseTeachingClassReferenceViewData);
+		Page<CourseTeachingClassReferenceViewData> pagedCourseTeachingClassReferenceViewData = referenceService.getPage(
+				request, t_course_teaching_class_id, t_course_teaching_class_reference_type_id, pageNo, pageSize);
+
+		view.addObject(PagedObjectConst.Paged_CourseTeachingClassReferenceViewData,
+				pagedCourseTeachingClassReferenceViewData);
 
 		// 设置课程基本信息，包括授课、作业类型等
 		SetCourseTeachingClassBaseInfo(view, t_course_teaching_class_id);

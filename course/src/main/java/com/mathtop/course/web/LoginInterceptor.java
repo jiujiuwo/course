@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.mathtop.course.cons.CommonConstant;
-import com.mathtop.course.cons.CourseMessage;
 import com.mathtop.course.domain.UserSessionInfo;
 
 /*

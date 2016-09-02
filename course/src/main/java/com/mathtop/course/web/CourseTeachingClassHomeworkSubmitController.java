@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.mathtop.course.cons.CommonConstant;
 import com.mathtop.course.cons.CourseMessage;
 import com.mathtop.course.cons.PagedObjectConst;
 import com.mathtop.course.cons.SelectedObjectConst;
@@ -314,7 +313,7 @@ public class CourseTeachingClassHomeworkSubmitController extends CourseTeachingC
 	public ModelAndView ListAll(HttpServletRequest request, @PathVariable String t_course_teaching_class_id,
 			@PathVariable String t_course_teaching_class_homeworktype_id,
 			@PathVariable String t_course_teaching_class_homework_baseinfo_id,
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 
 		// 作业基本信息
@@ -325,6 +324,7 @@ public class CourseTeachingClassHomeworkSubmitController extends CourseTeachingC
 				selectedCourseHomeworkBasicInfoViewData);
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize=getPageSize(request,pageSize);
 
 		UserSessionInfo userinfo = getSessionUser(request);
 
@@ -336,7 +336,7 @@ public class CourseTeachingClassHomeworkSubmitController extends CourseTeachingC
 				// 作业提交
 				Page<CourseTeachingClassHomeworkSubmitBaseinfoViewData> pagedCourseTeachingClassHomeworkSubmitBaseinfoViewData = homeworkSubmitService
 						.getPage(t_course_teaching_class_homework_baseinfo_id, t_student_id, pageNo,
-								CommonConstant.PAGE_SIZE);
+								pageSize);
 
 				view.addObject(PagedObjectConst.Paged_CourseTeachingClassHomeworkSubmitBaseinfoViewData,
 						pagedCourseTeachingClassHomeworkSubmitBaseinfoViewData);
@@ -348,7 +348,7 @@ public class CourseTeachingClassHomeworkSubmitController extends CourseTeachingC
 					// 作业批复
 					Page<CourseTeachingClassHomeworkReplyViewData> pagedCourseTeachingClassHomeworkReplyBaseinfoViewData = replyService
 							.getPage(t_course_teaching_class_homework_submit_baseinfo_id, t_student_id, pageNo,
-									CommonConstant.PAGE_SIZE);
+									pageSize);
 
 					view.addObject(PagedObjectConst.Paged_CourseTeachingClassHomeworkReplyBaseinfoViewData,
 							pagedCourseTeachingClassHomeworkReplyBaseinfoViewData);

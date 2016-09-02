@@ -19,7 +19,7 @@
 
 	<c:when
 		test="${pageResult.totalPageCount >1 && pageResult.totalPageCount <=10}">
-		<div class="navPage">
+		<div class="navPage" style="margin-right:10px;">
 
 			<div class="navPageRight">
 				<nav style="text-align: right;">

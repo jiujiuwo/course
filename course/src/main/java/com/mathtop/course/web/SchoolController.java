@@ -30,7 +30,7 @@ public class SchoolController extends BaseController {
 	 */
 	@Autowired
 	private SchoolService schoolService;
-	
+
 	@Autowired
 	DeleteService deleteService;
 
@@ -46,17 +46,16 @@ public class SchoolController extends BaseController {
 
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/school/list");
-		
+
 		System.out.println(school.getName());
 
 		School dbschool = schoolService.getByName(school.getName());
 
-		if (dbschool!=null && dbschool.getName() != null) {
+		if (dbschool != null && dbschool.getName() != null) {
 			mav.addObject(CourseMessage.Message_errorMsg, "学院名已经存在");
 
 			Integer pageNo = 1;
-			Page<School> pagedSchool = schoolService.getPage(pageNo,
-					CommonConstant.PAGE_SIZE);
+			Page<School> pagedSchool = schoolService.getPage(pageNo, CommonConstant.PAGE_SIZE);
 
 			mav.addObject("pagedSchool", pagedSchool);
 			mav.setViewName("redirect:list.html");
@@ -64,7 +63,6 @@ public class SchoolController extends BaseController {
 		} else {
 			schoolService.add(school.getName(), school.getNote());
 
-			
 			mav.setViewName("redirect:list.html");
 
 		}
@@ -79,12 +77,12 @@ public class SchoolController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/DELETE-{t_school_id}", method = RequestMethod.GET)
-	public ModelAndView DELETE(HttpServletRequest request,@PathVariable String t_school_id) {
+	public ModelAndView DELETE(HttpServletRequest request, @PathVariable String t_school_id) {
 		if (t_school_id != null)
 			deleteService.deleteSchoolById(request, t_school_id);
 
-		ModelAndView mav = new ModelAndView();		
-		mav.setViewName("redirect:list.html");		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:list.html");
 		return mav;
 	}
 
@@ -99,14 +97,11 @@ public class SchoolController extends BaseController {
 	public ModelAndView select(@PathVariable String schoolname) {
 		ModelAndView view = new ModelAndView();
 		view.setViewName("school/list");
-		
-		
 
 		if (schoolname != null && schoolname.length() > 0) {
 
 			int pageNo = 1;
-			Page<School> pagedSchool = schoolService.select(schoolname, pageNo,
-					CommonConstant.PAGE_SIZE);
+			Page<School> pagedSchool = schoolService.select(schoolname, pageNo, CommonConstant.PAGE_SIZE);
 
 			view.addObject(PagedObjectConst.Paged_School, pagedSchool);
 			view.setViewName("school/list");
@@ -134,16 +129,15 @@ public class SchoolController extends BaseController {
 		} else if (dbschool.getName() != null) {
 			mav.addObject(CourseMessage.Message_errorMsg, "学院名已经存在");
 
-			String toUrl=("list");
+			String toUrl = ("list");
 			mav.setViewName("redirect:" + toUrl);
 			return mav;
 
 		} else {
 
-			schoolService.update(school.getId(), school.getName(),
-					school.getNote());
+			schoolService.update(school.getId(), school.getName(), school.getNote());
 
-			String toUrl=("list");
+			String toUrl = ("list");
 			mav.setViewName("redirect:" + toUrl);
 			return mav;
 
@@ -158,29 +152,28 @@ public class SchoolController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list")
-	public ModelAndView ListAll(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public ModelAndView ListAll(HttpServletRequest request,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 
 		pageNo = pageNo == null ? 1 : pageNo;
-		Page<School> pagedSchool = schoolService.getPage(pageNo,
-				CommonConstant.PAGE_SIZE);
+		pageSize = getPageSize(request, pageSize);
+		Page<School> pagedSchool = schoolService.getPage(pageNo, pageSize);
 
 		view.addObject("pagedSchool", pagedSchool);
-		
+
 		view.setViewName("school/list");
 		return view;
 	}
-	
-	
-	//得到所有学院
+
+	// 得到所有学院
 	@RequestMapping(value = "/getall", method = RequestMethod.GET)
 	@ResponseBody
-	public List<School> getAllSchoolList(@RequestParam(value = "pageNo", required = false) Integer pageNo) {		
-		
+	public List<School> getAllSchoolList(@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+
 		pageNo = pageNo == null ? 1 : pageNo;
-		Page<School> pagedSchool = schoolService.getPage(pageNo,
-				CommonConstant.PAGE_SIZE);
+		Page<School> pagedSchool = schoolService.getPage(pageNo, CommonConstant.PAGE_SIZE);
 		return pagedSchool.getResult();
 	}
 

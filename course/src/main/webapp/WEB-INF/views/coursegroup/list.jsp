@@ -298,11 +298,6 @@
 <%@ include file="../../shared/sysLastInclude.jsp"%>
 
 
-	<script type="text/javascript">
-		$("#collapseHomework").addClass("in");
-		$("#homeworktype${selectedCourseHomeworkTypeData.id}").addClass(
-				"active");
-	</script>
 
 
 

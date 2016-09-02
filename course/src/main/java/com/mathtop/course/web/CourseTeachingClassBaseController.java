@@ -36,6 +36,8 @@ public class CourseTeachingClassBaseController extends BaseController {
 
 	@Autowired
 	CourseTeachingClassStudentGroupService courseTeachingClassStudentGroupService;
+	
+	
 
 	// 课程信息
 	protected void SetCourseTeachingClassBaseInfo(ModelAndView mav, String t_course_teaching_class_id) {
@@ -96,4 +98,5 @@ public class CourseTeachingClassBaseController extends BaseController {
 		mav.addObject(PagedObjectConst.Paged_CourseAttendanceTypeData, pagedAttendanceTypeData);
 	}
 
+	
 }

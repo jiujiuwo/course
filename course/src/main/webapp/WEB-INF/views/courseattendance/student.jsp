@@ -73,9 +73,9 @@
 				<tr>
 
 
-				
-					
-					
+
+
+
 					<td><div class="input-group input-group-sm">
 							<input type="text" class="form-control" id="SearchText" placeholder="Search for..." required>
 							<span class="input-group-btn">
@@ -92,14 +92,85 @@
 									<span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
 								</button>
 								<ul class="dropdown-menu" role="menu">
-									<li><a href="#">默认(10)</a></li>
+									<li><a
+											href="courseattendance/student-${selectedCourseTeachingClassID}.html?pageSize=10">
+											<c:if test="${sessionScope.USER_CONTEXT.pageSize==10}">
+												<i class="icon-ok"></i>
+											</c:if>
+											默认(10)
+										</a></li>
 									<li class="divider"></li>
-									<li><a href="#">20</a></li>
-									<li><a href="#">30</a></li>
-									<li><a href="#">40</a></li>
-									<li><a href="#">50</a></li>
+									<li><a
+											href="courseattendance/student-${selectedCourseTeachingClassID}.html?pageSize=20">
+											<c:if test="${sessionScope.USER_CONTEXT.pageSize==20}">
+												<i class="icon-ok"></i>
+											</c:if>
+											20
+										</a></li>
+									<li><a
+											href="courseattendance/student-${selectedCourseTeachingClassID}.html?pageSize=30">
+											<c:if test="${sessionScope.USER_CONTEXT.pageSize==30}">
+												<i class="icon-ok"></i>
+											</c:if>
+											30
+										</a></li>
+									<li><a
+											href="courseattendance/student-${selectedCourseTeachingClassID}.html?pageSize=40">
+											<c:if test="${sessionScope.USER_CONTEXT.pageSize==40}">
+												<i class="icon-ok"></i>
+											</c:if>
+											40
+										</a></li>
+									<li><a
+											href="courseattendance/student-${selectedCourseTeachingClassID}.html?pageSize=50">
+											<c:if test="${sessionScope.USER_CONTEXT.pageSize==50}">
+												<i class="icon-ok"></i>
+											</c:if>
+											50
+										</a></li>
+									<li><a
+											href="courseattendance/student-${selectedCourseTeachingClassID}.html?pageSize=60">
+											<c:if test="${sessionScope.USER_CONTEXT.pageSize==60}">
+												<i class="icon-ok"></i>
+											</c:if>
+											60
+										</a></li>
+									<li><a
+											href="courseattendance/student-${selectedCourseTeachingClassID}.html?pageSize=70">
+											<c:if test="${sessionScope.USER_CONTEXT.pageSize==70}">
+												<i class="icon-ok"></i>
+											</c:if>
+											70
+										</a></li>
+									<li><a
+											href="courseattendance/student-${selectedCourseTeachingClassID}.html?pageSize=80">
+											<c:if test="${sessionScope.USER_CONTEXT.pageSize==80}">
+												<i class="icon-ok"></i>
+											</c:if>
+											80
+										</a></li>
+									<li><a
+											href="courseattendance/student-${selectedCourseTeachingClassID}.html?pageSize=90">
+											<c:if test="${sessionScope.USER_CONTEXT.pageSize==90}">
+												<i class="icon-ok"></i>
+											</c:if>
+											90
+										</a></li>
+									<li><a
+											href="courseattendance/student-${selectedCourseTeachingClassID}.html?pageSize=100">
+											<c:if test="${sessionScope.USER_CONTEXT.pageSize==100}">
+												<i class="icon-ok"></i>
+											</c:if>
+											100
+										</a></li>
 									<li class="divider"></li>
-									<li><a href="#">不分页</a></li>
+									<li><a
+											href="courseattendance/student-${selectedCourseTeachingClassID}.html?pageSize=1000">
+											<c:if test="${sessionScope.USER_CONTEXT.pageSize>100}">
+												<i class="icon-ok"></i>
+											</c:if>
+											不分页
+										</a></li>
 								</ul>
 							</div>
 						</div></td>
@@ -131,21 +202,20 @@
 									<strong>班级</strong>
 								</div>
 
-								
+
 							</div>
 							<div class="gridseparator"></div>
 							<c:set var="index" value="1"></c:set>
 							<c:forEach var="dataitem" items="${pagedStudentViewData.result}">
 								<div class="row">
-									<div class="col-md-1">
-										${(pagedStudentViewData.currentPageNo-1) * pagedStudentViewData.pageSize +index}
+									<div class="col-md-1">${(pagedStudentViewData.currentPageNo-1) * pagedStudentViewData.pageSize +index}
 									</div>
 									<div class="col-md-2">${dataitem.student.studentNum}</div>
 									<div class="col-md-2">${dataitem.userbasicinfo.userBasicInfoName}</div>
 									<div class="col-md-2">${dataitem.department.name}</div>
 									<div class="col-md-2">${dataitem.naturalclass.name}</div>
 
-									
+
 								</div>
 								<c:set var="index" value="${index + 1}"></c:set>
 							</c:forEach>
@@ -195,7 +265,7 @@
 
 
 
-<%@ include file="../../shared/importJs.jsp"%>
+	<%@ include file="../../shared/importJs.jsp"%>
 	<%@ include file="../../shared/sysLastInclude.jsp"%>
 
 
