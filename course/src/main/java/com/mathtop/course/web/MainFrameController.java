@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mathtop.course.cons.SelectedObjectConst;
-import com.mathtop.course.domain.Teacher;
 import com.mathtop.course.domain.UserSessionInfo;
 import com.mathtop.course.service.MailBoxReceivedService;
 

@@ -42,8 +42,7 @@ public class NaturalClassService extends SimpleService<NaturalClassDao, NaturalC
 
 		String t_natural_class_id = naturalClassDao.add(n);
 		
-		System.out.println("t_department_id:"+t_department_id);
-		System.out.println("t_natural_class_id:"+t_natural_class_id);
+		
 		
 		if (t_natural_class_id != null) {
 			if (departmentNaturalClassDao.add(t_department_id, t_natural_class_id) == null)
@@ -257,26 +256,47 @@ public class NaturalClassService extends SimpleService<NaturalClassDao, NaturalC
 	public String getDefaultNaturalClassIdBySchoolNameAndDepartmentNameAndNaturallClassName(String school_name,
 			String department_name,String natural_class_name) {
 
+	
 		
-		
+		String t_school_id=null;
 		School s = schoolService.getByName(school_name);
-		if (s == null)
+		if (s == null){
+			t_school_id=schoolService.add(school_name, "");
+		}else
+			t_school_id=s.getId();
+		
+		if(t_school_id==null)
 			return null;
 		
 		
+		
+	
 
-		List<Department> list = departmentService.getAll(s.getId());
+		List<Department> list = departmentService.getAll(t_school_id);
 		if (list == null)
 			return null;
+		
+		
+		
+	
 
 		for (Department d : list) {
 			if (d.getName().equals(department_name)) {
-				return departmentNaturalClassDao.getIdByDepartmentIdNaturalclassName(d.getId(),natural_class_name);
+				String t_natural_class_id= departmentNaturalClassDao.getIdByDepartmentIdNaturalclassName(d.getId(),natural_class_name);
+				if(t_natural_class_id==null){
+					return Add(d.getId(),natural_class_name);
+				}else
+					return t_natural_class_id;
 			}
 		}
+		
+		
 
-		return null;
-
+		String t_department_id=departmentService.add(s.getId(), department_name);
+		
+	
+	
+		return Add(t_department_id,natural_class_name);
 	}
 	
 	
@@ -369,8 +389,13 @@ public class NaturalClassService extends SimpleService<NaturalClassDao, NaturalC
 		} else if (schoolName != null && departmentName != null && naturalclassname != null) {
 			// 111
 			// 放到指定学院的指定系部的指定班级中
+			
+			
+			
 			t_natural_class_id = getDefaultNaturalClassIdBySchoolNameAndDepartmentNameAndNaturallClassName(schoolName,
 							departmentName, naturalclassname);
+			
+			
 		}
 		
 		return t_natural_class_id;

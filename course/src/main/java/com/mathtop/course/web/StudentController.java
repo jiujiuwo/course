@@ -255,6 +255,7 @@ public class StudentController extends BaseController {
 		} catch (Exception e) {
 			view.addObject(CourseMessage.Message_errorMsg, "发生了错误");
 			view.setViewName("forward:/student/list.html");
+			e.printStackTrace();
 		}
 
 		return view;

@@ -137,7 +137,7 @@ public class CourseTeachingClassController extends BaseController {
 
 		ModelAndView mav = new ModelAndView();
 
-		mav.setViewName("redirect:/teachingclass/update.html");
+		mav.setViewName("redirect:/teachingclass/list.html");
 		return mav;
 	}
 

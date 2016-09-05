@@ -563,12 +563,13 @@ public class StudentService {
 		
 		
 		
+		
 	
 		
 		
 		String t_student_id = AddStudent(schoolName, departmentName, naturalclassname, name, student_num);
 		
-	
+		
 		
 		if (t_student_id == null)
 			return null;

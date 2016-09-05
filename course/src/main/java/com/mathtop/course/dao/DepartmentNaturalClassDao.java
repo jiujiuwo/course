@@ -172,20 +172,40 @@ public class DepartmentNaturalClassDao extends BaseDao<DepartmentNaturalClass> {
 	 * 得到id
 	 */
 	public String getIdByDepartmentNaturalclassId(String t_department_id, String t_natural_class_id) {
+		
+		
+		List<String> list = new ArrayList<String>();
+		getJdbcTemplate().query(GET_ID_BY_NATURAL_CLASS_ID_DEPARTMENT_ID,
+				new Object[] { t_department_id, t_natural_class_id }, new RowCallbackHandler() {
+					@Override
+					public void processRow(ResultSet rs) throws SQLException {
+						list.add(rs.getString("id"));
+					}
+				});
 
-		return getJdbcTemplate().queryForObject(GET_ID_BY_NATURAL_CLASS_ID_DEPARTMENT_ID,
-				new Object[] { t_department_id, t_natural_class_id }, new int[] { Types.VARCHAR, Types.VARCHAR },
-				String.class);
+		if (list.size() > 0)
+			return list.get(0);
+
+		return null;
 	}
 
 	/*
 	 * 得到id
 	 */
 	public String getIdByDepartmentIdNaturalclassName(String t_department_id, String t_natural_class_name) {
+		List<String> list = new ArrayList<String>();
+		getJdbcTemplate().query(GET_NATURAL_CLASS_ID_BY_DEPARTMENT_ID_AND_NATURAL_NAME,
+				new Object[] { t_department_id, t_natural_class_name }, new RowCallbackHandler() {
+					@Override
+					public void processRow(ResultSet rs) throws SQLException {
+						list.add(rs.getString("id"));
+					}
+				});
 
-		return getJdbcTemplate().queryForObject(GET_NATURAL_CLASS_ID_BY_DEPARTMENT_ID_AND_NATURAL_NAME,
-				new Object[] { t_department_id, t_natural_class_name }, new int[] { Types.VARCHAR, Types.VARCHAR },
-				String.class);
+		if (list.size() > 0)
+			return list.get(0);
+
+		return null;
 	}
 
 	/*

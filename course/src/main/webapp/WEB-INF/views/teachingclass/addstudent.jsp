@@ -101,7 +101,8 @@
 							<button type="button" class="btn btn-default btn-sm" data-toggle="modal"
 								data-target="#addStudentModal">增加单个学生</button>
 
-							<button type="button" class="btn btn-default btn-sm" onclick="onAddFromExcel()">从Excel导入学生</button>
+							<button type="button" class="btn btn-default btn-sm" onclick="onAddFromExcel()"
+								data-toggle="tooltip" data-placement="bottom" title="从Excel中增加学生，生成的学生名单次序和Excel中次序相同。">从Excel导入学生</button>
 
 							<button type="button" class="btn btn-default btn-sm" data-toggle="modal"
 								data-target="#myModal">删除</button>
@@ -504,8 +505,8 @@
 
 		}
 	<%/****************************************************************************************************
-							 *添加学生对话框
-							 */%>
+																			 *添加学生对话框
+																			 */%>
 		function AddNaturalClassStudentRow(studentid, studentnum, studentname) {
 
 			if (IsExistInNaturalClassStudentTable(studentid) == true)
@@ -559,8 +560,8 @@
 
 		}
 	<%/****************************************************************************************************
-						 *添加自然班学生对话框
-						 */%>
+															 *添加自然班学生对话框
+															 */%>
 		function AddNaturalClassRow(t_natural_class_id, naturalclassname) {
 			if (IsExistInNaturalClassTable(t_natural_class_id) == true)
 				return;
@@ -691,16 +692,15 @@
 		}
 	<%//根据部门填充班级%>
 		function fill_addModal_naturalclass(t_department_id) {
-			
+
 			if (t_department_id == null)
-				t_department_id= $("#addModal #departmentSelectControl").val();
+				t_department_id = $("#addModal #departmentSelectControl").val();
 			if (t_department_id == null)
 				return;
 
 			var url = "<c:url value="/naturalclass/"/>"
 
 			url = url + "selectbyt_department_id-" + t_department_id + ".json";
-		
 
 			$.get(url, function(data, status) {
 				if (status == "success") {
