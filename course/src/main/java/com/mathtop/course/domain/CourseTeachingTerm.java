@@ -13,7 +13,9 @@ public class CourseTeachingTerm extends BaseDomain{
 	private int teachingYearEnd;
 	private int teachingTerm;
 	private int weeks;
-	private Date weekBegin;
+	private Date weekBegin;//务必是周一
+	private static Date dateComputed;//已经计算过今天是第几周，每天只算一次即可
+	private static int weekIndex;//教学来的第几周
 	
 
 	public String getId() {
@@ -54,6 +56,32 @@ public class CourseTeachingTerm extends BaseDomain{
 	}
 	public String getTerm() {
 		return teachingYearBegin+"-"+teachingYearEnd+"学年第"+teachingTerm+"学期";
+	}
+	
+	private int betweenDays(Date d){
+		if(weekBegin==null)
+			return 0;
+		
+		Date d1=new Date();
+		return  (int)((d1.getTime() - d.getTime())/86400000);//1000*3600*24
+	}
+	
+	//返回第几周
+	public int getWeekIndex(){
+		if(weekBegin==null)
+			return 0;
+		
+		if(dateComputed==null){
+			dateComputed=new Date();
+			weekIndex= betweenDays(weekBegin)/7+1;
+			return weekIndex;
+		}else if(betweenDays(dateComputed)<1){
+			return weekIndex;
+		}else{
+			dateComputed=new Date();
+			weekIndex= betweenDays(weekBegin)/7+1;
+			return weekIndex;
+		}
 	}
 	
 

@@ -14,7 +14,9 @@ public class CourseTeachingClassViewData extends BaseDomain{
 
 
 	//课程
-	Course course;	
+	Course course;
+	
+	//学期
 	CourseTeachingTerm term;
 	
 	//授课教师

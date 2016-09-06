@@ -35,7 +35,7 @@
 
 		<div class="col-md-4">
 			<p class="text-muted">
-				<strong>授课学期：</strong>${selectedCourseTeachingClassViewData.term.term}
+				<strong>授课学期：</strong>${selectedCourseTeachingClassViewData.term.term}第${selectedCourseTeachingClassViewData.term.weekIndex}周
 			</p>
 
 		</div>

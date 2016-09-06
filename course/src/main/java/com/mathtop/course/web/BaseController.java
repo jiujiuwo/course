@@ -62,11 +62,13 @@ public class BaseController {
 		if(userinfo==null)
 			return 0;
 		
+		
+		
 		if(pageSize==null || pageSize<=0)
 			return userinfo.getPageSize();
 		else if(pageSize==userinfo.getPageSize())
 			return pageSize;
-		else{
+		else{			
 			userConfigService.updateByUserId(userinfo.getUser().getId(), pageSize);
 			userinfo.setPageSize(pageSize);
 			return pageSize;

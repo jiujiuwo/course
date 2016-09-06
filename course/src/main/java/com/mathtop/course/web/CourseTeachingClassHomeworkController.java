@@ -572,13 +572,16 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 	@RequestMapping(value = "/list-{t_course_teaching_class_id}-{t_course_teaching_class_homeworktype_id}")
 	public ModelAndView ListAll(HttpServletRequest request, @PathVariable String t_course_teaching_class_id,
 			@PathVariable String t_course_teaching_class_homeworktype_id,
-			@RequestParam(value = "pageNo", required = false) Integer pageNo,@RequestParam(value = "pageSize", required = false) Integer pageSize) {
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 
 		// System.out.println("12");
 
 		pageNo = pageNo == null ? 1 : pageNo;
-		pageSize=getPageSize(request,pageSize);
+		pageSize = getPageSize(request, pageSize);
+		
+		
 
 		// 设置课程基本信息，包括授课、作业类型等
 		SetCourseTeachingClassBaseInfo(view, t_course_teaching_class_id);
@@ -594,8 +597,7 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 			if (teacher != null) {
 				// 教师作业信息
 				Page<CourseTeachingClassHomeworkBaseinfoViewData> pagedCourseTeachingClassHomeworkBaseinfoViewData = homeworkService
-						.getPage(t_course_teaching_class_id, t_course_teaching_class_homeworktype_id, pageNo,
-								pageSize);
+						.getPage(t_course_teaching_class_id, t_course_teaching_class_homeworktype_id, pageNo, pageSize);
 
 				view.addObject(PagedObjectConst.Paged_CourseTeachingClassHomeworkBaseinfoViewData,
 						pagedCourseTeachingClassHomeworkBaseinfoViewData);
@@ -678,10 +680,11 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 	public ModelAndView replylist(HttpServletRequest request, @PathVariable String t_course_teaching_class_id,
 			@PathVariable String t_course_teaching_class_homeworktype_id,
 			@PathVariable String t_course_teaching_class_homework_baseinfo_id,
-			@RequestParam(value = "pageNo", required = false) Integer pageNo,@RequestParam(value = "pageSize", required = false) Integer pageSize) {
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 
 		pageNo = pageNo == null ? 1 : pageNo;
-		pageSize=getPageSize(request,pageSize);
+		pageSize = getPageSize(request, pageSize);
 
 		ModelAndView view = new ModelAndView();
 
@@ -725,7 +728,6 @@ public class CourseTeachingClassHomeworkController extends CourseTeachingClassBa
 			@PathVariable String t_course_teaching_class_homework_baseinfo_id, @PathVariable String t_student_id) {
 
 		ModelAndView view = new ModelAndView();
-		
 
 		// 作业基本信息
 		CourseTeachingClassHomeworkBaseinfoViewData selectedCourseHomeworkBasicInfoViewData = homeworkService
