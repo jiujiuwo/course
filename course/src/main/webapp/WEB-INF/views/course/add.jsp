@@ -90,20 +90,20 @@
 
 
 				<div class="form-group">
-					<label for="course_num" class="col-sm-1 control-label">课程编号</label>
-					<div class="col-sm-3">
+					<label for="course_num" class="col-sm-2 col-md-2 col-lg-1 control-label">课程编号</label>
+					<div class="col-sm-4 col-md-4 col-lg-3">
 						<input name="course_num" class="form-control placeholder-no-fix"
 							id="course_num" autocomplete="off" placeholder="课程编号" required />
 					</div>
 
-					<label for="course_name" class="col-sm-1 control-label">课程名称</label>
-					<div class="col-sm-3">
+					<label for="course_name" class="col-sm-2 col-md-2 col-lg-1 control-label">课程名称</label>
+					<div class="col-sm-4 col-md-4 col-lg-3">
 						<input name="course_name" class="form-control placeholder-no-fix"
 							id="course_name" autocomplete="off" placeholder="课程名称" required />
 					</div>
 
-					<label for="course_english_name" class="col-sm-1 control-label">课程名称(英文)</label>
-					<div class="col-sm-3">
+					<label for="course_english_name" class="col-sm-2 col-md-2 col-lg-1 control-label">课程名称(英文)</label>
+					<div class="col-sm-4 col-md-4 col-lg-3">
 						<input name="course_english_name"
 							class="form-control placeholder-no-fix" id="course_english_name"
 							autocomplete="off" placeholder="课程名称" required />
@@ -114,8 +114,8 @@
 				<div class="form-group">
 
 					<label for="naturalclassSelectControl"
-						class="col-sm-1 control-label">课程类别</label>
-					<div class="col-md-3">
+						class="col-sm-2 col-md-2 col-lg-1 control-label">课程类别</label>
+					<div class="col-sm-4 col-md-4">
 						<select id="courseStyleSelectControl" name="coursestyleID"
 							class="form-control input-sm">
 							<c:forEach var="d" items="${pagedCourseStyle.result}">
@@ -124,8 +124,8 @@
 						</select>
 					</div>
 
-					<label for="course_type" class="col-sm-1 control-label">课程性质</label>
-					<div class="col-md-3">
+					<label for="course_type" class="col-sm-2 col-md-2 col-lg-1 control-label">课程性质</label>
+					<div class="col-sm-4 col-md-4">
 						<select id="courseTypeSelectControl" name="coursetypeID"
 							class="form-control input-sm">
 							<c:forEach var="d" items="${pagedCourseType.result}">
@@ -138,14 +138,14 @@
 
 				<div class="form-group">
 
-					<label for="class_hours" class="col-sm-1 control-label">课堂学时</label>
-					<div class="col-md-3">
+					<label for="class_hours" class="col-sm-2 col-md-2 col-lg-1 control-label">课堂学时</label>
+					<div class="col-sm-4 col-md-4">
 						<input name="class_hours" id="class_hours"
 							class="form-control placeholder-no-fix" value="32"
 							autocomplete="off" placeholder="课堂学时" />
 					</div>
-					<label for="experiment_hours" class="col-sm-1 control-label">实验学时</label>
-					<div class="col-md-3">
+					<label for="experiment_hours" class="col-sm-2 col-md-2 col-lg-1 control-label">实验学时</label>
+					<div class="col-sm-4 col-md-4">
 						<input name="experiment_hours" id="experiment_hours"
 							class="form-control placeholder-no-fix" value="16"
 							autocomplete="off" placeholder="实验学时" />
@@ -155,7 +155,7 @@
 				</div>
 
 				<div class="form-group">
-					<label for="fordepartment" class="col-sm-1 control-label">使用专业</label>
+					<label for="fordepartment" class="col-sm-2 col-md-2 col-lg-1 control-label">使用专业</label>
 					<div class="col-sm-10" id="fordepartment">
 						<div class="btn-group" role="group" aria-label="...">
 							<button type="button" class="btn btn-default btn-sm"
@@ -196,7 +196,7 @@
 
 
 
-					<label for="forprecourse" class="col-sm-1 control-label">先修课程</label>
+					<label for="forprecourse" class="col-sm-2 col-md-2 col-lg-1 control-label">先修课程</label>
 					<div class="col-sm-10" id="forprecourse">
 						<div class="btn-group" role="group" aria-label="...">
 

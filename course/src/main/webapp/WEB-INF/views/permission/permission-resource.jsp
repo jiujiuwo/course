@@ -189,7 +189,7 @@
 										
 										<td>${dataitem.permission.name}</td>
 										<td>${dataitem.permission.note}</td>
-										<td>${dataitem.resource.uri}:${dataitem.resource.uri_element}</td>
+										<td>${dataitem.resource.uri}:${dataitem.resource.uriElement}</td>
 										<td>${dataitem.permissionoperator.name}</td>
 										<td><button type="button" class="btn btn-default btn-xs"
 												onclick="onUpdate('${dataitem.permission.id}')">修改...</button>

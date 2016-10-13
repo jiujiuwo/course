@@ -183,7 +183,7 @@
 
 
 										<button type="button" class="btn btn-default btn-xs"
-											onclick="onDelete('${dataitem.user.id}')">删除</button>
+											onclick="onDelete('${dataitem.user.id}','${dataitem.userbasicinfo.userBasicInfoName}','${dataitem.teacher.teacherNum}')">删除</button>
 									</div>
 								</div>
 								<c:set var="index" value="${index + 1}"></c:set>
@@ -321,17 +321,17 @@
 
 		}
 
-		function onDelete(t_department_id) {
-			var t_school_id = gett_school_id();
-			var url = "location='<c:url value="/DELETE-"/>" + t_school_id + "-"
-					+ t_department_id + ".html'";
+		function onDelete(t_user_id,name,teacher_num) {
+			
+			var url = "location='<c:url value="teacher/delete-"/>" + t_user_id 
+					+ ".html'";
 
 			$('#deleteModal').find('.modal-body #deleteinfo').text(
-					departmentname);
+					name+"("+teacher_num+")");
 			$('#deleteModal').find('.modal-footer #deletebtn').attr("onclick",
 					url);
 
-			alert(url);
+		
 
 			$('#deleteModal').modal('show');
 

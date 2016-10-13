@@ -75,6 +75,9 @@ public class CourseTeachingClassService {
 
 	@Autowired
 	StudentService studentService;
+	
+	@Autowired
+	CourseTeachingClassStudentGroupService courseTeachingClassStudentGroupService;
 
 	/**
 	 * 从Excel上传学生清单，然后添加到数据库中
@@ -447,6 +450,9 @@ public class CourseTeachingClassService {
 
 		// 课程相关考勤
 		attendanceService.deleteByCourseTeachingClassId(t_course_teaching_class_id);
+		
+		//删除分组
+		courseTeachingClassStudentGroupService.deleteByCourseTeachingClassId(t_course_teaching_class_id);
 
 		// 删除自己
 		courseTeachingClassDao.deleteById(t_course_teaching_class_id);

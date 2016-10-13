@@ -143,7 +143,7 @@
 								onclick="window.location.href='<c:url value="/teacher/add.html"/>'">新建教师</button>
 
 							<button type="button" class="btn btn-default btn-sm" data-toggle="modal"
-								data-target="#addModal">为课程增加授课教师</button>
+								data-target="#addModal">为教学班增加教师</button>
 
 
 						</div>

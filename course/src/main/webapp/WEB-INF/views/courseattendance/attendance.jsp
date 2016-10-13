@@ -59,14 +59,14 @@
 				<li class="active">${selectedCourseHomeworkTypeData.name}</li>
 			</ol>
 
-			<div class="CourseContentHeader">${selectedCourseTeachingClassViewData.teachingclass.name }
+			<div class="CourseContentHeader">${selectedCourseTeachingClassViewData.courseTeachingClass.name }
 				<mark>
 					<fmt:formatDate
-						value="${selectedCourseAttendanceViewData.attendance.begin_datetime}"
+						value="${selectedCourseAttendanceViewData.attendance.beginDatetime}"
 						pattern="yyyy-MM-dd HH:mm" />
 					-
 					<fmt:formatDate
-						value="${selectedCourseAttendanceViewData.attendance.end_datetime}"
+						value="${selectedCourseAttendanceViewData.attendance.endDatetime}"
 						pattern="yyyy-MM-dd HH:mm" />
 
 				</mark>
@@ -149,7 +149,7 @@
 							<c:forEach var="dataitem" items="${pagedStudentViewData.result}">
 								<tr>
 									<th scope="row">${(pagedStudentViewData.currentPageNo-1) * pagedStudentViewData.pageSize +index}</th>
-									<td>${dataitem.student.student_num}</td>
+									<td>${dataitem.student.studentNum}</td>
 									<td>${dataitem.userbasicinfo.userBasicInfoName}</td>
 									<td>${dataitem.naturalclass.name}</td>
 

@@ -166,11 +166,11 @@
 										<th scope="row"><input type="checkbox" value="">
 											${(pagedResource.currentPageNo-1) * pagedResource.pageSize +index}</th>
 										<td>${dataitem.uri}</td>
-										<td>${dataitem.uri_element}</td>
+										<td>${dataitem.uriElement}</td>
 										<td><button type="button" class="btn btn-default btn-xs"
-												onclick="onUpdate('${dataitem.id}','${dataitem.uri}','${dataitem.uri_element}')">修改...</button>
+												onclick="onUpdate('${dataitem.id}','${dataitem.uri}','${dataitem.uriElement}')">修改...</button>
 											<button type="button" class="btn btn-default btn-xs"
-												onclick="onDelete('${dataitem.id},'${dataitem.uri}','${dataitem.uri_element}'')">删除</button></td>
+												onclick="onDelete('${dataitem.id},'${dataitem.uri}','${dataitem.uriElement}'')">删除</button></td>
 									</tr>
 									<c:set var="index" value="${index + 1}"></c:set>
 								</c:forEach>

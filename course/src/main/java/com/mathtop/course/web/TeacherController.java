@@ -28,6 +28,7 @@ import com.mathtop.course.domain.UserBasicInfo;
 import com.mathtop.course.domain.UserContactInfo;
 import com.mathtop.course.domain.UserContactType;
 import com.mathtop.course.service.ContactTypeService;
+import com.mathtop.course.service.DeleteService;
 import com.mathtop.course.service.DepartmentService;
 import com.mathtop.course.service.GroupService;
 import com.mathtop.course.service.SchoolService;
@@ -65,10 +66,14 @@ public class TeacherController extends BaseController {
 	@Autowired
 	private UserGroupService usergroupService;
 
+	@Autowired
+	private DeleteService deleteService;
+
 	private final String strPageURI = "teacher";
 
 	@RequestMapping(value = "/info-{t_user_id}")
-	public ModelAndView info(HttpServletRequest request, @PathVariable String t_user_id, RedirectAttributes redirectAttributes) {
+	public ModelAndView info(HttpServletRequest request, @PathVariable String t_user_id,
+			RedirectAttributes redirectAttributes) {
 
 		ModelAndView mav = new ModelAndView();
 
@@ -107,7 +112,8 @@ public class TeacherController extends BaseController {
 		String[] contacttypeId = request.getParameterValues("contacttypeId");
 		String[] user_contact_value = request.getParameterValues("user_contact_value");
 
-		teacherService.updateTeacherInfo(t_user_id, user_basic_info_birthday, user_basic_info_sex, contacttypeId, user_contact_value);
+		teacherService.updateTeacherInfo(t_user_id, user_basic_info_birthday, user_basic_info_sex, contacttypeId,
+				user_contact_value);
 
 		ModelAndView mav = new ModelAndView();
 		// SetPage(mav, t_school_id, 1);
@@ -156,7 +162,6 @@ public class TeacherController extends BaseController {
 		return mav;
 	}
 
-	
 	/**
 	 * 为学院添加教师
 	 * 
@@ -171,14 +176,12 @@ public class TeacherController extends BaseController {
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(PagedObjectConst.Paged_School, pagedSchool);
-		
-		String t_school_id=null;
 
-		
+		String t_school_id = null;
+
 		List<School> schools = pagedSchool.getResult();
 		if (schools.size() > 0)
 			t_school_id = schools.get(0).getId();
-		
 
 		SetPage(mav, t_school_id, 1);
 
@@ -198,7 +201,6 @@ public class TeacherController extends BaseController {
 		return mav;
 	}
 
-	
 	/**
 	 * 添加学院
 	 * 
@@ -273,14 +275,14 @@ public class TeacherController extends BaseController {
 	 * @param user
 	 * @return
 	 */
-	@RequestMapping(value = "/DELETE-{t_school_id}-{t_department_id}", method = RequestMethod.GET)
-	public ModelAndView DELETE(@PathVariable String t_school_id, @PathVariable String t_department_id) {
+	@RequestMapping(value = "/delete-{t_user_id}", method = RequestMethod.GET)
+	public ModelAndView DELETE(HttpServletRequest request, @PathVariable String t_user_id) {
 
-		// if (t_school_id != null && t_department_id != null)
-		// departmentService.DELETE(t_school_id, t_department_id);
-
-		Integer pageNo = 1;
-		return ListAll(t_school_id, pageNo);
+		if (t_user_id != null)
+			deleteService.deleteByUserId(request, t_user_id);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/teacher/list.html");
+		return mav;
 	}
 
 	/**
@@ -370,7 +372,8 @@ public class TeacherController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/updateteacher-{t_user_id}")
-	public ModelAndView updateteacher(HttpServletRequest request, RedirectAttributes redirectAttributes, @PathVariable String t_user_id) {
+	public ModelAndView updateteacher(HttpServletRequest request, RedirectAttributes redirectAttributes,
+			@PathVariable String t_user_id) {
 		String t_school_id = request.getParameter("t_school_id");
 		// String t_department_id = request.getParameter("t_department_id");
 		// String user_password = request.getParameter("user_password");
@@ -436,8 +439,8 @@ public class TeacherController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/setteacherpwd-{t_school_id}-{t_user_id}-{pageNo}")
-	public ModelAndView setteacherpwd(HttpServletRequest request, @PathVariable String t_school_id, @PathVariable String t_user_id,
-			@PathVariable Integer pageNo) {
+	public ModelAndView setteacherpwd(HttpServletRequest request, @PathVariable String t_school_id,
+			@PathVariable String t_user_id, @PathVariable Integer pageNo) {
 
 		ModelAndView mav = new ModelAndView();
 
@@ -519,7 +522,8 @@ public class TeacherController extends BaseController {
 
 		SetPage(mav, t_school_id, pageNo);
 
-		Page<TeacherViewData> pagedTeacherViewData = teacherService.getPage(t_school_id, pageNo, CommonConstant.PAGE_SIZE);
+		Page<TeacherViewData> pagedTeacherViewData = teacherService.getPage(t_school_id, pageNo,
+				CommonConstant.PAGE_SIZE);
 		mav.addObject(PagedObjectConst.Paged_TeacherViewData, pagedTeacherViewData);
 
 		mav.setViewName("teacher/list");
@@ -542,7 +546,8 @@ public class TeacherController extends BaseController {
 
 		SetPage(mav, t_school_id, pageNo);
 
-		Page<TeacherViewData> pagedStudentViewData = teacherService.getPage(t_school_id, pageNo, CommonConstant.PAGE_SIZE);
+		Page<TeacherViewData> pagedStudentViewData = teacherService.getPage(t_school_id, pageNo,
+				CommonConstant.PAGE_SIZE);
 
 		mav.addObject(PagedObjectConst.Paged_StudentViewData, pagedStudentViewData);
 

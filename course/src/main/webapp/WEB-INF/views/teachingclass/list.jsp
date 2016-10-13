@@ -124,25 +124,25 @@
 						<div class="gridseparator"></div>
 						<div class="container-fluid">
 							<div class="row">
-								<div class="col-md-1">
+								<div class="col-sm-1 col-md-1">
 									<strong>#</strong>
 								</div>
-								<div class="col-md-2">
+								<div class="col-sm-2 col-md-2">
 									<strong>教学班名称</strong>
 								</div>
-								<div class="col-md-2">
+								<div class="col-sm-2 col-md-2">
 									<strong>课程</strong>
 								</div>
-								<div class="col-md-2">
+								<div class="col-sm-2 col-md-2">
 									<strong>授课时间</strong>
 								</div>
-								<div class="col-md-2">
+								<div class="col-sm-2 col-md-2">
 									<strong>教师</strong>
 								</div>
-								<div class="col-md-1">
+								<div class="col-sm-1 col-md-1">
 									<strong>学生</strong>
 								</div>
-								<div class="col-md-2">
+								<div class="col-sm-2 col-md-2">
 									<strong>操作</strong>
 								</div>
 							</div>
@@ -150,21 +150,21 @@
 							<c:set var="index" value="1"></c:set>
 							<c:forEach var="dataitem" items="${pagedTeachingClassViewData.result}">
 								<div class="row">
-									<div class="col-md-1">
+									<div class="col-sm-1 col-md-1">
 										<input type="checkbox" value=""> ${(pagedTeachingClassViewData.currentPageNo-1) * pagedTeachingClassViewData.pageSize +index}
 									</div>
 
 									<!-- 教学班名称 -->
-									<div class="col-md-2">${dataitem.courseTeachingClass.name}</div>
+									<div class="col-sm-2 col-md-2">${dataitem.courseTeachingClass.name}</div>
 
 									<!-- 课程名称 -->
-									<div class="col-md-2">${dataitem.course.name}</div>
+									<div class="col-sm-2 col-md-2">${dataitem.course.name}</div>
 
 									<!-- 授课时间 -->
-									<div class="col-md-2">${dataitem.term.teachingYearBegin}-${dataitem.term.teachingYearEnd}学年第${dataitem.term.teachingTerm}学期</div>
+									<div class="col-sm-2 col-md-2">${dataitem.term.teachingYearBegin}-${dataitem.term.teachingYearEnd}学年第${dataitem.term.teachingTerm}学期</div>
 
 									<!-- 授课教师 -->
-									<div class="col-md-2">
+									<div class="col-sm-2 col-md-2">
 
 										<div class="container-fluid" style="margin: 0px; padding: 0px;">
 											<div class="row" style="margin: 0px; padding: 0px;">
@@ -185,13 +185,13 @@
 									</div>
 
 									<!-- 学生 -->
-									<div class="col-md-1">
+									<div class="col-sm-1 col-md-1">
 										<button type="button" class="btn btn-default btn-xs"
 											onclick="window.location.href='<c:url value="/teachingclass/student-${dataitem.courseTeachingClass.id}.html"/>'">详细...</button>
 									</div>
 
 									<!-- 操作 -->
-									<div class="col-md-2">
+									<div class="col-sm-2 col-md-2">
 										<button type="button" class="btn btn-default btn-xs"
 											onclick="location='<c:url value="/teachingclass/update-${dataitem.courseTeachingClass.id}.html"/>'">修改...</button>
 										<button type="button" class="btn btn-default btn-xs"

@@ -136,7 +136,8 @@
 							<c:forEach var="dataitem" items="${pagedCourseTeachingTerm.result}">
 								<div class="row">
 									<div class="col-md-1">
-										<input type="checkbox" value=""> ${(pagedCourseTeachingTerm.currentPageNo-1) * pagedCourseTeachingTerm.pageSize +index}
+										<input type="checkbox" value="">
+										${(pagedCourseTeachingTerm.currentPageNo-1) * pagedCourseTeachingTerm.pageSize +index}
 									</div>
 									<div class="col-md-2">${dataitem.teachingYearBegin }</div>
 									<div class="col-md-2">${dataitem.teachingYearEnd }</div>
@@ -149,9 +150,9 @@
 
 									<div class="col-md-2">
 										<button type="button" class="btn btn-default btn-xs"
-											onclick="onUpdate('${dataitem.id}','${dataitem.teachingYearBegin}','${dataitem.teachingYearEnd}','${dataitem.teachingTerm}')">修改...</button>
+											onclick="onUpdate('${dataitem.id}','${dataitem.teachingYearBegin}','${dataitem.teachingYearEnd}','${dataitem.teachingTerm}','${dataitem.weeks}','${dataitem.weekBegin}')">修改...</button>
 										<button type="button" class="btn btn-default btn-xs"
-											onclick="onDelete('${dataitem.id}','${dataitem.teachingYearBegin}','${dataitem.teachingYearEnd}','${dataitem.teachingTerm}')">删除</button>
+											onclick="onDelete('${dataitem.id}','${dataitem.teachingYearBegin}','${dataitem.teachingYearEnd}','${dataitem.teachingTerm}','${dataitem.weeks}','${dataitem.weekBegin}')">删除</button>
 									</div>
 								</div>
 								<c:set var="index" value="${index + 1}"></c:set>
@@ -254,9 +255,9 @@
 							<div class="input-group date form_date col-sm-8" data-date="" data-date-format="yyyy-mm-dd"
 								data-link-field="dtp_input2" data-link-format="yyyy-mm-dd hh:ii">
 								<input class="form-control" size="16" type="text" id="week_begin" value="" name="week_begin"
-									readonly required> <span class="input-group-addon"><span
-									class="glyphicon glyphicon-remove"></span></span> <span class="input-group-addon"><span
-									class="glyphicon glyphicon-calendar"></span></span>
+									readonly required>
+								<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> <span
+									class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 							</div>
 
 
@@ -289,11 +290,12 @@
 					<h4 class="modal-title" id="myModalLabel">修改教学学期</h4>
 				</div>
 
-				<form class="form-signin" action="<c:url value='/${pagedURI}/update.html'/>" method="post">
+				<form class="form-signin" action="<c:url value='/courseteachingterm/update.html'/>" method="post">
 
 
 					<div class="modal-body">
-						<h4 class="form-signin-heading">请修改课程性质属性</h4>
+					<input type="hidden" id="inputid" name="id">
+						<h4 class="form-signin-heading">请修改教学学期属性</h4>
 						<div class="form-group">
 							<label for="teaching_year_begin" class="col-sm-4 control-label">学年开始</label>
 							<div class="col-sm-8">
@@ -333,9 +335,9 @@
 							<div class="input-group date form_date col-sm-8" data-date="" data-date-format="yyyy-mm-dd"
 								data-link-field="dtp_input2" data-link-format="yyyy-mm-dd hh:ii">
 								<input class="form-control" size="16" type="text" id="week_begin" value="" name="week_begin"
-									readonly required> <span class="input-group-addon"><span
-									class="glyphicon glyphicon-remove"></span></span> <span class="input-group-addon"><span
-									class="glyphicon glyphicon-calendar"></span></span>
+									readonly required>
+								<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> <span
+									class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 							</div>
 
 
@@ -356,7 +358,7 @@
 	</div>
 
 
-<%@ include file="../../shared/importJs.jsp"%>
+	<%@ include file="../../shared/importJs.jsp"%>
 	<%@ include file="../../shared/sysLastInclude.jsp"%>
 
 
@@ -389,12 +391,15 @@
 
 		}
 
-		function onUpdate(id, name, note) {
-			var url = "location='<c:url value="/courseteachingterm/update-"/>" + id
-					+ ".html'";
+		function onUpdate(id, begin_year, end_year, term, weeks, week_begin) {
+			var url = "location='<c:url value="/courseteachingterm/update-"/>"
+					+ id + ".html'";
 			$('#updateModal').find('.modal-body #inputid').val(id);
-			$('#updateModal').find('.modal-body #inputname').val(name);
-			$('#updateModal').find('.modal-body #inputnote').val(note);
+			$('#updateModal').find('.modal-body #teaching_year_begin').val(begin_year);
+			$('#updateModal').find('.modal-body #teaching_year_end').val(end_year);
+			$('#updateModal').find('.modal-body #teaching_term').val(term);
+			$('#updateModal').find('.modal-body #weeks').val(weeks);
+			$('#updateModal').find('.modal-body #week_begin').val(week_begin);			
 			$('#updateModal').find('.modal-footer #updatebtn').attr("onclick",
 					url);
 
@@ -402,11 +407,12 @@
 
 		}
 
-		function onDelete(id, begin,end,term) {
-			var url = "location='<c:url value="/courseteachingterm/delete-"/>" + id
-					+ ".html'";
+		function onDelete(id, begin_year, end_year, term, weeks, week_begin) {
+			var url = "location='<c:url value="/courseteachingterm/delete-"/>"
+					+ id + ".html'";
 
-			$('#deleteModal').find('.modal-body #deleteinfo').text(begin+"-"+end+"学年第"+term+"学期");
+			$('#deleteModal').find('.modal-body #deleteinfo').text(
+					begin_year + "-" + end_year + "学年第" + term + "学期");
 			$('#deleteModal').find('.modal-footer #deletebtn').attr("onclick",
 					url);
 

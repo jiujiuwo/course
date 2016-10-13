@@ -246,7 +246,7 @@
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">修改课程资料类型</h4>
+					<h4 class="modal-title" id="myModalLabel">修改课程作业类型</h4>
 				</div>
 
 				<form class="form-signin"

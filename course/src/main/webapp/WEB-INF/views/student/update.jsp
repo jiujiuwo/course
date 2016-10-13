@@ -119,7 +119,7 @@
 					<label for="student_num" class="col-sm-1 control-label">学号</label>
 					<div class="col-md-3">
 						<input name="student_num" class="form-control placeholder-no-fix"
-							autocomplete="off" placeholder="学号" value="${selectedStudentViewData.student.student_num }"/>
+							autocomplete="off" placeholder="学号" value="${selectedStudentViewData.student.studentNum }"/>
 					</div>
 
 					<label for="userBasicInfoName" class="col-sm-1 control-label">姓名</label>
@@ -141,7 +141,7 @@
 							data-date-format="yyyy-mm-dd" data-link-field="dtp_input2"
 							data-link-format="yyyy-mm-dd">
 							<input class="form-control" size="16" type="text"
-							value='<fmt:formatDate value="${selectedStudentViewData.userbasicinfo.user_basic_info_birthday}" pattern="yyyy-MM-dd"/>'
+							value='<fmt:formatDate value="${selectedStudentViewData.userbasicinfo.userBasicInfoBirthday}" pattern="yyyy-MM-dd"/>'
 								value="1980-01-01" name="user_basic_info_birthday" readonly>
 							<span class="input-group-addon"><span
 								class="glyphicon glyphicon-remove"></span></span> <span
@@ -156,13 +156,13 @@
 					<label for="user_basic_info_sex" class="col-sm-1 control-label">性别</label>
 					<div class="col-md-3">
 						<label class="radio-inline"> <input type="radio" value="0"
-							<c:if test="${selectedStudentViewData.userbasicinfo.user_basic_info_sex<1}">
+							<c:if test="${selectedStudentViewData.userbasicinfo.userBasicInfoSex<1}">
 							checked="checked"
 							</c:if>
 							name="user_basic_info_sex" id="inlineRadio1" value="option1">
 							男
 						</label> <label class="radio-inline"> <input type="radio"
-							<c:if test="${selectedStudentViewData.userbasicinfo.user_basic_info_sex>0}">
+							<c:if test="${selectedStudentViewData.userbasicinfo.userBasicInfoSex>0}">
 							checked="checked"
 							</c:if>
 							value="1" name="user_basic_info_sex" id="inlineRadio2"

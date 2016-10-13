@@ -195,7 +195,7 @@
 
 
 									<a id="attendancetype${data.id}"
-										href="/courseattendance/list-${selectedCourseTeachingClassID}-${data.id}.html"
+										href="courseattendance/list-${selectedCourseTeachingClassID}-${data.id}.html"
 										class="list-group-item ">${data.name}</a>
 
 								</c:forEach>

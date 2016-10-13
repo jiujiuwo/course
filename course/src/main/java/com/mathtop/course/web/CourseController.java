@@ -106,14 +106,20 @@ public class CourseController extends BaseController {
 	 * @param user
 	 * @return
 	 */
-	@RequestMapping(value = "/DELETE-{t_school_id}", method = RequestMethod.GET)
-	public ModelAndView DELETE() {
+	@RequestMapping(value = "/delete-{t_course_id}", method = RequestMethod.GET)
+	public ModelAndView DELETE(HttpServletRequest request, @PathVariable String t_course_id) {
+		
+		
 
-		// if (t_school_id != null && t_department_id != null)
-		// departmentService.DELETE(t_school_id, t_department_id);
+		ModelAndView mav = new ModelAndView();
+		
+		if (t_course_id != null && t_course_id.trim().length() > 0) {
+			courseService.deleteById(request, t_course_id);
+		}
+		
+		mav.setViewName("redirect:/course/list.html");
 
-		Integer pageNo = 1;
-		return ListAll(pageNo);
+		return mav;
 	}
 
 	/**

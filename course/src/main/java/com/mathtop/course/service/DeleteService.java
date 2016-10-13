@@ -374,13 +374,6 @@ public class DeleteService {
 
 	
 
-	/**
-	 * 删除课程
-	 */
-	public void deleteCourseById(HttpServletRequest request, String t_course_id) {
-		courseService.deleteById(request, t_course_id);		
-		
-	}
 
 	/**
 	 * 删除教学班

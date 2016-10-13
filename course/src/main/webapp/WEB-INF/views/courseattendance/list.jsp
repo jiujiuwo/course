@@ -142,16 +142,16 @@
 							<div class="col-md-2">
 								<a
 									href="<c:url value="/courseattendance/studentattendance-${selectedCourseTeachingClassID}-${selectedCourseAttendanceTypeData.id}-${data.attendance.id}.html"/>">
-									<fmt:formatDate value="${data.attendance.begin_datetime}"
+									<fmt:formatDate value="${data.attendance.beginDatetime}"
 										pattern="yyyy-MM-dd HH:mm" /> - <fmt:formatDate
-										value="${data.attendance.end_datetime}"
+										value="${data.attendance.endDatetime}"
 										pattern="yyyy-MM-dd HH:mm" />
 								</a>
 
 							</div>
 							<div class="col-md-2">
 								<button type="button" class="btn btn-default btn-xs"
-									onclick="onUpdate('${data.attendance.id}','${data.attendance.begin_datetime}','${data.attendance.end_datetime}')">修改...</button>
+									onclick="onUpdate('${data.attendance.id}','${data.attendance.beginDatetime}','${data.attendance.endDatetime}')">修改...</button>
 								<button type="button" class="btn btn-default btn-xs"
 									onclick="onDelete('${data.attendance.id}')">删除</button>
 

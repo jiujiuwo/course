@@ -117,7 +117,7 @@
 				<div class="form-group">
 					<label for="student_num" class="col-sm-1 control-label">学号</label>
 					<div class="col-md-3">
-						<p class="form-control-static">${selectedStudentViewData.student.student_num}</p>
+						<p class="form-control-static">${selectedStudentViewData.student.studentNum}</p>
 					</div>
 
 					<label for="userBasicInfoName" class="col-sm-1 control-label">姓名</label>
@@ -131,7 +131,7 @@
 					<label for="user_password" class="col-sm-1 control-label">初始密码</label>
 					<div class="col-md-3">
 						<input name="user_password"
-							class="form-control placeholder-no-fix" value="${selectedStudentViewData.student.student_num}"
+							class="form-control placeholder-no-fix" value="${selectedStudentViewData.student.studentNum}"
 							autocomplete="off" placeholder="初始密码" />
 					</div>
 				</div>
@@ -143,7 +143,7 @@
 						class="col-sm-1 control-label">生日</label>
 					<p class="form-control-static">
 						<fmt:formatDate
-							value="${selectedStudentViewData.userbasicinfo.user_basic_info_birthday}"
+							value="${selectedStudentViewData.userbasicinfo.userBasicInfoBirthday}"
 							pattern="yyyy-MM-dd" />
 					</p>
 				</div>
@@ -151,14 +151,14 @@
 				<div class="form-group">
 					<label for="user_basic_info_sex" class="col-sm-1 control-label">性别</label>
 					<c:if
-						test="${selectedStudentViewData.userbasicinfo.user_basic_info_sex<1}">
+						test="${selectedStudentViewData.userbasicinfo.userBasicInfoSex<1}">
 						<p class="form-control-static">男</p>
 					</c:if>
 
 
 
 					<c:if
-						test="${selectedStudentViewData.userbasicinfo.user_basic_info_sex>0}">
+						test="${selectedStudentViewData.userbasicinfo.userBasicInfoSex>0}">
 						<p class="form-control-static">女</p>
 					</c:if>
 
@@ -228,7 +228,7 @@
 										<tr id="contactrow${dataitem.usercontacttype.id}">
 											<th scope="row">${index}</th>
 											<td>${dataitem.usercontacttype.name}</td>
-											<td>${dataitem.usercontactinfo.user_contact_value}</td>
+											<td>${dataitem.usercontactinfo.userContactValue}</td>
 
 										</tr>
 										<c:set var="index" value="${index + 1}"></c:set>

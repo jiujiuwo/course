@@ -100,6 +100,8 @@ public class CourseService {
 	 * 删除课程
 	 * */
 	public void deleteById(HttpServletRequest request, String t_course_id){
+		
+		
 		//1.删除使用专业
 		coursedepartmentDao.deleteByCourseId(t_course_id);
 		
@@ -111,7 +113,8 @@ public class CourseService {
 		//3.删除课程-教学班
 		CourseTeachingClassService.deleteByCourseId(request, t_course_id);
 		
-		
+		//删除自己
+		courseDao.deleteById(t_course_id);
 	}
 	
 	/**

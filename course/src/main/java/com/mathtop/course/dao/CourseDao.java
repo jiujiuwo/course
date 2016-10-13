@@ -63,10 +63,25 @@ public class CourseDao extends BaseDao<Course> {
 	private final String GET_COURSE_COUNT_BY_DEPARTMENT_ID = "select count(*)"
 			+ " from t_course   where id in  ( select t_course_id"
 			+ " from t_course_department" + " where t_department_id=?" + " )";
+	
+	//insert
 	private final String INSERT_COURSE = "INSERT INTO t_course(id,name,english_name,num,class_hours,experiment_hours,t_course_type_id,t_course_style_id) VALUES(?,?,?,?,?,?,?,?)";
 	
+	//update
 	private final String UPDATE_COURSE = "update t_course set name=?,english_name=?,num=?,class_hours=?,experiment_hours=?,t_course_type_id=?,t_course_style_id=? where id=?";
+	
+	
+	// delete by id
+	private String DELETE_BY_ID = "DELETE FROM t_course WHERE id=?";
 
+	/**
+	 * 删除
+	 * */
+	public void deleteById(String id) {
+		Object params[] = new Object[] { id };
+		int types[] = new int[] { Types.VARCHAR };
+		getJdbcTemplate().update(DELETE_BY_ID, params, types);
+	}
 	
 	/**
 	 * 修改

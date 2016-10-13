@@ -173,7 +173,7 @@
 
 									<td>${dataitem.permission.name}</td>
 									<td>${dataitem.permission.note}</td>
-									<td>${dataitem.resource.uri}:${dataitem.resource.uri_element}</td>
+									<td>${dataitem.resource.uri}:${dataitem.resource.uriElement}</td>
 									<td>${dataitem.permissionoperator.name}</td>
 									<td><input id="permissionswitch${index}" name="permission"
 											value="${dataitem.permission.id}" type="checkbox"

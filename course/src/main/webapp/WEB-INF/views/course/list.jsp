@@ -158,7 +158,7 @@
 										<td><button type="button" class="btn btn-default btn-xs"
 												onclick="location='<c:url value="/course/update-${dataitem.course.id}.html"/>'">修改...</button>
 											<button type="button" class="btn btn-default btn-xs"
-												onclick="onDelete('${dataitem.course.id}')">删除</button></td>
+												onclick="onDelete('${dataitem.course.id}','${dataitem.course.name}')">删除</button></td>
 									</tr>
 									<c:set var="index" value="${index + 1}"></c:set>
 								</c:forEach>
@@ -209,6 +209,34 @@
 
 	<%@ include file="../../shared/importJs.jsp"%>
 	<%@ include file="../../shared/sysLastInclude.jsp"%>
+
+<script>
+		function onSearch() {
+			var st = document.getElementById("SearchText").value;
+
+			if (st != null && st.trim().length > 0) {
+				var url = "select-" + st + ".html";
+
+				window.location.href = url;
+			} else
+				ShowInfoMsg("搜索内容不能为空");
+
+		}
+
+		function onDelete(id,name) {
+			var url = "location='<c:url value="course/delete-"/>"
+					+ id + ".html'";
+
+			$('#deleteModal').find('.modal-body #deleteinfo').text(name);
+			$('#deleteModal').find('.modal-footer #deletebtn').attr("onclick",
+					url);
+
+			$('#deleteModal').modal('show');
+
+		}
+
+		
+	</script>
 
 
 

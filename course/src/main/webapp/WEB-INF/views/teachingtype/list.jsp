@@ -186,22 +186,22 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">修改联系类型</h4>
+					<h4 class="modal-title" id="myModalLabel">修改教师授课类型</h4>
 				</div>
 
 				<form class="form-signin" action="<c:url value='/${pagedURI}/update.html'/>" method="post">
 
 
 					<div class="modal-body">
-						<h4 class="form-signin-heading">请修改联系类型属性</h4>
-						<label for="inputname" class="sr-only">联系类型名称</label>
+						<h4 class="form-signin-heading">请修改教师授课类型属性</h4>
+						<label for="inputname" class="sr-only">教师授课类型名称</label>
 						<input type="text" id="inputid" class="form-control" name="id" value="" placeholder="id"
 							style="display: none;">
 						<input type="text" id="inputname" class="form-control" name="name" value=""
-							placeholder="联系类型名称" required autofocus>
-						<label for="inputnote" class="sr-only">联系类型描述</label>
+							placeholder="教师授课类型名称" required autofocus>
+						<label for="inputnote" class="sr-only">教师授课类型描述</label>
 						<input type="text" id="inputnote" class="form-control" name="note" value=""
-							placeholder="联系类型描述">
+							placeholder="教师授课类型描述">
 
 					</div>
 

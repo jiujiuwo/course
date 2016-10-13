@@ -132,7 +132,7 @@
 							data-date-format="yyyy-mm-dd" data-link-field="dtp_input2"
 							data-link-format="yyyy-mm-dd">
 							<input class="form-control" size="16" type="text"
-								value='<fmt:formatDate value="${selectedTeacherViewData.userbasicinfo.user_basic_info_birthday}" pattern="yyyy-MM-dd"/>'
+								value='<fmt:formatDate value="${selectedTeacherViewData.userbasicinfo.userBasicInfoBirthday}" pattern="yyyy-MM-dd"/>'
 								name="user_basic_info_birthday" readonly> <span
 								class="input-group-addon"><span
 								class="glyphicon glyphicon-remove"></span></span> <span
@@ -147,13 +147,13 @@
 					<label for="user_basic_info_sex" class="col-sm-1 control-label">性别</label>
 					<div class="col-md-3">
 						<label class="radio-inline"> <input type="radio" value="0"
-							<c:if test="${selectedTeacherViewData.userbasicinfo.user_basic_info_sex<1}">
+							<c:if test="${selectedTeacherViewData.userbasicinfo.userBasicInfoSex<1}">
 							checked="checked"
 							</c:if>
 							name="user_basic_info_sex" id="inlineRadio1" value="option1">
 							男
 						</label> <label class="radio-inline"> <input type="radio"
-							<c:if test="${selectedTeacherViewData.userbasicinfo.user_basic_info_sex>0}">
+							<c:if test="${selectedTeacherViewData.userbasicinfo.userBasicInfoSex>0}">
 							checked="checked"
 							</c:if>
 							value="1" name="user_basic_info_sex" id="inlineRadio2"

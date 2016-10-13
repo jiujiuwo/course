@@ -279,7 +279,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">为${selectedCourseTeachingClassViewData.courseTeachingClass.name}添加分组</h4>
+					<h4 class="modal-title" id="myModalLabel">为${selectedCourseTeachingClassViewData.courseTeachingClass.name}修改分组</h4>
 				</div>
 
 				<form class="form-horizontal"
@@ -291,20 +291,20 @@
 						<div class="form-group">
 							<label for="name" class="col-sm-2 control-label">小组名称</label>
 							<div class="col-sm-2">
-								<input type="text" class="form-control" id="name" name="name" placeholder="小组名称" value="2">
+								<input type="text" class="form-control" id="name" name="name" placeholder="小组名称" >
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="note" class="col-sm-2 control-label">小组说明</label>
 							<div class="col-sm-2">
-								<input type="text" class="form-control" id="note" name="note" placeholder="小组说明" value="2">
+								<input type="text" class="form-control" id="note" name="note" placeholder="小组说明" >
 							</div>
 						</div>
 
 					</div>
 					<div class="modal-footer">
-						<button type="submit" class="btn btn-primary">添加</button>
+						<button type="submit" class="btn btn-primary">修改</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 					</div>
 
@@ -406,13 +406,17 @@
 		}
 
 		function onUpdate(id, t_group_id, name, note) {
+			
+			
+		
 			var url = "location='<c:url value="coursegroup/updategroup-${selectedCourseTeachingClassID}-"/>"
 					+ id + ".html'";
+			
 
 			$('#updateGroupModal').find('.modal-body #t_group_id').val(
 					t_group_id);
-			$('#updateGroupModal').find('.modal-body #name').text(name);
-			$('#updateGroupModal').find('.modal-body #note').text(note);
+			$('#updateGroupModal').find('.modal-body #name').val(name);
+			$('#updateGroupModal').find('.modal-body #note').val(note);
 
 			$('#updateGroupModal').modal('show');
 
