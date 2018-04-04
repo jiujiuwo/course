@@ -51,11 +51,14 @@ public class CourseTeachingClassStudentGroupController extends CourseTeachingCla
 	@RequestMapping(value = "/list-{t_course_teaching_class_id}")
 	public ModelAndView list(HttpServletRequest request, RedirectAttributes redirectAttributes, HttpSession session,
 			@PathVariable String t_course_teaching_class_id,
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 
 		ModelAndView mav = new ModelAndView();
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
+		
 
 		// 设置课程基本信息，包括授课、作业类型等
 		SetCourseTeachingClassBaseInfo(mav, t_course_teaching_class_id);

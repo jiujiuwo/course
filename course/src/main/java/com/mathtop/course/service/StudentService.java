@@ -13,8 +13,9 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,7 +126,6 @@ public class StudentService {
 	 */
 	private void ProcessExcel97(String localfilename, String[] groupId) throws Exception {
 
-		
 		try {
 
 			File file = new File(localfilename);
@@ -166,8 +166,12 @@ public class StudentService {
 						HSSFCell cell = row.getCell(k);
 						if (null == cell)
 							continue;
+						
+						DataFormatter formatter = new DataFormatter();
 
-						String strIndexName = cell.getStringCellValue().trim();
+						//String strIndexName = cell.getStringCellValue().trim();
+						String strIndexName =formatter.formatCellValue(cell);
+
 
 						if (i == rowstart) {
 
@@ -228,10 +232,13 @@ public class StudentService {
 	private void ProcessExcel(String localfilename, String[] groupId) throws Exception {
 
 		OPCPackage file;
+
 		try {
+
 			file = OPCPackage.open(localfilename);
 
 			XSSFWorkbook xssfWorkbook = new XSSFWorkbook(file);
+
 			for (XSSFSheet sheet : xssfWorkbook) {
 
 				int rowstart = sheet.getFirstRowNum();
@@ -245,7 +252,7 @@ public class StudentService {
 
 				for (int i = rowstart; i <= rowEnd; i++) {
 
-					XSSFRow row = sheet.getRow(i);
+					Row row = sheet.getRow(i);
 					if (null == row)
 						continue;
 					int cellStart = row.getFirstCellNum();
@@ -258,11 +265,14 @@ public class StudentService {
 					String naturalclass = null;
 
 					for (int k = cellStart; k <= cellEnd; k++) {
-						XSSFCell cell = row.getCell(k);
+						Cell cell = row.getCell(k);
 						if (null == cell)
 							continue;
 
-						String strIndexName = cell.getStringCellValue().trim();
+						DataFormatter formatter = new DataFormatter();
+
+						//String strIndexName = cell.getStringCellValue().trim();
+						String strIndexName =formatter.formatCellValue(cell);
 
 						if (i == rowstart) {
 
@@ -337,7 +347,7 @@ public class StudentService {
 	public Student getStudentByStudentNum(String student_num) {
 		return studentDao.getStudentByStudentNum(student_num);
 	}
-	
+
 	public Student getStudentByStudentId(String t_student_id) {
 		return studentDao.getStudentByID(t_student_id);
 	}
@@ -367,6 +377,29 @@ public class StudentService {
 	}
 
 	/**
+	 * 学生是否存在
+	 */
+	public String isExist(String t_natural_class_id, String student_name, String student_num) {
+
+		return naturalclassstudentDao.getStudentId(t_natural_class_id, student_num);
+	}
+	
+	
+	/**
+	 * 根据学号查询学生是否存在
+	 * @param student_name
+	 * @param student_num
+	 * @return 如果学生存在，则返回该学生的id，否则返回null
+	 */
+	public String isExist(String student_num) {
+
+		Student student= studentDao.getStudentByStudentNum(student_num);
+		if(student!=null)
+			return student.getId();
+		return null;
+	}
+
+	/**
 	 * 添加学生
 	 * 
 	 * @param t_natural_class_id
@@ -388,11 +421,20 @@ public class StudentService {
 	 * @param groupId
 	 *            组
 	 * 
-	 * @return User
+	 * @return t_student_id
 	 */
-	public void AddStudent(String t_natural_class_id, String user_password, String student_num,
+	public String AddStudent(String t_natural_class_id, String user_password, String student_num,
 			String userBasicInfoName, String user_basic_info_birthday, String user_basic_info_sex,
-			String[] contacttypeId, String[] user_contact_value, String[] groupId) {
+			String[] contacttypeId, String[] user_contact_value, String[] groupId) throws Exception {
+
+		if (t_natural_class_id == null)
+			return null;
+
+		// 学生存在则不添加
+		String t_student_id = isExist(t_natural_class_id, userBasicInfoName, student_num);
+
+		if (t_student_id != null)
+			throw new StudentExistException("学生学号已经存在");
 
 		// user基本信息
 		User user = new User();
@@ -414,7 +456,7 @@ public class StudentService {
 
 		// 添加student
 		stu.setUserId(t_user_id);
-		studentDao.add(stu);
+		t_student_id = studentDao.add(stu);
 
 		// 添加用户基本信息
 		userbasicinfo.setUserId(t_user_id);
@@ -427,6 +469,92 @@ public class StudentService {
 				usergroupDao.add(gid, t_user_id);
 			}
 		}
+
+		return t_student_id;
+
+	}
+
+	/**
+	 * 添加学生
+	 * 
+	 * @throws Exception
+	 */
+
+	public String AddStudent(String schoolName, String departmentName, String naturalclassname, String student_name,
+			String student_num) throws Exception {
+
+		// 必须有学号
+		if (student_num == null || student_num.length() == 0)
+			return null;
+
+		// 必须有姓名
+		if (student_name == null || student_name.length() == 0)
+			return null;
+
+		if (schoolName != null && schoolName.trim().length() == 0)
+			schoolName = null;
+
+		if (departmentName != null && departmentName.trim().length() == 0)
+			departmentName = null;
+
+		if (naturalclassname != null && naturalclassname.trim().length() == 0)
+			naturalclassname = null;
+
+		// 取得班级
+
+		String t_natural_class_id = naturalClassService.getNaturalClassId(schoolName, departmentName, naturalclassname);
+
+		if (t_natural_class_id == null)
+			return null;
+
+		// 学生存在则不添加
+		String t_student_id = isExist(student_num);
+		
+		if (t_student_id != null)
+			return t_student_id;
+		
+		t_student_id = isExist(t_natural_class_id, student_name, student_num);
+
+		if (t_student_id != null)
+			return t_student_id;
+		
+		
+
+		try {
+
+			t_student_id = AddStudent(t_natural_class_id, student_num, student_num, student_name, "1980-01-01", "0",
+					null, null, null);
+		} catch (StudentExistException e) {
+			throw e;
+		}
+		return t_student_id;
+
+	}
+
+	/**
+	 * 添加学生
+	 * 
+	 * @throws Exception
+	 */
+	public String AddStudent(String schoolName, String departmentName, String naturalclassname, String name,
+			String student_num, String[] groupId) throws Exception {
+
+		String t_student_id = AddStudent(schoolName, departmentName, naturalclassname, name, student_num);
+
+		if (t_student_id == null)
+			return null;
+
+		Student stu = studentDao.getStudentByID(t_student_id);
+		if (stu == null)
+			return null;
+
+		if (groupId != null) {
+			for (String gid : groupId) {
+				usergroupDao.add(gid, stu.getUserId());
+			}
+		}
+
+		return t_student_id;
 
 	}
 
@@ -463,128 +591,6 @@ public class StudentService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-	}
-
-	/**
-	 * 学生是否存在
-	 */
-	public String isExist(String t_natural_class_id, String name, String student_num) {
-		
-		return naturalclassstudentDao.getStudentId(t_natural_class_id, student_num);
-	}
-
-	/**
-	 * 添加学生
-	 */
-	
-	public String AddStudent(String schoolName, String departmentName, String naturalclassname, String name,
-			String student_num) {
-
-		// 必须有学号
-		if (student_num == null || student_num.length() == 0)
-			return null;
-
-		// 必须有姓名
-		if (name == null || name.length() == 0)
-			return null;
-		
-
-		if (schoolName!=null && schoolName.trim().length() == 0)
-			schoolName = null;
-		
-	
-
-		if (departmentName!=null && departmentName.trim().length() == 0)
-			departmentName = null;
-		
-		
-
-		if (naturalclassname!=null && naturalclassname.trim().length() == 0)
-			naturalclassname = null;
-
-		// 取得班级
-		
-		String t_natural_class_id = naturalClassService.getNaturalClassId(schoolName, departmentName, naturalclassname);
-		
-	
-
-		if (t_natural_class_id == null)
-			return null;
-
-		// 学生存在则不添加
-		String t_student_id = isExist(t_natural_class_id, name, student_num);
-		
-		
-		if (t_student_id != null)
-			return t_student_id;
-
-		try {
-
-			User user = new User();
-			user.setUserName(student_num);
-			user.setUserPassword(student_num);
-
-			Student stu = new Student();
-			stu.setStudentNum(student_num);
-			stu.setNaturalClassId(t_natural_class_id);
-
-			UserBasicInfo userbasicinfo = new UserBasicInfo();
-			userbasicinfo.setUserBasicInfoName(name);
-			userbasicinfo.setUserBasicInfoBirthday(DateTimeSql.GetDate("1980-01-01"));
-			userbasicinfo.setUserBasicInfoSex(0);
-
-			// 添加用户
-			user.EncoderPassword();
-			String t_user_id = userDao.add(user);
-
-			// 添加student
-			stu.setUserId(t_user_id);
-			t_student_id = insert(stu);
-
-			// 添加用户基本信息
-			userbasicinfo.setUserId(t_user_id);
-			userbasicinfoDao.add(userbasicinfo);
-
-		} catch (StudentExistException e) {
-			// TODO Auto-generated catch block
-			 e.printStackTrace();
-		}
-
-		return t_student_id;
-	}
-
-	/**
-	 * 添加学生
-	 */
-	public String AddStudent(String schoolName, String departmentName, String naturalclassname, String name,
-			String student_num, String[] groupId) {
-		
-		
-		
-		
-		
-	
-		
-		
-		String t_student_id = AddStudent(schoolName, departmentName, naturalclassname, name, student_num);
-		
-		
-		
-		if (t_student_id == null)
-			return null;
-
-		Student stu = studentDao.getStudentByID(t_student_id);
-		if (stu == null)
-			return null;
-
-		if (groupId != null) {
-			for (String gid : groupId) {
-				usergroupDao.add(gid, stu.getUserId());
-			}
-		}
-
-		return t_student_id;
 
 	}
 
@@ -649,10 +655,10 @@ public class StudentService {
 	public void deleteById(String t_student_id) {
 		studentDao.deleteById(t_student_id);
 	}
-	
+
 	/**
 	 * 得到所有未分组的学生
-	 * */
+	 */
 	public List<StudentViewData> getNotGroupedStudent(String t_course_teaching_class_id) {
 		return studentviewdataDao.getNotGroupedStudentViewByCourseTeachingClassId(t_course_teaching_class_id);
 	}

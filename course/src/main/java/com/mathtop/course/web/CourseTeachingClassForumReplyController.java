@@ -188,13 +188,16 @@ public class CourseTeachingClassForumReplyController extends CourseTeachingClass
 	 */
 	@RequestMapping(value = "/list-{t_course_teaching_class_id}-{t_forum_topic_id}")
 	public ModelAndView ListAll(HttpServletRequest request,HttpSession httpSession, RedirectAttributes redirectAttributes,@PathVariable String t_course_teaching_class_id,
-			@PathVariable String t_forum_topic_id, @RequestParam(value = "pageNo", required = false) Integer pageNo) {
+			@PathVariable String t_forum_topic_id, @RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 		
 		
 		
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
+		
 		Page<CourseTeachingClassForumReplyViewData> pagedForumReplyViewData = forumreplyService.getPage(t_forum_topic_id, pageNo, CommonConstant.PAGE_SIZE);
 
 		view.addObject(PagedObjectConst.Paged_CourseForumReplyViewData, pagedForumReplyViewData);

@@ -44,6 +44,7 @@ public class UserDao extends BaseDao<User> {
 		if(id==null || strEncodedPwd==null)
 			return;		
 		
+		
 		Object params[]=new Object[]{strEncodedPwd,id};
 		int types[]=new int[]{Types.VARCHAR,Types.VARCHAR};
 		getJdbcTemplate().update(UPDATE_BY_ID, params, types);

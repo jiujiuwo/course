@@ -34,7 +34,7 @@ public class CourseTeachingClassViewDataDao extends BaseDao<CourseTeachingClassV
 
 	@Autowired
 	TeachingTypeDao teachingtypeDao;
-	
+
 	@Autowired
 	CourseTeachingTermDao courseTeachingTermDao;
 
@@ -59,6 +59,8 @@ public class CourseTeachingClassViewDataDao extends BaseDao<CourseTeachingClassV
 	public List<CourseTeachingClassViewData> getCourseTeachingClassViewDataByUserId(String t_user_id) {
 		List<CourseTeachingClassViewData> list = new ArrayList<CourseTeachingClassViewData>();
 
+		boolean isCurrentTerm = true;// 是否显示本学期
+
 		Teacher teacher = teacherDao.getTeacherByUserId(t_user_id);
 		if (teacher != null) {
 
@@ -67,31 +69,45 @@ public class CourseTeachingClassViewDataDao extends BaseDao<CourseTeachingClassV
 					.getTeachingClassTeacherByTeacherId(teacher.getId());
 
 			for (CourseTeachingClassTeacher tct : teachingclassteacherlist) {
-				
+
 				// 根据教学班得到教学班信息
 				CourseTeachingClassViewData temp = GetTeachingClassViewDataByCourseTeachingClassId(
-						tct.getCourseTeachingClassId());
+						tct.getCourseTeachingClassId(), isCurrentTerm);
 
-				list.add(temp);
+				if (temp != null)
+					list.add(temp);
 			}
 
 		} else {
 			Student student = studentDao.getStudentByUserId(t_user_id);
-		
+			
+			
+
 			if (student != null) {
+				
+				
+				
 				// 根据学生id得到教学班
 				List<CourseTeachingClassStudent> teachingclassstudentlist = courseTeachingClassStudentDao
 						.getTeachingClassStudentByStudentId(student);
+				
+				
 
-				for (CourseTeachingClassStudent tct : teachingclassstudentlist) {					
+				for (CourseTeachingClassStudent tct : teachingclassstudentlist) {
+					
+					
+
 					// 根据教学班得到教学班信息
 					CourseTeachingClassViewData temp = GetTeachingClassViewDataByCourseTeachingClassId(
-							tct.getCourseTeachingClassId());
+							tct.getCourseTeachingClassId(), isCurrentTerm);
 
-					list.add(temp);
+					if (temp != null)
+						list.add(temp);
 				}
 			}
 		}
+		
+		
 		if (list.size() == 0)
 			return null;
 		return list;
@@ -100,20 +116,20 @@ public class CourseTeachingClassViewDataDao extends BaseDao<CourseTeachingClassV
 	/**
 	 * 根据课程-教学班Id得到教学班相关信息
 	 */
-	public CourseTeachingClassViewData GetTeachingClassViewDataByCourseTeachingClassId(
-			String t_course_teaching_class_id) {
+	private CourseTeachingClassViewData GetTeachingClassViewDataByCourseTeachingClassIdHelper(CourseTeachingClass ctc) {
 
-		CourseTeachingClassViewData tcvd = new CourseTeachingClassViewData();
-
-		CourseTeachingClass ctc = courseTeachingClassDao.getCourseTeachingClassById(t_course_teaching_class_id);
 		if (ctc != null) {
+			CourseTeachingClassViewData tcvd = new CourseTeachingClassViewData();
+			CourseTeachingTerm term = courseTeachingTermDao.getByID(ctc.getCourseTeachingTermId());
+
+			if (!term.isCurrentTerm())
+				return null;
 
 			tcvd.setCourseTeachingClass(ctc);
 
 			Course c = courseDao.getCourseById(ctc.getCourseId());
 			tcvd.setCourse(c);
-			
-			CourseTeachingTerm term=courseTeachingTermDao.getByID(ctc.getCourseTeachingTermId());
+
 			tcvd.setTerm(term);
 
 			// 根据教学班得到教师信息
@@ -138,10 +154,56 @@ public class CourseTeachingClassViewDataDao extends BaseDao<CourseTeachingClassV
 
 			}
 
+			if (tcvd.getCourse() != null)
+				return tcvd;
+
 		}
 
-		if (tcvd.getCourse() != null)
-			return tcvd;
+		return null;
+	}
+
+	public CourseTeachingClassViewData GetTeachingClassViewDataByCourseTeachingClassId(
+			String t_course_teaching_class_id, boolean isCurrentTerm) {
+		if (isCurrentTerm)
+			return GetCurrentTermTeachingClassViewDataByCourseTeachingClassId(t_course_teaching_class_id);
+		return GetTeachingClassViewDataByCourseTeachingClassId(t_course_teaching_class_id);
+	}
+
+	/**
+	 * 根据课程-教学班Id得到教学班相关信息
+	 */
+	public CourseTeachingClassViewData GetCurrentTermTeachingClassViewDataByCourseTeachingClassId(
+			String t_course_teaching_class_id) {
+		
+		
+
+		CourseTeachingClass ctc = courseTeachingClassDao.getCourseTeachingClassById(t_course_teaching_class_id);
+		if (ctc != null) {
+
+			
+			CourseTeachingTerm term = courseTeachingTermDao.getByID(ctc.getCourseTeachingTermId());
+			
+			
+
+			if (!term.isCurrentTerm())
+				return null;
+			return GetTeachingClassViewDataByCourseTeachingClassIdHelper(ctc);
+		}
+		return null;
+
+	}
+
+	/**
+	 * 根据课程-教学班Id得到教学班相关信息
+	 */
+	public CourseTeachingClassViewData GetTeachingClassViewDataByCourseTeachingClassId(
+			String t_course_teaching_class_id) {
+
+		CourseTeachingClass ctc = courseTeachingClassDao.getCourseTeachingClassById(t_course_teaching_class_id);
+		if (ctc != null) {
+
+			return GetTeachingClassViewDataByCourseTeachingClassIdHelper(ctc);
+		}
 
 		return null;
 	}
@@ -163,19 +225,18 @@ public class CourseTeachingClassViewDataDao extends BaseDao<CourseTeachingClassV
 			for (CourseTeachingClass tc : lstTeachingClass) {
 
 				// 根据教学班得到课程
-				CourseTeachingClass courseteachingclass = courseTeachingClassDao
-						.getCourseTeachingClassById(tc.getId());
-				if(courseteachingclass!=null){
+				CourseTeachingClass courseteachingclass = courseTeachingClassDao.getCourseTeachingClassById(tc.getId());
+				if (courseteachingclass != null) {
 
 					CourseTeachingClassViewData tcvd = new CourseTeachingClassViewData();
-					
 
 					tcvd.setCourseTeachingClass(courseteachingclass);
 
 					Course c = courseDao.getCourseById(courseteachingclass.getCourseId());
 					tcvd.setCourse(c);
-					
-					CourseTeachingTerm term=courseTeachingTermDao.getByID(courseteachingclass.getCourseTeachingTermId());
+
+					CourseTeachingTerm term = courseTeachingTermDao
+							.getByID(courseteachingclass.getCourseTeachingTermId());
 					tcvd.setTerm(term);
 
 					// 根据教学班得到教师信息
@@ -232,6 +293,5 @@ public class CourseTeachingClassViewDataDao extends BaseDao<CourseTeachingClassV
 		return new Page<CourseTeachingClassViewData>(startIndex, totalCount, pageSize, data);
 
 	}
-
 
 }

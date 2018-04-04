@@ -502,16 +502,18 @@ public class TeacherController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list")
-	public ModelAndView ListAll(@RequestParam(value = "t_school_id", required = false) String t_school_id,
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public ModelAndView ListAll(HttpServletRequest request,@RequestParam(value = "t_school_id", required = false) String t_school_id,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 
 		ModelAndView mav = new ModelAndView();
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
 
 		if (t_school_id == null) {
 
-			Page<School> pagedSchool = schoolService.getPage(pageNo, CommonConstant.PAGE_SIZE);
+			Page<School> pagedSchool = schoolService.getPage(pageNo, pageSize);
 
 			List<School> schools = pagedSchool.getResult();
 			if (schools.size() > 0) {
@@ -523,7 +525,7 @@ public class TeacherController extends BaseController {
 		SetPage(mav, t_school_id, pageNo);
 
 		Page<TeacherViewData> pagedTeacherViewData = teacherService.getPage(t_school_id, pageNo,
-				CommonConstant.PAGE_SIZE);
+				pageSize);
 		mav.addObject(PagedObjectConst.Paged_TeacherViewData, pagedTeacherViewData);
 
 		mav.setViewName("teacher/list");

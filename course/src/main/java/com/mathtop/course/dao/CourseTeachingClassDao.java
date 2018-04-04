@@ -15,7 +15,7 @@ import com.mathtop.course.utility.GUID;
 @Repository
 public class CourseTeachingClassDao extends BaseDao<CourseTeachingClass> {
 	private final String GET_COUNT = "SELECT count(*) FROM t_course_teaching_class";
-	private final String GET_PAGE = "SELECT id FROM t_course_teaching_class limit ?,?";
+	private final String GET_PAGE = "SELECT * FROM t_course_teaching_class,t_course_teaching_term where t_course_teaching_class.t_course_teaching_term_id=t_course_teaching_term.id order by t_course_teaching_term.week_begin desc limit ?,?";
 	private final String GET_COURSE_TEACHING_CLASS_BY_ID = "SELECT t_course_id,name,t_course_teaching_term_id FROM t_course_teaching_class WHERE id=?";
 	private final String GET_COURSE_TEACHING_CLASS_BY_COURSE_ID = "SELECT id,name,t_course_teaching_term_id FROM t_course_teaching_class WHERE t_course_id=?";
 	private final String GET_COURSE_TEACHING_CLASS_BY_COURSE_ID_AND_ID = "SELECT name,t_course_teaching_term_id FROM t_course_teaching_class WHERE t_course_id=? and id=?";

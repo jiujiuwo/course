@@ -166,12 +166,14 @@ public class ItemKindsController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list")
-	public ModelAndView ListAll(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public ModelAndView ListAll(HttpServletRequest request,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 		SetPageURI(view);
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
 		
 		Page<ItemKinds> pagedItemKinds = itemkindsService
 				.getPage(pageNo, CommonConstant.PAGE_SIZE);
@@ -185,13 +187,8 @@ public class ItemKindsController extends BaseController {
 	// 得到所有学院
 	@RequestMapping(value = "/getall", method = RequestMethod.GET)
 	@ResponseBody
-	public List<ItemKinds> getAllSchoolList(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
-
-		pageNo = pageNo == null ? 1 : pageNo;
-		Page<ItemKinds> pagedExaminationType = itemkindsService
-				.getPage(pageNo, CommonConstant.PAGE_SIZE);
-		return pagedExaminationType.getResult();
+	public List<ItemKinds> getAllSchoolList() {
+		return itemkindsService.getAll();
 	}
 
 }

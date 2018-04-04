@@ -32,7 +32,7 @@ public class UserService {
 	}
 	
 	/**
-	 * 更新密码，注意穿过的值是加密后的值
+	 * 更新密码，注意传过的值是加密后的值
 	 * */
 	public void updateUserPassword(String id,String strEncodedPwd){
 		userDao.updateUserPassword(id, strEncodedPwd);

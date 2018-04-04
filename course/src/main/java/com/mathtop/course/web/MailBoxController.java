@@ -406,10 +406,13 @@ public class MailBoxController extends CourseTeachingClassBaseController {
 	 */
 	@RequestMapping(value = "/receivedlistwithcourse-{t_course_teaching_class_id}")
 	public ModelAndView receivedlist(HttpServletRequest request, @PathVariable String t_course_teaching_class_id,
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
+		
 		SetMailBosReceived(request, pageNo, view);
 
 		// 设置课程基本信息，包括授课、作业类型等
@@ -428,10 +431,13 @@ public class MailBoxController extends CourseTeachingClassBaseController {
 	 */
 	@RequestMapping(value = "/receivedlist")
 	public ModelAndView receivedlistWithoutCourse(HttpServletRequest request,
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
+		
 		SetMailBosReceived(request, pageNo, view);
 
 		view.setViewName("mailbox/receivedlist");
@@ -464,10 +470,13 @@ public class MailBoxController extends CourseTeachingClassBaseController {
 	 */
 	@RequestMapping(value = "/sendlistwithcourse-{t_course_teaching_class_id}")
 	public ModelAndView sendlist(HttpServletRequest request, @PathVariable String t_course_teaching_class_id,
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
+		
 		SetMailBoxSend(request, pageNo, view);
 
 		// 设置课程基本信息，包括授课、作业类型等
@@ -486,10 +495,13 @@ public class MailBoxController extends CourseTeachingClassBaseController {
 	 */
 	@RequestMapping(value = "/sendlist")
 	public ModelAndView sendlistWithoutCourse(HttpServletRequest request,
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
+		
 		SetMailBoxSend(request, pageNo, view);
 
 		view.setViewName("mailbox/sendlist");

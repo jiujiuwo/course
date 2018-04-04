@@ -106,7 +106,7 @@ public class NaturalClassService extends SimpleService<NaturalClassDao, NaturalC
 		String t_department_id = departmentService.getDefaultDepartmentIdInDefaultSchoolId();
 		if(t_department_id==null)
 			return null;
-		System.out.println("t_department_id B :"+t_department_id);
+		
 
 		List<NaturalClass> list = departmentNaturalClassDao.getNaturalClassByDepartmentId(t_department_id);
 

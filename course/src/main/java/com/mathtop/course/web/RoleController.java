@@ -177,12 +177,14 @@ public class RoleController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list")
-	public ModelAndView list(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public ModelAndView list(HttpServletRequest request,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 		SetPageURI(view);
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
 		
 		Page<Role> pagedRole = roleService
 				.getPage(pageNo, CommonConstant.PAGE_SIZE);
@@ -193,18 +195,11 @@ public class RoleController extends BaseController {
 		return view;
 	}
 
-	// 得到所有学院
+	// 得到所有
 	@RequestMapping(value = "/getall", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Role> getall(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
-
-		pageNo = pageNo == null ? 1 : pageNo;
-		Page<Role> pagedRole = roleService
-				.getPage(pageNo, CommonConstant.PAGE_SIZE);
-		return pagedRole.getResult();
-	}
-
-	
+	public List<Role> getall() {		
+		return roleService.getAll();
+	}	
 	
 }

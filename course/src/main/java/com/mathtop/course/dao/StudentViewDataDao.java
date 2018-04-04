@@ -203,6 +203,8 @@ public class StudentViewDataDao extends BaseDao<TeacherViewData> {
 
 		List<StudentViewData> list = new ArrayList<StudentViewData>();
 
+	
+		
 		getJdbcTemplate().query(GET_STUDENTVIEWDATA_BY_COURSE_TEACHING_CLASS_ID,
 				new Object[] { t_course_teaching_class_id, PageBegin * PageSize, PageSize }, new RowCallbackHandler() {
 

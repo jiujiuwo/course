@@ -44,7 +44,6 @@ public class DepartmentController extends BaseController {
 	@RequestMapping(value = "/add")
 	public ModelAndView add(HttpServletRequest request, Department d) {
 		String t_school_id = request.getParameter("t_school_id");
-		
 
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/department/list");
@@ -54,14 +53,14 @@ public class DepartmentController extends BaseController {
 		if (n > 0) {
 			mav.addObject(CourseMessage.Message_errorMsg, "学院系部已经存在");
 			Integer pageNo = 1;
-			return ListAll(t_school_id, pageNo);
+			return ListAll(request, t_school_id, pageNo, getPageSize(request));
 
 		} else {
 
 			departmentService.add(t_school_id, d.getName(), d.getNote());
 
 			Integer pageNo = 1;
-			return ListAll(t_school_id, pageNo);
+			return ListAll(request, t_school_id, pageNo, getPageSize(request));
 
 		}
 	}
@@ -74,16 +73,16 @@ public class DepartmentController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/DELETE-{t_school_id}-{t_department_id}", method = RequestMethod.GET)
-	public ModelAndView DELETE(@PathVariable String t_school_id,
+	public ModelAndView DELETE(HttpServletRequest request, @PathVariable String t_school_id,
 			@PathVariable String t_department_id) {
 
 		if (t_school_id != null && t_department_id != null)
 			departmentService.delete(t_school_id, t_department_id);
 
 		Integer pageNo = 1;
-		return ListAll(t_school_id, pageNo);
+		return ListAll(request, t_school_id, pageNo, getPageSize(request));
 	}
-	
+
 	/**
 	 * 得到指定学院下的系部
 	 * 
@@ -91,13 +90,13 @@ public class DepartmentController extends BaseController {
 	 * @param user
 	 * @return
 	 */
-	
+
 	@RequestMapping(value = "/selectbyschool-{t_school_id}", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Department> androidLogin(HttpServletRequest request,@PathVariable String t_school_id) {		
-		
-		 return departmentService.getAll(t_school_id);
-		
+	public List<Department> androidLogin(HttpServletRequest request, @PathVariable String t_school_id) {
+
+		return departmentService.getAll(t_school_id);
+
 	}
 
 	/**
@@ -116,8 +115,7 @@ public class DepartmentController extends BaseController {
 		if (departmentname != null && departmentname.length() > 0) {
 
 			int pageNo = 1;
-			Page<School> pagedSchool = schoolService.select(departmentname,
-					pageNo, CommonConstant.PAGE_SIZE);
+			Page<School> pagedSchool = schoolService.select(departmentname, pageNo, CommonConstant.PAGE_SIZE);
 
 			view.addObject("pagedSchool", pagedSchool);
 			view.setViewName("department/list");
@@ -145,37 +143,36 @@ public class DepartmentController extends BaseController {
 		if (n > 0) {
 			mav.addObject(CourseMessage.Message_errorMsg, "学院系部已经存在");
 			Integer pageNo = 1;
-			return ListAll(t_school_id, pageNo);
+			return ListAll(request, t_school_id, pageNo, getPageSize(request));
 
 		} else {
 
 			departmentService.update(d.getId(), d.getName(), d.getNote());
 
 			Integer pageNo = 1;
-			return ListAll(t_school_id, pageNo);
+			return ListAll(request, t_school_id, pageNo, getPageSize(request));
 
 		}
 	}
 
 	/**
-	 * 列出全部学院
+	 * 列出全部
 	 * 
 	 * @param request
 	 * @param user
 	 * @return
 	 */
 	@RequestMapping(value = "/list")
-	public ModelAndView ListAll(
+	public ModelAndView ListAll(HttpServletRequest request,
 			@RequestParam(value = "t_school_id", required = false) String t_school_id,
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
-		
-		
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
 
-		Page<School> pagedSchool = schoolService.getPage(pageNo,
-				CommonConstant.PAGE_SIZE);
+		Page<School> pagedSchool = schoolService.getPage(pageNo, CommonConstant.PAGE_SIZE);
 
 		view.addObject("pagedSchool", pagedSchool);
 
@@ -188,8 +185,7 @@ public class DepartmentController extends BaseController {
 
 		}
 
-		Page<Department> pagedDeparment = departmentService.getPage(t_school_id,
-				pageNo, CommonConstant.PAGE_SIZE);
+		Page<Department> pagedDeparment = departmentService.getPage(t_school_id, pageNo, CommonConstant.PAGE_SIZE);
 
 		view.addObject("pagedDeparment", pagedDeparment);
 

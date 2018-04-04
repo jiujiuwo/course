@@ -74,4 +74,13 @@ public class BaseController {
 			return pageSize;
 		}
 	}
+	
+	public int getPageSize(HttpServletRequest request){
+		UserSessionInfo userinfo = getSessionUser(request);
+		if(userinfo==null)
+			return 0;
+		
+		return userinfo.getPageSize();
+		
+	}
 }

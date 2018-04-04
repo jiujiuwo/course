@@ -169,12 +169,14 @@ public class GroupController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list")
-	public ModelAndView list(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public ModelAndView list(HttpServletRequest request,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 		SetPageURI(view);
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
 		
 		Page<Group> pagedGroup = groupService
 				.getPage(pageNo, CommonConstant.PAGE_SIZE);
@@ -188,18 +190,7 @@ public class GroupController extends BaseController {
 	// 得到所有学院
 	@RequestMapping(value = "/getall", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Group> getall(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
-
-		pageNo = pageNo == null ? 1 : pageNo;
-		Page<Group> pagedExaminationType = groupService
-				.getPage(pageNo, CommonConstant.PAGE_SIZE);
-		return pagedExaminationType.getResult();
-	}
-	
-	
-	
-	
-	
-	
+	public List<Group> getall() {
+		return groupService.getAll();
+	}	
 }

@@ -21,13 +21,13 @@ public class CourseTeachingClassStudentDao extends BaseDao<CourseTeachingClassSt
 	private final String IS_STUDENT_EXIST = "select count(*) from t_course_teaching_class_student where t_course_teaching_class_id=? and t_student_id=?";
 	private final String GET_COURSE_TEACHING_CLASS_STUDENT_BY_STUDENT_ID = "SELECT id,t_course_teaching_class_id,show_index FROM t_course_teaching_class_student WHERE t_student_id=?";
 
-	private final String GET_TEACHING_CLASS_STUDENT_BY_COURSE_TEACHING_CLASS_ID = "SELECT t_course_teaching_class_student.id,t_student_id "
+	private final String GET_TEACHING_CLASS_STUDENT_BY_COURSE_TEACHING_CLASS_ID = "SELECT t_course_teaching_class_student.id,show_index,t_student_id "
 			+ " FROM t_course_teaching_class_student right join t_student on t_student.id=t_course_teaching_class_student.t_student_id"
-			+ " WHERE t_course_teaching_class_id=? order by show_idex,student_num";
+			+ " WHERE t_course_teaching_class_id=? order by show_index,student_num";
 
 	private final String GET_TEACHING_CLASS_STUDENT_BY_COURSE_TEACHING_CLASS_ID_STUDENT_ID = "SELECT id ,show_index "
 			+ " FROM t_course_teaching_class_student " + " WHERE t_course_teaching_class_id=? and t_student_id=?";
-	
+
 	private final String GET_TEACHING_CLASS_STUDENT_BY_COURSE_TEACHING_CLASS_ID_SHOW_INDEX = "SELECT id,t_student_id "
 			+ " FROM t_course_teaching_class_student " + " WHERE t_course_teaching_class_id=?  and show_index=?";
 
@@ -55,10 +55,16 @@ public class CourseTeachingClassStudentDao extends BaseDao<CourseTeachingClassSt
 			+ " set show_index=? where id=?";
 
 	private final String UPDATE_SHOW_INDEX_BY_COURSE_TEACHING_ID_AND_STUDENT_ID = "update t_course_teaching_class_student"
-			+ " set show_index=? where t_course_teaching_class_id=?,t_student_id=?";
+			+ " set show_index=? where t_course_teaching_class_id=? and t_student_id=?";
 
 	/**
-	 * 修改
+	 * 更新
+	 * 
+	 * @param id
+	 * @param t_course_teaching_class_id
+	 * @param t_student_id
+	 * @param show_index
+	 * @return
 	 */
 	public String update(String id, String t_course_teaching_class_id, String t_student_id, int show_index) {
 
@@ -69,8 +75,11 @@ public class CourseTeachingClassStudentDao extends BaseDao<CourseTeachingClassSt
 		return id;
 	}
 
+	
 	/**
 	 * 修改show_index
+	 * @param id
+	 * @param show_index
 	 */
 	public void update(String id, int show_index) {
 
@@ -161,7 +170,7 @@ public class CourseTeachingClassStudentDao extends BaseDao<CourseTeachingClassSt
 		return i;
 
 	}
-	
+
 	/**
 	 * 得到比指定的学生大一个次序
 	 */
@@ -175,8 +184,6 @@ public class CourseTeachingClassStudentDao extends BaseDao<CourseTeachingClassSt
 		return i;
 
 	}
-	
-	
 
 	/**
 	 * */
@@ -195,7 +202,6 @@ public class CourseTeachingClassStudentDao extends BaseDao<CourseTeachingClassSt
 	 */
 	public boolean IsStudentExist(String t_course_teaching_class_id, String t_student_id) {
 
-		
 		return getJdbcTemplate().queryForObject(IS_STUDENT_EXIST,
 				new Object[] { t_course_teaching_class_id, t_student_id }, new int[] { Types.VARCHAR, Types.VARCHAR },
 				Long.class) > 0;
@@ -208,7 +214,6 @@ public class CourseTeachingClassStudentDao extends BaseDao<CourseTeachingClassSt
 
 		if (IsStudentExist(t_course_teaching_class_id, t_student_id))
 			return null;
-	
 
 		String id = GUID.getGUID();
 
@@ -220,9 +225,13 @@ public class CourseTeachingClassStudentDao extends BaseDao<CourseTeachingClassSt
 	}
 
 	/**
-	 * 获得制定学生的教学班级信息
+	 * 获得指定学生的教学班级信息
+	 * 
+	 * @param t_student_id
+	 * @return
 	 */
 	public List<CourseTeachingClassStudent> getTeachingClassStudentByStudentId(String t_student_id) {
+
 		List<CourseTeachingClassStudent> list = new ArrayList<CourseTeachingClassStudent>();
 		getJdbcTemplate().query(GET_COURSE_TEACHING_CLASS_STUDENT_BY_STUDENT_ID, new Object[] { t_student_id },
 				new RowCallbackHandler() {
@@ -251,8 +260,11 @@ public class CourseTeachingClassStudentDao extends BaseDao<CourseTeachingClassSt
 
 	}
 
+
 	/**
 	 * 获得教学班级学生信息
+	 * @param t_course_teaching_class_id
+	 * @return
 	 */
 	public List<CourseTeachingClassStudent> getTeachingClassStudentByTeachingClassId(
 			String t_course_teaching_class_id) {
@@ -274,6 +286,12 @@ public class CourseTeachingClassStudentDao extends BaseDao<CourseTeachingClassSt
 		return list;
 	}
 
+	/**
+	 * 
+	 * @param t_course_teaching_class_id
+	 * @param t_student_id
+	 * @return
+	 */
 	public CourseTeachingClassStudent getTeachingClassStudentByTeachingClassIdAndStudentId(
 			String t_course_teaching_class_id, String t_student_id) {
 		CourseTeachingClassStudent stu = new CourseTeachingClassStudent();
@@ -295,7 +313,13 @@ public class CourseTeachingClassStudentDao extends BaseDao<CourseTeachingClassSt
 			return null;
 		return stu;
 	}
-	
+
+	/**
+	 * 
+	 * @param t_course_teaching_class_id
+	 * @param show_index
+	 * @return
+	 */
 	public CourseTeachingClassStudent getTeachingClassStudentByTeachingClassIdAndShowIndex(
 			String t_course_teaching_class_id, int show_index) {
 		CourseTeachingClassStudent stu = new CourseTeachingClassStudent();
@@ -317,7 +341,5 @@ public class CourseTeachingClassStudentDao extends BaseDao<CourseTeachingClassSt
 			return null;
 		return stu;
 	}
-	
-	
 
 }

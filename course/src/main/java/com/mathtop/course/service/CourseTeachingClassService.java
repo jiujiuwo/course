@@ -15,8 +15,9 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -162,7 +163,10 @@ public class CourseTeachingClassService {
 						if (null == cell)
 							continue;
 
-						String strIndexName = cell.getStringCellValue().trim();
+						DataFormatter formatter = new DataFormatter();
+
+						//String strIndexName = cell.getStringCellValue().trim();
+						String strIndexName =formatter.formatCellValue(cell);
 
 						if (i == rowstart) {
 
@@ -222,11 +226,17 @@ public class CourseTeachingClassService {
 	 */
 	private void ProcessExcel(String t_course_teaching_class_id, String localfilename) throws Exception {
 
+		
 		OPCPackage file;
+
 		try {
+
 			file = OPCPackage.open(localfilename);
 
+
+
 			XSSFWorkbook xssfWorkbook = new XSSFWorkbook(file);
+
 			for (XSSFSheet sheet : xssfWorkbook) {
 
 				int rowstart = sheet.getFirstRowNum();
@@ -240,7 +250,7 @@ public class CourseTeachingClassService {
 
 				for (int i = rowstart; i <= rowEnd; i++) {
 
-					XSSFRow row = sheet.getRow(i);
+					Row row = sheet.getRow(i);
 					if (null == row)
 						continue;
 					int cellStart = row.getFirstCellNum();
@@ -253,11 +263,15 @@ public class CourseTeachingClassService {
 					String naturalclass = null;
 
 					for (int k = cellStart; k <= cellEnd; k++) {
-						XSSFCell cell = row.getCell(k);
+						Cell cell = row.getCell(k);
 						if (null == cell)
 							continue;
 
-						String strIndexName = cell.getStringCellValue().trim();
+						DataFormatter formatter = new DataFormatter();
+
+						//String strIndexName = cell.getStringCellValue().trim();
+						String strIndexName =formatter.formatCellValue(cell);
+						
 
 						if (i == rowstart) {
 
@@ -312,14 +326,15 @@ public class CourseTeachingClassService {
 	 *            教学班id
 	 * 
 	 * @return User
+	 * @throws Exception 
 	 */
-	public void AddStudent(String t_course_teaching_class_id, String school, String department, String naturalclass,
-			String name, String student_num) {
+	public String AddStudent(String t_course_teaching_class_id, String school, String department, String naturalclass,
+			String name, String student_num) throws Exception {
 
 		String t_student_id = studentService.AddStudent(school, department, naturalclass, name, student_num);
 
 		if (t_student_id == null)
-			return;
+			return null;
 
 		int show_index = courseTeachingClassStudentDao
 				.getShowIndexMaxByCourseTeachingClassId(t_course_teaching_class_id);
@@ -330,6 +345,8 @@ public class CourseTeachingClassService {
 
 		} else
 			courseTeachingClassStudentDao.add(t_course_teaching_class_id, t_student_id, show_index);
+		
+		return t_student_id;
 
 	}
 
@@ -408,7 +425,7 @@ public class CourseTeachingClassService {
 	 */
 	public void deleteByCourseTeachingClassIdAndStudentId(HttpServletRequest request, String t_course_teaching_class_id,
 			String t_student_id) {
-
+		courseTeachingClassStudentDao.deleteByCourseTeachingClassIdAndStudentId(t_course_teaching_class_id, t_student_id);
 	}
 
 	/**

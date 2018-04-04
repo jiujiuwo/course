@@ -362,7 +362,7 @@ public class CourseTeachingClassController extends BaseController {
 		if (t_student_id != null)
 			deleteService.deleteStudentFromCourseTeachingClass(request, t_course_teaching_class_id, t_student_id);
 
-		mav.setViewName("redirect:/teachingclass/list.html-" + t_course_teaching_class_id + ".html?pageNo=" + pageNo);
+		mav.setViewName("redirect:/teachingclass/student-" + t_course_teaching_class_id + ".html?pageNo=" + pageNo);
 		return mav;
 
 	}
@@ -489,12 +489,15 @@ public class CourseTeachingClassController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/student-{t_course_teaching_class_id}", method = RequestMethod.GET)
-	public ModelAndView student(@PathVariable String t_course_teaching_class_id,
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public ModelAndView student(HttpServletRequest request,@PathVariable String t_course_teaching_class_id,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 
 		ModelAndView mav = new ModelAndView();
 
+		
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
 
 		CourseTeachingClassViewData selected_CourseTeachingClassViewData = courseTeachingClassService
 				.GetTeachingClassViewDataByCourseTeachingClassId(t_course_teaching_class_id);
@@ -505,7 +508,7 @@ public class CourseTeachingClassController extends BaseController {
 
 		// 学生信息
 		Page<StudentViewData> pagedStudentViewData = studentService
-				.getPageByCourseTeachingClassId(t_course_teaching_class_id, pageNo, CommonConstant.PAGE_SIZE);
+				.getPageByCourseTeachingClassId(t_course_teaching_class_id, pageNo, pageSize);
 
 		mav.addObject(PagedObjectConst.Paged_StudentViewData, pagedStudentViewData);
 
@@ -551,13 +554,15 @@ public class CourseTeachingClassController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/teacher-{t_teaching_class_id}", method = RequestMethod.GET)
-	public ModelAndView teacher(@PathVariable String t_teaching_class_id,
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public ModelAndView teacher(HttpServletRequest request,@PathVariable String t_teaching_class_id,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 
 		ModelAndView mav = new ModelAndView();
 
 		pageNo = pageNo == null ? 1 : pageNo;
-
+		pageSize = getPageSize(request, pageSize);
+		
 		Page<CourseTeachingClassViewData> pagedTeachingClassViewData = courseTeachingClassService.getPage(pageNo,
 				CommonConstant.PAGE_SIZE);
 
@@ -615,14 +620,17 @@ public class CourseTeachingClassController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list")
-	public ModelAndView ListAll(@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public ModelAndView ListAll(HttpServletRequest request,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 
 		ModelAndView mav = new ModelAndView();
 
 		pageNo = pageNo == null ? 1 : pageNo;
-
+		pageSize = getPageSize(request, pageSize);
+		
 		Page<CourseTeachingClassViewData> pagedTeachingClassViewData = courseTeachingClassService.getPage(pageNo,
-				CommonConstant.PAGE_SIZE);
+				pageSize);
 
 		mav.addObject(PagedObjectConst.Paged_TeachingClassViewData, pagedTeachingClassViewData);
 

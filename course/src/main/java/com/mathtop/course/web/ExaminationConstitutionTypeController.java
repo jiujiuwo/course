@@ -166,12 +166,14 @@ public class ExaminationConstitutionTypeController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list")
-	public ModelAndView ListAll(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public ModelAndView ListAll(HttpServletRequest request,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 		SetPageURI(view);
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
 		
 		Page<ExaminationConstitutionType> pagedExaminationConstitutionType = examinationconstitutiontypeService
 				.getPage(pageNo, CommonConstant.PAGE_SIZE);
@@ -185,13 +187,10 @@ public class ExaminationConstitutionTypeController extends BaseController {
 	// 得到所有学院
 	@RequestMapping(value = "/getall", method = RequestMethod.GET)
 	@ResponseBody
-	public List<ExaminationConstitutionType> getAllSchoolList(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public List<ExaminationConstitutionType> getAllSchoolList() {
 
-		pageNo = pageNo == null ? 1 : pageNo;
-		Page<ExaminationConstitutionType> pagedExaminationConstitutionType = examinationconstitutiontypeService
-				.getPage(pageNo, CommonConstant.PAGE_SIZE);
-		return pagedExaminationConstitutionType.getResult();
+		return examinationconstitutiontypeService.getAll();
+				
 	}
 
 }

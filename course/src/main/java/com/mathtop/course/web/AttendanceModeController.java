@@ -184,13 +184,8 @@ public class AttendanceModeController extends BaseController {
 	// 得到所有学院
 	@RequestMapping(value = "/getall", method = RequestMethod.GET)
 	@ResponseBody
-	public List<AttendanceMode> getAllSchoolList(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
-
-		pageNo = pageNo == null ? 1 : pageNo;
-		Page<AttendanceMode> pagedAttendanceState = attendancemodeService
-				.getPage(pageNo, CommonConstant.PAGE_SIZE);
-		return pagedAttendanceState.getResult();
+	public List<AttendanceMode> getAllList() {
+		return  attendancemodeService.getAll();
 	}
 
 }

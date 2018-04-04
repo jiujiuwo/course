@@ -89,7 +89,7 @@ public class NaturalClassController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/DELETE-{t_natural_class_id}", method = RequestMethod.GET)
-	public ModelAndView DELETE(@PathVariable String t_natural_class_id) {
+	public ModelAndView DELETE(HttpServletRequest request,@PathVariable String t_natural_class_id) {
 
 		System.out.println(t_natural_class_id);
 		String t_school_id=null;
@@ -98,7 +98,7 @@ public class NaturalClassController extends BaseController {
 			departmentNaturalClassService.delete(t_natural_class_id);
 
 		Integer pageNo = 1;
-		return ListAll(t_school_id, pageNo);
+		return ListAll(request,t_school_id, pageNo,getPageSize(request));
 	}
 	
 	/**
@@ -162,14 +162,14 @@ public class NaturalClassController extends BaseController {
 		if (n > 0) {
 			mav.addObject(CourseMessage.Message_errorMsg, "学院系部已经存在");
 			Integer pageNo = 1;
-			return ListAll(t_school_id, pageNo);
+			return ListAll(request,t_school_id, pageNo,getPageSize(request));
 
 		} else {
 
 			departmentService.update(d.getId(), d.getName(), d.getNote());
 
 			Integer pageNo = 1;
-			return ListAll(t_school_id, pageNo);
+			return ListAll(request,t_school_id, pageNo,getPageSize(request));
 
 		}
 	}
@@ -182,9 +182,10 @@ public class NaturalClassController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list")
-	public ModelAndView ListAll(
+	public ModelAndView ListAll(HttpServletRequest request,
 			@RequestParam(value = "t_depratment_id", required = false) String t_depratment_id,
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 		
 		
@@ -192,6 +193,7 @@ public class NaturalClassController extends BaseController {
 	//	System.out.println("NaturalClassControler:listall 0");
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
 
 		Page<School> pagedSchool = schoolService.getPage(pageNo,
 				CommonConstant.PAGE_SIZE);
@@ -248,5 +250,7 @@ public class NaturalClassController extends BaseController {
 		
 		return view;
 	}
+	
+	
 
 }

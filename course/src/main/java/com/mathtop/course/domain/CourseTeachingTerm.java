@@ -71,6 +71,8 @@ public class CourseTeachingTerm extends BaseDomain{
 		if(weekBegin==null)
 			return 0;
 		
+		
+		
 		if(dateComputed==null){
 			dateComputed=new Date();
 			weekIndex= betweenDays(weekBegin)/7+1;
@@ -82,6 +84,15 @@ public class CourseTeachingTerm extends BaseDomain{
 			weekIndex= betweenDays(weekBegin)/7+1;
 			return weekIndex;
 		}
+	}
+	public boolean isCurrentTerm(){
+		Date d=new Date();
+		int n= betweenDays(weekBegin)/7+1;
+		
+		
+		if(n<0 || n>weeks)
+			return false;
+		return true;
 	}
 	
 

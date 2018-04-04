@@ -83,12 +83,14 @@ public class PermissionrResourceController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list")
-	public ModelAndView list(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public ModelAndView list(HttpServletRequest request,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 		SetPageURI(view);
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
 
 		Page<PermissionOperator> pagedPermissionOperator = permissionoperatorService
 				.getPage(pageNo, CommonConstant.PAGE_SIZE);
@@ -113,10 +115,7 @@ public class PermissionrResourceController extends BaseController {
 	//得到所有学院
 		@RequestMapping(value = "/getall", method = RequestMethod.GET)
 		@ResponseBody
-		public List<PermissionViewData> getAll(@RequestParam(value = "pageNo", required = false) Integer pageNo) {		
-			
-			pageNo = pageNo == null ? 1 : pageNo;
-			
+		public List<PermissionViewData> getAll() {			
 			return permissionService.getPermissionViewData();
 		}
 	

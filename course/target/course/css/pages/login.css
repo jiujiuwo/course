@@ -1,0 +1,66 @@
+.login {
+	background-color: #515255 !important;
+}
+
+
+
+.login .content {
+	background-color: #fff;
+	width: 360px;
+	margin: 0 auto;
+	margin-top: 20px;
+	margin-bottom: 0px;
+	padding: 30px;
+	padding-top: 20px;
+	padding-bottom: 15px;
+	border-radius: 4px;
+}
+
+.login .content h3 {
+	color: #000;
+}
+
+.login .content h4 {
+	color: #555;
+}
+
+.login .content p {
+	color: #222;
+}
+
+.login .content .login-form
+	{
+	padding: 0px;
+	margin: 0px;
+}
+
+
+.login .content .form-title {
+	font-weight: medium;
+	margin-bottom: 25px;
+	
+}
+
+.login .content .form-group {
+	
+	margin: 10px;
+	
+}
+
+.login .content .form-label {	
+	
+}
+
+.login .content .form-actions {
+	background-color: #fff;
+	clear: both;
+	border: 0px;
+	padding: 20px 30px 20px 30px;
+	margin-left: 30px;
+	margin-right: 0px;
+}
+
+.login .content .field-has-error
+{
+	color:red;
+}

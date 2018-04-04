@@ -194,14 +194,16 @@ public class UserGroupController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/group-user")
-	public ModelAndView group_user(
+	public ModelAndView group_user(HttpServletRequest request,
 			@RequestParam(value = "groupId", required = false) String t_group_id,
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 
 		ModelAndView view = new ModelAndView();
 		SetPageURI(view);
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
 
 		Page<Group> pagedGroup = groupService.getAllPage();
 
@@ -215,7 +217,7 @@ public class UserGroupController extends BaseController {
 
 			Page<UserGroupViewData> pagedGroupPersonInfo = usergroupService
 					.getPageByGroupId(t_group_id, pageNo,
-							CommonConstant.PAGE_SIZE);
+							pageSize);
 
 			view.addObject(PagedObjectConst.Paged_GroupPersonInfo,
 					pagedGroupPersonInfo);
@@ -236,13 +238,15 @@ public class UserGroupController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/group-role")
-	public ModelAndView group_role(
+	public ModelAndView group_role(HttpServletRequest request,
 			@RequestParam(value = "groupId", required = false) String t_group_id,
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 		SetPageURI(view);
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
 
 		Page<Group> pagedGroup = groupService.getAllPage();
 
@@ -261,7 +265,7 @@ public class UserGroupController extends BaseController {
 
 			Page<GroupRoleViewData> pagedGroupRoleInfo = grouproleService
 					.getPageByGroupId(t_group_id, pageNo,
-							CommonConstant.PAGE_SIZE);
+							pageSize);
 
 			view.addObject(PagedObjectConst.Paged_GroupRoleInfo,
 					pagedGroupRoleInfo);
@@ -282,16 +286,18 @@ public class UserGroupController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/role-permission")
-	public ModelAndView role_permission(
+	public ModelAndView role_permission(HttpServletRequest request,
 			@RequestParam(value = "roleId", required = false) String roleId,
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 		SetPageURI(view);
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
 
 		Page<Role> pagedRole = roleService.getPage(pageNo,
-				CommonConstant.PAGE_SIZE);
+				pageSize);
 
 		view.addObject(PagedObjectConst.Paged_Role, pagedRole);
 
@@ -303,7 +309,7 @@ public class UserGroupController extends BaseController {
 
 			Page<RolePermissionViewData> pagedRolePermissionViewData = rolepermissionService
 					.getPageRolePermissionViewData(roleId, pageNo,
-							CommonConstant.PAGE_SIZE);
+							pageSize);
 
 			view.addObject(PagedObjectConst.Paged_RolePermissionViewData,
 					pagedRolePermissionViewData);
@@ -324,15 +330,17 @@ public class UserGroupController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/permission-resource")
-	public ModelAndView permission_resource(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public ModelAndView permission_resource(HttpServletRequest request,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 		SetPageURI(view);
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
 
 		Page<PermissionOperator> pagedPermissionOperator = permissionoperatorService
-				.getPage(pageNo, CommonConstant.PAGE_SIZE);
+				.getPage(pageNo, pageSize);
 
 		view.addObject(PagedObjectConst.Paged_PermissionOperator,
 				pagedPermissionOperator);
@@ -475,15 +483,17 @@ public class UserGroupController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/group")
-	public ModelAndView group(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public ModelAndView group(HttpServletRequest request,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 		SetPageURI(view);
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
 		
 		Page<Group> pagedGroup = groupService
-				.getPage(pageNo, CommonConstant.PAGE_SIZE);
+				.getPage(pageNo, pageSize);
 
 		view.addObject(PagedObjectConst.Paged_Group, pagedGroup);
 
@@ -494,13 +504,8 @@ public class UserGroupController extends BaseController {
 	// 得到所有学院
 	@RequestMapping(value = "/getallgroup", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Group> getallgroup(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
-
-		pageNo = pageNo == null ? 1 : pageNo;
-		Page<Group> pagedExaminationType = groupService
-				.getPage(pageNo, CommonConstant.PAGE_SIZE);
-		return pagedExaminationType.getResult();
+	public List<Group> getallgroup() {	
+		return groupService.getAll();		
 	}
 	
 	
@@ -636,15 +641,17 @@ public class UserGroupController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/role")
-	public ModelAndView role(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public ModelAndView role(HttpServletRequest request,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 		SetPageURI(view);
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
 		
 		Page<Role> pagedRole = roleService
-				.getPage(pageNo, CommonConstant.PAGE_SIZE);
+				.getPage(pageNo, pageSize);
 
 		view.addObject(PagedObjectConst.Paged_Role, pagedRole);
 
@@ -655,13 +662,11 @@ public class UserGroupController extends BaseController {
 	// 得到所有学院
 	@RequestMapping(value = "/getallrole", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Role> getallrole(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public List<Role> getallrole() {
 
-		pageNo = pageNo == null ? 1 : pageNo;
-		Page<Role> pagedRole = roleService
-				.getPage(pageNo, CommonConstant.PAGE_SIZE);
-		return pagedRole.getResult();
+		
+		return  roleService.getAll();
+		
 	}
 
 	
@@ -795,15 +800,17 @@ public class UserGroupController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/permissionoperator")
-	public ModelAndView PermissionOperator(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public ModelAndView PermissionOperator(HttpServletRequest request,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 		SetPageURI(view);
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
 		
 		Page<PermissionOperator> pagedPermissionOperator = permissionoperatorService
-				.getPage(pageNo, CommonConstant.PAGE_SIZE);
+				.getPage(pageNo, pageSize);
 
 		view.addObject(PagedObjectConst.Paged_PermissionOperator, pagedPermissionOperator);
 
@@ -814,13 +821,8 @@ public class UserGroupController extends BaseController {
 	// 得到所有学院
 	@RequestMapping(value = "/getallpermissionoperator", method = RequestMethod.GET)
 	@ResponseBody
-	public List<PermissionOperator> getAllPermissionOperator(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
-
-		pageNo = pageNo == null ? 1 : pageNo;
-		Page<PermissionOperator> pagedPermissionOperator = permissionoperatorService
-				.getPage(pageNo, CommonConstant.PAGE_SIZE);
-		return pagedPermissionOperator.getResult();
+	public List<PermissionOperator> getAllPermissionOperator() {
+		return permissionoperatorService.getAll();	
 	}
 	
 	
@@ -928,15 +930,17 @@ public class UserGroupController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/permissionresource")
-	public ModelAndView ListAll(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public ModelAndView ListAll(HttpServletRequest request,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 		SetPageURI(view);
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
 
 		Page<Resource> pagedResource = resourceService.getPage(pageNo,
-				CommonConstant.PAGE_SIZE);
+				pageSize);
 
 		view.addObject(PagedObjectConst.Paged_PermissionResource, pagedResource);
 
@@ -947,12 +951,7 @@ public class UserGroupController extends BaseController {
 	// 得到所有学院
 	@RequestMapping(value = "/getallpermissionresource", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Resource> getAllpermissionresource(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
-
-		pageNo = pageNo == null ? 1 : pageNo;
-		Page<Resource> pagedResource = resourceService.getPage(pageNo,
-				CommonConstant.PAGE_SIZE);
-		return pagedResource.getResult();
+	public List<Resource> getAllpermissionresource() {		
+		return  resourceService.getAll();
 	}
 }

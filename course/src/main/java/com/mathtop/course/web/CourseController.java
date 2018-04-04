@@ -218,12 +218,14 @@ public class CourseController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list")
-	public ModelAndView ListAll(@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public ModelAndView ListAll(HttpServletRequest request,@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 
 		ModelAndView mav = new ModelAndView();
 
 		pageNo = pageNo == null ? 1 : pageNo;
-
+		pageSize = getPageSize(request, pageSize);
+		
 		SetPage(mav, pageNo);
 
 		mav.setViewName("course/list");

@@ -164,12 +164,16 @@ public class CourseStyleController extends BaseController {
 	 */
 	@RequestMapping(value = "/list")
 	public ModelAndView ListAll(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+			HttpServletRequest request,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
+		
 		Page<CourseStyle> pagedCourseStyle = coursestyleService.getPage(pageNo,
-				CommonConstant.PAGE_SIZE);
+				pageSize);
 
 		view.addObject(PagedObjectConst.Paged_CourseStyle, pagedCourseStyle);
 		
@@ -179,15 +183,10 @@ public class CourseStyleController extends BaseController {
 	}
 	
 	
-	//得到所有学院
+	//得到所有
 	@RequestMapping(value = "/getall", method = RequestMethod.GET)
 	@ResponseBody
-	public List<CourseStyle> getAllSchoolList(@RequestParam(value = "pageNo", required = false) Integer pageNo) {		
-		
-		pageNo = pageNo == null ? 1 : pageNo;
-		Page<CourseStyle> pagedCourseStyle = coursestyleService.getPage(pageNo,
-				CommonConstant.PAGE_SIZE);
-		return pagedCourseStyle.getResult();
+	public List<CourseStyle> getAllSchoolList() {		
+		return coursestyleService.getAll();
 	}
-
 }

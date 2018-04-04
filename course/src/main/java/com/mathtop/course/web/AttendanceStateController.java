@@ -60,13 +60,12 @@ public class AttendanceStateController extends BaseController {
 			mav.addObject(CourseMessage.Message_errorMsg, "联系类型名已经存在");
 
 			Integer pageNo = 1;
-			Page<AttendanceState> pagedAttendanceState = attendancestateService
-					.getPage(pageNo, CommonConstant.PAGE_SIZE);
+			Page<AttendanceState> pagedAttendanceState = attendancestateService.getPage(pageNo,
+					CommonConstant.PAGE_SIZE);
 
 			mav.addObject(PagedObjectConst.Paged_AttendanceState, pagedAttendanceState);
 			String toUrl = ("list.html");
 			mav.setViewName("redirect:" + toUrl);
-			
 
 		} else {
 			attendancestateService.add(ct.getName(), ct.getNote());
@@ -112,8 +111,8 @@ public class AttendanceStateController extends BaseController {
 		if (ctIdname != null && ctIdname.length() > 0) {
 
 			int pageNo = 1;
-			Page<AttendanceState> pagedAttendanceState = attendancestateService
-					.select(ctIdname, pageNo, CommonConstant.PAGE_SIZE);
+			Page<AttendanceState> pagedAttendanceState = attendancestateService.select(ctIdname, pageNo,
+					CommonConstant.PAGE_SIZE);
 
 			view.addObject(PagedObjectConst.Paged_AttendanceState, pagedAttendanceState);
 			view.setViewName("attendancestate/list");
@@ -135,8 +134,7 @@ public class AttendanceStateController extends BaseController {
 		SetPageURI(mav);
 		mav.setViewName("/attendancestate/list");
 
-		AttendanceState dbitem = attendancestateService.getByName(item
-				.getName());
+		AttendanceState dbitem = attendancestateService.getByName(item.getName());
 
 		if (dbitem == null) {
 			return mav;
@@ -149,8 +147,7 @@ public class AttendanceStateController extends BaseController {
 
 		} else {
 
-			attendancestateService.update(item.getId(), item.getName(),
-					item.getNote());
+			attendancestateService.update(item.getId(), item.getName(), item.getNote());
 
 			String toUrl = ("list");
 			mav.setViewName("redirect:" + toUrl);
@@ -167,16 +164,16 @@ public class AttendanceStateController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list")
-	public ModelAndView ListAll(HttpServletRequest request, 
-			@RequestParam(value = "pageNo", required = false) Integer pageNo,@RequestParam(value = "pageSize", required = false) Integer pageSize) {
+	public ModelAndView ListAll(HttpServletRequest request,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 		SetPageURI(view);
 
 		pageNo = pageNo == null ? 1 : pageNo;
-		pageSize=getPageSize(request,pageSize);
-		
-		Page<AttendanceState> pagedAttendanceState = attendancestateService
-				.getPage(pageNo, CommonConstant.PAGE_SIZE);
+		pageSize = getPageSize(request, pageSize);
+
+		Page<AttendanceState> pagedAttendanceState = attendancestateService.getPage(pageNo, pageSize);
 
 		view.addObject(PagedObjectConst.Paged_AttendanceState, pagedAttendanceState);
 
@@ -184,16 +181,11 @@ public class AttendanceStateController extends BaseController {
 		return view;
 	}
 
-	// 得到所有学院
+	// 得到所有
 	@RequestMapping(value = "/getall", method = RequestMethod.GET)
 	@ResponseBody
-	public List<AttendanceState> getAllSchoolList(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
-
-		pageNo = pageNo == null ? 1 : pageNo;
-		Page<AttendanceState> pagedAttendanceState = attendancestateService
-				.getPage(pageNo, CommonConstant.PAGE_SIZE);
-		return pagedAttendanceState.getResult();
+	public List<AttendanceState> getAllList() {
+		return attendancestateService.getAll();
 	}
 
 }

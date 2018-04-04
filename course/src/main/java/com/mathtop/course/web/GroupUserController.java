@@ -1,5 +1,7 @@
 package com.mathtop.course.web;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,15 +42,17 @@ public class GroupUserController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list")
-	public ModelAndView group_user(
+	public ModelAndView group_user(HttpServletRequest request,
 			@RequestParam(value = "groupId", required = false) String t_group_id,
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 
 		ModelAndView view = new ModelAndView();
 		SetPageURI(view);
 
 		pageNo = pageNo == null ? 1 : pageNo;
-
+		pageSize = getPageSize(request, pageSize);
+		
 		Page<Group> pagedGroup = groupService.getAllPage();
 
 		view.addObject(PagedObjectConst.Paged_Group, pagedGroup);

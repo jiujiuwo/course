@@ -135,6 +135,7 @@ public class LoginController extends BaseController {
 		user.EncoderPassword();
 
 		User dbUser = userService.getUserByUserName(user.getUserName());
+		
 
 		if (dbUser == null) {
 			mav.addObject(CourseMessage.Message_errorMsg, "用户名不存在");

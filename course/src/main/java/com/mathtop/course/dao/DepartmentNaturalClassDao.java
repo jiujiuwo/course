@@ -172,8 +172,7 @@ public class DepartmentNaturalClassDao extends BaseDao<DepartmentNaturalClass> {
 	 * 得到id
 	 */
 	public String getIdByDepartmentNaturalclassId(String t_department_id, String t_natural_class_id) {
-		
-		
+
 		List<String> list = new ArrayList<String>();
 		getJdbcTemplate().query(GET_ID_BY_NATURAL_CLASS_ID_DEPARTMENT_ID,
 				new Object[] { t_department_id, t_natural_class_id }, new RowCallbackHandler() {
@@ -183,10 +182,11 @@ public class DepartmentNaturalClassDao extends BaseDao<DepartmentNaturalClass> {
 					}
 				});
 
-		if (list.size() > 0)
-			return list.get(0);
+		if (list.size() == 0)
+			return null;
 
-		return null;
+		return list.get(0);
+
 	}
 
 	/*
@@ -202,10 +202,10 @@ public class DepartmentNaturalClassDao extends BaseDao<DepartmentNaturalClass> {
 					}
 				});
 
-		if (list.size() > 0)
-			return list.get(0);
+		if (list.size() == 0)
+			return null;
+		return list.get(0);
 
-		return null;
 	}
 
 	/*

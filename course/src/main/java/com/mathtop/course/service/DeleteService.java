@@ -106,6 +106,9 @@ public class DeleteService {
 
 	@Autowired
 	CourseTeachingClassHomeworkSubmitService courseTeachingClassHomeworkSubmitService;
+	
+	@Autowired
+	CourseTeachingClassHomeworkStudentScoreService courseTeachingClassHomeworkStudentScoreService;
 
 	@Autowired
 	CourseTeachingClassForumTopicService courseTeachingClassForumTopicService;
@@ -300,6 +303,18 @@ public class DeleteService {
 	}
 
 	/**
+	 * 根据学生学号删除学生
+	 */
+	public void deleteStudentByStudentNum(HttpServletRequest request, String t_student_num){
+		Student stu =studentDao.getStudentByStudentNum(t_student_num);
+		if (stu == null)
+			return;
+		deleteStudentById(request,stu.getId());
+		
+	}
+	
+	
+	/**
 	 * 删除学生
 	 */
 	public void deleteStudentById(HttpServletRequest request, String t_student_id) {
@@ -309,6 +324,9 @@ public class DeleteService {
 			return;
 
 		String t_user_id = stu.getUserId();
+		
+		// 删除作业成绩系统
+		courseTeachingClassHomeworkStudentScoreService.deleteByStudentID(request, t_student_id);
 
 		// 删除提交作业系统
 		courseTeachingClassHomeworkSubmitService.deleteByStudentID(request, t_student_id);

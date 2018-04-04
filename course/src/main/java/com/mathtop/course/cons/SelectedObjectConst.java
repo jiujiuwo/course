@@ -1,9 +1,11 @@
 package com.mathtop.course.cons;
 
+import com.mathtop.course.domain.CourseTeachingClassHomeworkStudentScoresViewData;
+
 public class SelectedObjectConst {
 
 	// 页码
-	public static final String Selected_PageNo = "selectedtpageNo";
+	public static final String Selected_PageNo = "selectedpageNo";
 
 	// 组、角色
 	public static final String Selected_Group_ID = "selectedGroupID";
@@ -65,7 +67,13 @@ public class SelectedObjectConst {
 
 	// 课程-作业-统计数据
 	public static final String Selected_CourseHomeworkStatisticsData = "selectedCourseHomeworkStatisticsData";
+	
+	// 课程-作业-成绩
+	public static final String Selected_CourseTeachingClassHomeworkStudentScoresViewData= "selectedCourseTeachingClassHomeworkStudentScoresViewData";
 
+	//课程-作业-显示次序
+	public static final String Selected_CourseTeachingClassHomeworkShowOrder= "selectedCourseTeachingClassHomeworkShowOrder";
+	
 	// 论坛主题id
 	public static final String Selected_CourseForumTopicID = "selectedCourseForumTopicID";
 

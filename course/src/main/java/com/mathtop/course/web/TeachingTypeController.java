@@ -168,13 +168,16 @@ public class TeachingTypeController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list")
-	public ModelAndView ListAll(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public ModelAndView ListAll(HttpServletRequest request,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
+		
 		Page<TeachingType> pagedTeachingType = teachingtypeService.getPage(pageNo,
-				CommonConstant.PAGE_SIZE);
+				pageSize);
 
 		view.addObject(PagedObjectConst.Paged_TeachingType, pagedTeachingType);
 		SetPageURI(view);
@@ -187,12 +190,8 @@ public class TeachingTypeController extends BaseController {
 	//得到所有学院
 	@RequestMapping(value = "/getall", method = RequestMethod.GET)
 	@ResponseBody
-	public List<TeachingType> getAllSchoolList(@RequestParam(value = "pageNo", required = false) Integer pageNo) {		
-		
-		pageNo = pageNo == null ? 1 : pageNo;
-		Page<TeachingType> pagedTeachingType = teachingtypeService.getPage(pageNo,
-				CommonConstant.PAGE_SIZE);
-		return pagedTeachingType.getResult();
+	public List<TeachingType> getAllSchoolList() {		
+		return  teachingtypeService.getAll();		
 	}
 
 }

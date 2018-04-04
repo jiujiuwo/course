@@ -108,10 +108,13 @@ public class CourseTeachingClassReferenceTypeController extends CourseTeachingCl
 	 */
 	@RequestMapping(value = "/list-{t_course_teaching_class_id}")
 	public ModelAndView ListAll(HttpServletRequest request, @PathVariable String t_course_teaching_class_id,
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
+		
 		Page<CourseTeachingClassReferenceType> pagedReferenceTypeData = referencetypeService.getPage(t_course_teaching_class_id);
 
 		view.addObject(PagedObjectConst.Paged_CourseReferenceTypeData, pagedReferenceTypeData);

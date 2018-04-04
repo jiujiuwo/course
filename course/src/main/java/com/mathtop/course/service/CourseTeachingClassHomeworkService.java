@@ -64,6 +64,9 @@ public class CourseTeachingClassHomeworkService {
 
 	@Autowired
 	CourseTeachingClassStudentGroupService courseTeachingClassStudentGroupService;
+	
+	@Autowired
+	CourseTeachingClassHomeworkScoreInfoService courseTeachingClassHomeworkScoreInfoService;
 
 	public CourseTeachingClassHomeworkFile getFileByID(String id) {
 		return homeworkfileDao.getByID(id);
@@ -119,6 +122,9 @@ public class CourseTeachingClassHomeworkService {
 				new Date(), DateTimeSql.GetDateTimeNotIncludingSecond(enddate));
 
 		addFiles(request, t_course_teaching_class_homework_baseinfo_id, files);
+		
+		//作业成绩管理
+		courseTeachingClassHomeworkScoreInfoService.addHomeworkBaseInfo(t_course_teaching_class_homework_baseinfo_id);
 
 	}
 
@@ -231,7 +237,10 @@ public class CourseTeachingClassHomeworkService {
 		// 1.删除文件
 		deleteFilesByHomeworkBaseInfoId(request, t_course_teaching_class_homework_baseinfo_id);
 
-		// 2.删除基本信息
+		//2.删除成绩
+		courseTeachingClassHomeworkScoreInfoService.deleteByCourseTeachingClassHomeworkInfoId(request, t_course_teaching_class_homework_baseinfo_id);
+		
+		// 3.删除基本信息
 		homeworkbaseinfodao.deleteById(t_course_teaching_class_homework_baseinfo_id);
 	}
 
@@ -289,6 +298,10 @@ public class CourseTeachingClassHomeworkService {
 
 	public List<CourseTeachingClassHomeworkBaseinfo> getByCourseTeachingClassID(String t_course_teaching_class_id) {
 		return homeworkbaseinfodao.getByCourseTeachingClassID(t_course_teaching_class_id);
+	}
+	
+	public List<CourseTeachingClassHomeworkBaseinfo> getByCourseTeachingClassIDAndHomeworkTypeId(String t_course_teaching_class_id,String t_course_teaching_class_homeworktype_id) {
+		return homeworkbaseinfodao.getByCourseTeachingClassIDAndHomeworkTypeId(t_course_teaching_class_id,t_course_teaching_class_homeworktype_id);
 	}
 
 	public Page<CourseTeachingClassHomeworkBaseinfoStudentViewData> getPage(String t_course_teaching_class_id,

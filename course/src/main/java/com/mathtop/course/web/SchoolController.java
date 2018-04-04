@@ -170,9 +170,12 @@ public class SchoolController extends BaseController {
 	// 得到所有学院
 	@RequestMapping(value = "/getall", method = RequestMethod.GET)
 	@ResponseBody
-	public List<School> getAllSchoolList(@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public List<School> getAllSchoolList(HttpServletRequest request,@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
+		
 		Page<School> pagedSchool = schoolService.getPage(pageNo, CommonConstant.PAGE_SIZE);
 		return pagedSchool.getResult();
 	}

@@ -9,11 +9,11 @@ import com.mathtop.course.dao.CourseTypeDao;
 import com.mathtop.course.domain.CourseType;
 
 @Service
-public class CourseTypeService extends SimpleService<CourseTypeDao,CourseType> {
-	
+public class CourseTypeService extends SimpleService<CourseTypeDao, CourseType> {
+
 	@Autowired
 	protected CourseTypeDao dao;
-	
+
 	@Autowired
 	CourseService courseService;
 
@@ -22,10 +22,10 @@ public class CourseTypeService extends SimpleService<CourseTypeDao,CourseType> {
 		// TODO Auto-generated method stub
 		return dao;
 	}
-	
-public void deleteById(HttpServletRequest request,String t_course_type_id){
-	
-	dao.deleteById(t_course_type_id);
+
+	public void deleteById(HttpServletRequest request, String t_course_type_id) {
+
+		dao.deleteById(t_course_type_id);
 	}
-	
+
 }

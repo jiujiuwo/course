@@ -117,14 +117,16 @@ public class GroupRoleController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list")
-	public ModelAndView group_role(
+	public ModelAndView group_role(HttpServletRequest request,
 			@RequestParam(value = "groupId", required = false) String t_group_id,
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 		SetPageURI(view);
 
 		pageNo = pageNo == null ? 1 : pageNo;
-
+		pageSize = getPageSize(request, pageSize);
+		
 		Page<Group> pagedGroup = groupService.getAllPage();
 
 		view.addObject(PagedObjectConst.Paged_Group, pagedGroup);

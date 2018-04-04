@@ -166,12 +166,14 @@ public class KnowledgepointTypeController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list")
-	public ModelAndView ListAll(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public ModelAndView ListAll(HttpServletRequest request,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 		SetPageURI(view);
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
 		
 		Page<KnowledgepointType> pagedKnowledgepointType = knowledgepointtypetypeService
 				.getPage(pageNo, CommonConstant.PAGE_SIZE);
@@ -185,13 +187,9 @@ public class KnowledgepointTypeController extends BaseController {
 	// 得到所有学院
 	@RequestMapping(value = "/getall", method = RequestMethod.GET)
 	@ResponseBody
-	public List<KnowledgepointType> getAllSchoolList(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
-
-		pageNo = pageNo == null ? 1 : pageNo;
-		Page<KnowledgepointType> pagedExaminationType = knowledgepointtypetypeService
-				.getPage(pageNo, CommonConstant.PAGE_SIZE);
-		return pagedExaminationType.getResult();
+	public List<KnowledgepointType> getAllSchoolList() {
+		return  knowledgepointtypetypeService
+				.getAll();
 	}
 
 }

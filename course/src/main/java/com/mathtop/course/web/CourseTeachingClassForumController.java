@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mathtop.course.cons.CommonConstant;
 import com.mathtop.course.cons.PagedObjectConst;
 import com.mathtop.course.cons.SelectedObjectConst;
 import com.mathtop.course.dao.Page;
@@ -172,12 +171,14 @@ public class CourseTeachingClassForumController extends CourseTeachingClassBaseC
 	 */
 	@RequestMapping(value = "/list-{t_course_teaching_class_id}")
 	public ModelAndView ListAll(HttpServletRequest request, @PathVariable String t_course_teaching_class_id,
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView mav = new ModelAndView();
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
 		Page<CourseTeachingClassForumTopicViewData> pagedForumTopicViewData = forumtopicService.getPage(t_course_teaching_class_id, pageNo,
-				CommonConstant.PAGE_SIZE);
+				pageSize);
 
 		mav.addObject(PagedObjectConst.Paged_CourseForumTopicViewData, pagedForumTopicViewData);
 

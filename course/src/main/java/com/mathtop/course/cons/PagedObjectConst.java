@@ -85,6 +85,21 @@ public class PagedObjectConst {
 
 	// 课程-教学作业类型
 	public static final String Paged_CourseHomeworkTypeData = "pagedHomeworkTypeData";
+	
+	// 课程-作业-成绩-信息
+	public static final String Paged_CourseTeachingClassHomeworkScoreinfoViewData = "pagedCourseTeachingClassHomeworkScoreinfoViewData";
+
+	
+	// 课程-作业-学生-成绩
+	public static final String Paged_CourseTeachingClassHomeworkStudentScoresViewData = "pagedCourseTeachingClassHomeworkStudentScoresViewData";
+
+	// 课程-作业-成绩-分值类型
+	public static final String Paged_CourseTeachingClassHomeworkScoreMarkingTypeData = "pagedCourseTeachingClassHomeworkScoreMarkingTypeData";
+
+	// 课程-作业-成绩-显式类型
+	public static final String Paged_CourseTeachingClassHomeworkScoreShowTypeData = "pagedCourseTeachingClassHomeworkScoreShowTypeData";
+
+		
 
 	// 课程-考勤-类型
 	public static final String Paged_CourseAttendanceTypeData = "pagedAttendanceTypeData";

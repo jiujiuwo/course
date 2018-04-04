@@ -149,12 +149,14 @@ public class ResourceController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list")
-	public ModelAndView ListAll(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+	public ModelAndView ListAll(HttpServletRequest request,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize) {
 		ModelAndView view = new ModelAndView();
 		SetPageURI(view);
 
 		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = getPageSize(request, pageSize);
 
 		Page<Resource> pagedResource = resourceService.getPage(pageNo,
 				CommonConstant.PAGE_SIZE);
@@ -168,12 +170,7 @@ public class ResourceController extends BaseController {
 	// 得到所有学院
 	@RequestMapping(value = "/getall", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Resource> getall(
-			@RequestParam(value = "pageNo", required = false) Integer pageNo) {
-
-		pageNo = pageNo == null ? 1 : pageNo;
-		Page<Resource> pagedResource = resourceService.getPage(pageNo,
-				CommonConstant.PAGE_SIZE);
-		return pagedResource.getResult();
+	public List<Resource> getall() {
+		return resourceService.getAll();
 	}
 }
